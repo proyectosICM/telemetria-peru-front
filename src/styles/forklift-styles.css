@@ -1,0 +1,63 @@
+/** 
+ * Stylesheet for forklift visuals with 4 and 6 tires configurations.
+ * This CSS file provides the styling necessary to display the forklift and its tires in the application,
+ * enabling interaction and visual representation of tire details based on user selection.
+ */
+
+/** 
+ * Represents the central part of the forklift, including the visual representation of the forklift base.
+ */
+ .base-forklift {
+    width: 50px;
+    height: 90%;
+    margin: 1rem auto;
+    background-image: url('../images/forklift.jpg');
+    background-position: center; 
+    background-size: cover;
+}
+
+/** 
+ * Container for the left and right sets of tires on the forklift, arranging them vertically.
+ */
+.fkl-tires-l,
+.fkl-tires-r {
+    width: 40px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 2px solid gree;
+    margin: 1rem auto;
+}
+
+.fkl-blank{
+    flex: 1;
+    margin: 0.5rem 0%;
+    background-position: center;
+    background-size: cover;
+}
+
+/** 
+ * Styles for individual tires on both the left and right sides of the forklift, making them interactive.
+ */
+.fkl-tires-l .fkl-tire,
+.fkl-tires-r .fkl-tire {
+    flex: 1;
+    margin: 0.5rem 0%;
+    background-position: center;
+    background-size: cover;
+    background-image: url('../images/llanta.jpg');
+    cursor: pointer;
+}
+
+/**
+ * Styles for the area that shows details of the recovered tires, providing visibility on the status 
+ * of the tires (Device pressure, temperature and battery).
+ */
+.fkl-info-tire {
+    width: 60%;
+    height: 10%;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1;
+}

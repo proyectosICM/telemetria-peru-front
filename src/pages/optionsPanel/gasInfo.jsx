@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import useMqtt from "../../hooks/useMqtt";
-import { mqttLocalURL, mqttTopics, mqttURL } from "../../api/apiurls";
+import { mqttDominio, mqttLocalURL, mqttTopics, mqttURL } from "../../api/apiurls";
 
 export function GasInfo({vehicleId}) {
   const topic = `${mqttTopics.tmp_gasPressure}${vehicleId}`;
 
-  const { isConnected, messages, sendMessage } = useMqtt(mqttLocalURL, topic);
+  const { isConnected, messages, sendMessage } = useMqtt(mqttDominio, topic);
   const [inputMessage, setInputMessage] = useState("");
   
   const [pressure, setPressure] = useState(0);
@@ -20,8 +20,8 @@ export function GasInfo({vehicleId}) {
       console.log("Último mensaje recibido:", lastMessageStr);
       try {
         const lastMessage = JSON.parse(lastMessageStr);
-        alert(lastMessage)
-        setPressure(lastMessage.pressure);
+        //alert(lastMessage)
+        setPressure(lastMessage);
       } catch (error) {
         console.error("Error parsing MQTT message", error);
         console.log("Mensaje recibido no válido:", lastMessageStr);

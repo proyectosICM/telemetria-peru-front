@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { mqttTopics, mqttURL, vehiclesURL } from "../../api/apiurls";
+import { mqttTopics, mqttURL, vehiclesAlarmOnURL, vehiclesEngineOnURL, vehiclesLockOnURL, vehiclesURL } from "../../api/apiurls";
 import useMqtt from "../../hooks/useMqtt";
 import { ListItems } from "../../hooks/listItems";
+import { editSingleValue } from "../../hooks/editItem";
 
 export function VehicleOptions({vehicleId}) {
   const [data, setData] = useState([]);
@@ -9,6 +10,8 @@ export function VehicleOptions({vehicleId}) {
   useEffect(() => {
     ListItems(`${vehiclesURL}/${vehicleId}`, setData);
   }, [vehicleId]);
+
+
 
   const [isAlarmOn, setIsAlarmOn] = useState(false);
   const [isVehicleOn, setIsVehicleOn] = useState(false);
@@ -19,18 +22,21 @@ export function VehicleOptions({vehicleId}) {
       setIsAlarmOn(data.alarmStatus);
       setIsVehicleOn(data.timeOn);
     }
-  }, [data]);
+  }, [data]); 
 
   const handleToggleAlarm = () => {
     setIsAlarmOn((prevState) => !prevState);
+    editSingleValue(`${vehiclesAlarmOnURL}/${vehicleId}`, 'alarm', true);
   };
 
   const handleToggleVehicle = () => {
     setIsVehicleOn((prevState) => !prevState);
+    editSingleValue(`${vehiclesLockOnURL}/${vehicleId}`, 'lock', true);
   };
 
   const handleToggleLocks = () => {
     setAreLocksOn((prevState) => !prevState);
+    editSingleValue(`${vehiclesEngineOnURL}/${vehicleId}`, 'engine', true);
   };
 
   return (

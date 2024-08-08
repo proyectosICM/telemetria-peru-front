@@ -7,6 +7,7 @@ export function VehicleInfo({vehicleId}) {
 
     useEffect(() => {
       ListItems(`${vehiclesURL}/${vehicleId}`, setData);
+      //console.log(`${vehiclesURL}/${vehicleId}`);
     }, [vehicleId]);
  
   return (

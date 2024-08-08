@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { ListItems } from "../../hooks/listItems";
 import { vehiclesURL } from "../../api/apiurls";
 
-export function VehicleInfo() {
+export function VehicleInfo({vehicleId}) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-      ListItems(`${vehiclesURL}/2`, setData);
-    }, []);
-
+      ListItems(`${vehiclesURL}/${vehicleId}`, setData);
+    }, [vehicleId]);
+ 
   return (
     <div className='option-item'>
       <h4>Informacion</h4>

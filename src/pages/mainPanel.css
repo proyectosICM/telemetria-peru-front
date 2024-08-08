@@ -1,0 +1,41 @@
+/* MainPanel.css */
+.main-panel-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 20%;
+    height: 900px;
+    border: 2px solid blue;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 900px;
+    border: 2px solid red;
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 550px;
+    border: 3px solid red;
+    cursor: pointer;
+  }
+  
+  .options-panel {
+    width: 100%;
+    height: 350px;
+    border: 3px solid red;
+    overflow: auto;
+  }
+  
+  .options-panel-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  

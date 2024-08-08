@@ -3,12 +3,12 @@ import { mqttTopics, mqttURL, vehiclesURL } from "../../api/apiurls";
 import useMqtt from "../../hooks/useMqtt";
 import { ListItems } from "../../hooks/listItems";
 
-export function VehicleOptions() {
+export function VehicleOptions({vehicleId}) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/2`, setData);
-  }, []);
+    ListItems(`${vehiclesURL}/${vehicleId}`, setData);
+  }, [vehicleId]);
 
   const [isAlarmOn, setIsAlarmOn] = useState(false);
   const [isVehicleOn, setIsVehicleOn] = useState(false);

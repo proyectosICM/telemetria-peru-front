@@ -1,5 +1,5 @@
 export const mqttURL = "ws://38.43.134.172:1884"
-export const mqttLocalURL = "ws://192.168.0.204:1883"
+export const mqttLocalURL = "ws://localhost:1883"
 
 // Temas MQTT
 export const mqttTopics = {

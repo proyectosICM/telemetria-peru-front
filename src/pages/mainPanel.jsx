@@ -6,6 +6,7 @@ import { VehicleMenuPanel } from "../common/vehicleMenuPanel";
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
 import './mainPanel.css';
+import { NavbarCommon } from "../common/navbarCommon";
 
 export function MainPanel() {
 
@@ -36,6 +37,7 @@ export function MainPanel() {
 
   return (
     <div>
+      <NavbarCommon/>
       <h5>Main</h5>
       <div className="main-panel-container">
         <div className="sidebar">

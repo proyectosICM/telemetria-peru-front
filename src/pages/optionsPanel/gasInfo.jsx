@@ -20,7 +20,6 @@ export function GasInfo({vehicleId}) {
       console.log("Último mensaje recibido:", lastMessageStr);
       try {
         const lastMessage = JSON.parse(lastMessageStr);
-        //alert(lastMessage)
         setPressure(lastMessage);
       } catch (error) {
         console.error("Error parsing MQTT message", error);

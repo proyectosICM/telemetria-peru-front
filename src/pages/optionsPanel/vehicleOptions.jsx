@@ -20,23 +20,33 @@ export function VehicleOptions({vehicleId}) {
   useEffect(() => {
     if (data) {
       setIsAlarmOn(data.alarmStatus);
-      setIsVehicleOn(data.timeOn);
+      setIsVehicleOn(data.engineStatus);
+      setAreLocksOn(data.lockStatus)
     }
   }, [data]); 
 
   const handleToggleAlarm = () => {
-    setIsAlarmOn((prevState) => !prevState);
-    editSingleValue(`${vehiclesAlarmOnURL}/${vehicleId}`, 'alarm', true);
+    setIsAlarmOn((prevState) => {
+      const newState = !prevState;
+      editSingleValue(`${vehiclesAlarmOnURL}/${vehicleId}`, 'alarm', newState);
+      return newState;
+    });
   };
 
   const handleToggleVehicle = () => {
-    setIsVehicleOn((prevState) => !prevState);
-    editSingleValue(`${vehiclesLockOnURL}/${vehicleId}`, 'lock', true);
+    setIsVehicleOn((prevState) => {
+      const newState = !prevState;
+      editSingleValue(`${vehiclesEngineOnURL}/${vehicleId}`, 'engine', newState);
+      return newState;
+    });
   };
 
   const handleToggleLocks = () => {
-    setAreLocksOn((prevState) => !prevState);
-    editSingleValue(`${vehiclesEngineOnURL}/${vehicleId}`, 'engine', true);
+    setAreLocksOn((prevState) => {
+      const newState = !prevState;
+      editSingleValue(`${vehiclesLockOnURL}/${vehicleId}`, 'lock', newState);
+      return newState;
+    });
   };
 
   return (

@@ -18,16 +18,24 @@ const base = "http://192.168.1.232:6061"
 
 //const base = "http://192.168.0.200:6061"
 
-const baseURL = `${base}/api`;
+export const baseURL = `${base}`;
+
+export const loginURL = `${base}/login`;
+
+const baseAPIURL = `${base}/api`;
 
 //vehicles
-export const vehiclesURL = `${baseURL}/vehicles`;
+export const vehiclesURL = `${baseAPIURL}/vehicles`;
 export const vehiclesByCompanyURL = `${vehiclesURL}/findByCompanyId`;
 export const vehiclesByCompanyPagedURL = `${vehiclesURL}/findByCompanyId-paged`;
 
 export const vehiclesAlarmOnURL = `${vehiclesURL}/update-alarm`;
 export const vehiclesLockOnURL = `${vehiclesURL}/update-lock`;
 export const vehiclesEngineOnURL = `${vehiclesURL}/update-engine`;
+
+/** User */
+export const UserURL = `${baseAPIURL}/users`;
+export const InfoUserURL = `${UserURL}/info/`;
 
 
 

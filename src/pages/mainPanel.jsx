@@ -5,10 +5,12 @@ import { TireInfo } from "./optionsPanel/tireInfo";
 import { VehicleMenuPanel } from "../common/vehicleMenuPanel";
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
-import './mainPanel.css';
+import "./mainPanel.css";
 import { NavbarCommon } from "../common/navbarCommon";
+import { LogoutToken } from "../hooks/logoutToken";
 
 export function MainPanel() {
+  LogoutToken();
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
 
@@ -32,13 +34,12 @@ export function MainPanel() {
 
   const handleSelectVehicle = (id) => {
     setSelectedVehicleId(id);
-  }
-
+  };
 
   return (
     <div>
-      <NavbarCommon/>
-      <h5>Main</h5>
+      <NavbarCommon />
+
       <div className="main-panel-container">
         <div className="sidebar">
           <VehicleMenuPanel onSelectVehicle={handleSelectVehicle} />
@@ -47,18 +48,20 @@ export function MainPanel() {
           <div className="map-container">
             <MapaBase buses={buses} />
           </div>
-          {selectedVehicleId && (
+          {selectedVehicleId ? (
             <div className="options-panel">
               <h3>Options Panel</h3>
               <div className="options-panel-content">
                 <VehicleInfo vehicleId={selectedVehicleId} />
                 <VehicleOptions vehicleId={selectedVehicleId} />
                 <GasInfo vehicleId={selectedVehicleId} />
-                <TireInfo vehicleId={selectedVehicleId} />  
+                <TireInfo vehicleId={selectedVehicleId} />
               </div>
-              <div className="options-panel-content">
-
-              </div>
+              <div className="options-panel-content"></div>
+            </div>
+          ) : (
+            <div className="no-vehicle-selected">
+              <h1>Por favor, seleccione un vehículo para ver las opciones.</h1>
             </div>
           )}
         </div>

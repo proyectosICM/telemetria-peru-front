@@ -3,16 +3,19 @@ import { ListItems } from "../hooks/listItems";
 import { vehiclesByCompanyURL } from "../api/apiurls";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
+  
   const [data, setData] = useState([]);
 
+  const companyId = localStorage.getItem("empresa");
+
   useEffect(() => {
-    ListItems(`${vehiclesByCompanyURL}/1`, setData);
-  }, []);
+    ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData);
+  }, [companyId]);
 
   const handleSelectVehicle = (id) => {
     onSelectVehicle(id);
-  }
-
+  };
+ 
   return (
     <div className="container">
       <h1>Camiones</h1>
@@ -22,7 +25,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
             <p>{item.licensePlate}</p>
           </div>
         ))}
-      </div> 
+      </div>
     </div>
   );
 }

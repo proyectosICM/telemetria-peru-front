@@ -6,7 +6,7 @@ export function ListItems(url, setData) {
         const token = await localStorage.getItem("token");
         const response = await axios.get(`${url}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, 
           },
         });
         setData(response.data);

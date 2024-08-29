@@ -23,6 +23,7 @@ export const useAuth = () => {
         username,
         password,
       });
+      console.log("token: " + response.data.token )
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("Username", username);
       navigate("/redirectandW", { state: { username } });

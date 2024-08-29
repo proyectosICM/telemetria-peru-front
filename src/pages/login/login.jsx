@@ -26,7 +26,7 @@ export function Login() {
   const onSubmit = (data) => {
     login(data.username, data.password);
   };
-
+ 
   useEffect(() => {
     if (token) {
       navigate("/");
@@ -53,7 +53,7 @@ export function Login() {
             {errors.password && <span>Este campo es obligatorio</span>}
           </Form.Group>
 
-          <Button variant="primary" type="submit" disabled={isLoading}>
+          <Button variant="primary" type="submit" disabled={isLoading} className="login-button">
             Iniciar sesión
           </Button>
           {error && <div>{error}</div>}

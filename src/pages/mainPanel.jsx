@@ -29,7 +29,7 @@ export function MainPanel() {
       placa: "GHI789",
       longitud: -76.955,
       latitud: -12.035,
-    },
+    }, 
   ];
 
   const handleSelectVehicle = (id) => {
@@ -44,10 +44,12 @@ export function MainPanel() {
         <div className="sidebar">
           <VehicleMenuPanel onSelectVehicle={handleSelectVehicle} />
         </div>
+
         <div className="main-content">
           <div className="map-container">
             <MapaBase buses={buses} />
           </div>
+
           {selectedVehicleId ? (
             <div className="options-panel">
               <h3>Options Panel</h3>
@@ -57,6 +59,7 @@ export function MainPanel() {
                 <GasInfo vehicleId={selectedVehicleId} />
                 <TireInfo vehicleId={selectedVehicleId} />
               </div>
+              
               <div className="options-panel-content"></div>
             </div>
           ) : (

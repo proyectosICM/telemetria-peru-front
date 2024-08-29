@@ -19,9 +19,9 @@ export function WelcomeAndRedirect() {
 
   useEffect(() => {
     if (info) {
-      localStorage.setItem("rol", info.roleModel.id);
-      localStorage.setItem("empresa", info.companyModel.id);
-      localStorage.setItem("usuario", info.id);
+      localStorage.setItem("rolId", info.roleModel.id);
+      localStorage.setItem("companyId", info.companyModel.id);
+      localStorage.setItem("userId", info.id);
 
       let path;
       switch (info.roleModel.id) {

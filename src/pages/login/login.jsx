@@ -13,7 +13,7 @@ export function Login() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  //LogoutToken();
+  LogoutToken();
 
   const {
     register,

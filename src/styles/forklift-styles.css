@@ -11,7 +11,7 @@
     width: 50px;
     height: 90%;
     margin: 1rem auto;
-    background-image: url('../images/forklift.jpg');
+    background-image: url('../images/forklift.webp');
     background-position: center; 
     background-size: cover;
 }
@@ -46,10 +46,10 @@
     margin: 0.5rem 0%;
     background-position: center;
     background-size: cover;
-    background-image: url('../images/llanta.jpg');
+    background-image: url('../images/llanta.webp');
     cursor: pointer;
 }
-
+    
 /**
  * Styles for the area that shows details of the recovered tires, providing visibility on the status 
  * of the tires (Device pressure, temperature and battery).

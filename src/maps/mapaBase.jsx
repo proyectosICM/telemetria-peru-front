@@ -6,7 +6,6 @@ import { fromLonLat, toLonLat } from "ol/proj";
 
 // Posición inicial del mapa
 const position = [-76.95769789314294, -12.036776926858456];
-const yo = [-76.95769789314294, -12.036776926858456];
 
 export function MapaBase({ buses, rutas }) {
   const [map, setMap] = useState(null);

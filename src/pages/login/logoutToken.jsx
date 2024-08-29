@@ -13,7 +13,12 @@ export function LogoutToken() {
 
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
         console.log("El token ha expirado");
+        // Eliminar el token
         localStorage.removeItem("token");
+        // Eliminar el resto de localStorages
+        localStorage.removeItem("rolId");
+        localStorage.removeItem("companyId");
+        localStorage.removeItem("userId");
         navigate("/login");
       }
     } else {

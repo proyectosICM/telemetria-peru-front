@@ -1,0 +1,16 @@
+/* adminPanel.css */
+
+.admin-panel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;         
+}
+
+.panel-content {
+    border: 2px solid #d1d0cc;
+    border-radius: 20px;
+    margin: 40px 0;
+    width: 300px;
+    padding: 20px;           /* Opcional: agrega algo de relleno interno */
+    text-align: center;      /* Opcional: centra el texto */
+}

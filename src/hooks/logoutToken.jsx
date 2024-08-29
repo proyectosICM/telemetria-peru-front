@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { clearLocalStorage } from "../utils/storageUtils";
 
 export function LogoutToken() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function LogoutToken() {
 
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
         console.log("El token ha expirado");
-        localStorage.removeItem("token");
+        clearLocalStorage();
         navigate("/login");
       }
     } else {

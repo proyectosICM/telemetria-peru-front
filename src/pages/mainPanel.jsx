@@ -8,6 +8,10 @@ import { VehicleOptions } from "./optionsPanel/vehicleOptions";
 import "./mainPanel.css";
 import { NavbarCommon } from "../common/navbarCommon";
 import { LogoutToken } from "../hooks/logoutToken";
+import { BatteryInfo } from "./optionsPanel/batteryInfo";
+import { TireInfoData } from "./optionsPanel/tireInfoData";
+import { IssuesInfo } from "./optionsPanel/issuesInfo";
+import { ImpactIncidentLogging } from "./optionsPanel/impactIncidentLogging";
 
 export function MainPanel() {
   LogoutToken();
@@ -29,10 +33,11 @@ export function MainPanel() {
       placa: "GHI789",
       longitud: -76.955,
       latitud: -12.035,
-    }, 
+    },
   ];
 
   const handleSelectVehicle = (id) => {
+    localStorage.setItem("selectedVehicleId", id);
     setSelectedVehicleId(id);
   };
 
@@ -54,13 +59,18 @@ export function MainPanel() {
             <div className="options-panel">
               <h3>Options Panel</h3>
               <div className="options-panel-content">
-                <VehicleInfo vehicleId={selectedVehicleId} />
-                <VehicleOptions vehicleId={selectedVehicleId} />
-                <GasInfo vehicleId={selectedVehicleId} />
-                <TireInfo vehicleId={selectedVehicleId} />
+                <VehicleInfo />
+                <VehicleOptions />
+                <GasInfo />
+                <BatteryInfo />
               </div>
-              
-              <div className="options-panel-content"></div>
+
+              <div className="options-panel-content">
+                <TireInfo />
+                <TireInfoData />
+                <ImpactIncidentLogging />
+                {/* <IssuesInfo /> */}
+              </div>
             </div>
           ) : (
             <div className="no-vehicle-selected">

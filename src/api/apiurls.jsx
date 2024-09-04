@@ -37,6 +37,18 @@ export const vehiclesEngineOnURL = `${vehiclesURL}/update-engine`;
 export const UserURL = `${baseAPIURL}/users`;
 export const InfoUserURL = `${UserURL}/info/`;
 
+/** Gas Records */
+export const gasRecordsURL = `${baseAPIURL}/gas-records`;
+export const gasRecordsPageURL = `${gasRecordsURL}/page`;
+export const gasRecordsByVehicleIdURL = `${gasRecordsURL}/findByVehicleId`;
+export const gasRecordsByVehicleIdPageURL = `${gasRecordsURL}/findByVehicleId-page`;
 
+/** Battery **/
+export const batteryURL = `${baseAPIURL}/batteries`;
+export const batteryByVehicleIdURL = `${batteryURL}/findByVehicleId`;
+export const batteryByVehicleIdPageURL = `${batteryURL}/findByVehicleId-page`;
 
-
+/** Battery Records **/
+export const batteryRecordURL = `${baseAPIURL}/batteries-records`;
+export const batteryRecordByVehicleIdURL = `${batteryRecordURL}/findByBatteryId`;
+export const batteryRecordByVehicleIdPageURL = `${batteryRecordURL}/findByBatteryId-page`;

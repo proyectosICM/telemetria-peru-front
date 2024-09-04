@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { ListItems } from "../../hooks/listItems";
 import { vehiclesURL } from "../../api/apiurls";
 
-export function VehicleInfo({vehicleId}) {
+export function VehicleInfo() {
     const [data, setData] = useState([]);
+    const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
     useEffect(() => {
-      ListItems(`${vehiclesURL}/${vehicleId}`, setData);
+      ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
       //console.log(`${vehiclesURL}/${vehicleId}`);
-    }, [vehicleId]);
+    }, [selectedVehicleId]); 
  
   return (
     <div className='option-item'>
@@ -18,5 +19,5 @@ export function VehicleInfo({vehicleId}) {
       <p>Tiempo encendido: 13 horas 20 min</p>
       <p>Coordenadas: {data && data.longitud}</p>
     </div>
-  );
+  ); 
 }

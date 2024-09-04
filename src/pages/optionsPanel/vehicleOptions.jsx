@@ -4,12 +4,13 @@ import useMqtt from "../../hooks/useMqtt";
 import { ListItems } from "../../hooks/listItems";
 import { editSingleValue } from "../../hooks/editItem";
 
-export function VehicleOptions({vehicleId}) {
+export function VehicleOptions() {
   const [data, setData] = useState([]);
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${vehicleId}`, setData);
-  }, [vehicleId]);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
+  }, [selectedVehicleId]);
 
 
 
@@ -28,7 +29,7 @@ export function VehicleOptions({vehicleId}) {
   const handleToggleAlarm = () => {
     setIsAlarmOn((prevState) => {
       const newState = !prevState;
-      editSingleValue(`${vehiclesAlarmOnURL}/${vehicleId}`, 'alarm', newState);
+      editSingleValue(`${vehiclesAlarmOnURL}/${selectedVehicleId}`, 'alarm', newState);
       return newState;
     });
   };
@@ -36,7 +37,7 @@ export function VehicleOptions({vehicleId}) {
   const handleToggleVehicle = () => {
     setIsVehicleOn((prevState) => {
       const newState = !prevState;
-      editSingleValue(`${vehiclesEngineOnURL}/${vehicleId}`, 'engine', newState);
+      editSingleValue(`${vehiclesEngineOnURL}/${selectedVehicleId}`, 'engine', newState);
       return newState;
     });
   };
@@ -44,7 +45,7 @@ export function VehicleOptions({vehicleId}) {
   const handleToggleLocks = () => {
     setAreLocksOn((prevState) => {
       const newState = !prevState;
-      editSingleValue(`${vehiclesLockOnURL}/${vehicleId}`, 'lock', newState);
+      editSingleValue(`${vehiclesLockOnURL}/${selectedVehicleId}`, 'lock', newState);
       return newState;
     });
   };
@@ -54,17 +55,18 @@ export function VehicleOptions({vehicleId}) {
       <h4>Opciones Remotas</h4>
 
       <div className="option">
-        <span style={{ fontSize: "18px", margin: "5px" }}>{isAlarmOn ? "Desactivar alarma" : "Activar alarma"}</span>
+        <span style={{ fontSize: "18px", margin: "5px" }}>{isVehicleOn ? "Apagar vehículo" : "Encender vehículo"}</span>
         <label className="switch">
-          <input type="checkbox" checked={isAlarmOn} onChange={handleToggleAlarm} />
+          <input type="checkbox" checked={isVehicleOn} onChange={handleToggleVehicle} />
           <span className="slider"></span>
         </label>
       </div>
 
+
       <div className="option">
-        <span style={{ fontSize: "18px", margin: "5px" }}>{isVehicleOn ? "Apagar vehículo" : "Encender vehículo"}</span>
+        <span style={{ fontSize: "18px", margin: "5px" }}>{isAlarmOn ? "Desactivar alarma" : "Activar alarma"}</span>
         <label className="switch">
-          <input type="checkbox" checked={isVehicleOn} onChange={handleToggleVehicle} />
+          <input type="checkbox" checked={isAlarmOn} onChange={handleToggleAlarm} />
           <span className="slider"></span>
         </label>
       </div>

@@ -52,3 +52,8 @@ export const batteryByVehicleIdPageURL = `${batteryURL}/findByVehicleId-page`;
 export const batteryRecordURL = `${baseAPIURL}/batteries-records`;
 export const batteryRecordByVehicleIdURL = `${batteryRecordURL}/findByBatteryId`;
 export const batteryRecordByVehicleIdPageURL = `${batteryRecordURL}/findByBatteryId-page`;
+
+/**  **/
+export const impactIncidentLoggingURL = `${baseAPIURL}/impact_incident_logging`;
+export const impactIncidentLoggingByVehicleURL = `${impactIncidentLoggingURL}/findByVehicleId`;
+export const impactIncidentLoggingByVehiclePageURL = `${impactIncidentLoggingURL}/findByVehicleId-page`;

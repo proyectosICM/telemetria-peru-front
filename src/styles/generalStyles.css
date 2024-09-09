@@ -1,4 +1,8 @@
-.mapa {
+.g-background {
+  background-color: black;
+}
+
+.g-mapa {
   text-align: center;
   justify-content: center;
   width: 95%;

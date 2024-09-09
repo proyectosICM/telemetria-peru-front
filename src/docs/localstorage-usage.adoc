@@ -1,0 +1,8 @@
+= LocalStorage Documentation / Documentación de LocalStorage
+
+[role="strong"]
+Este documento detalla los elementos almacenados en el `localStorage` dentro de la aplicación React. Específicamente, se centra en las claves que se guardan durante el proceso de autenticación.
+
+This document details the items stored in `localStorage` within the React application. Specifically, it focuses on the keys saved during the authentication process.
+
+== Claves del LocalStorage / LocalStorage Keys

@@ -24,7 +24,7 @@ export const useAuth = () => {
         password,
       });
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("Username", username);
+      localStorage.setItem("username", username);
       navigate("/redirectandW"); 
     } catch (error) {
       setError("Error en la autenticación");

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import { NavbarCommon } from "../common/navbarCommon";
 import { MapaBase } from "../maps/mapaBase";
-import { GasInfo } from "./optionsPanel/gasInfo";
-import { TireInfo } from "./optionsPanel/tireInfo";
 import { VehicleMenuPanel } from "../common/vehicleMenuPanel";
+
+import { GasInfo } from "./optionsPanel/gasInfo";
+import { TireInfo } from "./optionsPanel/tireSensorInfo";
+
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
 import "./mainPanel.css";
-import { NavbarCommon } from "../common/navbarCommon";
+
 import { LogoutToken } from "../hooks/logoutToken";
 import { BatteryInfo } from "./optionsPanel/batteryInfo";
-import { TireInfoData } from "./optionsPanel/tireInfoData";
+import { TireInfoData } from "./optionsPanel/tireSensorInfoData";
 import { IssuesInfo } from "./optionsPanel/issuesInfo";
 import { ImpactIncidentLogging } from "./optionsPanel/impactIncidentLogging";
 
@@ -29,7 +32,7 @@ export function MainPanel() {
       longitud: -76.96,
       latitud: -12.037,
     },
-    {
+    { 
       placa: "GHI789",
       longitud: -76.955,
       latitud: -12.035,
@@ -42,30 +45,30 @@ export function MainPanel() {
   };
 
   return (
-    <div>
+    <div className="g-background">
       <NavbarCommon />
 
       <div className="main-panel-container">
-        <div className="sidebar">
+        <div className="main-sidebar">
           <VehicleMenuPanel onSelectVehicle={handleSelectVehicle} />
         </div>
 
         <div className="main-content">
-          <div className="map-container">
+          <div className="main-map-container">
             <MapaBase buses={buses} />
           </div>
 
           {selectedVehicleId ? (
-            <div className="options-panel">
+            <div className="main-options-panel">
               <h3>Options Panel</h3>
-              <div className="options-panel-content">
+              <div className="main-options-panel-content">
                 <VehicleInfo />
                 <VehicleOptions />
                 <GasInfo />
                 <BatteryInfo />
               </div>
 
-              <div className="options-panel-content">
+              <div className="main-options-panel-content">
                 <TireInfo />
                 <TireInfoData />
                 <ImpactIncidentLogging />
@@ -73,7 +76,7 @@ export function MainPanel() {
               </div>
             </div>
           ) : (
-            <div className="no-vehicle-selected">
+            <div className="main-no-vehicle-selected">
               <h1>Por favor, seleccione un vehículo para ver las opciones.</h1>
             </div>
           )}

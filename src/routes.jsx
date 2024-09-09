@@ -7,7 +7,7 @@ import { IssuesRecords } from "./pages/issuesRecords/issuesRecords";
 import { Login } from "./pages/login/login";
 import { WelcomeAndRedirect } from "./pages/login/welcomeAndRedirect";
 import { MainPanel } from "./pages/mainPanel";
-
+ 
 export const routes = [
   { path: "/", component: <MainPanel /> },
   { path: "/mapa", component: <MapaBase /> },
@@ -17,6 +17,7 @@ export const routes = [
 
   { path: "/gas-Records", component: <GasRecords/> },
   { path: "/battery-Records", component: <BatteryRecords /> },
+  
   { path: "/issues-Records", component: <IssuesRecords /> },
   { path: "/impact-incident-logging-records", component: <ImpactIncidentLoggingRecords />},
 ];

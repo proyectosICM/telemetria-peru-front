@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { clearLocalStorage } from "../utils/storageUtils";
 
 export function NavbarCommon() {
-
   const navigation = useNavigate();
 
   const handleLogout = () => {
     clearLocalStorage();
     navigation("/login");
   };
-
+ 
   return (
     <Navbar bg="dark" variant="dark" className="justify-content-between">
       <Navbar.Brand style={{ marginLeft: "25px", cursor: "pointer" }} onClick={() => navigation("/")}>

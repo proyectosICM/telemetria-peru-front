@@ -50,5 +50,5 @@ export function MapaBase({ buses, rutas }) {
 
   
 
-  return <>{showMap && <div ref={mapRef} className="mapa" />}</>;
+  return <>{showMap && <div ref={mapRef} className="g-mapa" />}</>;
 }

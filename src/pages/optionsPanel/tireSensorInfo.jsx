@@ -6,6 +6,6 @@ export function TireInfo(){
         <div className='option-item'>
             <h4>Neumaticos Info</h4>
             <ForkliftWith4Tires />
-        </div>
+        </div> 
     )
 }

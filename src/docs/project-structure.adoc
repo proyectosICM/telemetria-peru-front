@@ -9,41 +9,41 @@ Este documento describe la estructura y arquitectura del proyecto, proporcionand
 
 [options="header"]
 |===
-| Directory / Directorio | Description / Descripción
+| Directory / Directorio | Description / Descripción | Descripción / Description
 
 | /src
-| The main source folder containing all project files. / La carpeta principal de código fuente que contiene todos los archivos del proyecto.
+| The main source folder containing all project files. | La carpeta principal de código fuente que contiene todos los archivos del proyecto.
 
 | /api
-| Contains the `apiurls.jsx` file, which includes API endpoints and information for MQTT and WebSocket connections. / Contiene el archivo `apiurls.jsx`, que incluye los endpoints de la API e información para conexiones MQTT y WebSocket.
+| Contains the `apiurls.jsx` file, which includes API endpoints and information for MQTT and WebSocket connections. | Contiene el archivo `apiurls.jsx`, que incluye los endpoints de la API e información para conexiones MQTT y WebSocket.
 
 | /common
-| Contains reusable small components used throughout the project, such as `navbarCommon.jsx` and `vehicleMenuPanel.jsx`. / Contiene pequeños componentes reutilizables utilizados en todo el proyecto, como `navbarCommon.jsx` y `vehicleMenuPanel.jsx`.
+| Contains reusable small components used throughout the project, such as `navbarCommon.jsx` and `vehicleMenuPanel.jsx`. | Contiene pequeños componentes reutilizables utilizados en todo el proyecto, como `navbarCommon.jsx` y `vehicleMenuPanel.jsx`.
 
 | /docs
-| Contains documentation files for the project. / Contiene archivos de documentación para el proyecto.
+| Contains documentation files for the project. | Contiene archivos de documentación para el proyecto.
 
 | /hooks
-| Contains custom hooks used throughout the project, such as `editItem.jsx`, `listItem.jsx`, `logoutToken.jsx` for session management, and `useMqtt` for MQTT subscription. / Contiene hooks personalizados utilizados en todo el proyecto, como `editItem.jsx`, `listItem.jsx`, `logoutToken.jsx` para la gestión de sesiones, y `useMqtt` para la suscripción a MQTT.
+| Contains custom hooks used throughout the project, such as `editItem.jsx`, `listItem.jsx`, `logoutToken.jsx` for session management, and `useMqtt` for MQTT subscription. | Contiene hooks personalizados utilizados en todo el proyecto, como `editItem.jsx`, `listItem.jsx`, `logoutToken.jsx` para la gestión de sesiones, y `useMqtt` para la suscripción a MQTT.
 
 | /images
-| Contains images used in the project. / Contiene imágenes utilizadas en el proyecto.
+| Contains images used in the project. | Contiene imágenes utilizadas en el proyecto.
 
 | /maps
-| Contains the `mapBase.jsx` component and `mapHooks.jsx` hook for map functionality. / Contiene el componente `mapBase.jsx` y el hook `mapHooks.jsx` para la funcionalidad del mapa.
+| Contains the `mapBase.jsx` component and `mapHooks.jsx` hook for map functionality. | Contiene el componente `mapBase.jsx` y el hook `mapHooks.jsx` para la funcionalidad del mapa.
 
 | /pages
-| Contains the main screens displayed in the application, such as `main`, `register`, `admin`, etc. Each screen should be in its own subfolder, which includes modular components specific to that page. / Contiene las pantallas principales que se muestran en la aplicación, como `main`, `register`, `admin`, etc. Cada pantalla debe estar en su propia subcarpeta, que incluye componentes modulares específicos para esa página.
+| Contains the main screens displayed in the application, such as `main`, `register`, `admin`, etc. Each screen should be in its own subfolder, which includes modular components specific to that page. | Contiene las pantallas principales que se muestran en la aplicación, como `main`, `register`, `admin`, etc. Cada pantalla debe estar en su propia subcarpeta, que incluye componentes modulares específicos para esa página.
 
 | /styles
-| Contains general styles used in the project, divided into files based on their use. All style files should be in this folder, except for small exceptions like `login.jsx` or `main.jsx`. / Contiene estilos generales utilizados en el proyecto, divididos en archivos según su uso. Todos los archivos de estilos deben estar en esta carpeta, salvo pequeñas excepciones como `login.jsx` o `main.jsx`.
+| Contains general styles used in the project, divided into files based on their use. All style files should be in this folder, except for small exceptions like `login.jsx` or `main.jsx`. | Contiene estilos generales utilizados en el proyecto, divididos en archivos según su uso. Todos los archivos de estilos deben estar en esta carpeta, salvo pequeñas excepciones como `login.jsx` o `main.jsx`.
 
 | /utils
-| Includes utility functions such as `formatUtils` for date and time formatting, and `storageUtils` for managing localStorage. / Incluye funciones de utilidad como `formatUtils` para el formato de fecha y hora, y `storageUtils` para gestionar `localStorage`.
+| Includes utility functions such as `formatUtils` for date and time formatting, and `storageUtils` for managing localStorage. | Incluye funciones de utilidad como `formatUtils` para el formato de fecha y hora, y `storageUtils` para gestionar `localStorage`.
 
 | routes.jsx
-| Contains route definitions and redirects for the application, including pages and their respective unique paths. / Contiene definiciones de rutas y redirecciones para la aplicación, incluyendo páginas y sus respectivos caminos únicos.
+| Contains route definitions and redirects for the application, including pages and their respective unique paths. | Contiene definiciones de rutas y redirecciones para la aplicación, incluyendo páginas y sus respectivos caminos únicos.
 
 | server.js
-| Located outside of `src`, this file is used to initialize the server from a previously built project. / Ubicado fuera de `src`, este archivo se usa para inicializar el servidor a partir de un proyecto previamente construido.
+| Located outside of `src`, this file is used to initialize the server from a previously built project. | Ubicado fuera de `src`, este archivo se usa para inicializar el servidor a partir de un proyecto previamente construido.
 |===

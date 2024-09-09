@@ -21,9 +21,9 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   );
 
   return (
-    <div className="container">
+    <div className="vmp-container">
       <h1>Camiones</h1>
-      <div className="search-bar">
+      <div className="vmp-search-bar">
         <input
           type="text"
           placeholder="Buscar por matrícula..."
@@ -31,9 +31,9 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className="panel">
+      <div className="vmp-panel">
         {filteredData.map((item, index) => (
-          <div className="item" key={index} onClick={() => handleSelectVehicle(item.id)}>
+          <div className="vmp-item" key={index} onClick={() => handleSelectVehicle(item.id)}>
             <p>{item.licensePlate}</p>
           </div>
         ))}

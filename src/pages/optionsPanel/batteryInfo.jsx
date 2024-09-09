@@ -33,7 +33,7 @@ export function BatteryInfo({ showAlert = true }) {
   };
 
   return (
-    <div className="option-item" onClick={handleRecords}>
+    <div className="g-option-item" onClick={handleRecords}>
       <h4>Battery Info</h4>
       <Table striped bordered hover variant="dark">
         <thead>

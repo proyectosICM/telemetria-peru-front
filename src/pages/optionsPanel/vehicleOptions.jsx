@@ -51,31 +51,31 @@ export function VehicleOptions() {
   };
 
   return (
-    <div className="option-item">
+    <div className="g-option-item">
       <h4>Opciones Remotas</h4>
 
       <div className="option">
         <span style={{ fontSize: "18px", margin: "5px" }}>{isVehicleOn ? "Apagar vehículo" : "Encender vehículo"}</span>
-        <label className="switch">
+        <label className="tk-op-switch">
           <input type="checkbox" checked={isVehicleOn} onChange={handleToggleVehicle} />
-          <span className="slider"></span>
+          <span className="tk-op-slider"></span>
         </label>
       </div>
 
 
       <div className="option">
         <span style={{ fontSize: "18px", margin: "5px" }}>{isAlarmOn ? "Desactivar alarma" : "Activar alarma"}</span>
-        <label className="switch">
+        <label className="tk-op-switch">
           <input type="checkbox" checked={isAlarmOn} onChange={handleToggleAlarm} />
-          <span className="slider"></span>
+          <span className="tk-op-slider"></span>
         </label>
       </div>
 
       <div className="option">
         <span style={{ fontSize: "18px", margin: "5px" }}>{areLocksOn ? "Retirar seguros" : "Colocar seguros"}</span>
-        <label className="switch">
+        <label className="tk-op-switch">
           <input type="checkbox" checked={areLocksOn} onChange={handleToggleLocks} />
-          <span className="slider"></span>
+          <span className="tk-op-slider"></span>
         </label>
       </div>
     </div>

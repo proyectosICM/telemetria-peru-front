@@ -50,7 +50,7 @@ export function GasInfo({ showAlert = true }) {
   };
 
   return (
-    <div className="option-item" onClick={handleRecords}>
+    <div className="g-option-item" onClick={handleRecords}>
       <h4>Gas Info</h4>
       <div style={{ display: "flex", width: "40%", height: "40%", margin: "auto" }}>
         <CircularProgressbar

@@ -18,7 +18,7 @@ export function ForkliftWith4Tires() {
         </div>
 
         {/* Center placeholder for the forklift base */}
-        <div className="base-forklift"></div>
+        <div className="fkl-base-forklift"></div>
 
         {/* Right side tires interaction area */}
         <div className="fkl-tires-r">

@@ -1,0 +1,88 @@
+= CSS Documentation Overview / Descripción general de la documentación CSS 
+
+== login.css
+
+* **Location / Ubicación:**  
+  Located within `src/login`  
+  Se encuentra ubicado dentro de `src/login`
+
+* **Class Prefix / Prefijo de Clase:**  
+  `.login-`  
+
+* **Purpose / Propósito:**  
+  This file contains styles specific to the login component.  
+  Este archivo es para los estilos únicos del componente login.
+
+== main.css
+
+* **Location / Ubicación:**  
+  Located within `src/pages`  
+  Se encuentra ubicado dentro de `src/pages`
+
+* **Class Prefix / Prefijo de Clase:**  
+  `.main-`  
+
+* **Purpose / Propósito:**  
+  This file contains styles specific to the main component and its internal subpanels.  
+  Este archivo contiene los estilos únicos para el componente main y sus subpaneles internos.
+
+
+== generalStyles.css
+
+* **Location / Ubicación:**  
+  Located within `src/generalStyles`  
+  Se encuentra ubicado dentro de `src/generalStyles`
+
+* **Class Prefix / Prefijo de Clase:**  
+  `.g-`  
+
+* **Purpose / Propósito:**  
+  This file contains general reusable styles to be used across other components. Any style that is reused should be defined here with the correct prefix.  
+  Este archivo contiene estilos generales reutilizables dentro de otros componentes. Todo estilo que se reutilizará debe ser definido acá con el correcto prefijo.
+
+* **Includes / Incluye:**  
+  Classes for background color, map, back button, and option-item.  
+  Clases para un color de fondo, mapa, botón de retroceso y opción-item.
+
+
+== vehicleMenuPanel.css
+
+* **Location / Ubicación:**  
+  Located within `src/generalStyles`  
+  Se encuentra ubicado dentro de `src/generalStyles`
+
+* **Class Prefix / Prefijo de Clase:**  
+  `.vmp-` (Vehicle Menu Panel - Panel de Menú de Vehículos)  
+
+* **Purpose / Propósito:**  
+  This file contains styles for the sidebar menu where vehicles are listed, including styles for the search bar, items, containers, etc.  
+  Este archivo contiene los estilos para el menú lateral donde se listan los vehículos, incluye los estilos para la barra de búsqueda, los ítems, los contenedores, etc.
+
+== forklift-styles.css
+
+* **Location / Ubicación:**  
+  Located within `src/generalStyles`  
+  Se encuentra ubicado dentro de `src/generalStyles`
+
+* **Class Prefix / Prefijo de Clase:**  
+  `.fkl-` (Forklift - Montacargas)  
+
+* **Purpose / Propósito:**  
+  This file contains specific classes for drawing the forklift and the arrangement of its tires.  
+  Este archivo contiene las clases específicas para dibujar el montacargas y la disposición de sus neumáticos.
+
+== truckOptions.css
+
+* **Location / Ubicación:**  
+  Located within `src/generalStyles`  
+  Se encuentra ubicado dentro de `src/generalStyles`
+
+* **Class Prefix / Prefijo de Clase:**  
+  `.tk-op-` (Truck Options - Opciones de Camión)  
+
+* **Purpose / Propósito:**  
+  This file contains specific classes for styling truck options, including switches.  
+  Este archivo contiene las clases específicas para los estilos de las opciones de los vehículos, incluyendo interruptores.
+
+
+

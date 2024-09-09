@@ -1,6 +1,6 @@
 /* busMenuPanel.css */
 
-.container {
+.vmp-container {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -9,7 +9,7 @@
 
 }
 
-.panel {
+.vmp-panel {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -29,7 +29,7 @@
     border: 2px solid red;
 */
 
-.item {
+.vmp-item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,14 +42,14 @@
     background-color: #FDCC9B;
 }
 
-.search-bar {
+.vmp-search-bar {
     margin-bottom: 20px;
     width: 100%; 
     display: flex;
     justify-content: center;
 }
 
-.search-bar input {
+.vmp-search-bar input {
     width: 80%;
     max-width: 80%;
     padding: 8px;

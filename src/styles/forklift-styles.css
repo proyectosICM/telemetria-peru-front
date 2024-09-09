@@ -7,7 +7,7 @@
 /** 
  * Represents the central part of the forklift, including the visual representation of the forklift base.
  */
- .base-forklift {
+ .fkl-base-forklift {
     width: 50px;
     height: 90%;
     margin: 1rem auto;

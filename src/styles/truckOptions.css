@@ -1,5 +1,5 @@
 /* The switch - the box around the slider */
-.switch {
+.tk-op-switch {
   font-size: 17px;
   position: relative;
   display: inline-block;
@@ -8,14 +8,14 @@
 }
 
 /* Hide default HTML checkbox */
-.switch input {
+.tk-op-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
 /* The slider */
-.slider {
+.tk-op-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -27,7 +27,7 @@
   border-radius: 10px;
 }
 
-.slider:before {
+.tk-op-slider:before {
   position: absolute;
   content: "";
   height: 1.4em;
@@ -40,14 +40,14 @@
   transition: .4s;
 }
 
-.switch input:checked+.slider {
+.tk-op-switch input:checked+.slider {
   background-color: #21cc4c;
 }
 
-.switch input:focus+.slider {
+.tk-op-switch input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-.switch input:checked+.slider:before {
+.tk-op-switch input:checked+.slider:before {
   transform: translateX(1.5em);
 }

@@ -12,7 +12,7 @@ export function VehicleInfo() {
     }, [selectedVehicleId]); 
  
   return (
-    <div className='option-item'>
+    <div className='g-option-item'>
       <h4>Informacion</h4>
       <p>Placa: {data && data.licensePlate}</p>
       <p>Velocidad Actual: {data && `${data.speed} km`} </p>

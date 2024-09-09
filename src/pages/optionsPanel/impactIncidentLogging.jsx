@@ -34,7 +34,7 @@ export function ImpactIncidentLogging({ showAlert = true }) {
   };
 
   return (
-    <div className="option-item" onClick={handleRecords}>
+    <div className="g-option-item" onClick={handleRecords}>
       <h4>Registro de incidentes de impacto</h4>
       <Table striped bordered hover variant="dark">
         <thead>

@@ -11,7 +11,7 @@ export function TireInfoData() {
   ]; 
 
   return (
-    <div className="option-item">
+    <div className="g-option-item">
       <h4>Tire Info</h4>
       <Table striped bordered hover variant="dark">
         <thead>

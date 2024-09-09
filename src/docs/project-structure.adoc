@@ -3,6 +3,7 @@
 == Overview / Visión General
 
 This document outlines the structure and architecture of the project, providing a high-level view of the project's organization and key components.  
+
 Este documento describe la estructura y arquitectura del proyecto, proporcionando una visión general de la organización y los componentes clave del proyecto.
 
 == Project Directory Structure / Estructura del Directorio del Proyecto

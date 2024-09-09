@@ -58,3 +58,48 @@ El rolId se almacena para gestionar los permisos de usuario y los niveles de acc
 
 * **Example Value / Ejemplo de Valor :**  
   `1` (id)
+
+=== `companyId`
+* **Description / Descripción :**  
+  This key stores the identifier of the company associated with the user.  
+  Esta clave almacena el identificador de la empresa asociada con el usuario.
+
+* **Data Type / Tipo de Dato :**  
+  `string`
+
+* **Usage / Uso :**  
+  The `companyId` is used to associate user actions and data with a specific company within a multi-tenant system.  
+  El `companyId` se utiliza para asociar las acciones y datos del usuario con una empresa específica dentro de un sistema multi-tenant.
+
+* **Example Value / Ejemplo de Valor :**  
+  `14`
+
+=== `userId`
+* **Description / Descripción :**  
+  This key stores the unique identifier of the user who has logged in.  
+  Esta clave almacena el identificador único del usuario que ha iniciado sesión.
+
+* **Data Type / Tipo de Dato :**  
+  `string`
+
+* **Usage / Uso :**  
+  The `userId` is used to uniquely identify the user within the application and to track user-specific actions and data.  
+  El `userId` se utiliza para identificar de manera única al usuario dentro de la aplicación y para rastrear las acciones y datos específicos del usuario.
+
+* **Example Value / Ejemplo de Valor :**  
+  `14`
+
+=== `selectedVehicleId`
+* **Description / Descripción :**  
+  This key stores the identifier of the vehicle selected by the user.  
+  Esta clave almacena el identificador del vehículo seleccionado por el usuario.
+
+* **Data Type / Tipo de Dato :**  
+  `string`
+
+* **Usage / Uso :**  
+  The `selectedVehicleId` is used to remember which vehicle the user has selected in the application, allowing for vehicle-specific data to be accessed or displayed.  
+  El `selectedVehicleId` se utiliza para recordar qué vehículo ha seleccionado el usuario en la aplicación, permitiendo acceder o mostrar datos específicos del vehículo.
+
+* **Example Value / Ejemplo de Valor :**  
+  `5678`

@@ -7,7 +7,7 @@ import { ListItems } from "../../hooks/listItems";
 
 export function WelcomeAndRedirect() {
   const navigate = useNavigate();
-  const username = localStorage.getItem("Username");
+  const username = localStorage.getItem("username");
 
   const [info, setInfo] = useState(null);
 

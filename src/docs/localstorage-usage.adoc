@@ -5,7 +5,12 @@ This document details the items stored in `localStorage` within the React applic
 
 Específicamente, se centra en las claves que se guardan durante el proceso de autenticación.
 
-== Claves del LocalStorage / LocalStorage Keys
+* **Persistence / Persistencia :**  
+  This value persists even after closing the browser window. The token should be manually removed from `localStorage` when the user logs out.
+  Este valor persiste incluso después de cerrar la ventana del navegador. El token debería eliminarse manualmente del `localStorage` cuando el usuario cierre sesión.  
+
+
+== LocalStorage Keys / Claves del LocalStorage 
 
 === `token`
 * ** Description / Descripción:**  
@@ -17,41 +22,23 @@ Específicamente, se centra en las claves que se guardan durante el proceso de a
   `string`
 
 * **Usage / Uso :**  
-  El `token` se utiliza para autenticar futuras solicitudes a la API. Almacenar el token en el `localStorage` permite que la aplicación mantenga al usuario autenticado entre recargas de página.  
   The `token` is used to authenticate future requests to the API. Storing the token in `localStorage` allows the application to keep the user authenticated between page reloads.
-
-* **Ejemplo de Valor / Example Value:**  
+  El `token` se utiliza para autenticar futuras solicitudes a la API. Almacenar el token en el `localStorage` permite que la aplicación mantenga al usuario autenticado entre recargas de página.  
+ 
+* **Example Value / Ejemplo de Valor :**  
   `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`
 
-* **Persistencia / Persistence:**  
-  Este valor persiste incluso después de cerrar la ventana del navegador. El token debería eliminarse manualmente del `localStorage` cuando el usuario cierre sesión.  
-  This value persists even after closing the browser window. The token should be manually removed from `localStorage` when the user logs out.
-
 === `username`
-* **Descripción / Description:**  
-  Esta clave almacena el nombre de usuario del usuario que ha iniciado sesión.  
+* **Description / Descripción :**  
   This key stores the username of the user who has logged in.
+  Esta clave almacena el nombre de usuario del usuario que ha iniciado sesión.  
 
-* **Tipo de Dato / Data Type:**  
+* **Data Type / Tipo de Dato :**  
   `string`
 
-* **Uso / Usage:**  
-  El `username` se almacena para mostrar el nombre de usuario en la interfaz de usuario y posiblemente para otras funciones que requieran el nombre del usuario autenticado.  
-  The `username` is stored to display the username in the user interface and possibly for other functions that require the authenticated user's name.
-
-* **Ejemplo de Valor / Example Value:**  
+* **Usage / Uso :**  
+  The `username` is stored to display the username in the user interface.
+  El `username` se almacena para mostrar el nombre de usuario en la interfaz de usuario.  
+  
+* **Example Value / Ejemplo de Valor :**  
   `john_doe`
-
-* **Persistencia / Persistence:**  
-  Este valor también persiste entre recargas de página y sesiones de navegador. Debe eliminarse cuando el usuario cierra sesión o si es necesario borrar la sesión del usuario.  
-  This value also persists between page reloads and browser sessions. It should be removed when the user logs out or if it is necessary to clear the user's session.
-
-== Notas Adicionales / Additional Notes
-
-* **Seguridad / Security:**  
-  Es importante tener en cuenta que almacenar el token de autenticación en el `localStorage` puede tener implicaciones de seguridad, especialmente si el token no está adecuadamente protegido. Se debe considerar el uso de medidas adicionales como la expiración de tokens y el manejo adecuado de sesiones.  
-  It is important to note that storing the authentication token in `localStorage` may have security implications, especially if the token is not adequately protected. Consider using additional measures like token expiration and proper session management.
-
-* **Limpieza / Cleanup:**  
-  Se recomienda limpiar estos valores del `localStorage` cuando el usuario cierre sesión o cuando la sesión expira, para asegurar que no permanezcan datos innecesarios.  
-  It is recommended to clear these values from `localStorage` when the user logs out or when the session expires, to ensure that unnecessary data does not persist.

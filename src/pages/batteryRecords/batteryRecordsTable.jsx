@@ -8,7 +8,7 @@ export function BatteryRecordsTable({ batteries }) {
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Name</th> 
             <th>Voltage</th>
             <th>Status</th>
             <th>Creation Date</th> {/* Nueva columna */}

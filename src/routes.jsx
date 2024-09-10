@@ -7,6 +7,7 @@ import { IssuesRecords } from "./pages/issuesRecords/issuesRecords";
 import { Login } from "./pages/login/login";
 import { WelcomeAndRedirect } from "./pages/login/welcomeAndRedirect";
 import { MainPanel } from "./pages/mainPanel";
+import { TireSensorsDetails } from "./pages/tireSensorsDetails/tireSensorsDetails";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -20,4 +21,6 @@ export const routes = [
   
   { path: "/issues-Records", component: <IssuesRecords /> },
   { path: "/impact-incident-logging-records", component: <ImpactIncidentLoggingRecords />},
+
+  { path: "/tire-sensors-details", component: <TireSensorsDetails /> },
 ];

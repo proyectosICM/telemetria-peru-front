@@ -13,7 +13,7 @@ export function ImpactIncidentLogging({ showAlert = true }) {
   const page = 0;
 
   useEffect(() => {
-    ListItemsPaginated(`${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`, setData, page);
+    //ListItemsPaginated(`${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`, setData, page);
   }, [selectedVehicleId]);
 
   const handleRecords = () => {

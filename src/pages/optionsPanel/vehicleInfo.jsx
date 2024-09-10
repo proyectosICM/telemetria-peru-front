@@ -8,7 +8,6 @@ export function VehicleInfo() {
 
     useEffect(() => {
       ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
-      //console.log(`${vehiclesURL}/${vehicleId}`);
     }, [selectedVehicleId]); 
  
   return (
@@ -16,7 +15,7 @@ export function VehicleInfo() {
       <h4>Informacion</h4>
       <p>Placa: {data && data.licensePlate}</p>
       <p>Velocidad Actual: {data && `${data.speed} km`} </p>
-      <p>Tiempo encendido: 13 horas 20 min</p>
+      <p>Tiempo encendido: {data && data.timeOn} segundos</p>
       <p>Coordenadas: {data && data.longitud}</p>
     </div>
   ); 

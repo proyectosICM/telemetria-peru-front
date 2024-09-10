@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import useMqtt from "../../hooks/useMqtt";
-import { mqttDominio, mqttLocalURL, mqttTopics, mqttURL } from "../../api/apiurls";
+import { mqttDominio, mqttTopics } from "../../api/apiurls";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -12,10 +12,9 @@ export function GasInfo({ showAlert = true }) {
   const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
 
   const { isConnected, messages, sendMessage } = useMqtt(mqttDominio, topic);
-  const [inputMessage, setInputMessage] = useState("");
-
   const [pressure, setPressure] = useState(0);
-  const percentage = 90;
+  const [percentage, setPercentage] = useState(0); // Estado para el porcentaje
+  const maxPressure = 200;
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -24,6 +23,8 @@ export function GasInfo({ showAlert = true }) {
       try {
         const lastMessage = JSON.parse(lastMessageStr);
         setPressure(lastMessage);
+        const calculatedPercentage = (lastMessage / maxPressure) * 100;
+        setPercentage(calculatedPercentage);
       } catch (error) {
         console.error("Error parsing MQTT message", error);
         console.log("Mensaje recibido no válido:", lastMessageStr);
@@ -49,6 +50,21 @@ export function GasInfo({ showAlert = true }) {
     }
   };
 
+  // Determinar el estado basado en el porcentaje
+  const determineStatus = (percentage) => {
+    if (percentage > 75) {
+      return "Óptimo";
+    } else if (percentage > 50) {
+      return "Regular";
+    } else if (percentage > 25) {
+      return "Bajo";
+    } else {
+      return "Muy Bajo";
+    }
+  };
+
+  const status = determineStatus(percentage);
+
   return (
     <div className="g-option-item" onClick={handleRecords}>
       <h4>Gas Info</h4>
@@ -56,7 +72,7 @@ export function GasInfo({ showAlert = true }) {
         <CircularProgressbar
           value={percentage}
           maxValue={100}
-          text={`${percentage}%`}
+          text={`${Math.round(percentage)}%`} // Redondear el porcentaje
           styles={buildStyles({
             rotation: 0.5,
             strokeLinecap: "butt",
@@ -69,11 +85,11 @@ export function GasInfo({ showAlert = true }) {
           })}
         />
       </div>
-      <span>Estado: Optimo</span>
+      <span>Estado: {status}</span>
       <br />
-      <span>Presion Actual: {pressure} psi</span>
+      <span>Presión Actual: {pressure} psi</span>
       <br />
-      <span>Cambios realizados en el dia: 10 cambios</span>
+      <span>Cambios realizados en el día: 10 cambios</span>
     </div>
   );
 }

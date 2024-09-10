@@ -57,7 +57,7 @@ export function MainPanel() {
           <div className="main-map-container">
             <MapaBase buses={buses} />
           </div>
-
+  
           {selectedVehicleId ? (
             <div className="main-options-panel">
               <h3>Options Panel</h3>

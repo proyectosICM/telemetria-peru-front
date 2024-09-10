@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { ListItemsPaginated } from "../../hooks/listItems";
-import { impactIncidentLoggingByVehiclePageURL } from "../../api/apiurls";
-import { getDateAndDayFromTimestamp } from "../../utils/formatUtils";
+import { ListItems } from "../../hooks/listItems";
+import { tireSensorByVehicleIdURL } from "../../api/apiurls";
 
-export function ImpactIncidentLoggingRecords() {
+export function TireSensorsDetails() {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  const page = 0;
 
   useEffect(() => {
-   // ListItemsPaginated(`${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`, setData, page);
+    ListItems(`${tireSensorByVehicleIdURL}/${selectedVehicleId}`, setData);
   }, [selectedVehicleId]);
 
   return (
@@ -23,29 +21,36 @@ export function ImpactIncidentLoggingRecords() {
         Atras
       </Button>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto" }}>
+        <h1>Registro detallados </h1>
         <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "80%" }}>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Dia y Hora</th>
-              <th>Description</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Pressure</th>
+              <th>Temperature</th>
+              <th>Battery</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {data &&
-              data.map((log) => (
-                <tr key={log.id}>
-                  <td>{log.id}</td>
-                  <td>{getDateAndDayFromTimestamp(log.createdAt)}</td>
-                  <td>{log.description}</td>
+              data.map((tire) => (
+                <tr key={tire.id}>
+                  <td>{tire.id}</td>
+                  <td>{tire.identificationCode}</td>
+                  <td>{tire.pressure}</td>
+                  <td>{tire.temperature}</td>
+                  <td>{tire.batteryLevel}</td>
+                  <td>{tire.status ? "Good" : "Bad"}</td>
                 </tr>
               ))}
           </tbody>
         </Table>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginTop: "20px" }}>
-          <Button>Atras</Button>
+          {/*         <Button>Atras</Button>
           <p style={{ margin: "0" }}>Pagina 1 de 3</p>
-          <Button>Siguiente</Button>
+          <Button>Siguiente</Button>*/}
         </div>
       </div>
     </div>

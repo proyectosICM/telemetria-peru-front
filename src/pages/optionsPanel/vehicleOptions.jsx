@@ -40,7 +40,7 @@ export function VehicleOptions() {
       editSingleValue(`${vehiclesEngineOnURL}/${selectedVehicleId}`, 'engine', newState);
       return newState;
     });
-  };
+  }; 
 
   const handleToggleLocks = () => {
     setAreLocksOn((prevState) => {

@@ -1,34 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { ListItems } from "../../hooks/listItems";
+import { tireSensorByVehicleIdURL } from "../../api/apiurls";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-export function TireInfoData() {
-  // Datos de ejemplo para la tabla
-  const tireData = [
-    { id: 1, name: "Tire 1", pressure: "35 PSI", status: "Good" },
-    { id: 2, name: "Tire 2", pressure: "32 PSI", status: "Low" },
-    { id: 3, name: "Tire 3", pressure: "36 PSI", status: "Good" },
-    { id: 4, name: "Tire 4", pressure: "33 PSI", status: "Low" },
-  ]; 
+export function TireInfoData({ showAlert = true }) {
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+  
+  useEffect(() => {
+    ListItems(`${tireSensorByVehicleIdURL}/${selectedVehicleId}`, setData);
+  }, [selectedVehicleId]); 
 
+  const handleRecords = () => {
+    if (showAlert) {
+      Swal.fire({
+        title: "¿Desea ver los registros de detallados?",
+        showCancelButton: true,
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/tire-sensors-details");
+          console.log("Mostrar registros");
+        }
+      });
+    } else {
+      navigate("/tire-sensors-details");
+    }
+  };
+ 
   return (
-    <div className="g-option-item">
+    <div className="g-option-item" onClick={handleRecords}>
       <h4>Tire Info</h4>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>#</th>
             <th>Name</th>
             <th>Pressure</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {tireData.map((tire) => (
+          {data && data.map((tire) => (
             <tr key={tire.id}>
-              <td>{tire.id}</td>
-              <td>{tire.name}</td>
+              <td>{tire.identificationCode}</td>
               <td>{tire.pressure}</td>
-              <td>{tire.status}</td>
+              <td>{tire.status ? "Good" : "Bad"}</td>
             </tr>
           ))}
         </tbody>

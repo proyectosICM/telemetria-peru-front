@@ -13,7 +13,7 @@ export function GasInfo({ showAlert = true }) {
 
   const { isConnected, messages, sendMessage } = useMqtt(mqttDominio, topic);
   const [pressure, setPressure] = useState(0);
-  const [percentage, setPercentage] = useState(0); // Estado para el porcentaje
+  const [percentage, setPercentage] = useState(0);
   const maxPressure = 200;
 
   useEffect(() => {
@@ -52,18 +52,34 @@ export function GasInfo({ showAlert = true }) {
 
   // Determinar el estado basado en el porcentaje
   const determineStatus = (percentage) => {
-    if (percentage > 75) {
+    if (percentage > 60) {
       return "Óptimo";
     } else if (percentage > 50) {
       return "Regular";
-    } else if (percentage > 25) {
+    } else if (percentage > 30) {
       return "Bajo";
     } else {
       return "Muy Bajo";
     }
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Óptimo":
+        return "rgba(0, 128, 0, 1)"; // Verde
+      case "Regular":
+        return "rgba(255, 165, 0, 1)"; // Naranja
+      case "Bajo":
+        return "rgba(255, 215, 0, 1)"; // Amarillo
+      case "Muy Bajo":
+        return "rgba(255, 0, 0, 1)"; // Rojo
+      default:
+        return "rgba(62, 152, 199, 1)"; // Color base
+    }
+  };
+
   const status = determineStatus(percentage);
+  const statusColor = getStatusColor(status);
 
   return (
     <div className="g-option-item" onClick={handleRecords}>
@@ -72,14 +88,14 @@ export function GasInfo({ showAlert = true }) {
         <CircularProgressbar
           value={percentage}
           maxValue={100}
-          text={`${Math.round(percentage)}%`} // Redondear el porcentaje
+          text={`${Math.round(percentage)}%`}
           styles={buildStyles({
             rotation: 0.5,
             strokeLinecap: "butt",
             trailColor: "#eee",
             textSize: "16px",
             pathTransitionDuration: 0.5,
-            pathColor: `rgba(62, 152, 199, ${percentage / 100})`,
+            pathColor: statusColor,
             textColor: "white",
             backgroundColor: "#3e98c7",
           })}

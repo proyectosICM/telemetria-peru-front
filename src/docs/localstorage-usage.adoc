@@ -103,3 +103,19 @@ El rolId se almacena para gestionar los permisos de usuario y los niveles de acc
 
 * **Example Value / Ejemplo de Valor :**  
   `5678`
+
+=== `selectedTypeVehicleId`
+
+* ** Description / Descripción :**
+  This key stores the identifier of the type of vehicle selected by the user.
+  Esta clave almacena el identificador del tipo de vehículo seleccionado por el usuario.
+
+* **Data Type / Tipo de Dato :**  
+  `string`
+
+* **Usage / Uso :**  
+  The selectedTypeVehicleId is used to remember the type of vehicle selected in the application, allowing for type-specific data to be accessed or displayed. This value is set when a vehicle is selected from the VehicleMenuPanel component and is used alongside the selectedVehicleId.
+  El selectedTypeVehicleId se utiliza para recordar el tipo de vehículo seleccionado en la aplicación, permitiendo acceder o mostrar datos específicos del tipo. Este valor se establece cuando se selecciona un vehículo desde el componente VehicleMenuPanel y se usa junto con el selectedVehicleId.
+
+* **Example Value / Ejemplo de Valor :**  
+  1 (id del tipo de vehículo)

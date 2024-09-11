@@ -15,6 +15,8 @@ import { BatteryInfo } from "./optionsPanel/batteryInfo";
 import { TireInfoData } from "./optionsPanel/tireSensorInfoData";
 import { IssuesInfo } from "./optionsPanel/issuesInfo";
 import { ImpactIncidentLogging } from "./optionsPanel/impactIncidentLogging";
+import useMqtt from "../hooks/useMqtt";
+import { mqttDominio, mqttTopics } from "../api/apiurls";
 
 export function MainPanel() {
   LogoutToken();
@@ -44,6 +46,10 @@ export function MainPanel() {
     setSelectedVehicleId(id);
   };
 
+  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
+  
+  const { isConnected, messages, sendMessage } = useMqtt(mqttDominio, topic);
+ 
   return (
     <div className="g-background">
       <NavbarCommon />

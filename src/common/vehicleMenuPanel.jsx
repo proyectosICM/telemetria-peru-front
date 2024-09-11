@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ListItems } from "../hooks/listItems";
 import { vehiclesByCompanyURL } from "../api/apiurls";
 
-export function VehicleMenuPanel({ onSelectVehicle }) {
+export function VehicleMenuPanel({ onSelectVehicle, onTypeVehicle }) {
   
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,9 +12,10 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
     ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData);
   }, [companyId]);
 
-  const handleSelectVehicle = (id) => {
+  const handleSelectVehicle = (id, type) => {
     onSelectVehicle(id);
-  };
+    localStorage.setItem("selectedTypeVehicleId", type);
+  }; 
 
   const filteredData = data.filter((item) =>
     item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase())
@@ -33,7 +34,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
       </div>
       <div className="vmp-panel">
         {filteredData.map((item, index) => (
-          <div className="vmp-item" key={index} onClick={() => handleSelectVehicle(item.id)}>
+          <div className="vmp-item" key={index} onClick={() => handleSelectVehicle(item.id, item.vehicletypeModel.id)}>
             <p>{item.licensePlate}</p>
           </div>
         ))}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { mqttDominio, mqttTopics } from "../../api/apiurls";
+import { mqttDominio, mqttTopics, vehiclesTypesURL } from "../../api/apiurls";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useMqtt from "../../hooks/useMqtt";
@@ -10,19 +10,35 @@ import { handleRecordsMessage } from "../../utils/handleRecordsMessage";
 import { getStatusColor } from "../../utils/getStatusColorCPB";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/CircularProgressbarWithStatus";
+import { ListItems } from "../../hooks/listItems";
 
 export function TireInfoData({ showAlert = true }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-
+  const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
+  const [maxPressure, setMaxPressure] = useState(0)
   const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
   const { isConnected, messages } = useMqtt(mqttDominio, topic);
+  const [pressureRange, setPressureRange] = useState(0);
+
+  useEffect(() => {
+    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setPressureRange);
+  }, [selectedTypeVehicleId]);
+
+  useEffect(() => {
+    //console.log("Datos actualizados:", data);
+    if (pressureRange) {
+      const maxPressureData = pressureRange.tirePressureRange.maxTirePressure || 0;
+      setMaxPressure(maxPressureData);
+      console.log(`Max pressure actualizado: ${maxPressureData}`);
+    }
+  }, [pressureRange]); 
 
   useEffect(() => {
     if (messages.length > 0) {
       const lastMessageStr = messages[messages.length - 1];
-      console.log("Último mensaje recibido:", lastMessageStr);
+      //console.log("Último mensaje recibido:", lastMessageStr);
 
       try {
         const lastMessage = JSON.parse(lastMessageStr);
@@ -41,14 +57,17 @@ export function TireInfoData({ showAlert = true }) {
   }, [messages]);
 
   const determineStatus = (percentage) => {
-    if (percentage > 75) {
+    const { optimalTirePressureRangeStart, regularTirePressureRangeStart, lowTirePressureRangeStart, veryLowTirePressureRangeStart } = pressureRange.tirePressureRange;
+    if (percentage >= optimalTirePressureRangeStart) {
       return "Óptimo";
-    } else if (percentage > 50) {
+    } else if (percentage >= regularTirePressureRangeStart) {
       return "Regular";
-    } else if (percentage > 25) {
+    } else if (percentage >= lowTirePressureRangeStart) {
       return "Bajo";
-    } else {
+    } else if (percentage >= veryLowTirePressureRangeStart) {
       return "Muy Bajo";
+    } else {
+      return "No Disponible";
     }
   };
 
@@ -58,9 +77,9 @@ export function TireInfoData({ showAlert = true }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0px", justifyContent: "center" }}>
         {data.length > 0 ? (
           data.map((tire, index) => {
-            const maxPressure = tire.maxPressure || 130;
+
             const percentage = tire.pressure ? calculatePercentage(tire.pressure, maxPressure) : 0;
-            const status = determineStatus(percentage);
+            const status = determineStatus(tire.pressure);
 
             return (
               <div key={index} style={{ width: "40%", height: "40%", margin: "2%" }}>

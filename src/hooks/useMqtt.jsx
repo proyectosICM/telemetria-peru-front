@@ -20,7 +20,7 @@ const useMqtt = (brokerUrl, topic) => {
 
     client.on('message', (receivedTopic, message) => {
       if (receivedTopic === topic) {
-        console.log(`Mensaje recibido: ${message.toString()}`);
+        //console.log(`Mensaje recibido: ${message.toString()}`);
         setMessages((prevMessages) => [...prevMessages, message.toString()]);
       }
     });

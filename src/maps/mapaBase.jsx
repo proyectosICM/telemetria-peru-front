@@ -29,12 +29,12 @@ export function MapaBase({ buses, rutas }) {
     if (map && buses) {
       if (Array.isArray(buses)) {
         buses.forEach((bus) => {
-          const busPosition = [bus.longitud, bus.latitud];
-          addMarker(map, busPosition, "busesIcono",bus.placa);
+          const busPosition = [bus.longitude, bus.latitude];
+          addMarker(map, busPosition, "busesIcono",bus.imei);
         });
       } else {
-        const busPosition = [buses.longitud, buses.latitud];
-        addMarker(map, busPosition, "busesIcono",buses.placa);
+        const busPosition = [buses.longitude, buses.latitude];
+        addMarker(map, busPosition, "busesIcono",buses.imei);
       }
     }
   }, [map, buses]);

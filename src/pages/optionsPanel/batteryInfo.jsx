@@ -1,27 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { mqttDominio, mqttTopics } from "../../api/apiurls";
+import { mqttDominio, mqttTopics, vehiclesTypesURL } from "../../api/apiurls";
 import useMqtt from "../../hooks/useMqtt";
 import { calculatePercentage } from "../../utils/calculatePercentage";
 import { getStatusColor } from "../../utils/getStatusColorCPB";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/CircularProgressbarWithStatus";
+import { ListItems } from "../../hooks/listItems";
 
 export function BatteryInfo({ showAlert = true }) {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Datos de la batería
+  const [batteryRange, setBatteryRange] = useState(null); // Rango de batería dinámico
+  const [maxVoltaje, setMaxVoltaje] = useState(0); // Rango de
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  const maxVoltaje = 12;
+  const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
+  
   const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
   const { isConnected, messages } = useMqtt(mqttDominio, topic);
+
+  // Obtener los rangos de batería desde la API del tipo de vehículo
+  useEffect(() => {
+    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setBatteryRange);
+  }, [selectedTypeVehicleId]);
+
+  useEffect(() => {
+    //console.log("Datos actualizados:", data);
+    if (batteryRange) {
+      const maxGas = batteryRange.batteryRange.maxBatteryVoltage || 0;
+      setMaxVoltaje(maxGas);
+      console.log(`Max pressure actualizado: ${maxGas}`);
+    }
+  }, [batteryRange]); 
 
   useEffect(() => {
     if (messages.length > 0) {
       const lastMessageStr = messages[messages.length - 1];
-      console.log("Último mensaje recibido:", lastMessageStr);
+      //console.log("Último mensaje recibido:", lastMessageStr);
 
       try {
         const lastMessage = JSON.parse(lastMessageStr);
@@ -56,15 +74,24 @@ export function BatteryInfo({ showAlert = true }) {
     }
   };
 
+  // Función para determinar el estado según los rangos dinámicos
   const determineStatus = (percentage) => {
-    if (percentage > 75) {
+    if (!batteryRange) {
+      return "No Disponible"; // Si los rangos aún no están disponibles
+    }
+    //console.log("Estyad" + percentage)
+    const { optimalBatteryRangeStart, regularBatteryRangeStart, lowBatteryRangeStart, veryLowBatteryRangeStart } = batteryRange.batteryRange;
+
+    if (percentage >= optimalBatteryRangeStart) {
       return "Óptimo";
-    } else if (percentage > 50) {
+    } else if (percentage >= regularBatteryRangeStart) {
       return "Regular";
-    } else if (percentage > 25) {
+    } else if (percentage >= lowBatteryRangeStart) {
       return "Bajo";
-    } else {
+    } else if (percentage >= veryLowBatteryRangeStart) {
       return "Muy Bajo";
+    } else {
+      return "No Disponible";
     }
   };
 
@@ -75,8 +102,7 @@ export function BatteryInfo({ showAlert = true }) {
         {data.length > 0 ? (
           data.map((battery, index) => {
             const percentage = battery.voltaje ? calculatePercentage(battery.voltaje, maxVoltaje) : 0;
-            const status = determineStatus(percentage);
-            const statusColor = getStatusColor(status);
+            const status = determineStatus(battery.voltaje);
 
             return (
               <div key={index} style={{ width: "40%", height: "40%", margin: "2%" }}>

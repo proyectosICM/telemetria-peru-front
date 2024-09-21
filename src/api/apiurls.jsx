@@ -14,8 +14,8 @@ export const mqttTopics = {
 };
 
 // URL base común
-const base = "http://192.168.1.232:6061"
-
+// const base = "http://192.168.1.232:6061"
+export const base = "https://telemetriaperu.com:4005";
 //const base = "http://192.168.0.200:6061"
 
 export const baseURL = `${base}`;
@@ -28,6 +28,9 @@ const baseAPIURL = `${base}/api`;
 export const vehiclesURL = `${baseAPIURL}/vehicles`;
 export const vehiclesByCompanyURL = `${vehiclesURL}/findByCompanyId`;
 export const vehiclesByCompanyPagedURL = `${vehiclesURL}/findByCompanyId-paged`;
+
+//vehicles
+export const vehiclesTypesURL = `${baseAPIURL}/vehicle-type`;
 
 export const vehiclesAlarmOnURL = `${vehiclesURL}/update-alarm`;
 export const vehiclesLockOnURL = `${vehiclesURL}/update-lock`;

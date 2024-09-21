@@ -7,7 +7,7 @@ import { gasRecordsByVehicleIdPageURL } from "../../api/apiurls";
 import { ListItemsPaginated } from "../../hooks/listItems";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
-
+ 
 export function GasRecords() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

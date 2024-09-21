@@ -10,6 +10,6 @@ export const getStatusColor = (status) => {
         return "rgba(255, 0, 0, 1)"; // Rojo
       default:
         return "rgba(62, 152, 199, 1)"; // Color base
-    }
+    } 
   };
   

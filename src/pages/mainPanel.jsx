@@ -1,55 +1,100 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../common/navbarCommon";
 import { MapaBase } from "../maps/mapaBase";
 import { VehicleMenuPanel } from "../common/vehicleMenuPanel";
-
 import { GasInfo } from "./optionsPanel/gasInfo";
 import { TireInfo } from "./optionsPanel/tireSensorInfo";
-
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
 import "./mainPanel.css";
-
 import { LogoutToken } from "../hooks/logoutToken";
 import { BatteryInfo } from "./optionsPanel/batteryInfo";
 import { TireInfoData } from "./optionsPanel/tireSensorInfoData";
-import { IssuesInfo } from "./optionsPanel/issuesInfo";
 import { ImpactIncidentLogging } from "./optionsPanel/impactIncidentLogging";
 import useMqtt from "../hooks/useMqtt";
 import { mqttDominio, mqttTopics } from "../api/apiurls";
+import { ChecklistInfo } from "./optionsPanel/checklistInfo";
 
 export function MainPanel() {
   LogoutToken();
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
+  const [buses, setBuses] = useState([
 
-  const buses = [
+  ]);
+
+  /*
     {
-      placa: "ABC12223",
-      longitud: -76.95769789314294,
-      latitud: -12.036776926858456,
+      imei: "ABC12223",
+      longitude: -76.95769789314294,
+      latitude: -12.036776926858456,
     },
     {
-      placa: "DEF456",
-      longitud: -76.96,
-      latitud: -12.037,
+      imei: "DEF456",
+      longitude: -76.96,
+      latitude: -12.037,
     },
     { 
-      placa: "GHI789",
-      longitud: -76.955,
-      latitud: -12.035,
+      imei: "GHI789",
+      longitude: -76.955,
+      latitude: -12.035,
     },
-  ];
+  */
 
   const handleSelectVehicle = (id) => {
     localStorage.setItem("selectedVehicleId", id);
     setSelectedVehicleId(id);
   };
 
-  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
-  
+  const topic = `prueba`;
   const { isConnected, messages, sendMessage } = useMqtt(mqttDominio, topic);
- 
+
+  // Manejar los mensajes recibidos
+  useEffect(() => {
+    if (messages && messages.length > 0) {
+      messages.forEach((message) => {
+        try {
+          // Intentar parsear el mensaje como JSON
+          const jsonString = message.match(/{.*}/);  // Extraer solo el JSON del mensaje
+          if (!jsonString) {
+            console.error("El mensaje no contiene un JSON válido:", message);
+            return;
+          }
+
+          const data = JSON.parse(jsonString[0]);
+
+          const { imei, longitude, latitude } = data;
+
+          // Verificar si el mensaje tiene los campos esperados
+          if (imei && longitude && latitude) {
+            setBuses((prevBuses) => {
+              const busIndex = prevBuses.findIndex((bus) => bus.imei === imei);
+
+              if (busIndex !== -1) {
+                // Actualizar la longitud y latitud del bus si el IMEI ya existe
+                const updatedBuses = [...prevBuses];
+                updatedBuses[busIndex] = {
+                  ...updatedBuses[busIndex],
+                  longitude,
+                  latitude,
+                };
+                return updatedBuses;
+              } else {
+                // Si no existe, agregar un nuevo bus
+                return [
+                  ...prevBuses,
+                  { imei, longitude, latitude },
+                ];
+              }
+            });
+          }
+        } catch (error) {
+          console.error("Error al procesar el mensaje JSON:", error);
+        }
+      });
+    }
+  }, [messages]);
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -68,17 +113,19 @@ export function MainPanel() {
             <div className="main-options-panel">
               <h3>Options Panel</h3>
               <div className="main-options-panel-content">
+
                 <VehicleInfo />
+                <ChecklistInfo />
                 <VehicleOptions />
                 <GasInfo />
-                <BatteryInfo />
+ 
               </div>
 
               <div className="main-options-panel-content">
+                <BatteryInfo />
                 <TireInfo />
                 <TireInfoData />
                 <ImpactIncidentLogging />
-                {/* <IssuesInfo /> */}
               </div>
             </div>
           ) : (

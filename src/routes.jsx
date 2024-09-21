@@ -1,6 +1,9 @@
 import { MapaBase } from "./maps/mapaBase";
 import { AdminPanel } from "./pages/adminPanel/adminPanel";
 import { BatteryRecords } from "./pages/batteryRecords/batteryRecords";
+import { ChecklistPanel } from "./pages/checklistPanel/checklisPanel";
+import { Example } from "./pages/checklistPanel/example";
+import { Example2 } from "./pages/checklistPanel/example2";
 import { GasRecords } from "./pages/gasRecords/gasRecords";
 import { ImpactIncidentLoggingRecords } from "./pages/impactIncidentLoggingRecords/impactIncidentLoggingRecords";
 import { IssuesRecords } from "./pages/issuesRecords/issuesRecords";
@@ -8,6 +11,8 @@ import { Login } from "./pages/login/login";
 import { WelcomeAndRedirect } from "./pages/login/welcomeAndRedirect";
 import { MainPanel } from "./pages/mainPanel";
 import { TireSensorsDetails } from "./pages/tireSensorsDetails/tireSensorsDetails";
+import { Example4 } from './pages/checklistPanel/example4';
+import { Example3 } from './pages/checklistPanel/example3';
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -23,4 +28,10 @@ export const routes = [
   { path: "/impact-incident-logging-records", component: <ImpactIncidentLoggingRecords />},
 
   { path: "/tire-sensors-details", component: <TireSensorsDetails /> },
+  { path: "/checklist-panel", component: <ChecklistPanel /> },
+
+  { path: "/example/:type", component: <Example /> },
+  { path: "/example2/:type", component: <Example2 /> },
+  { path: "/example3", component: <Example3 /> },
+  { path: "/example2", component: <Example4 /> },
 ];

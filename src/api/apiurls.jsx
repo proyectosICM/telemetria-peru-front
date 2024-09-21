@@ -15,7 +15,7 @@ export const mqttTopics = {
 
 // URL base común
 // const base = "http://192.168.1.232:6061"
-export const base = "https://telemetriaperu.com:7070";
+export const base = "https://telemetriaperu.com:7071";
 //const base = "http://192.168.0.200:6061"
 
 export const baseURL = `${base}`;

@@ -1,6 +1,6 @@
 export const mqttURL = "ws://38.43.134.172:1884"
-export const mqttDominio = "wss://telemetriaperu.com:1884"
-export const mqttLocalURL = "wss://localhost:1883"
+export const mqttDominio = "ws://telemetriaperu.com:1884"
+export const mqttLocalURL = "ws://localhost:1883"
 
 // Temas MQTT
 export const mqttTopics = {
@@ -15,7 +15,7 @@ export const mqttTopics = {
 
 // URL base común
 // const base = "http://192.168.1.232:6061"
-export const base = "https://telemetriaperu.com:7071";
+export const base = "http://telemetriaperu.com:7070";
 //const base = "http://192.168.0.200:6061"
 
 export const baseURL = `${base}`;

@@ -19,27 +19,7 @@ export function MainPanel() {
   LogoutToken();
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
-  const [buses, setBuses] = useState([
-
-  ]);
-
-  /*
-    {
-      imei: "ABC12223",
-      longitude: -76.95769789314294,
-      latitude: -12.036776926858456,
-    },
-    {
-      imei: "DEF456",
-      longitude: -76.96,
-      latitude: -12.037,
-    },
-    { 
-      imei: "GHI789",
-      longitude: -76.955,
-      latitude: -12.035,
-    },
-  */
+  const [buses, setBuses] = useState([]);
 
   const handleSelectVehicle = (id) => {
     localStorage.setItem("selectedVehicleId", id);
@@ -47,7 +27,7 @@ export function MainPanel() {
   };
 
   const topic = `prueba`;
-  const { isConnected, messages, sendMessage } = useMqtt(mqttDominio, topic);
+  const { messages } = useMqtt(mqttDominio, topic);
 
   // Manejar los mensajes recibidos
   useEffect(() => {
@@ -55,7 +35,7 @@ export function MainPanel() {
       messages.forEach((message) => {
         try {
           // Intentar parsear el mensaje como JSON
-          const jsonString = message.match(/{.*}/);  // Extraer solo el JSON del mensaje
+          const jsonString = message.match(/{.*}/); // Extraer solo el JSON del mensaje
           if (!jsonString) {
             console.error("El mensaje no contiene un JSON válido:", message);
             return;
@@ -81,10 +61,7 @@ export function MainPanel() {
                 return updatedBuses;
               } else {
                 // Si no existe, agregar un nuevo bus
-                return [
-                  ...prevBuses,
-                  { imei, longitude, latitude },
-                ];
+                return [...prevBuses, { imei, longitude, latitude }];
               }
             });
           }
@@ -108,17 +85,15 @@ export function MainPanel() {
           <div className="main-map-container">
             <MapaBase buses={buses} />
           </div>
-  
+
           {selectedVehicleId ? (
             <div className="main-options-panel">
               <h3>Options Panel</h3>
               <div className="main-options-panel-content">
-
                 <VehicleInfo />
                 <ChecklistInfo />
                 <VehicleOptions />
                 <GasInfo />
- 
               </div>
 
               <div className="main-options-panel-content">

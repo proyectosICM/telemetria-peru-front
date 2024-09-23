@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import mqtt from 'mqtt';
+import { useEffect, useState } from "react";
+import mqtt from "mqtt";
 
 const useMqtt = (brokerUrl, topic) => {
   const [client, setClient] = useState(null);
@@ -8,17 +8,17 @@ const useMqtt = (brokerUrl, topic) => {
 
   useEffect(() => {
     const client = mqtt.connect(brokerUrl);
-    client.on('connect', () => {
-      console.log('Conectado a MQTT Broker');
+    client.on("connect", () => {
+      //console.log("Conectado a MQTT Broker");
       setIsConnected(true);
       client.subscribe(topic, (err) => {
         if (!err) {
-          console.log(`Suscrito al tópico ${topic}`);
+          //console.log(`Suscrito al tópico ${topic}`);
         }
       });
     });
 
-    client.on('message', (receivedTopic, message) => {
+    client.on("message", (receivedTopic, message) => {
       if (receivedTopic === topic) {
         //console.log(`Mensaje recibido: ${message.toString()}`);
         setMessages((prevMessages) => [...prevMessages, message.toString()]);
@@ -39,11 +39,17 @@ const useMqtt = (brokerUrl, topic) => {
     }
   };
 
+  const clearMessages = () => {
+    console.log("Mensajes Borrados")
+    setMessages([]);
+  };
+
   return {
     client,
     isConnected,
     messages,
     sendMessage,
+    clearMessages
   };
 };
 

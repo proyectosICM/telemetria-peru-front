@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { ListItems } from "../../hooks/listItems";
-import { vehiclesURL } from "../../api/apiurls";
+import { mqttDominio, mqttTopics, vehiclesURL } from "../../api/apiurls";
+import useMqtt from "../../hooks/useMqtt";
+import mqttDataHandler from "../../hooks/mqttDataHandler";
 
 export function VehicleInfo() {
-    const [data, setData] = useState([]);
-    const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+  const [data, setData] = useState([]);
+  const [speed, setSpeed] = useState([]);
+  const [latitude, setLatitude] = useState([]);
+  const [longitude, setLongitude] = useState([]);
 
-    useEffect(() => {
-      ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
-    }, [selectedVehicleId]); 
- 
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+
+  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
+  const { messages } = useMqtt(mqttDominio, topic);
+
+  useEffect(() => {
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
+  }, [selectedVehicleId]);
+
+  useEffect(() => {
+    mqttDataHandler(messages, setSpeed, "speedInfo");
+  }, [messages]);
+  
   return (
-    <div className='g-option-item'>
+    <div className="g-option-item">
       <h4>Informacion</h4>
       <p>Placa: {data && data.licensePlate}</p>
-      <p>Velocidad Actual: {data && `${data.speed} km`} </p>
+      <p>Tipo: {data && data.vehicletypeModel && data.vehicletypeModel.name} </p>
+      <p>Velocidad Actual: {`${speed} km`} </p>
       <p>Tiempo encendido: {data && data.timeOn} segundos</p>
-      <p>Coordenadas: {data && data.longitud}</p>
     </div>
-  ); 
+  );
 }

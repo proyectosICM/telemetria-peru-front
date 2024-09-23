@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import useMqtt from "../../hooks/useMqtt";
@@ -9,73 +9,67 @@ import { handleRecordsMessage } from "../../utils/handleRecordsMessage";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/CircularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";
+import mqttDataHandler from "../../hooks/mqttDataHandler"; // Importa el hook
 
 export function GasInfo({ showAlert = true }) {
   const navigate = useNavigate();
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
-  
-  const [data, setData] = useState(null); // Guardará los datos del tipo de vehículo
+  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
+
+  const { messages, clearMessages } = useMqtt(mqttDominio, topic);
+
+  const [data, setData] = useState(null);
   const [pressure, setPressure] = useState(null);
   const [percentage, setPercentage] = useState(0);
   const [maxPressure, setMaxPressure] = useState(0);
-  
+
   // Obtener los datos del tipo de vehículo
   useEffect(() => {
     ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setData);
   }, [selectedTypeVehicleId]);
 
+  // Usar useRef para almacenar el vehículo anterior
+  const previousVehicleIdRef = useRef(selectedVehicleId);
+
+  // Limpiar mensajes al cambiar de vehículo seleccionado
   useEffect(() => {
-    //console.log("Datos actualizados:", data);
+    if (previousVehicleIdRef.current !== selectedVehicleId) {
+      clearMessages(); // Llama a la función para limpiar mensajes solo si el vehículo ha cambiado
+      setPressure(0)
+      setPressure(0)
+      previousVehicleIdRef.current = selectedVehicleId; // Actualiza el ref del vehículo anterior
+    }
+  }, [selectedVehicleId, clearMessages]);
+
+
+  useEffect(() => {
     if (data) {
       const maxGas = data.gasRange.maxGasPressure || 0;
       setMaxPressure(maxGas);
-      console.log(`Max pressure actualizado: ${maxGas}`);
     }
-  }, [data]); 
+  }, [data]);
 
-
-  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
-  const { isConnected, messages } = useMqtt(mqttDominio, topic);
-
-  // Procesar el mensaje de MQTT
+  // Procesar el mensaje de MQTT usando mqttDataHandler
   useEffect(() => {
-    if (messages.length > 0) {
-      const lastMessageStr = messages[messages.length - 1];
-      //console.log("Último mensaje recibido:", lastMessageStr);
-
-      try {
-        if (lastMessageStr.startsWith("gasInfo:")) {
-          const pressureValue = parseFloat(lastMessageStr.split(":")[1].trim());
-          setPressure(pressureValue);
-          const calculatedPercentage = calculatePercentage(pressureValue, maxPressure);
-          setPercentage(calculatedPercentage);
-        } else {
-          const lastMessage = JSON.parse(lastMessageStr);
-          if (lastMessage.gasInfo !== undefined) {
-            const gasInfo = lastMessage.gasInfo;
-            setPressure(gasInfo);
-            const calculatedPercentage = calculatePercentage(gasInfo, maxPressure);
-            setPercentage(calculatedPercentage);
-          } else {
-            setPressure(null); // No hay datos de gas
-          }
-        }
-      } catch (error) {
-        console.error("Error parsing MQTT message", error);
-        console.log("Mensaje recibido no válido:", lastMessageStr);
-        setPressure(null); // No hay datos de gas
-      }
-    }
+    mqttDataHandler(messages, setPressure, "gasInfo");
   }, [messages]);
 
-  // Función para determinar el estado del gas basado en los valores dinámicos de gasRange
+  // Calcula el porcentaje y actualiza el estado
+  useEffect(() => {
+    if (pressure !== null && maxPressure > 0) {
+      const calculatedPercentage = calculatePercentage(pressure, maxPressure);
+      setPercentage(calculatedPercentage);
+    }
+  }, [pressure, maxPressure]);
+
   const determineStatus = (pressureValue) => {
     if (!data || !data.gasRange) {
-      return "No Disponible"; // Si los datos no están disponibles
+      return "No Disponible";
     }
-    //console.log("dT" + pressureValue)
+
     const { optimalGasRangeStart, regularGasRangeStart, lowGasRangeStart, veryLowGasRangeStart } = data.gasRange;
 
     if (pressureValue >= optimalGasRangeStart) {

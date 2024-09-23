@@ -31,7 +31,6 @@ export function TireInfoData({ showAlert = true }) {
     if (pressureRange) {
       const maxPressureData = pressureRange.tirePressureRange.maxTirePressure || 0;
       setMaxPressure(maxPressureData);
-      console.log(`Max pressure actualizado: ${maxPressureData}`);
     }
   }, [pressureRange]); 
 

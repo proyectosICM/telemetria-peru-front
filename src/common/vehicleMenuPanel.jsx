@@ -1,25 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { FaTruck } from "react-icons/fa"; // Importa el ícono de camión
 import { ListItems } from "../hooks/listItems";
-import { vehiclesByCompanyURL } from "../api/apiurls";
+import { vehiclesByCompanyURL, vehiclesTypesURL } from "../api/apiurls";
+import { useMemo } from "react";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
   const [data, setData] = useState([]);
+  const [dataTypes, setDataTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+ 
   const companyId = localStorage.getItem("companyId");
 
   useEffect(() => {
     ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData);
   }, [companyId]);
 
+  useEffect(() => {
+    ListItems(`${vehiclesTypesURL}`, setDataTypes);
+  }, []);
+
   const handleSelectVehicle = (id, type) => {
     onSelectVehicle(id);
     localStorage.setItem("selectedTypeVehicleId", type);
   };
 
-  const filteredData = data.filter((item) =>
-    item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredData = useMemo(() => {
+    return data.filter((item) =>
+      item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedType ? item.vehicletypeModel.name === selectedType : true)
+    );
+  }, [data, searchTerm, selectedType]);
 
   return (
     <div className="vmp-container">
@@ -35,6 +46,21 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
         />
       </div>
 
+      <div className="vmp-filter-bar">
+        <select
+          className="vmp-filter-select"
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+        >
+          <option value="">Todos los tipos</option>
+          {dataTypes.map((type) => (
+            <option key={type.id} value={type.name}>
+              {type.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="vmp-panel">
         {filteredData.map((item, index) => (
           <div
@@ -43,7 +69,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
             onClick={() => handleSelectVehicle(item.id, item.vehicletypeModel.id)}
           >
             <div className="vmp-item-details">
-              <FaTruck size={40} color="black" style={{ marginBottom: "10px" }} />
+            <FaTruck className="vmp-truck-icon" />
               <p className="vmp-license">
                 <strong>Placa:</strong> {item.licensePlate}
               </p>

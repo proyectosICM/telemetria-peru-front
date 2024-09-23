@@ -32,7 +32,6 @@ export function BatteryInfo({ showAlert = true }) {
     if (batteryRange) {
       const maxGas = batteryRange.batteryRange.maxBatteryVoltage || 0;
       setMaxVoltaje(maxGas);
-      console.log(`Max pressure actualizado: ${maxGas}`);
     }
   }, [batteryRange]); 
 

@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { useNavigate } from "react-router-dom";
 import { FaClipboardCheck, FaTruckLoading, FaTruckMoving, FaCheckSquare } from "react-icons/fa"; // Importando íconos
 import { Button, Table, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Importa Bootstrap
+import { ListItems } from "../../hooks/listItems";
+import { vehiclesURL } from "../../api/apiurls";
 
 export function ChecklistPanel() {
   const navigate = useNavigate();
 
-  // Estado para manejar el valor seleccionado en el ComboBox
+  const [data, setData] = useState([]);
   const [selectedChecklist, setSelectedChecklist] = useState("todos");
 
-  const handleAddChecklist = (type) => {
-    console.log(`Agregar checklist: ${type}`);
-  };
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+
+  useEffect(() => {
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
+  }, [selectedVehicleId]);
 
   const cardStyle = {
     display: "inline-block",
@@ -70,6 +74,16 @@ export function ChecklistPanel() {
           >
             <FaCheckSquare style={iconStyle} />
             <p>Inspección diaria de unidades MOTOFURGON (salida)</p>
+          </div>
+        </div>
+        {/* Sección de "cards" para agregar nuevos checklists */}
+        <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+          <div
+            style={{ ...cardStyle, backgroundColor: "#28a745" }} // Color verde para checklist de salida
+            onClick={() => navigate("/example/salida")}
+          >
+            <FaClipboardCheck style={iconStyle} />
+            <p>Nuevo registro</p>
           </div>
         </div>
 

@@ -1,13 +1,37 @@
-/* busMenuPanel.css */
-
 .vmp-container {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 5px 0;
-    justify-content: center;
+    padding: 20px;
+    justify-content: flex-start;
     align-items: center;
+}
 
+.vmp-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.vmp-search-bar {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.vmp-search-input {
+    width: 80%;
+    max-width: 600px; /* Máximo ancho para el input */
+    padding: 10px;
+    border: 2px solid #007BFF; /* Color de borde azul */
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: 1em;
+    transition: border-color 0.3s; /* Transición suave */
+}
+
+.vmp-search-input:focus {
+    border-color: #0056b3; /* Color de borde al enfocar */
+    outline: none; /* Quitar outline por defecto */
 }
 
 .vmp-panel {
@@ -16,86 +40,35 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 90%;
-    height: 80%;
-    max-width: 90%;
-    max-height: 80%;
-    border-radius: 2%;
+    width: 100%;
+    max-width: 1200px; /* Máximo ancho para el panel */
+    border-radius: 10px; /* Bordes redondeados */
     overflow: auto;
     box-sizing: border-box;
-    color: black;
 }
-
-/* 
-    border: 2px solid red;
-*/
 
 .vmp-item {
     display: flex;
+    flex-direction: column; /* Cambiado a columna para mejor alineación */
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: calc(50% - 20px); /* Ancho ajustado para dos columnas */
     height: 150px;
-    margin: 5px;
+    margin: 10px;
     cursor: pointer;
     text-align: center;
-    border-radius: 15%;
-    background-color: #FDCC9B;
+    border-radius: 15px;
+    background-color: #FDCC9B; /* Fondo del ítem */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transición suave */
 }
 
-.vmp-search-bar {
-    margin-bottom: 20px;
-    width: 100%; 
-    display: flex;
-    justify-content: center;
+.vmp-item:hover {
+    transform: scale(1.05); /* Aumenta ligeramente al pasar el mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más intensa al pasar el mouse */
 }
 
-.vmp-search-bar input {
-    width: 80%;
-    max-width: 80%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.vmp-license, .vmp-type {
+    color: #333; /* Color de texto */
+    margin: 5px 0; /* Espaciado entre líneas */
 }
-
-/* Media query for small screens
-@media (max-width: 600px) {
-    .panel {
-        width: 100%;
-        height: auto;
-    }
-
-    .item {
-        width: 80%;
-        margin: 5px 10%;
-    }
-}
- */
-
-/* Media query for medium screens 
-@media (min-width: 601px) and (max-width: 1024px) {
-    .panel {
-        width: 90%;
-        height: auto;
-    }
-
-    .item {
-        width: 45%;
-        margin: 5px 2.5%;
-    }
-}
-*/
-
-/* Media query for large screens 
-@media (min-width: 1025px) {
-    .panel {
-        width: 80%;
-        height: 80%;
-    }
-
-    .item {
-        width: 40%;
-        margin: 5px 5%;
-    }
-}
-*/

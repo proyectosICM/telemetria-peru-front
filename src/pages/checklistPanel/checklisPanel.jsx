@@ -33,6 +33,66 @@ export function ChecklistPanel() {
 
   const iconStyle = { fontSize: "2em", marginBottom: "10px" };
 
+  // Función para determinar qué checklist mostrar según el tipo de vehículo
+  const renderChecklistCards = () => {
+    if (data && data.vehicletypeModel) {
+      const vehicleTypeId = data.vehicletypeModel.id;
+
+      if (vehicleTypeId === 3 || vehicleTypeId === 4) {
+        // Mostrar el primer grupo de checklists
+        return (
+          <>
+            <div
+              style={{ ...cardStyle, backgroundColor: "#28a745" }} // Color verde para checklist de salida
+              onClick={() => navigate("/example/salida")}
+            >
+              <FaClipboardCheck style={iconStyle} />
+              <p>Inspección diaria de unidades (salida)</p>
+            </div>
+
+            <div
+              style={{ ...cardStyle, backgroundColor: "#ffc107" }} // Color amarillo para checklist de retorno
+              onClick={() => navigate("/example/retorno")}
+            >
+              <FaTruckMoving style={iconStyle} />
+              <p>Inspección diaria de unidades (retorno)</p>
+            </div>
+
+            <div
+              style={{ ...cardStyle, backgroundColor: "#17a2b8" }} // Color azul claro para inspección de entrada
+              onClick={() => navigate("/example2/retorno")}
+            >
+              <FaTruckLoading style={iconStyle} />
+              <p>Inspección diaria de unidad MOTOFURGON (retorno)</p>
+            </div>
+
+            <div
+              style={{ ...cardStyle, backgroundColor: "#007bff" }} // Color azul oscuro para inspección de salida
+              onClick={() => navigate("/example2/salida")}
+            >
+              <FaCheckSquare style={iconStyle} />
+              <p>Inspección diaria de unidades MOTOFURGON (salida)</p>
+            </div>
+          </>
+        );
+      } else if (vehicleTypeId === 1 || vehicleTypeId === 2) {
+        // Mostrar el segundo grupo de checklists
+        return (
+          <>
+            <div
+              style={{ ...cardStyle, backgroundColor: "#28a745" }} // Color verde para checklist de salida
+              onClick={() => navigate("/example3")}
+            >
+              <FaClipboardCheck style={iconStyle} />
+              <p>Nuevo registro</p>
+            </div>
+          </>
+        );
+      }
+    }
+    return null;
+  };
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -44,93 +104,57 @@ export function ChecklistPanel() {
 
         {/* Sección de "cards" para agregar nuevos checklists */}
         <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          <div
-            style={{ ...cardStyle, backgroundColor: "#28a745" }} // Color verde para checklist de salida
-            onClick={() => navigate("/example/salida")}
-          >
-            <FaClipboardCheck style={iconStyle} />
-            <p>Inspección diaria de unidades (salida)</p>
-          </div>
-
-          <div
-            style={{ ...cardStyle, backgroundColor: "#ffc107" }} // Color amarillo para checklist de retorno
-            onClick={() => navigate("/example/retorno")}
-          >
-            <FaTruckMoving style={iconStyle} />
-            <p> Inspección diaria de unidades (retorno)</p>
-          </div>
-
-          <div
-            style={{ ...cardStyle, backgroundColor: "#17a2b8" }} // Color azul claro para inspección de entrada
-            onClick={() => navigate("/example2/retorno")}
-          >
-            <FaTruckLoading style={iconStyle} />
-            <p>Inspección diaria de unidad MOTOFURGON (retorno)</p>
-          </div>
-
-          <div
-            style={{ ...cardStyle, backgroundColor: "#007bff" }} // Color azul oscuro para inspección de salida
-            onClick={() => navigate("/example2/salida")}
-          >
-            <FaCheckSquare style={iconStyle} />
-            <p>Inspección diaria de unidades MOTOFURGON (salida)</p>
-          </div>
+          {renderChecklistCards()}
         </div>
-        {/* Sección de "cards" para agregar nuevos checklists */}
-        <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          <div
-            style={{ ...cardStyle, backgroundColor: "#28a745" }} // Color verde para checklist de salida
-            onClick={() => navigate("/example/salida")}
-          >
-            <FaClipboardCheck style={iconStyle} />
-            <p>Nuevo registro</p>
-          </div>
-        </div>
-
-        <h1>Registros</h1>
 
         {/* ComboBox estilizado con Bootstrap */}
-        <div style={{ marginBottom: "20px", textAlign: "center" }}>
-          <label htmlFor="checklistSelect" style={{ marginRight: "10px" }}>
-            Seleccionar tipo de checklist:
-          </label>
-          <div style={{ position: "relative", display: "inline-block", width: "auto" }}>
-            <Form.Select
-              id="checklistSelect"
-              value={selectedChecklist}
-              onChange={(e) => setSelectedChecklist(e.target.value)}
-              className="form-select"
-              style={{
-                backgroundColor: "#000", // Fondo negro
-                color: "#fff", // Texto en blanco
-                border: "1px solid #fff", // Borde blanco
-                appearance: "none", // Ocultar la flecha por defecto
-                paddingRight: "30px", // Espacio para la flecha personalizada
-                width: "auto",
-                display: "inline-block",
-              }}
-            >
-              <option value="todos">Todos</option>
-              <option value="salida">Checklist de Salida</option>
-              <option value="retorno">Checklist de Retorno</option>
-              <option value="inspeccion_entrada">Inspección de Entrada</option>
-              <option value="inspeccion_salida">Inspección de Salida</option>
-            </Form.Select>
-            {/* Flecha personalizada */}
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                right: "10px",
-                transform: "translateY(-50%)",
-                pointerEvents: "none",
-                color: "#fff", // Color blanco para la flecha
-              }}
-            >
-              ▼
+        {data && data.vehicletypeModel && (data.vehicletypeModel.id !== 1 && data.vehicletypeModel.id !== 2) && (
+          <>
+            <h1>Registros</h1>
+            <div style={{ marginBottom: "20px", textAlign: "center" }}>
+              <label htmlFor="checklistSelect" style={{ marginRight: "10px" }}>
+                Seleccionar tipo de checklist:
+              </label>
+              <div style={{ position: "relative", display: "inline-block", width: "auto" }}>
+                <Form.Select
+                  id="checklistSelect"
+                  value={selectedChecklist}
+                  onChange={(e) => setSelectedChecklist(e.target.value)}
+                  className="form-select"
+                  style={{
+                    backgroundColor: "#000", // Fondo negro
+                    color: "#fff", // Texto en blanco
+                    border: "1px solid #fff", // Borde blanco
+                    appearance: "none", // Ocultar la flecha por defecto
+                    paddingRight: "30px", // Espacio para la flecha personalizada
+                    width: "auto",
+                    display: "inline-block",
+                  }}
+                >
+                  <option value="todos">Todos</option>
+                  <option value="salida">Checklist de Salida</option>
+                  <option value="retorno">Checklist de Retorno</option>
+                  <option value="inspeccion_entrada">Inspección de Entrada</option>
+                  <option value="inspeccion_salida">Inspección de Salida</option>
+                </Form.Select>
+                {/* Flecha personalizada */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    pointerEvents: "none",
+                    color: "#fff", // Color blanco para la flecha
+                  }}
+                >
+                  ▼
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
+
         {/* Contenedor centrado para la tabla */}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Table striped bordered hover variant="dark" style={{ width: "90%" }}>

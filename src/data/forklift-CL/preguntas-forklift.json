@@ -1,0 +1,610 @@
+{
+  "montacargasApagadoN/A": [
+    {
+      "numero": 1,
+      "texto": "Contraseña de encendido",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        },
+        {
+          "label": "N/A",
+          "variant": "secondary"
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "texto": "Tapa estabilizadora de carga",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        },
+        {
+          "label": "N/A",
+          "variant": "secondary"
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "texto": "Jebes de Tapa estabilizadora de carga",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        },
+        {
+          "label": "N/A",
+          "variant": "secondary"
+        }
+      ]
+    }
+  ],
+  "montacargasApagado": [
+    {
+      "numero": 1,
+      "texto": "Tanque de Gas (sin golpes, fugas)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "texto": "Agarradera Trasera (punto de apoyo para marcha atrás)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "texto": "Tres Puntos de Apoyo y Stickers de señalización ⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "texto": "Escalón Antideslizante en buen estado ⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "texto": "Sin Abolladuras, golpes mayores, varios, etc…⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "texto": "Acrílico protector del display en buen estado (sellos en buen estado)",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "texto": "Limpieza del equipo",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "texto": "Extintor (buen estado, cargado, vigente, con seguro y boquilla funcional)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "texto": "Espejos completos y en buen estado⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "texto": "Llantas en buen estado (Delanteras y Traseras) Presión, desgastes, daños⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "texto": "Claxón funcionando⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 12,
+      "texto": "Asiento funcional (Respaldo, Guías de desplazamiento y giro)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "texto": "Cinturón de seguridad en buen estado ⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "texto": "Parabrisas en buen estado",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "texto": "Limpia parabrisas en buen estado",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "texto": "Adhesivos reflectantes traseros completos⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "texto": "Etiqueta de peso máximo en buen estado",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "texto": "Etiqueta de velocidad máxima",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "texto": "Rejilla protectora superior en buen estado ⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    }
+  ],
+  "montacargasEncendido": [
+    {
+      "numero": 1,
+      "texto": "Batería sin novedad (cargada) Se visualiza en el tablero⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "texto": "Luces funcionando (Frontales, Traseras, Reversa y circulina)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "texto": "Punto Faro Azul funcionando (Blue Spot)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "texto": "Medidor nivel de combustible funcionando (verificar sonido)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "texto": "Alarma de reversa funcionando⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "texto": "Frenos en buen estado⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "texto": "Dirección en buen estado (sin juego)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "texto": "Funcionamiento del mástil adecuado (subir, bajar, inclinar)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "texto": "Freno de mano en buen estado y funcionando⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "texto": "Cadena del mástil en buen estado⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "texto": "Aditamento (cascade) en buen estado⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 12,
+      "texto": "No presenta alguna fuga de fluidos (refrigerantes y aceites)⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "texto": "No hay ruido o sonido extraño durante el funcionamiento⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "texto": "No hay ninguna luz indicadora encendida durante la operación: código de falla⚠️",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    }
+  ],
+  "montacargasGolpesRayaduras": [
+    {
+      "numero": 1,
+      "texto": "Contrapeso Lateral Derecho",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "texto": "Contrapeso Posterior",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "texto": "Contrapeso Lateral Izquierdo",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "texto": "Cabina Lateral Derecho",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "texto": "Cabina Lateral Izquierdo",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "texto": "Aros",
+      "opciones": [
+        {
+          "label": "Bueno",
+          "variant": "success"
+        },
+        {
+          "label": "Malo",
+          "variant": "danger"
+        }
+      ]
+    }
+  ]
+}

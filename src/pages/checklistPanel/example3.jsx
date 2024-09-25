@@ -12,11 +12,56 @@ export function Example3() {
 
   // Estado para guardar las respuestas
   const [respuestas, setRespuestas] = useState({});
-  const [observaciones, setObservaciones] = useState("");
+  const [observaciones1, setObservaciones1] = useState("");
+  const [observaciones2, setObservaciones2] = useState("");
+  const [observaciones3, setObservaciones3] = useState("");
+  const [observaciones4, setObservaciones4] = useState("");
 
   // Función para actualizar la respuesta de una pregunta
-  const handleSeleccion = (pregunta, opcion) => {
-    setRespuestas((prevState) => ({ ...prevState, [pregunta]: opcion }));
+  const handleSeleccion = (categoria, pregunta, opcion) => {
+    setRespuestas((prevState) => ({
+      ...prevState,
+      [categoria]: {
+        ...prevState[categoria],
+        [pregunta]: opcion,
+      },
+    }));
+  };
+
+  // Función para descargar el archivo JSON
+  const descargarJSON = (contenido, nombreArchivo) => {
+    const blob = new Blob([JSON.stringify(contenido, null, 2)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = nombreArchivo;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Función para enviar respuestas y observaciones
+  const handleSubmit = () => {
+    const respuestasFinales = {
+      montacargasApagadoNA: {
+        ...respuestas["montacargasApagadoN/A"],
+        observaciones: observaciones1,
+      },
+      montacargasApagado: {
+        ...respuestas["montacargasApagado"],
+        observaciones: observaciones2,
+      },
+      montacargasEncendido: {
+        ...respuestas["montacargasEncendido"],
+        observaciones: observaciones3,
+      },
+      montacargasGolpesRayaduras: {
+        ...respuestas["montacargasGolpesRayaduras"],
+        observacionesAdicionales: observaciones4,
+      },
+    };
+
+    console.log("Respuestas y observaciones enviadas:", respuestasFinales);
+    descargarJSON(respuestasFinales, `respuestas_${type}.json`);
   };
 
   return (
@@ -62,10 +107,25 @@ export function Example3() {
                 numero={pregunta.numero}
                 texto={pregunta.texto}
                 opciones={pregunta.opciones}
-                seleccion={respuestas[pregunta.texto]}
-                onSeleccion={(opcion) => handleSeleccion(pregunta.texto, opcion)}
+                seleccion={respuestas["montacargasApagadoN/A"]?.[pregunta.texto]}
+                onSeleccion={(opcion) => handleSeleccion("montacargasApagadoN/A", pregunta.texto, opcion)}
               />
             ))}
+        </div>
+
+        {/* Observaciones */}
+        <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
+          <h3>Observaciones Montacargas Apagado N/A</h3>
+          <Form.Group controlId="observaciones">
+            <Form.Label>Observaciones:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={2}
+              placeholder="Escribe tus observaciones aquí..."
+              value={observaciones1}
+              onChange={(e) => setObservaciones1(e.target.value)}
+            />
+          </Form.Group>
         </div>
 
         {/* Sección de preguntas críticas */}
@@ -82,10 +142,25 @@ export function Example3() {
                 numero={pregunta.numero}
                 texto={pregunta.texto}
                 opciones={pregunta.opciones}
-                seleccion={respuestas[pregunta.texto]}
-                onSeleccion={(opcion) => handleSeleccion(pregunta.texto, opcion)}
+                seleccion={respuestas["montacargasApagado"]?.[pregunta.texto]}
+                onSeleccion={(opcion) => handleSeleccion("montacargasApagado", pregunta.texto, opcion)}
               />
             ))}
+        </div>
+
+        {/* Observaciones */}
+        <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
+          <h3>Observaciones Montacargas Apagado</h3>
+          <Form.Group controlId="observaciones">
+            <Form.Label>Observaciones:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={2}
+              placeholder="Escribe tus observaciones aquí..."
+              value={observaciones2}
+              onChange={(e) => setObservaciones2(e.target.value)}
+            />
+          </Form.Group>
         </div>
 
         <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
@@ -101,13 +176,27 @@ export function Example3() {
                 numero={pregunta.numero}
                 texto={pregunta.texto}
                 opciones={pregunta.opciones}
-                seleccion={respuestas[pregunta.texto]}
-                onSeleccion={(opcion) => handleSeleccion(pregunta.texto, opcion)}
+                seleccion={respuestas["montacargasEncendido"]?.[pregunta.texto]}
+                onSeleccion={(opcion) => handleSeleccion("montacargasEncendido", pregunta.texto, opcion)}
               />
             ))}
         </div>
 
-        
+        {/* Observaciones */}
+        <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
+          <h3>Observaciones Montacargas Encendido</h3>
+          <Form.Group controlId="observaciones">
+            <Form.Label>Observaciones:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={2}
+              placeholder="Escribe tus observaciones aquí..."
+              value={observaciones3}
+              onChange={(e) => setObservaciones3(e.target.value)}
+            />
+          </Form.Group>
+        </div>
+
         <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
           <h3>No presenta Golpes menores, Rayaduras o Raspones ?</h3>
           {preguntas["montacargasGolpesRayaduras"] &&
@@ -117,26 +206,31 @@ export function Example3() {
                 numero={pregunta.numero}
                 texto={pregunta.texto}
                 opciones={pregunta.opciones}
-                seleccion={respuestas[pregunta.texto]}
-                onSeleccion={(opcion) => handleSeleccion(pregunta.texto, opcion)}
+                seleccion={respuestas["montacargasGolpesRayaduras"]?.[pregunta.texto]}
+                onSeleccion={(opcion) => handleSeleccion("montacargasGolpesRayaduras", pregunta.texto, opcion)}
               />
             ))}
         </div>
 
         {/* Observaciones */}
         <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
-          <h3>Observaciones</h3>
+          <h3>Observaciones adicionales</h3>
           <Form.Group controlId="observaciones">
             <Form.Label>Observaciones:</Form.Label>
             <Form.Control
               as="textarea"
-              rows={3}
+              rows={2}
               placeholder="Escribe tus observaciones aquí..."
-              value={observaciones}
-              onChange={(e) => setObservaciones(e.target.value)}
+              value={observaciones4}
+              onChange={(e) => setObservaciones4(e.target.value)}
             />
           </Form.Group>
         </div>
+
+        {/* Botón para enviar */}
+        <Button variant="primary" style={{width:"100%", margin:"20px 0"}} onClick={handleSubmit}>
+          Enviar
+        </Button>
       </div>
     </div>
   );

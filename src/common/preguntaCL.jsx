@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 
-export function PreguntaCL({ numero, texto, opciones, seleccion, onSeleccion }) {
+export function PreguntaCL({ numero, texto, descripcion, opciones, seleccion, onSeleccion }) {
   // Cambiamos el estado a un único valor para la opción seleccionada
   const [selectedOption, setSelectedOption] = useState(seleccion);
 
@@ -14,6 +14,7 @@ export function PreguntaCL({ numero, texto, opciones, seleccion, onSeleccion }) 
   return (
     <div style={{ margin: "20px 0" }}>
       <h4>{`${numero}| ${texto}`}</h4>
+      {descripcion && <p>{descripcion}</p>} {/* Mostrar la descripción si está presente */}
       <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
         {opciones.map((opcion, index) => (
           <Button
@@ -29,6 +30,7 @@ export function PreguntaCL({ numero, texto, opciones, seleccion, onSeleccion }) 
     </div>
   );
 }
+
 // Opciones para los botones
 export const opcionesGeneralesB = [
   { label: "Bueno", variant: "success" },

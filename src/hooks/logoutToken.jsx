@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { clearLocalStorage } from "../utils/storageUtils";
+import Swal from "sweetalert2"; // Importa SweetAlert2
 
 export function LogoutToken() {
   const navigate = useNavigate();
@@ -14,8 +15,17 @@ export function LogoutToken() {
 
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
         console.log("El token ha expirado");
-        clearLocalStorage();
-        navigate("/login");
+
+        // Muestra la alerta de SweetAlert2
+        Swal.fire({
+          icon: "warning",
+          title: "Sesión expirada",
+          text: "Tu sesión ha expirado. Por favor, inicia sesión de nuevo.",
+          confirmButtonText: "Aceptar",
+        }).then(() => {
+          clearLocalStorage();
+          navigate("/login");
+        });
       }
     } else {
       navigate("/login");

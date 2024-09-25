@@ -24,6 +24,12 @@ export const loginURL = `${base}/login`;
 
 const baseAPIURL = `${base}/api`;
 
+// Company
+export const companiesURL = `${baseAPIURL}/companies`;
+export const companiesPageURL = `${companiesURL}/page`;
+
+export const rolesURL = `${baseAPIURL}/role`;
+
 //vehicles
 export const vehiclesURL = `${baseAPIURL}/vehicles`;
 export const vehiclesByCompanyURL = `${vehiclesURL}/findByCompanyId`;
@@ -38,7 +44,12 @@ export const vehiclesEngineOnURL = `${vehiclesURL}/update-engine`;
 
 /** User */
 export const UserURL = `${baseAPIURL}/users`;
+export const userPagedURL = `${UserURL}/paged`;
 export const InfoUserURL = `${UserURL}/info/`;
+
+/** Drivers */
+export const driverURL = `${baseAPIURL}/driver`;
+export const driverPagedURL = `${driverURL}/paged`;
 
 /** Gas Records */
 export const gasRecordsURL = `${baseAPIURL}/gas-records`;
@@ -48,6 +59,7 @@ export const gasRecordsByVehicleIdPageURL = `${gasRecordsURL}/findByVehicleId-pa
 
 /** Battery **/
 export const batteryURL = `${baseAPIURL}/batteries`;
+export const batteryPagedURL = `${batteryURL}/paged`;
 export const batteryByVehicleIdURL = `${batteryURL}/findByVehicleId`;
 export const batteryByVehicleIdPageURL = `${batteryURL}/findByVehicleId-page`;
 

@@ -1,16 +1,29 @@
-/* adminPanel.css */
-
 .admin-panel-container {
     display: flex;
     justify-content: center;
-    align-items: center;         
+    align-items: center;  
+    flex-wrap: wrap;
+    border: 2px solid white;
 }
 
 .panel-content {
     border: 2px solid #d1d0cc;
     border-radius: 20px;
-    margin: 40px 0;
+    margin: 20px;
     width: 300px;
-    padding: 20px;           /* Opcional: agrega algo de relleno interno */
-    text-align: center;      /* Opcional: centra el texto */
+    padding: 20px;          
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 250px; /* Asegura una altura mínima uniforme */
+}
+
+.panel-content h1 {
+    margin-bottom: 20px; /* Asegura espacio entre el título y el botón */
+}
+
+.panel-content Button {
+    width: 80%; /* Asegura que el botón siempre ocupe el 80% del ancho */
 }

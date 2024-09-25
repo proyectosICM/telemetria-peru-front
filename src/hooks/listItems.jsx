@@ -55,6 +55,7 @@ export function ListItemsPaginated(url, pageNumber) {
       setDatos(response.data.content);
       setTotalPages(response.data.totalPages);
       setCurrentPage(response.data.number);
+      console.log(response.data);
     } catch (error) {
       console.error("Error listing items", error);
     }

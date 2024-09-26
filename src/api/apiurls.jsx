@@ -72,6 +72,13 @@ export const batteryRecordByVehicleIdPageURL = `${batteryRecordURL}/findByBatter
 export const tireSensorURL = `${baseAPIURL}/tire-sensor`;
 export const tireSensorByVehicleIdURL = `${tireSensorURL}/findByVehicleModelId`;
 
+/** Checklist */
+export const checklistRecordsURL = `${baseAPIURL}/checklist-records`;
+export const checklistRecordsPageURL = `${checklistRecordsURL}/paged`;
+export const checklistJSONURL = `${checklistRecordsURL}/json`;
+export const checklistRecordsVehicleURL = `${checklistRecordsURL}/findByVehicle`;
+export const checklistRecordsVehiclePageURL = `${checklistRecordsURL}/findByVehicle-paged`;
+
 /**  **/
 export const impactIncidentLoggingURL = `${baseAPIURL}/impact_incident_logging`;
 export const impactIncidentLoggingByVehicleURL = `${impactIncidentLoggingURL}/findByVehicleId`;

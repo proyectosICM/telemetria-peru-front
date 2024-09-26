@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { useNavigate } from "react-router-dom";
-import { FaClipboardCheck, FaTruckLoading, FaTruckMoving, FaCheckSquare } from "react-icons/fa"; // Importando íconos
+import { FaClipboardCheck, FaTruckLoading, FaTruckMoving, FaCheckSquare, FaEye } from "react-icons/fa"; // Importando íconos
 import { Button, Table, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Importa Bootstrap
-import { ListItems } from "../../hooks/listItems";
-import { vehiclesURL } from "../../api/apiurls";
+import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
+import { checklistRecordsVehiclePageURL, vehiclesURL } from "../../api/apiurls";
+import { PaginacionUtils } from "../../utils/paginacionUtils";
+import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 
 export function ChecklistPanel() {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
   const [selectedChecklist, setSelectedChecklist] = useState("todos");
+  const [pageNumber, setPageNumber] = useState(0);
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+
+  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsVehiclePageURL}/${selectedVehicleId}`, pageNumber);
 
   useEffect(() => {
     ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
@@ -103,12 +108,10 @@ export function ChecklistPanel() {
         <h1>Checklist</h1>
 
         {/* Sección de "cards" para agregar nuevos checklists */}
-        <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          {renderChecklistCards()}
-        </div>
+        <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>{renderChecklistCards()}</div>
 
         {/* ComboBox estilizado con Bootstrap */}
-        {data && data.vehicletypeModel && (data.vehicletypeModel.id !== 1 && data.vehicletypeModel.id !== 2) && (
+        {data && data.vehicletypeModel && data.vehicletypeModel.id !== 1 && data.vehicletypeModel.id !== 2 && (
           <>
             <h1>Registros</h1>
             <div style={{ marginBottom: "20px", textAlign: "center" }}>
@@ -164,39 +167,40 @@ export function ChecklistPanel() {
                 <th>Fecha</th>
                 <th>Hora</th>
                 <th>Descripción</th>
-                <th>Acciones</th>
+                <th>Placa</th>
+                <th>Detalles</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>2024-09-20</td>
-                <td>08:00</td>
-                <td>Revisión de neumáticos</td>
-                <td>
-                  <Button variant="primary">Ver</Button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>2024-09-19</td>
-                <td>14:30</td>
-                <td>Revisión de frenos</td>
-                <td>
-                  <Button variant="primary">Ver</Button>
-                </td>
-              </tr>
-              {/* Otros registros */}
+              {datos && datos.length > 0 ? (
+                datos.map((dato, index) => (
+                  <tr key={dato.id}>
+                    <td>{dato.id}</td>
+                    <td>{getDateFromTimestamp(dato.createdAt)}</td>
+                    <td>{getTimeFromTimestamp(dato.createdAt)}</td>
+                    <td>{dato.name}</td>
+                    <td>{dato.vehicleModel.licensePlate}</td>
+                    <td>
+                      <Button style={{ width: "80%", backgroundColor: "#007bff", border: "none" }} onClick={() => navigate(`/ver-cl/${dato.id}`)}>
+                        Ver
+                        <FaEye style={{ marginLeft: "8px" }} /> {/* Ícono a la derecha del texto */}
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: "center" }}>
+                    No hay registros disponibles
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </div>
 
         {/* Controles de paginación */}
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginTop: "20px" }}>
-          <Button>Atras</Button>
-          <p style={{ margin: "0" }}>Pagina 1 de 3</p>
-          <Button>Siguiente</Button>
-        </div>
+        <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
       </div>
     </div>
   );

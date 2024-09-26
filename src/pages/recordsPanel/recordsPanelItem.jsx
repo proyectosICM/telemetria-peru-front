@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Importar el hook useNavigate
 
-export function AdminPanelItem({ icon: Icon, title, route }) {
+export function RecordsPanelItem({ icon: Icon, title, route }) {
   const navigate = useNavigate(); // Definir navigate
 
   return (

@@ -18,6 +18,8 @@ import { UserAdminPanel } from "./pages/adminPanel/userAdmin/userAdminPanel";
 import { DriverAdminPanel } from "./pages/adminPanel/driverAdmin/driverAdminPanel";
 import { BatteriesAdminPanel } from "./pages/adminPanel/batteriesAdmin/batteriesAdminPanel";
 import { RoleAdminPanel } from "./pages/adminPanel/rolAdmin/roleAdminPanel";
+import { VerCL } from "./pages/checklistPanel/verCL";
+import { RecordsPanel } from "./pages/recordsPanel/recordsPanel";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -48,4 +50,7 @@ export const routes = [
   { path: "/batteries-admin", component: <BatteriesAdminPanel /> },
   { path: "/roles-admin", component: <RoleAdminPanel /> },
   { path: "/tire-admin", component: <RoleAdminPanel /> },
+
+  { path: "/ver-cl/:idcl", component: <VerCL /> },
+  { path: "/records-panel", component: <RecordsPanel /> },
 ];

@@ -4,12 +4,14 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { opcionesCriticasB, opcionesGeneralesB, PreguntaCL } from "../../common/preguntaCL";
 import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
+import { agregarElementoAPI, agregarElementoAPICL } from "../../hooks/agregarElementoAPI";
+import { checklistRecordsURL } from "../../api/apiurls";
 // Componente para cada pregunta
 
 export function Example3() {
   const navigate = useNavigate();
   const { type } = useParams();
-
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   // Estado para guardar las respuestas
   const [respuestas, setRespuestas] = useState({});
   const [observaciones1, setObservaciones1] = useState("");
@@ -60,8 +62,23 @@ export function Example3() {
       },
     };
 
-    console.log("Respuestas y observaciones enviadas:", respuestasFinales);
-    descargarJSON(respuestasFinales, `respuestas_${type}.json`);
+    // Estructura del objeto que necesitas enviar
+    const requestData = {
+      checklistRecordModel: {
+        name: "Revisión Diaria",
+        vehicleModel: {
+          id: selectedVehicleId,
+        },
+        checklistTypeModel: {
+          id: 1,
+        },
+      },
+      jsonData: respuestasFinales,
+    };
+
+    // Llamada a la API
+    agregarElementoAPI(`${checklistRecordsURL}`, requestData);
+    navigate("/checklist-panel")
   };
 
   return (
@@ -228,7 +245,7 @@ export function Example3() {
         </div>
 
         {/* Botón para enviar */}
-        <Button variant="primary" style={{width:"100%", margin:"20px 0"}} onClick={handleSubmit}>
+        <Button variant="primary" style={{ width: "100%", margin: "20px 0" }} onClick={handleSubmit}>
           Enviar
         </Button>
       </div>

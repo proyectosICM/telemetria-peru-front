@@ -350,14 +350,6 @@
           }
         ]
       }
-    ],
-    "observaciones": [
-      {
-        "numero": 1,
-        "texto": "Observaciones si marco 'NO' arriba",
-        "nota": "Si se evidencia alguna falla durante la operación, debe registrarse aquí.",
-        "opciones": []
-      }
     ]
   }
   

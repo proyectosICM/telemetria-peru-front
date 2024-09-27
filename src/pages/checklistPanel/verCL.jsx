@@ -9,10 +9,10 @@ export function VerCL() {
   const navigate = useNavigate();
   const { idcl } = useParams();
   const [jsonContent, setJsonContent] = useState(null); // Estado para almacenar el contenido del JSON
-  const [error, setError] = useState(null); // Estado para almacenar errores
+  //const [error, setError] = useState(null); // Estado para almacenar errores
 
   useEffect(() => {
-    ListItems(`${checklistJSONURL}/${idcl}`, setJsonContent, setError); // Asegúrate de pasar el setError
+    ListItems(`${checklistJSONURL}/${idcl}`, setJsonContent); // Asegúrate de pasar el setError
   }, [idcl]);
 
   const renderJsonContent = (data) => {
@@ -53,7 +53,7 @@ export function VerCL() {
         Atrás
       </Button>
       <div style={{ margin: "20px 10%", padding: "20px", border: "2px solid white", borderRadius: '8px' }}>
-        {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>} {/* Mostrar error si hay */}
+        {/*error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>} {/* Mostrar error si hay */}
         {jsonContent && renderJsonContent(jsonContent)} {/* Mostrar contenido JSON */}
       </div>
     </div>

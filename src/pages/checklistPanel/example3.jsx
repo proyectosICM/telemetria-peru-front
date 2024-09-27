@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { opcionesCriticasB, opcionesGeneralesB, PreguntaCL } from "../../common/preguntaCL";
-import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
-import { agregarElementoAPI, agregarElementoAPICL } from "../../hooks/agregarElementoAPI";
+import { PreguntaCL } from "../../common/preguntaCL";
+import { agregarElementoAPI } from "../../hooks/agregarElementoAPI";
 import { checklistRecordsURL } from "../../api/apiurls";
+
+import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
 // Componente para cada pregunta
 
 export function Example3() {

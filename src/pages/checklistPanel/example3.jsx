@@ -11,13 +11,20 @@ import { checklistRecordsURL } from "../../api/apiurls";
 export function Example3() {
   const navigate = useNavigate();
   const { type } = useParams();
+  const { licensePlate } = useParams();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+  const companyId = localStorage.getItem("companyId");
+
   // Estado para guardar las respuestas
   const [respuestas, setRespuestas] = useState({});
   const [observaciones1, setObservaciones1] = useState("");
   const [observaciones2, setObservaciones2] = useState("");
   const [observaciones3, setObservaciones3] = useState("");
   const [observaciones4, setObservaciones4] = useState("");
+
+  const [nombreOperador, setNombreOperador] = useState("");
+  const [lecturaHorometro, setLecturaHorometro] = useState("");
+  const [numeroMontacargas, setNumeroMontacargas] = useState(licensePlate ? licensePlate : "");
 
   // Función para actualizar la respuesta de una pregunta
   const handleSeleccion = (categoria, pregunta, opcion) => {
@@ -30,35 +37,29 @@ export function Example3() {
     }));
   };
 
-  // Función para descargar el archivo JSON
-  const descargarJSON = (contenido, nombreArchivo) => {
-    const blob = new Blob([JSON.stringify(contenido, null, 2)], { type: "application/json" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = nombreArchivo;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   // Función para enviar respuestas y observaciones
   const handleSubmit = () => {
     const respuestasFinales = {
-      montacargasApagadoNA: {
+      Info: {
+        Operador: nombreOperador,
+        Horometro: lecturaHorometro,
+        MontacargasNumero: numeroMontacargas,
+      },
+      MontacargasApagadoNA: {
         ...respuestas["montacargasApagadoN/A"],
-        observaciones: observaciones1,
+        Observaciones: observaciones1,
       },
-      montacargasApagado: {
+      MontacargasApagado: {
         ...respuestas["montacargasApagado"],
-        observaciones: observaciones2,
+        Observaciones: observaciones2,
       },
-      montacargasEncendido: {
+      MontacargasEncendido: {
         ...respuestas["montacargasEncendido"],
-        observaciones: observaciones3,
+        Observaciones: observaciones3,
       },
-      montacargasGolpesRayaduras: {
+      MontacargasGolpesRayaduras: {
         ...respuestas["montacargasGolpesRayaduras"],
-        observacionesAdicionales: observaciones4,
+        ObservacionesAdicionales: observaciones4,
       },
     };
 
@@ -72,13 +73,16 @@ export function Example3() {
         checklistTypeModel: {
           id: 1,
         },
+        companyModel: {
+          id: companyId,
+        },
       },
       jsonData: respuestasFinales,
     };
 
     // Llamada a la API
     agregarElementoAPI(`${checklistRecordsURL}`, requestData);
-    navigate("/checklist-panel")
+    navigate("/checklist-panel");
   };
 
   return (
@@ -92,19 +96,35 @@ export function Example3() {
         {/* Sección para el nombre del conductor */}
         <div style={{ margin: "20px 0" }}>
           <h2>Operador Asignado al Equipo:</h2>
-          <Form.Control type="text" placeholder="Ingrese el nombre del conductor" />
+          <Form.Control
+            type="text"
+            placeholder="Ingrese el nombre del conductor"
+            value={nombreOperador}
+            onChange={(e) => setNombreOperador(e.target.value)}
+          />
         </div>
 
         {/* Lectura Horómetro */}
         <div style={{ margin: "20px 0" }}>
           <h2>Lectura Horómetro:</h2>
-          <Form.Control type="text" placeholder="Ingrese la lectura del horómetro" />
+          <Form.Control
+            type="text"
+            placeholder="Ingrese la lectura del horómetro"
+            value={lecturaHorometro}
+            onChange={(e) => setLecturaHorometro(e.target.value)}
+          />
         </div>
 
         {/* Montacargas Nro. */}
         <div style={{ margin: "20px 0" }}>
           <h2>Montacargas Nro.:</h2>
-          <Form.Control type="text" placeholder="Ingrese el número del montacargas" />
+          <Form.Control
+            type="text"
+            placeholder="Ingrese el número del montacargas"
+            value={numeroMontacargas}
+            onChange={(e) => setNumeroMontacargas(e.target.value)}
+            readOnly={!!licensePlate} // Si licensePlate existe, el campo será de solo lectura
+          />
         </div>
 
         {/* Título de Inspección vehicular */}

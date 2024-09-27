@@ -53,7 +53,6 @@ export function VerCL() {
         Atrás
       </Button>
       <div style={{ margin: "20px 10%", padding: "20px", border: "2px solid white", borderRadius: '8px' }}>
-        <h1 style={{ textAlign: 'center' }}>{idcl}</h1>
         {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>} {/* Mostrar error si hay */}
         {jsonContent && renderJsonContent(jsonContent)} {/* Mostrar contenido JSON */}
       </div>

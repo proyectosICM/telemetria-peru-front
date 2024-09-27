@@ -40,6 +40,7 @@ export const routes = [
   { path: "/example/:type", component: <Example /> },
   { path: "/example2/:type", component: <Example2 /> },
   { path: "/example3", component: <Example3 /> },
+  { path: "/example3/:licensePlate", component: <Example3 /> },
   { path: "/example2", component: <Example4 /> },
 
 

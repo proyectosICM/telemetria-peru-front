@@ -1,0 +1,363 @@
+{
+    "implementosSeguridadCalidad": [
+      {
+        "numero": 1,
+        "texto": "Cono de seguridad",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "texto": "Extintor 2kg",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "texto": "Llave cruz, Gata, palanca",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "texto": "Tacos de seguridad",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "texto": "Llanta de repuesto",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "texto": "Botiquín",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 7,
+        "texto": "Espejos",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "texto": "Toldo de furgon (sin agujeros)",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      }
+    ],
+    "lucesElementosSonoros": [
+      {
+        "numero": 1,
+        "texto": "Luces altas y bajas",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "texto": "Luces de freno",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "texto": "Luces de retroceso",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "texto": "Luces direccionales y emergencia",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "texto": "Cláxon",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "texto": "Alarma de retroceso",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 7,
+        "texto": "Pantalla de retro",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      }
+    ],
+    "neumaticos": [
+      {
+        "numero": 1,
+        "texto": "Estado (sin incrustaciones ni anomalías)",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      }
+    ],
+    "capacidadCarga": [
+      {
+        "numero": 1,
+        "texto": "Plano (65 cajas)",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "texto": "Pendiente (34 cajas)",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          }
+        ]
+      }
+    ],
+    "nivelLiquidos": [
+      {
+        "numero": 1,
+        "texto": "Aceite de motor",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          },
+          {
+            "label": "N/A",
+            "variant": "secondary"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "texto": "Refrigerante",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          },
+          {
+            "label": "N/A",
+            "variant": "secondary"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "texto": "Líquido de freno",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          },
+          {
+            "label": "N/A",
+            "variant": "secondary"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "texto": "Aceite de caja",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          },
+          {
+            "label": "N/A",
+            "variant": "secondary"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "texto": "NIVEL DE COMBUSTIBLE INICIAL (GAL) 90Oct",
+        "opciones": [
+          {
+            "label": "Bueno",
+            "variant": "success"
+          },
+          {
+            "label": "Malo",
+            "variant": "danger"
+          },
+          {
+            "label": "N/A",
+            "variant": "secondary"
+          }
+        ]
+      }
+    ],
+    "observaciones": [
+      {
+        "numero": 1,
+        "texto": "Observaciones si marco 'NO' arriba",
+        "nota": "Si se evidencia alguna falla durante la operación, debe registrarse aquí.",
+        "opciones": []
+      }
+    ]
+  }
+  

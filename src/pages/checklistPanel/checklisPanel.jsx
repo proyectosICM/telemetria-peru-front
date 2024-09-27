@@ -86,7 +86,7 @@ export function ChecklistPanel() {
           <>
             <div
               style={{ ...cardStyle, backgroundColor: "#28a745" }} // Color verde para checklist de salida
-              onClick={() => navigate("/example3")}
+              onClick={() => navigate(`/example3/${data.licensePlate}`)}
             >
               <FaClipboardCheck style={iconStyle} />
               <p>Nuevo registro</p>

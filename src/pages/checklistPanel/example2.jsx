@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { PreguntaCL } from "../../common/preguntaCL"; // Reutiliza este componente para mostrar las preguntas.
-import preguntas from "../../data/trucks-T1-CL/p-mf-salida.json"; // Importa el archivo JSON de preguntas.
+import { PreguntaCL } from "../../common/preguntaCL"; 
+import preguntas from "../../data/trucks-T1-CL/p-mf.json"; 
 import { agregarElementoAPI } from "../../hooks/agregarElementoAPI";
 import { checklistRecordsURL } from "../../api/apiurls";
 
@@ -14,8 +14,8 @@ export function Example2() {
   // Estado para guardar las respuestas y observaciones
   const [respuestas, setRespuestas] = useState({});
   const [observaciones, setObservaciones] = useState("");
-  const [nombreConductor, setNombreConductor] = useState(""); // Estado para el nombre del conductor
-  const [kilometraje, setKilometraje] = useState(""); // Estado para el kilometraje
+  const [nombreConductor, setNombreConductor] = useState(""); 
+  const [kilometraje, setKilometraje] = useState(""); 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const companyId = localStorage.getItem("companyId");
 
@@ -81,7 +81,7 @@ export function Example2() {
 
   return (
     <div className="g-background">
-      <NavbarCommon />
+      <NavbarCommon />  
       <Button onClick={() => navigate("/checklist-panel")} className="back-button">
         Atras
       </Button>
@@ -111,7 +111,7 @@ export function Example2() {
 
         {/* Título de Inspección vehicular de salida */}
         <div style={{ margin: "20px 0" }}>
-          <h1>Inspección diaria de unidad ({type})</h1>
+          <h1>Inspección diaria de unidad MOTOFURGON ({type})</h1>
         </div>
 
         {/* Sección de preguntas basadas en JSON */}
@@ -134,6 +134,7 @@ export function Example2() {
                   key={pregunta.texto}
                   numero={pregunta.numero}
                   texto={pregunta.texto}
+                  descripcion={pregunta.descripcion}
                   opciones={pregunta.opciones}
                   seleccion={respuestas[categoria]?.[pregunta.texto]}
                   onSeleccion={(opcion) => handleSeleccion(categoria, pregunta.texto, opcion)}

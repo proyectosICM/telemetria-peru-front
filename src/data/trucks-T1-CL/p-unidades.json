@@ -1,0 +1,229 @@
+{
+    "Inspección diaria de unidades": [
+        {
+            "numero": 1,
+            "texto": "DOCUMENTACIÓN DEL VEHÍCULO Y OPERADOR / CONDUCTOR",
+            "descripcion": "¿El vehículo cuenta con la documentación completa y vigente física o digital según reglamentación de Perú? (Tarjeta de propiedad, Inspección Técnica, Tarjeta de transporte de mercancías, SOAT, Licencia, conducción manejo defensivo) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 2,
+            "texto": "NIVELES Y FUGAS",
+            "descripcion": "El vehículo cuenta con todos sus niveles adecuados (Combustible: Gasolina, Diesel, Urea, Gas o GLP, Refrigerante, Aceite Motor, Líquido de frenos (si aplica), Aceite Dirección, Líquido del Embrague, Agua Limpiabrisas) y sin fugas de aceite en caja, transmisión y diferencial. Se drena la trampa de agua en el combustible (si aplica o se requiere). ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 3,
+            "texto": "SISTEMA AUDIBLE / SONORO",
+            "descripcion": "¿El sistema audible esta en buen estado y funciona correctamente? (Bocina o claxon y alarma de reversa) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 4,
+            "texto": "VIDRIOS Y ESPEJOS",
+            "descripcion": "¿Todos los vidrios y espejos están en buen estado y funcionan correctamente? (Vidrio panorámico/parabrisas, limpiabrisas, espejos laterales/principales, espejos auxiliares, vidrios de puertas, laterales y traseros de cabina). ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 5,
+            "texto": "CABINA",
+            "descripcion": "¿El vehículo cuenta con sus puntos de apoyo, asientos, cinturón de seguridad por cada asiento en buen estado y no presenta indicadores de tablero encendidos? (Puntos de apoyo (mínimo 3), asientos, cinturón de seguridad, indicadores de tablero de instrumentos, caja de seguridad y cubreestribos) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 6,
+            "texto": "EQUIPO DE CARRETERA",
+            "descripcion": "¿El vehículo cuenta con el equipo de carretera en buen estado, completo y vigente según reglamentación? (Gato / Gata, Llave de ruedas y palanca, extintor, botiquín, conos, tacos, carretillas, llanta de repuesto) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 7,
+            "texto": "SISTEMA DE ILUMINACIÓN",
+            "descripcion": "¿El sistema de iluminación está en buen estado y funciona correctamente? (Luces de: unidades altas y bajas, freno, reversa, direccionales, estacionarias de parqueo ó intermitentes, delimitadoras o de ruta (Si Aplica)) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 8,
+            "texto": "LLANTAS",
+            "descripcion": "¿Todas las llantas se encuentran en buen estado? (Presión, Milimetraje/Profundidad, banda de rodamiento, costados de la llanta, pernos o tuercas) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 9,
+            "texto": "CARROCERÍA",
+            "descripcion": "El vehículo cuenta con su carrocería en buen estado y funcional? (Cortinas, correa para cierre de cortina, sistema anticaída de cortina (Si Aplica), Chapas o seguros de Cortinas/carpas, carpas, sistema de rieles y rodamientos de carpas, filtración de agua a la carrocería, bomper o defensa delantera, bomper o defensa trasera, porta carretillas/Diablos, planchas/bandeja o escalera de acceso, Correas de amarre/varillas de sujeción de carga (Si Aplica), Mamparas-divisiones de bahías ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 10,
+            "texto": "SEÑALIZACIÓN",
+            "descripcion": "El vehículo cuenta con todas sus avisos y calcomanías completas y en buen estado? (Prevención de la violencia, Estándar de 5s, capacidad de carga del vehículo, identificación - placas reflectivas en puertas, EPPS, puntos de apoyo y Rombo de seguridad, estándar de presión de Neumáticos) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 11,
+            "texto": "EXTERIOR",
+            "descripcion": "¿El vehículo se encuentra en óptimas condiciones, libre de golpes, rayones y abolladuras en cabina y carrocería?",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 12,
+            "texto": "EQUIPOS DE CARGUE Y DESCARGUE",
+            "descripcion": "¿Los equipos de cargue y descargue (carretillas/diablitos, jetpallet, buggie) se encuentran completos, funcionales y en buen estado? ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 13,
+            "texto": "PROGRAMA (5S)",
+            "descripcion": "¿Se le aplica 5S (orden, limpieza) al vehículo?",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 14,
+            "texto": "SISTEMA DE DIRECCIÓN",
+            "descripcion": "¿El sistema de dirección está en buen estado y funciona correctamente? (Ruido anormal, vibración o juego anormal) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        },
+        {
+            "numero": 15,
+            "texto": "SISTEMA DE FRENOS",
+            "descripcion": "¿El sistema de frenos está en buen estado y funciona correctamente? (Fuga de aire o líquido de frenos, bajo nivel de aire o líquido de frenos, ruido anormal en los frenos, juego anormal en pedal de freno, frenos largos, protector de pedal de freno, freno de estacionamiento o parqueo) ⚠️",
+            "opciones": [
+                {
+                    "label": "Bueno",
+                    "variant": "success"
+                },
+                {
+                    "label": "Malo",
+                    "variant": "danger"
+                }
+            ]
+        }
+    ]
+}

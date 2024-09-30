@@ -129,7 +129,7 @@ export function Example3() {
         </div>
 
         {/* Título de Inspección vehicular */}
-        <h1>Inspección diaria de unidades ({type})</h1>
+        <h1>Check List Montacargas</h1>
 
         {/* Sección de preguntas Montacargas apagado N/A */}
         <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>

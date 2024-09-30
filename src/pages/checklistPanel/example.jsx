@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import preguntas from "../../data/trucks-T1-CL/preguntas-t1.json";
 import { PreguntaCL } from "../../common/preguntaCL";
-
+import preguntas from "../../data/trucks-T1-CL/p-unidades.json";
+import { agregarElementoAPI } from "../../hooks/agregarElementoAPI";
+import { checklistRecordsURL } from "../../api/apiurls";
 export function Example() {
   const navigate = useNavigate();
   const { type } = useParams();
 
   const [respuestas, setRespuestas] = useState({});
   const [observaciones, setObservaciones] = useState("");
-  const [conductor, setConductor] = useState(""); // Manejar estado para el conductor
-  const [kilometraje, setKilometraje] = useState(""); // Manejar estado para el kilometraje
+  const [conductor, setConductor] = useState("");
+  const [kilometraje, setKilometraje] = useState("");
+  const [nombreConductor, setNombreConductor] = useState("");
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+  const companyId = localStorage.getItem("companyId");
 
   const handleSeleccion = (categoria, pregunta, opcion) => {
     setRespuestas((prevState) => ({
@@ -24,29 +28,38 @@ export function Example() {
     }));
   };
 
-  const descargarJSON = (contenido, nombreArchivo) => {
-    const blob = new Blob([JSON.stringify(contenido, null, 2)], { type: "application/json" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = nombreArchivo;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const handleSubmit = () => {
-    const dataToDownload = {
-      conductor,
-      kilometraje,
-      respuestas,
-      observaciones,
+    const respuestasFinales = {
+      info: {
+        nombreConductor,
+        kilometraje,
+        Observaciones: observaciones,
+      },
+      "Inspección diaria de unidades": {
+        ...respuestas["Inspección diaria de unidades"],
+      },
     };
 
-    // Imprimir por consola
-    console.log(dataToDownload);
+    const requestData = {
+      checklistRecordModel: {
+        name: `Unidades (${type})`,
+        vehicleModel: {
+          id: selectedVehicleId,
+        },
+        checklistTypeModel: {
+          id: 2,
+        },
+        companyModel: {
+          id: companyId,
+        },
+      },
+      jsonData: respuestasFinales,
+    };
 
-    // Descargar el JSON
-    descargarJSON(dataToDownload, "inspeccion_unidades_t1.json");
+    // Llamada a la API
+    agregarElementoAPI(`${checklistRecordsURL}`, requestData);
+    console.log("Respuestas finales: ", respuestasFinales);
+    navigate("/checklist-panel");
   };
 
   return (
@@ -60,21 +73,21 @@ export function Example() {
         {/* Sección para el nombre del conductor */}
         <div style={{ margin: "20px 0" }}>
           <h2>Nombre del conductor:</h2>
-          <Form.Control 
-            type="text" 
-            placeholder="Ingrese el nombre del conductor" 
-            value={conductor} 
-            onChange={(e) => setConductor(e.target.value)} // Manejar el cambio
+          <Form.Control
+            type="text"
+            placeholder="Ingrese el nombre del conductor"
+            value={nombreConductor}
+            onChange={(e) => setNombreConductor(e.target.value)} // Actualiza el estado del nombre
           />
         </div>
 
         {/* Kilometraje de la unidad */}
         <div style={{ margin: "20px 0" }}>
           <h2>Kilometraje de la unidad:</h2>
-          <Form.Control 
-            type="text" 
-            placeholder="Ingrese el kilometraje de la unidad" 
-            value={kilometraje} 
+          <Form.Control
+            type="text"
+            placeholder="Ingrese el kilometraje de la unidad"
+            value={kilometraje}
             onChange={(e) => setKilometraje(e.target.value)} // Manejar el cambio
           />
         </div>
@@ -82,31 +95,35 @@ export function Example() {
         {/* Título de Inspección vehicular de salida */}
         <div style={{ margin: "20px 0" }}></div>
         <h1>Inspección diaria de unidades ({type})</h1>
-
-        <div>
-          {preguntas["Inspección diaria de unidades T1"] &&
-            preguntas["Inspección diaria de unidades T1"].map((pregunta) => (
-              <div
-                key={pregunta.texto}
-                style={{
-                  margin: "20px 0",
-                  padding: "20px",
-                  border: "1px solid #ddd",
-                  borderRadius: "10px",
-                }}
-              >
+        {/* Sección de preguntas basadas en JSON */}
+        {Object.keys(preguntas).map((categoria) => (
+          <div
+            key={categoria}
+            style={{
+              margin: "20px 0",
+              backgroundColor: "black",
+              color: "white",
+              padding: "20px",
+              border: "2px solid white",
+              borderRadius: "10px",
+            }}
+          >
+            <h3>{categoria}</h3>
+            <div className="row">
+              {preguntas[categoria].map((pregunta) => (
                 <PreguntaCL
-                  style={{ margin: "20px 0" }}
+                  key={pregunta.texto}
                   numero={pregunta.numero}
                   texto={pregunta.texto}
                   descripcion={pregunta.descripcion}
                   opciones={pregunta.opciones}
-                  seleccion={respuestas["Inspección diaria de unidades T1"]?.[pregunta.texto]}
-                  onSeleccion={(opcion) => handleSeleccion("Inspección diaria de unidades T1", pregunta.texto, opcion)}
+                  seleccion={respuestas[categoria]?.[pregunta.texto]}
+                  onSeleccion={(opcion) => handleSeleccion(categoria, pregunta.texto, opcion)}
                 />
-              </div>
-            ))}
-        </div>
+              ))}
+            </div>
+          </div>
+        ))}
 
         {/* Panel de Documentación del Vehículo y Operador/Conductor */}
         {/* 16 | Observaciones - si marco "NO" arriba - describir */}

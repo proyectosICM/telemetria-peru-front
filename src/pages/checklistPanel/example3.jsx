@@ -3,8 +3,8 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { PreguntaCL } from "../../common/preguntaCL";
-import { agregarElementoAPI } from "../../hooks/agregarElementoAPI";
-import { checklistRecordsURL } from "../../api/apiurls";
+import { agregarElementoAPI, agregarElementoConRespuestaAPI, agregarImagenAPI } from "../../hooks/agregarElementoAPI";
+import { checklistRecordsURL, ImagesCLURL } from "../../api/apiurls";
 
 import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
 // Componente para cada pregunta
@@ -27,6 +27,9 @@ export function Example3() {
   const [lecturaHorometro, setLecturaHorometro] = useState("");
   const [numeroMontacargas, setNumeroMontacargas] = useState(licensePlate ? licensePlate : "");
 
+  // Estado para guardar las imágenes seleccionadas
+  const [imagenes, setImagenes] = useState([]);
+
   // Función para actualizar la respuesta de una pregunta
   const handleSeleccion = (categoria, pregunta, opcion) => {
     setRespuestas((prevState) => ({
@@ -38,8 +41,17 @@ export function Example3() {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImagenes((prevImagenes) => [...prevImagenes, ...files]);
+  };
+
+  const handleRemoveImage = (index) => {
+    setImagenes((prevImagenes) => prevImagenes.filter((_, i) => i !== index));
+  };
+
   // Función para enviar respuestas y observaciones
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const respuestasFinales = {
       Info: {
         Operador: nombreOperador,
@@ -64,10 +76,11 @@ export function Example3() {
       },
     };
 
-    // Estructura del objeto que necesitas enviar
+    // Estructura del objeto que necesitas enviar para el checklist
     const requestData = {
       checklistRecordModel: {
         name: "Revisión Diaria",
+        driver: null,
         vehicleModel: {
           id: selectedVehicleId,
         },
@@ -81,9 +94,28 @@ export function Example3() {
       jsonData: respuestasFinales,
     };
 
-    // Llamada a la API
-    agregarElementoAPI(`${checklistRecordsURL}`, requestData);
-    navigate("/checklist-panel");
+    try {
+      // Crear el registro de checklist y obtener el ID
+      const clid = await agregarElementoConRespuestaAPI(`${checklistRecordsURL}`, requestData);
+      console.log(clid);
+      // Iterar sobre cada imagen y enviar una por una
+      for (const imagen of imagenes) {
+        const formData = new FormData();
+        formData.append("file", imagen);
+
+        // Enviar la imagen
+        await agregarImagenAPI(`${ImagesCLURL}/${clid.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
+
+      // Navegar al panel después de enviar todas las imágenes
+      navigate("/checklist-panel");
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
   };
 
   return (
@@ -263,6 +295,35 @@ export function Example3() {
               onChange={(e) => setObservaciones4(e.target.value)}
             />
           </Form.Group>
+        </div>
+
+        {/* Sección para agregar fotos */}
+        <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
+          <h3>Agregar Fotos</h3>
+          <Form.Group controlId="formFileMultiple" className="mb-3">
+            <Form.Label>Sube las fotos de inspección</Form.Label>
+            <Form.Control type="file" multiple onChange={handleImageChange} />
+          </Form.Group>
+
+          {/* Muestra las imágenes seleccionadas con opción para eliminar */}
+          <div>
+            {imagenes.length > 0 && <h4>Imágenes seleccionadas:</h4>}
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {imagenes.map((imagen, index) => (
+                <div key={index} style={{ position: "relative", display: "inline-block" }}>
+                  <img src={URL.createObjectURL(imagen)} alt={`preview-${index}`} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    style={{ position: "absolute", top: "5px", right: "5px" }}
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    X
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Botón para enviar */}

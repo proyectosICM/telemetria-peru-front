@@ -1,25 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { PreguntaCL } from "../../common/preguntaCL"; 
-import preguntas from "../../data/trucks-T1-CL/p-mf.json"; 
+import { handleSeleccionCL, PreguntaCL } from "../../common/preguntaCL";
+import preguntas from "../../data/trucks-T1-CL/p-mf.json";
 import { agregarElementoAPI } from "../../hooks/agregarElementoAPI";
 import { checklistRecordsURL } from "../../api/apiurls";
+import { useTimer } from "../../hooks/useTimer";
+import { useImageHandler } from "../../hooks/useImageHandler";
 
 export function Example2() {
   const navigate = useNavigate();
   const { type } = useParams();
 
-  // Estado para guardar las respuestas y observaciones
-  const [respuestas, setRespuestas] = useState({});
-  const [observaciones, setObservaciones] = useState("");
-  const [nombreConductor, setNombreConductor] = useState(""); 
-  const [kilometraje, setKilometraje] = useState(""); 
+  // Variables de local Storage
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const companyId = localStorage.getItem("companyId");
 
+  // Estado para guardar la informacion de cabecera
+  const [nombreConductor, setNombreConductor] = useState("");
+  const [kilometraje, setKilometraje] = useState("");
+
+  // Estado para guardar las respuestas y observaciones
+  const [respuestas, setRespuestas] = useState({});
+  const [observaciones, setObservaciones] = useState("");
+
+  const [isFormValid, setIsFormValid] = useState(false);
+  const { seconds, isActive, setIsActive } = useTimer(true);
+  const { imagenes, handleImageChange, handleRemoveImage } = useImageHandler();
+
   // Función para actualizar la respuesta de una pregunta
+
   const handleSeleccion = (categoria, pregunta, opcion) => {
     setRespuestas((prevState) => ({
       ...prevState,
@@ -29,6 +40,18 @@ export function Example2() {
       },
     }));
   };
+
+  useEffect(() => {
+    const requiredSections = ["implementosSeguridadCalidad", "lucesElementosSonoros", "neumaticos", "capacidadCarga", "nivelLiquidos"];
+
+    const allAnswered = requiredSections.every((section) => {
+      return preguntas[section].every((pregunta) => respuestas[section]?.[pregunta.texto]);
+    });
+
+    setIsFormValid(allAnswered && nombreConductor && kilometraje);
+  }, [respuestas, nombreConductor, kilometraje]);
+
+  //handleSeleccionCL(categoria, pregunta, opcion)
 
   // Enviar las respuestas
   const handleSubmit = () => {
@@ -53,13 +76,13 @@ export function Example2() {
       nivelLiquidos: {
         ...respuestas["nivelLiquidos"],
       },
-
     };
 
     // Estructura del objeto que necesitas enviar
     const requestData = {
       checklistRecordModel: {
         name: `Motorfurgon (${type})`,
+        timer: seconds,
         vehicleModel: {
           id: selectedVehicleId,
         },
@@ -81,12 +104,18 @@ export function Example2() {
 
   return (
     <div className="g-background">
-      <NavbarCommon />  
+      <NavbarCommon />
       <Button onClick={() => navigate("/checklist-panel")} className="back-button">
         Atras
       </Button>
 
       <div style={{ margin: "2px 10%", padding: "2px 10%", border: "2px solid white" }}>
+        {/* Cronómetro */}
+        <div style={{ margin: "20px 0", border: "2px solid white", borderRadius: "10px" }}>
+          <h2>Tiempo transcurrido {`${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60}`}</h2>
+          <p></p>
+        </div>
+
         {/* Sección para el nombre del conductor */}
         <div style={{ margin: "20px 0" }}>
           <h2>Nombre del conductor:</h2>
@@ -159,8 +188,39 @@ export function Example2() {
           </Form.Group>
         </div>
 
+        {/* Muestra las imágenes seleccionadas con opción para eliminar */}
+
+        <div style={{ margin: "20px 0", padding: "20px", border: "1px solid #ddd", borderRadius: "10px" }}>
+          <h3>Agregar Fotos</h3>
+          <Form.Group controlId="formFileMultiple" className="mb-3">
+            <Form.Label>Sube las fotos de inspección</Form.Label>
+            <Form.Control type="file" multiple onChange={handleImageChange} />
+          </Form.Group>
+
+          {/* Muestra las imágenes seleccionadas con opción para eliminar */}
+          <div>
+            {imagenes.length > 0 && <h4>Imágenes seleccionadas:</h4>}
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {imagenes.map((imagen, index) => (
+                <div key={index} style={{ position: "relative", display: "inline-block" }}>
+                  <img src={URL.createObjectURL(imagen)} alt={`preview-${index}`} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    style={{ position: "absolute", top: "5px", right: "5px" }}
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    X
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         {/* Botón para enviar */}
-        <Button onClick={handleSubmit}>Enviar</Button>
+        <Button variant="primary" style={{ width: "100%", margin: "20px 0" }} onClick={handleSubmit} disabled={!isFormValid}>
+          Enviar
+        </Button>
       </div>
     </div>
   );

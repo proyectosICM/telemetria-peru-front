@@ -81,6 +81,9 @@ export const checklistRecordsVehiclePageURL = `${checklistRecordsURL}/findByVehi
 
 /** Image Checklist */
 export const ImagesCLURL = `${baseAPIURL}/images-cl`;
+export const ImagesCLIdURL = `${ImagesCLURL}/findByChecklistRecord`;
+export const ImagesCLIdPagedURL = `${ImagesCLURL}/findByChecklistRecord-paged`;
+export const ImagesCLNameViewURL = `${ImagesCLURL}/images`;
 
 /**  **/
 export const impactIncidentLoggingURL = `${baseAPIURL}/impact_incident_logging`;

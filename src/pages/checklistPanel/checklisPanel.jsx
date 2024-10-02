@@ -162,6 +162,7 @@ export function ChecklistPanel() {
                 <th>ID</th>
                 <th>Fecha</th>
                 <th>Hora</th>
+                <th>Tiempo</th>
                 <th>Descripción</th>
                 <th>Placa</th>
                 {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <th>Conductor</th>} {/* Columna "Conductor" solo si no es tipo 1 o 2 */}
@@ -180,6 +181,7 @@ export function ChecklistPanel() {
                       <td>{dato.id}</td>
                       <td>{getDateFromTimestamp(dato.createdAt)}</td>
                       <td>{getTimeFromTimestamp(dato.createdAt)}</td>
+                      <td>{`${Math.floor(dato.timer / 60)}:${dato.timer % 60 < 10 ? `0${dato.timer % 60}` : dato.timer % 60}`}</td>
                       <td>{dato.name}</td>
                       <td>{dato.vehicleModel.licensePlate}</td>
                       {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <td>{driverFullName}</td>} {/* Muestra el nombre completo o "No registra" solo si no es tipo 1 o 2 */}

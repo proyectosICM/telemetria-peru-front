@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,28 +7,34 @@ import { agregarElementoAPI, agregarElementoConRespuestaAPI, agregarImagenAPI } 
 import { checklistRecordsURL, ImagesCLURL } from "../../api/apiurls";
 
 import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
-// Componente para cada pregunta
+import { useTimer } from "../../hooks/useTimer";
+import { useImageHandler } from "../../hooks/useImageHandler";
 
 export function Example3() {
   const navigate = useNavigate();
   const { type } = useParams();
   const { licensePlate } = useParams();
+
+  // Variables de local Storage
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const companyId = localStorage.getItem("companyId");
 
-  // Estado para guardar las respuestas
+  // Estado para guardar la informacion de cabecera
+  const [nombreOperador, setNombreOperador] = useState("");
+  const [lecturaHorometro, setLecturaHorometro] = useState("");
+  const [numeroMontacargas, setNumeroMontacargas] = useState(licensePlate ? licensePlate : "");
+
+  // Estados para guardar las respuestas y observaciones
   const [respuestas, setRespuestas] = useState({});
   const [observaciones1, setObservaciones1] = useState("");
   const [observaciones2, setObservaciones2] = useState("");
   const [observaciones3, setObservaciones3] = useState("");
   const [observaciones4, setObservaciones4] = useState("");
 
-  const [nombreOperador, setNombreOperador] = useState("");
-  const [lecturaHorometro, setLecturaHorometro] = useState("");
-  const [numeroMontacargas, setNumeroMontacargas] = useState(licensePlate ? licensePlate : "");
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  // Estado para guardar las imágenes seleccionadas
-  const [imagenes, setImagenes] = useState([]);
+  const { seconds, isActive, setIsActive } = useTimer(true);
+  const { imagenes, handleImageChange, handleRemoveImage } = useImageHandler();
 
   // Función para actualizar la respuesta de una pregunta
   const handleSeleccion = (categoria, pregunta, opcion) => {
@@ -41,17 +47,20 @@ export function Example3() {
     }));
   };
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImagenes((prevImagenes) => [...prevImagenes, ...files]);
-  };
+  useEffect(() => {
+    const requiredSections = ["montacargasApagadoN/A", "montacargasApagado", "montacargasEncendido", "montacargasGolpesRayaduras"];
 
-  const handleRemoveImage = (index) => {
-    setImagenes((prevImagenes) => prevImagenes.filter((_, i) => i !== index));
-  };
+    const allAnswered = requiredSections.every((section) => {
+      return preguntas[section].every((pregunta) => respuestas[section]?.[pregunta.texto]);
+    });
 
-  // Función para enviar respuestas y observaciones
+    setIsFormValid(allAnswered && nombreOperador && lecturaHorometro && numeroMontacargas);
+  }, [respuestas, nombreOperador, lecturaHorometro, numeroMontacargas]);
+
+
+
   const handleSubmit = async () => {
+    setIsActive(false);
     const respuestasFinales = {
       Info: {
         Operador: nombreOperador,
@@ -80,6 +89,7 @@ export function Example3() {
     const requestData = {
       checklistRecordModel: {
         name: "Revisión Diaria",
+        timer: seconds,
         driver: null,
         vehicleModel: {
           id: selectedVehicleId,
@@ -95,23 +105,17 @@ export function Example3() {
     };
 
     try {
-      // Crear el registro de checklist y obtener el ID
       const clid = await agregarElementoConRespuestaAPI(`${checklistRecordsURL}`, requestData);
       console.log(clid);
-      // Iterar sobre cada imagen y enviar una por una
       for (const imagen of imagenes) {
         const formData = new FormData();
         formData.append("file", imagen);
-
-        // Enviar la imagen
         await agregarImagenAPI(`${ImagesCLURL}/${clid.id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
       }
-
-      // Navegar al panel después de enviar todas las imágenes
       navigate("/checklist-panel");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
@@ -126,6 +130,12 @@ export function Example3() {
       </Button>
 
       <div style={{ margin: "2px 10%", padding: "2px 10%", border: "2px solid white" }}>
+        {/* Cronómetro */}
+        <div style={{ margin: "20px 0", border: "2px solid white", borderRadius: "10px" }}>
+          <h2>Tiempo transcurrido {`${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60}`}</h2>
+          <p></p>
+        </div>
+
         {/* Sección para el nombre del conductor */}
         <div style={{ margin: "20px 0" }}>
           <h2>Operador Asignado al Equipo:</h2>
@@ -327,7 +337,7 @@ export function Example3() {
         </div>
 
         {/* Botón para enviar */}
-        <Button variant="primary" style={{ width: "100%", margin: "20px 0" }} onClick={handleSubmit}>
+        <Button variant="primary" style={{ width: "100%", margin: "20px 0" }} onClick={handleSubmit} disabled={!isFormValid}>
           Enviar
         </Button>
       </div>

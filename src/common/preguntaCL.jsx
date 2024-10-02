@@ -42,3 +42,13 @@ export const opcionesCriticasB = [
   { label: "Bueno", variant: "success" },
   { label: "Malo", variant: "danger" },
 ];
+
+export const handleSeleccionCL = (categoria, pregunta, opcion, setRespuestas) => {
+  setRespuestas((prevState) => ({
+    ...prevState,
+    [categoria]: {
+      ...prevState[categoria],
+      [pregunta]: opcion,
+    },
+  }));
+};

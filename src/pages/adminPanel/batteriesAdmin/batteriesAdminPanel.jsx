@@ -3,14 +3,42 @@ import { NavbarCommon } from "./../../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItemsPaginated } from "../../../hooks/listItems";
-import { batteryPagedURL } from "../../../api/apiurls";
+import { batteryPagedURL, batteryURL } from "../../../api/apiurls";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
 import { getDateFromTimestamp } from "../../../utils/formatUtils";
+import { deleteItem } from "../../../hooks/deleteItem";
+import Swal from "sweetalert2"; // Importar SweetAlert
 
 export function BatteriesAdminPanel() {
   const navigate = useNavigate();
+
+  const rolId = localStorage.getItem("rolId");
+
   const [pageNumber, setPageNumber] = useState(0);
   const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${batteryPagedURL}`, pageNumber);
+
+  const handleDelete = (id) => {
+    // Mostrar alerta de confirmación antes de eliminar
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Esto eliminará la batería y todos los registros asociados de manera directa.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteItem(`${batteryURL}/${id}`);
+        Swal.fire(
+          'Eliminado!',
+          'La batería ha sido eliminada.',
+          'success'
+        );
+      }
+    });
+  };
 
   return (
     <div className="g-background">
@@ -30,9 +58,8 @@ export function BatteriesAdminPanel() {
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Voltaje</th>
-              <th>Estado</th>
-              <th>Fecha de Creación</th>
+              <th>Vehiculo Asociado</th>
+              <th>Empresa Asociada</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -42,14 +69,15 @@ export function BatteriesAdminPanel() {
                 <tr key={battery.id}>
                   <td>{index + 1 + currentPage * 10}</td>
                   <td>{battery.name}</td>
-                  <td>{battery.voltaje ? battery.voltaje : "N/A"}</td>
-                  <td>{battery.status ? "Activo" : "Inactivo"}</td>
-                  <td>{getDateFromTimestamp(battery.createdAt)}</td>
+                  <td>{battery.vehicleModel.licensePlate}</td>
+                  <td>{battery.companyModel.name}</td>
                   <td>
                     <Button variant="warning" onClick={() => navigate(`/edit-battery/${battery.id}`)}>
                       Editar
                     </Button>{" "}
-                    {/*<Button variant="danger" onClick={() => handleDelete(battery.id)}>Eliminar</Button> */}
+                    <Button variant="danger" onClick={() => handleDelete(battery.id)}>
+                      Eliminar
+                    </Button>
                   </td>
                 </tr>
               ))

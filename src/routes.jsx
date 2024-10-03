@@ -20,6 +20,8 @@ import { BatteriesAdminPanel } from "./pages/adminPanel/batteriesAdmin/batteries
 import { RoleAdminPanel } from "./pages/adminPanel/rolAdmin/roleAdminPanel";
 import { VerCL } from "./pages/checklistPanel/verCL";
 import { RecordsPanel } from "./pages/recordsPanel/recordsPanel";
+import { AddBatteryForm } from "./pages/adminPanel/batteriesAdmin/addBatteryForm";
+import { AddDriverForm } from "./pages/adminPanel/driverAdmin/addDriverForm";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -47,8 +49,15 @@ export const routes = [
   // Admin
   { path: "/company-admin", component: <CompanyAdminPanel /> },
   { path: "/user-admin", component: <UserAdminPanel /> },
+
   { path: "/driver-admin", component: <DriverAdminPanel /> },
+  { path: "/add-driver", component: <AddDriverForm /> },
+  { path: "/edit-driver/:id", component: <AddDriverForm /> },
+
   { path: "/batteries-admin", component: <BatteriesAdminPanel /> },
+  { path: "/add-battery", component: <AddBatteryForm /> },
+  { path: "/edit-battery/:id", component: <AddBatteryForm /> },
+
   { path: "/roles-admin", component: <RoleAdminPanel /> },
   { path: "/tire-admin", component: <RoleAdminPanel /> },
 

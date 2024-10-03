@@ -4,7 +4,7 @@ import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { BatteryInfo } from "../optionsPanel/batteryInfo";
 import { BatteryRecordsTable } from "./batteryRecordsTable";
-
+ 
 export function BatteryRecords() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

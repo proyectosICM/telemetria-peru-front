@@ -14,7 +14,7 @@ export function DriverAdminPanel() {
   // Función para manejar la eliminación de conductores
   const handleDelete = (id) => {
     // Aquí puedes implementar la lógica para eliminar un conductor
-    console.log("Eliminar conductor con ID:", id);
+    console.log("Eliminar conductor con ID:", id); 
     // Llama a tu API para eliminar el conductor y luego refresca los datos
   };
 

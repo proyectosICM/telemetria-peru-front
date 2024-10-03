@@ -35,6 +35,7 @@ export function DriverAdminPanel() {
           <thead>
             <tr>
               <th>#</th>
+              <th>RFID</th>
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Número de Licencia</th>
@@ -49,6 +50,7 @@ export function DriverAdminPanel() {
               datos.map((driver, index) => (
                 <tr key={driver.id}>
                   <td>{index + 1 + currentPage * 10}</td>
+                  <td>{driver.rfid}</td>
                   <td>{driver.name}</td>
                   <td>{driver.lastName}</td>
                   <td>{driver.driverLicense}</td>

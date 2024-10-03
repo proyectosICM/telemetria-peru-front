@@ -1,16 +1,17 @@
 import axios from "axios";
 
-export function agregarElementoAPI(url, requestData) {
+export function agregarElementoAPI(url, requestData, setError) {
   const token = localStorage.getItem("token");
 
-  axios
+  return axios
     .post(url, requestData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
     .catch((error) => {
-      console.log(error);
+      setError(error.response.data);
+      throw error;
     });
 }
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Función para editar un elemento con un objeto JSON completo
-export async function editItem(url, requestData) {
+export async function editItem(url, requestData, setError) {
   try {
     const token = localStorage.getItem("token");
     await axios.put(url, requestData, {
@@ -12,6 +12,7 @@ export async function editItem(url, requestData) {
   } catch (error) {
     // Manejo de errores, por ejemplo, mostrar un mensaje de error
     console.error("Error al actualizar el elemento:", error);
+    setError(error);
   }
 }
 

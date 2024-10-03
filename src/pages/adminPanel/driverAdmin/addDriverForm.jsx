@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { batteryURL, companiesURL, driverURL, vehiclesByCompanyURL } from "../../../api/apiurls";
+import { batteryURL, companiesURL, driverURL } from "../../../api/apiurls";
 import Select from "react-select";
 import { agregarElementoAPI } from "../../../hooks/agregarElementoAPI";
 import { editItem } from "../../../hooks/editItem";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 
 export function AddDriverForm() {
   const navigate = useNavigate();
@@ -16,20 +19,19 @@ export function AddDriverForm() {
 
   const [driverData, setDriverData] = useState();
   const [companies, setCompanies] = useState([]);
-  const [vehicles, setVehicles] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [driverName, setDriverName] = useState("");
   const [driverLastName, setDriverLastName] = useState("");
   const [rfid, setRfid] = useState("");
   const [driverLicense, setDriverLicense] = useState("");
-  const [licenseIssueDate, setLicenseIssueDate] = useState({ year: "", month: "", day: "" }); // Estado para la fecha de emisión
-  const [licenseExpireDate, setLicenseExpireDate] = useState({ year: "", month: "", day: "" }); // Estado para la fecha de expiración
+  const [driverPhoneNumber, setDriverPhoneNumber] = useState("");
+  const [licenseIssueDate, setLicenseIssueDate] = useState(null);
+  const [licenseExpireDate, setLicenseExpireDate] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (id != null || id !== undefined) {
       ListItems(`${driverURL}/${id}`, setDriverData);
-      console.log(`${driverURL}/${id}`);
     }
   }, [id]);
 
@@ -39,8 +41,9 @@ export function AddDriverForm() {
       setDriverLastName(driverData.lastName);
       setRfid(driverData.rfid);
       setDriverLicense(driverData.driverLicense);
-      setLicenseIssueDate({ year: driverData.licenseIssueDate[0], month: driverData.licenseIssueDate[1], day: driverData.licenseIssueDate[2] }); // Establecer fecha de emisión
-      setLicenseExpireDate({ year: driverData.licenseExpireDate[0], month: driverData.licenseExpireDate[1], day: driverData.licenseExpireDate[2] }); // Establecer fecha de expiración
+      setDriverPhoneNumber(driverData.driverPhoneNumber);
+      setLicenseIssueDate(new Date(driverData.licenseIssueDate));
+      setLicenseExpireDate(new Date(driverData.licenseExpireDate));
       setSelectedCompany({ value: driverData.companyModel.id, label: driverData.companyModel.name });
     }
   }, [driverData]);
@@ -50,14 +53,8 @@ export function AddDriverForm() {
   }, []);
 
   useEffect(() => {
-    if (selectedCompany) {
-      ListItems(`${vehiclesByCompanyURL}/${selectedCompany.value}`, setVehicles);
-    }
-  }, [selectedCompany]);
-
-  useEffect(() => {
-    if (rolId !== "1" && companyId) {
-      const selectedCompany = companies.find((company) => company.id === companyId);
+    if (rolId !== "1" && companyId && companies.length > 0) {
+      const selectedCompany = companies.find((company) => company.id === parseInt(companyId));
       setSelectedCompany({ value: selectedCompany.id, label: selectedCompany.name });
     }
   }, [rolId, companyId, companies]);
@@ -68,18 +65,17 @@ export function AddDriverForm() {
   }));
 
   const handleSaveDriver = async () => {
+    setError("");
     const requestData = {
       name: driverName,
       lastName: driverLastName,
-      rfid,
+      driverPhoneNumber: driverPhoneNumber,
+      rfid: rfid,
       driverLicense,
-      licenseIssueDate: [licenseIssueDate.year, licenseIssueDate.month, licenseIssueDate.day], // Incluir fecha de emisión en la solicitud
-      licenseExpireDate: [licenseExpireDate.year, licenseExpireDate.month, licenseExpireDate.day], // Incluir fecha de expiración en la solicitud
+      licenseIssueDate: [licenseIssueDate.getFullYear(), licenseIssueDate.getMonth() + 1, licenseIssueDate.getDate()],
+      licenseExpireDate: [licenseExpireDate.getFullYear(), licenseExpireDate.getMonth() + 1, licenseExpireDate.getDate()],
       companyModel: {
         id: selectedCompany?.value,
-      },
-      vehicleModel: {
-        id: selectedVehicle?.value,
       },
     };
     console.log(requestData);
@@ -87,11 +83,52 @@ export function AddDriverForm() {
       if (id != null || id !== undefined) {
         await editItem(`${driverURL}/${id}`, requestData);
       } else {
-        await agregarElementoAPI(driverURL, requestData);
+        await agregarElementoAPI(driverURL, requestData, setError);
       }
-      navigate("/driver-admin");
+      // navigate("/driver-admin");
     } catch (error) {
       console.error("Error al guardar el conductor:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Hubo un error al guardar los datos. Inténtalo nuevamente. ${error.response.data}`,
+      });
+    }
+  };
+
+  // Función para validar solo letras, permitiendo mayúsculas y tildes
+  const handleTextInput = (setState) => (e) => {
+    const value = e.target.value;
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]*$/; // Regex que permite letras, tildes y espacios
+    if (regex.test(value)) {
+      setState(value); // Solo actualiza el estado si es válido
+    }
+  };
+
+  // Función para validar el RFID (suponiendo que debe ser alfanumérico)
+  const handleRfidInput = (e) => {
+    const value = e.target.value;
+    const regex = /^[a-zA-Z0-9]*$/; // Regex que permite letras y números
+    if (regex.test(value)) {
+      setRfid(value);
+    }
+  };
+
+  // Función para validar la licencia de conductor
+  const handleDriverLicenseInput = (e) => {
+    const value = e.target.value;
+    const regex = /^[a-zA-Z0-9-]*$/; // Regex que permite letras, números y guiones
+    if (regex.test(value)) {
+      setDriverLicense(value);
+    }
+  };
+
+  // Función para validar el número de celular
+  const handleDriverPhoneNumberInput = (e) => {
+    const value = e.target.value;
+    const regex = /^\d{0,10}$/; // Regex que permite hasta 10 dígitos
+    if (regex.test(value)) {
+      setDriverPhoneNumber(value);
     }
   };
 
@@ -112,7 +149,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese el nombre del conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverName}
-                onChange={(e) => setDriverName(e.target.value)}
+                onChange={handleTextInput(setDriverName)} // Llama a la función de validación
               />
             </Form.Group>
 
@@ -123,7 +160,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese el apellido del conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverLastName}
-                onChange={(e) => setDriverLastName(e.target.value)}
+                onChange={handleTextInput(setDriverLastName)} // Llama a la función de validación
               />
             </Form.Group>
           </div>
@@ -136,7 +173,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese el RFID"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={rfid}
-                onChange={(e) => setRfid(e.target.value)}
+                onChange={handleRfidInput} // Llama a la función de validación
               />
             </Form.Group>
 
@@ -147,94 +184,62 @@ export function AddDriverForm() {
                 placeholder="Ingrese la Licencia de Conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverLicense}
-                onChange={(e) => setDriverLicense(e.target.value)}
+                onChange={handleDriverLicenseInput} // Llama a la función de validación
               />
             </Form.Group>
           </div>
 
-          {/* Contenedor flex para fecha de emisión y expiración de licencia */}
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-            {/* Input para Fecha de Emisión de Licencia */}
-            <Form.Group controlId="licenseIssueDate" style={{ flex: 1, marginRight: "10px" }}>
-              <Form.Label style={{ color: "white" }}>Fecha de Emisión</Form.Label>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Form.Control
-                  type="number"
-                  placeholder="Año"
-                  style={{ backgroundColor: "white", color: "black", marginRight: "5px", flex: 1 }}
-                  value={licenseIssueDate.year}
-                  onChange={(e) => setLicenseIssueDate({ ...licenseIssueDate, year: e.target.value })}
-                />
-                <Form.Control
-                  type="number"
-                  placeholder="Mes"
-                  style={{ backgroundColor: "white", color: "black", marginRight: "5px", flex: 1 }}
-                  value={licenseIssueDate.month}
-                  onChange={(e) => setLicenseIssueDate({ ...licenseIssueDate, month: e.target.value })}
-                />
-                <Form.Control
-                  type="number"
-                  placeholder="Día"
-                  style={{ backgroundColor: "white", color: "black", flex: 1 }}
-                  value={licenseIssueDate.day}
-                  onChange={(e) => setLicenseIssueDate({ ...licenseIssueDate, day: e.target.value })}
-                />
-              </div>
+            <Form.Group controlId="driverPhoneNumber" style={{ flex: 1, marginRight: "10px" }}>
+              <Form.Label style={{ color: "white" }}>Número de Celular</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el número de celular"
+                style={{ backgroundColor: "white", color: "black" }}
+                value={driverPhoneNumber}
+                onChange={handleDriverPhoneNumberInput} // Llama a la función de validación
+              />
             </Form.Group>
 
-            {/* Input para Fecha de Expiración de Licencia */}
-            <Form.Group controlId="licenseExpireDate" style={{ flex: 1 }}>
-              <Form.Label style={{ color: "white" }}>Fecha de Expiración</Form.Label>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Form.Control
-                  type="number"
-                  placeholder="Año"
-                  style={{ backgroundColor: "white", color: "black", marginRight: "5px", flex: 1 }}
-                  value={licenseExpireDate.year}
-                  onChange={(e) => setLicenseExpireDate({ ...licenseExpireDate, year: e.target.value })}
-                />
-                <Form.Control
-                  type="number"
-                  placeholder="Mes"
-                  style={{ backgroundColor: "white", color: "black", marginRight: "5px", flex: 1 }}
-                  value={licenseExpireDate.month}
-                  onChange={(e) => setLicenseExpireDate({ ...licenseExpireDate, month: e.target.value })}
-                />
-                <Form.Control
-                  type="number"
-                  placeholder="Día"
-                  style={{ backgroundColor: "white", color: "black", flex: 1 }}
-                  value={licenseExpireDate.day}
-                  onChange={(e) => setLicenseExpireDate({ ...licenseExpireDate, day: e.target.value })}
-                />
-              </div>
+            <Form.Group controlId="company" style={{ flex: 1 }}>
+              <Form.Label style={{ color: "white" }}>Compañía</Form.Label>
+              <Select
+                options={companyOptions}
+                value={selectedCompany}
+                onChange={setSelectedCompany}
+                placeholder="Seleccione una compañía"
+              />
             </Form.Group>
           </div>
 
-          <Form.Group controlId="company" style={{ marginBottom: "20px" }}>
-            <Form.Label style={{ color: "white" }}>Compañía</Form.Label>
-            <Select
-              options={companyOptions}
-              onChange={(selected) => setSelectedCompany(selected)}
-              value={selectedCompany}
-            />
-          </Form.Group>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+            <Form.Group controlId="licenseIssueDate" style={{ flex: 1, marginRight: "10px" }}>
+              <Form.Label style={{ color: "white" }}>Fecha de Emisión de Licencia</Form.Label>
+              <DatePicker
+                selected={licenseIssueDate}
+                onChange={(date) => setLicenseIssueDate(date)}
+                dateFormat="dd/MM/yyyy"
+                className="form-control"
+                placeholderText="Seleccione la fecha"
+              />
+            </Form.Group>
 
-          <Form.Group controlId="vehicle" style={{ marginBottom: "20px" }}>
-            <Form.Label style={{ color: "white" }}>Vehículo</Form.Label>
-            <Select
-              options={vehicles.map((vehicle) => ({
-                value: vehicle.id,
-                label: vehicle.licensePlate,
-              }))}
-              onChange={(selected) => setSelectedVehicle(selected)}
-              value={selectedVehicle}
-            />
-          </Form.Group>
+            <Form.Group controlId="licenseExpireDate" style={{ flex: 1 }}>
+              <Form.Label style={{ color: "white" }}>Fecha de Vencimiento de Licencia</Form.Label>
+              <DatePicker
+                selected={licenseExpireDate}
+                onChange={(date) => setLicenseExpireDate(date)}
+                dateFormat="dd/MM/yyyy"
+                className="form-control"
+                placeholderText="Seleccione la fecha"
+              />
+            </Form.Group>
+          </div>
 
-          <Button variant="primary" onClick={handleSaveDriver}>
+          <Button onClick={handleSaveDriver} style={{ marginTop: "20px" }}>
             Guardar
           </Button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
       </div>
     </div>

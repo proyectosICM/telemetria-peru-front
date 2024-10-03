@@ -25,13 +25,8 @@ export function AddBatteryForm() {
   useEffect(() => {
     if (id != null || id !== undefined) {
       ListItems(`${batteryURL}/${id}`, setBatteryData);
-      console.log(`${batteryURL}/${id}`);
     }
   }, [id]);
-
-  useEffect(() => {
-    console.log(`${batteryData && batteryData.name}`);
-  }, [batteryData]);
 
   useEffect(() => {
     if (batteryData) {
@@ -52,9 +47,8 @@ export function AddBatteryForm() {
   }, [selectedCompany]);
 
   useEffect(() => {
-    // Si el rolId no es 1, selecciona automáticamente la empresa correspondiente
-    if (rolId !== "1" && companyId) {
-      const selectedCompany = companies.find((company) => company.id === companyId);
+    if (rolId !== "1" && companyId && companies.length > 0) {
+      const selectedCompany = companies.find((company) => company.id === parseInt(companyId));
       setSelectedCompany({ value: selectedCompany.id, label: selectedCompany.name });
     }
   }, [rolId, companyId, companies]);
@@ -111,40 +105,43 @@ export function AddBatteryForm() {
               placeholder="Ingrese el nombre de la batería"
               style={{ backgroundColor: "white", color: "black" }}
               value={batteryName}
+              isDisabled={rolId !== "1"}
               onChange={(e) => setBatteryName(e.target.value)} // Manejar el cambio en el input
             />
           </Form.Group>
 
           {/* Select para elegir la empresa */}
-          <Form.Group controlId="associatedCompany" style={{ marginBottom: "20px" }}>
-            <Form.Label style={{ color: "white" }}>Empresa Asociada</Form.Label>
-            <Select
-              options={companyOptions} // Opciones de empresas
-              value={selectedCompany} // Valor seleccionado
-              onChange={(selectedOption) => {
-                setSelectedCompany(selectedOption); // Establecer la empresa seleccionada
-                setSelectedVehicle(null); // Limpiar la selección del vehículo cuando se cambia la empresa
-              }}
-              placeholder="Seleccione una empresa"
-              isSearchable // Habilita la barra de búsqueda
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  backgroundColor: "white",
-                  color: "black",
-                }),
-                menu: (provided) => ({
-                  ...provided,
-                  zIndex: 9999,
-                }),
-                option: (provided, state) => ({
-                  ...provided,
-                  backgroundColor: state.isSelected ? "#007bff" : state.isFocused ? "#555" : "#444",
-                  color: "white",
-                }),
-              }}
-            />
-          </Form.Group>
+          {rolId === "1" && (
+            <Form.Group controlId="associatedCompany" style={{ marginBottom: "20px" }}>
+              <Form.Label style={{ color: "white" }}>Empresa Asociada</Form.Label>
+              <Select
+                options={companyOptions} // Opciones de empresas
+                value={selectedCompany} // Valor seleccionado
+                onChange={(selectedOption) => {
+                  setSelectedCompany(selectedOption); // Establecer la empresa seleccionada
+                  setSelectedVehicle(null); // Limpiar la selección del vehículo cuando se cambia la empresa
+                }}
+                placeholder="Seleccione una empresa"
+                isSearchable // Habilita la barra de búsqueda
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    backgroundColor: "white",
+                    color: "black",
+                  }),
+                  menu: (provided) => ({
+                    ...provided,
+                    zIndex: 9999,
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: state.isSelected ? "#007bff" : state.isFocused ? "#555" : "#444",
+                    color: "white",
+                  }),
+                }}
+              />
+            </Form.Group>
+          )}
 
           {/* Select para elegir el vehículo asignado */}
           <Form.Group controlId="assignedVehicle" style={{ marginBottom: "20px" }}>
@@ -181,7 +178,7 @@ export function AddBatteryForm() {
             style={{ backgroundColor: "#007bff", border: "none" }}
             onClick={handleSaveBattery} // Llamar a la función para guardar la batería
           >
-            Guardar Batería
+            Guardar Bateria 
           </Button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export function agregarElementoAPI(url, requestData, setError) {
+export function agregarElementoAPI(url, requestData) {
   const token = localStorage.getItem("token");
 
   return axios
@@ -10,7 +10,6 @@ export function agregarElementoAPI(url, requestData, setError) {
       },
     })
     .catch((error) => {
-      setError(error.response.data);
       throw error;
     });
 }

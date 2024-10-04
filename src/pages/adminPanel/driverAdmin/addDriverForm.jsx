@@ -27,7 +27,6 @@ export function AddDriverForm() {
   const [driverPhoneNumber, setDriverPhoneNumber] = useState("");
   const [licenseIssueDate, setLicenseIssueDate] = useState(null);
   const [licenseExpireDate, setLicenseExpireDate] = useState(null);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     if (id != null || id !== undefined) {
@@ -65,7 +64,24 @@ export function AddDriverForm() {
   }));
 
   const handleSaveDriver = async () => {
-    setError("");
+    if (
+      !driverName ||
+      !driverLastName ||
+      !rfid ||
+      !driverLicense ||
+      !driverPhoneNumber ||
+      !selectedCompany ||
+      !licenseIssueDate ||
+      !licenseExpireDate
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "Campos incompletos",
+        text: "Por favor, completa todos los campos requeridos.",
+      });
+      return;
+    }
+
     const requestData = {
       name: driverName,
       lastName: driverLastName,
@@ -83,9 +99,9 @@ export function AddDriverForm() {
       if (id != null || id !== undefined) {
         await editItem(`${driverURL}/${id}`, requestData);
       } else {
-        await agregarElementoAPI(driverURL, requestData, setError);
+        await agregarElementoAPI(driverURL, requestData);
       }
-      // navigate("/driver-admin");
+      navigate("/driver-admin");
     } catch (error) {
       console.error("Error al guardar el conductor:", error);
       Swal.fire({
@@ -126,7 +142,7 @@ export function AddDriverForm() {
   // Función para validar el número de celular
   const handleDriverPhoneNumberInput = (e) => {
     const value = e.target.value;
-    const regex = /^\d{0,10}$/; // Regex que permite hasta 10 dígitos
+    const regex = /^[+\d-\s]*$/; // Regex que permite dígitos, +, - y espacios
     if (regex.test(value)) {
       setDriverPhoneNumber(value);
     }
@@ -149,6 +165,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese el nombre del conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverName}
+                maxLength="50" 
                 onChange={handleTextInput(setDriverName)} // Llama a la función de validación
               />
             </Form.Group>
@@ -157,6 +174,7 @@ export function AddDriverForm() {
               <Form.Label style={{ color: "white" }}>Apellido del Conductor</Form.Label>
               <Form.Control
                 type="text"
+                maxLength="50"
                 placeholder="Ingrese el apellido del conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverLastName}
@@ -173,6 +191,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese el RFID"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={rfid}
+                maxLength="10"
                 onChange={handleRfidInput} // Llama a la función de validación
               />
             </Form.Group>
@@ -184,6 +203,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese la Licencia de Conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverLicense}
+                maxLength="20"
                 onChange={handleDriverLicenseInput} // Llama a la función de validación
               />
             </Form.Group>
@@ -197,18 +217,14 @@ export function AddDriverForm() {
                 placeholder="Ingrese el número de celular"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverPhoneNumber}
+                maxLength="15"
                 onChange={handleDriverPhoneNumberInput} // Llama a la función de validación
               />
             </Form.Group>
 
             <Form.Group controlId="company" style={{ flex: 1 }}>
               <Form.Label style={{ color: "white" }}>Compañía</Form.Label>
-              <Select
-                options={companyOptions}
-                value={selectedCompany}
-                onChange={setSelectedCompany}
-                placeholder="Seleccione una compañía"
-              />
+              <Select options={companyOptions} value={selectedCompany} onChange={setSelectedCompany} placeholder="Seleccione una compañía" />
             </Form.Group>
           </div>
 
@@ -239,7 +255,6 @@ export function AddDriverForm() {
           <Button onClick={handleSaveDriver} style={{ marginTop: "20px" }}>
             Guardar
           </Button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
       </div>
     </div>

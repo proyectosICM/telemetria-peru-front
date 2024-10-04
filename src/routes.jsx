@@ -22,6 +22,7 @@ import { VerCL } from "./pages/checklistPanel/verCL";
 import { RecordsPanel } from "./pages/recordsPanel/recordsPanel";
 import { AddBatteryForm } from "./pages/adminPanel/batteriesAdmin/addBatteryForm";
 import { AddDriverForm } from "./pages/adminPanel/driverAdmin/addDriverForm";
+import { AddCompanyForm } from "./pages/adminPanel/companyAdmin/addCompanyForm";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -48,6 +49,9 @@ export const routes = [
 
   // Admin
   { path: "/company-admin", component: <CompanyAdminPanel /> },
+  { path: "/add-company", component: <AddCompanyForm /> },
+  { path: "/edit-company/:id", component: <AddCompanyForm /> },
+
   { path: "/user-admin", component: <UserAdminPanel /> },
 
   { path: "/driver-admin", component: <DriverAdminPanel /> },

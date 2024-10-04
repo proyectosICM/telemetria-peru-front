@@ -69,8 +69,8 @@ export function BatteriesAdminPanel() {
                 <tr key={battery.id}>
                   <td>{index + 1 + currentPage * 10}</td>
                   <td>{battery.name}</td>
-                  <td>{battery.vehicleModel.licensePlate}</td>
-                  <td>{battery.companyModel.name}</td>
+                  <td>{battery.licensePlate}</td>
+                  <td>{battery.companyName}</td>
                   <td>
                     <Button variant="warning" onClick={() => navigate(`/edit-battery/${battery.id}`)}>
                       Editar

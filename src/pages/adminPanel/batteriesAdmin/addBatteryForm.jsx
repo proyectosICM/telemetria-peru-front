@@ -8,7 +8,7 @@ import { batteryURL, companiesURL, vehiclesByCompanyURL } from "../../../api/api
 import Select from "react-select";
 import { agregarElementoAPI } from "../../../hooks/agregarElementoAPI";
 import { editItem } from "../../../hooks/editItem";
-
+ 
 export function AddBatteryForm() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,9 +30,9 @@ export function AddBatteryForm() {
 
   useEffect(() => {
     if (batteryData) {
-      setBatteryName(batteryData.name); // Establecer el nombre de la batería al cargar los datos
-      setSelectedCompany({ value: batteryData.companyModel.id, label: batteryData.companyModel.name }); // Establecer la empresa seleccionada
-      setSelectedVehicle({ value: batteryData.vehicleModel.id, label: batteryData.vehicleModel.licensePlate }); // Establecer el vehículo seleccionado
+      setBatteryName(batteryData.name); 
+      setSelectedCompany({ value: batteryData.companyId, label: batteryData.companyName }); 
+      setSelectedVehicle({ value: batteryData.vehicleId, label: batteryData.licensePlate }); 
     }
   }, [batteryData]);
 

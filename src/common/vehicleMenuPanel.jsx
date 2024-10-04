@@ -66,7 +66,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
           <div
             className="vmp-item"
             key={index}
-            onClick={() => handleSelectVehicle(item.id, item.vehicletypeModel.id)}
+            onClick={() => handleSelectVehicle(item.id, item.vehicleTypeId)}
           >
             <div className="vmp-item-details">
             <FaTruck className="vmp-truck-icon" />
@@ -74,7 +74,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
                 <strong>Placa:</strong> {item.licensePlate}
               </p>
               <p className="vmp-type">
-                <strong>Tipo:</strong> {item.vehicletypeModel.name}
+                <strong>Tipo:</strong> {item.vehicleTypeName}
               </p>
             </div>
           </div>

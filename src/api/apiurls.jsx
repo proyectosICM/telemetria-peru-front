@@ -6,11 +6,6 @@ export const mqttLocalURL = "ws://localhost:1883"
 export const mqttTopics = {
     prueba: "prueba",
     tmp_gasPressure: "tmp_gasPressure/",
-
-    //Option
-    tmp_alarmOn : "tmp_alarmOn/",
-    tmp_vehicleOn: "tmp_vehicleOn/",
-    tmp_areLocksOn: "tmp_areLocksOn/"
 };
 
 // URL base común
@@ -38,9 +33,8 @@ export const vehiclesByCompanyPagedURL = `${vehiclesURL}/findByCompanyId-paged`;
 //vehicles
 export const vehiclesTypesURL = `${baseAPIURL}/vehicle-type`;
 
-export const vehiclesAlarmOnURL = `${vehiclesURL}/update-alarm`;
-export const vehiclesLockOnURL = `${vehiclesURL}/update-lock`;
-export const vehiclesEngineOnURL = `${vehiclesURL}/update-engine`;
+export const vehiclesOptionsDataURL = `${vehiclesURL}/options-data`;
+export const vehiclesOptionsUpdateURL = `${vehiclesURL}/options-update`;
 
 /** User */
 export const UserURL = `${baseAPIURL}/users`;

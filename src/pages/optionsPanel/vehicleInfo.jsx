@@ -7,8 +7,10 @@ import mqttDataHandler from "../../hooks/mqttDataHandler";
 export function VehicleInfo() {
   const [data, setData] = useState([]);
   const [speed, setSpeed] = useState([]);
-  const [latitude, setLatitude] = useState([]);
-  const [longitude, setLongitude] = useState([]);
+
+  // Activar si se desea optener la ubicacion
+  // const [latitude, setLatitude] = useState([]);
+  // const [longitude, setLongitude] = useState([]);
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
@@ -27,7 +29,7 @@ export function VehicleInfo() {
     <div className="g-option-item">
       <h4>Informacion</h4>
       <p>Placa: {data && data.licensePlate}</p>
-      <p>Tipo: {data && data.vehicletypeModel && data.vehicletypeModel.name} </p>
+      <p>Tipo: {data && data.vehicleTypeName} </p>
       <p>Velocidad Actual: {`${speed} km`} </p>
       <p>Tiempo encendido: {data && data.timeOn} segundos</p>
     </div>

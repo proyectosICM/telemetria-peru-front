@@ -4,13 +4,12 @@ import axios from "axios";
 export async function editItem(url, requestData, setError) {
   try {
     const token = localStorage.getItem("token");
-    await axios.put(url, requestData, {
+    return await axios.put(url, requestData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   } catch (error) {
-    // Manejo de errores, por ejemplo, mostrar un mensaje de error
     console.error("Error al actualizar el elemento:", error);
     setError(error);
   }
@@ -33,18 +32,20 @@ export async function editSingleValue(url,key, value) {
   }
 }
 
-export async function editSingleValue2(url, key, value) {
-    try {
-      const token = localStorage.getItem("token");
-      const requestData = { [key]: value };
-  
-      await axios.put(url, requestData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } catch (error) {
-      // Manejo de errores
-      console.error("Error al actualizar el valor:", error);
-    }
+export async function editVehicleOptions(url, type, status) {
+  try {
+    const token = localStorage.getItem("token");
+    const requestUrl = `${url}?type=${type}&status=${status}`;
+
+    await axios.put(requestUrl, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    // Manejo de errores
+    console.error("Error al actualizar el valor:", error);
   }
+}
+
+

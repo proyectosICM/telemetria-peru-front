@@ -35,6 +35,7 @@ export function MainPanel() {
       messages.forEach((message) => {
         try {
           // Intentar parsear el mensaje como JSON
+          console.log(message);
           const jsonString = message.match(/{.*}/); // Extraer solo el JSON del mensaje
           if (!jsonString) {
             console.error("El mensaje no contiene un JSON válido:", message);

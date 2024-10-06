@@ -40,8 +40,8 @@ export function ChecklistPanel() {
 
   // Función para determinar qué checklist mostrar según el tipo de vehículo
   const renderChecklistCards = () => {
-    if (data && data.vehicletypeModel) {
-      const vehicleTypeId = data.vehicletypeModel.id;
+    if (data && data.vehicleTypeId) {
+      const vehicleTypeId = data.vehicleTypeId;
       
       if (vehicleTypeId === 3 || vehicleTypeId === 4) {
         return (

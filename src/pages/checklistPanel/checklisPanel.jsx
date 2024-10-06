@@ -96,7 +96,7 @@ export function ChecklistPanel() {
     return null;
   };
 
-  const vehicleTypeId = data?.vehicletypeModel?.id;
+  const vehicleTypeId = data?.vehicleTypeId;
 
   return (
     <div className="g-background">

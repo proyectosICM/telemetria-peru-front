@@ -19,8 +19,8 @@ export function NavbarCommon() {
 
       <Nav>
         <Nav.Link onClick={() => navigation("/")}>Panel Principal</Nav.Link>
-        <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link>
-        <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link>
+        {/*   <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link>
+        <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link> */}
       </Nav>
 
       <Button style={{ marginRight: "25px" }} onClick={handleLogout} variant="outline-light">

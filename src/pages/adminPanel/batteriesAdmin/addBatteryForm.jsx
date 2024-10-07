@@ -57,7 +57,7 @@ export function AddBatteryForm() {
   const companyOptions = companies.map((company) => ({
     value: company.id,
     label: company.name, // Asegúrate de que esta propiedad exista en tus datos
-  }));
+  })); 
 
   // Formatear las opciones de vehículos para react-select
   const vehicleOptions = vehicles.map((vehicle) => ({

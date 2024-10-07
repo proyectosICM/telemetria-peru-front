@@ -1,6 +1,6 @@
 import React from "react";
 import Swal from "sweetalert2";
-import { clearLocalStorage } from "../utils/storageUtils";
+
 
 export function alertMessageCreated(status) {
   if (status === 201) {

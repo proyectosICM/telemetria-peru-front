@@ -1,31 +1,14 @@
-import React, { useState } from "react";
-import { NavbarCommon } from "./../../../common/navbarCommon";
+import React from "react";
+import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { ListItemsPaginated } from "../../../hooks/listItems";
-import { companiesPageURL, companiesURL } from "../../../api/apiurls";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
-import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../utils/formatUtils";
-import Swal from "sweetalert2";
-import { deleteItem } from "../../../hooks/deleteItem";
-import { alertDeleteConfirmation, alertFailedfulDeleted, alertSuccessfulDeleted } from "../../../messages/apiResponseMessages";
+import { getDateFromTimestamp } from "../../../utils/formatUtils";
+import { useCompanyAdminLogic } from "./useCompanyAdminLogic";
 
 export function CompanyAdminPanel() {
   const navigate = useNavigate();
-  const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${companiesPageURL}`, pageNumber);
-
-  const handleDelete = async (id) => {
-    try {
-      const result = await alertDeleteConfirmation();
-      if (result.isConfirmed) {
-        await deleteItem(`${companiesURL}/${id}`);
-        alertSuccessfulDeleted();
-      }
-    } catch (error) {
-      alertFailedfulDeleted();
-    }
-  };
+  const { datos, totalPages, currentPage, setCurrentPage, setPageNumber, handleDelete } = useCompanyAdminLogic();
 
   return (
     <div className="g-background">
@@ -34,7 +17,7 @@ export function CompanyAdminPanel() {
         <Button onClick={() => navigate("/admin")} className="back-button" style={{ marginBottom: "20px" }}>
           Atras
         </Button>
-        <h1>Panel Administractivo de Empresas</h1>
+        <h1>Panel Administrativo de Empresas</h1>
         <Button onClick={() => navigate("/add-company")} variant="success" style={{ marginBottom: "20px" }}>
           Agregar Empresa
         </Button>

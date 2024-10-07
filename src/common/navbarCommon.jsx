@@ -10,7 +10,7 @@ export function NavbarCommon() {
     clearLocalStorage();
     navigation("/login");
   };
- 
+
   return (
     <Navbar bg="dark" variant="dark" className="justify-content-between">
       <Navbar.Brand style={{ marginLeft: "25px", cursor: "pointer" }} onClick={() => navigation("/")}>
@@ -19,8 +19,8 @@ export function NavbarCommon() {
 
       <Nav>
         <Nav.Link onClick={() => navigation("/")}>Panel Principal</Nav.Link>
-        {/*   <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link>
-        <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link> */}
+        <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link>
+        <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link>
       </Nav>
 
       <Button style={{ marginRight: "25px" }} onClick={handleLogout} variant="outline-light">

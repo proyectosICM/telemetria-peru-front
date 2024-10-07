@@ -5,18 +5,13 @@ import { ListItemsPaginated } from "../../../hooks/listItems";
 import { userPagedURL } from "../../../api/apiurls";
 import { Button, Table } from "react-bootstrap";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
+import { useUserAdminLogic } from "./useUserAdminLogic";
+import { getDateFromTimestamp } from "../../../utils/formatUtils";
 
 export function UserAdminPanel() {
   const navigate = useNavigate();
-  const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${userPagedURL}`, pageNumber);
+  const { datos, totalPages, currentPage, setCurrentPage, setPageNumber, handleDelete } = useUserAdminLogic();
 
-  // Función para manejar la eliminación de usuarios
-  const handleDelete = (id) => {
-    // Aquí puedes implementar la lógica para eliminar un usuario
-    console.log("Eliminar usuario con ID:", id);
-    // Llama a tu API para eliminar el usuario y luego refresca los datos
-  };
 
   return (
     <div className="g-background">
@@ -54,7 +49,7 @@ export function UserAdminPanel() {
                   <td>{user.status ? "Activo" : "Inactivo"}</td>
                   <td>{user.companyModel.name }</td>
                   <td>{user.roleModel ? user.roleModel.name : "Sin Rol"}</td>
-                  <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td>{getDateFromTimestamp(user.createdAt)}</td>
                   <td>
                     <Button variant="warning" onClick={() => navigate(`/edit-user/${user.id}`)}>
                       Editar

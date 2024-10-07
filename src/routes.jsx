@@ -23,6 +23,8 @@ import { RecordsPanel } from "./pages/recordsPanel/recordsPanel";
 import { AddBatteryForm } from "./pages/adminPanel/batteriesAdmin/addBatteryForm";
 import { AddDriverForm } from "./pages/adminPanel/driverAdmin/addDriverForm";
 import { AddCompanyForm } from "./pages/adminPanel/companyAdmin/addCompanyForm";
+import { AddUserForm } from "./pages/adminPanel/userAdmin/addUserForm";
+import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -53,16 +55,21 @@ export const routes = [
   { path: "/edit-company/:id", component: <AddCompanyForm /> },
 
   { path: "/user-admin", component: <UserAdminPanel /> },
+  { path: "/add-user", component: <AddUserForm /> },
+  { path: "/edit-user/:id", component: <AddUserForm /> },
 
   { path: "/driver-admin", component: <DriverAdminPanel /> },
   { path: "/add-driver", component: <AddDriverForm /> },
-  { path: "/edit-driver/:id", component: <AddDriverForm /> },
+  { path: "/edit-driver/:id", component: <AddDriverForm /> }, 
 
   { path: "/batteries-admin", component: <BatteriesAdminPanel /> },
   { path: "/add-battery", component: <AddBatteryForm /> },
   { path: "/edit-battery/:id", component: <AddBatteryForm /> },
 
   { path: "/roles-admin", component: <RoleAdminPanel /> },
+  { path: "/add-role", component: <AddRolForm /> },
+  { path: "/edit-role/:id", component: <AddRolForm /> },
+
   { path: "/tire-admin", component: <RoleAdminPanel /> },
 
   { path: "/ver-cl/:idcl", component: <VerCL /> },

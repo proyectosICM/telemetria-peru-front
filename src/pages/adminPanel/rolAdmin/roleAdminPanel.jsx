@@ -14,7 +14,7 @@ export function RoleAdminPanel() {
   useEffect(() => {
     ListItems(`${rolesURL}`, setDatos);
   }, []);
-
+ 
   return (
     <div className="g-background">
       <NavbarCommon />

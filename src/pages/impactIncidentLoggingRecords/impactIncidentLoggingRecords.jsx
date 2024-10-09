@@ -5,17 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { ListItemsPaginated } from "../../hooks/listItems";
 import { impactIncidentLoggingByVehiclePageURL } from "../../api/apiurls";
 import { getDateAndDayFromTimestamp } from "../../utils/formatUtils";
+import { PaginacionUtils } from "../../utils/paginacionUtils";
 
 export function ImpactIncidentLoggingRecords() {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  const page = 0;
+  const [pageNumber, setPageNumber] = useState(0);
 
-  useEffect(() => {
-   // ListItemsPaginated(`${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`, setData, page);
-  }, [selectedVehicleId]);
-
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`, pageNumber);
   return (
     <div>
       <NavbarCommon />
@@ -42,11 +40,7 @@ export function ImpactIncidentLoggingRecords() {
               ))}
           </tbody>
         </Table>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginTop: "20px" }}>
-          <Button>Atras</Button>
-          <p style={{ margin: "0" }}>Pagina 1 de 3</p>
-          <Button>Siguiente</Button>
-        </div>
+        <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
       </div>
     </div>
   );

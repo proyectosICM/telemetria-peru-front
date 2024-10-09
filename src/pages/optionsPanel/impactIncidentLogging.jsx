@@ -8,13 +8,14 @@ import { getDateAndDayFromTimestamp } from "../../utils/formatUtils";
 
 export function ImpactIncidentLogging({ showAlert = true }) {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  //const [data, setData] = useState();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  const page = 0;
+  const [pageNumber, setPageNumber] = useState(0);
 
-  useEffect(() => {
-    //ListItemsPaginated(`${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`, setData, page);
-  }, [selectedVehicleId]);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
+    `${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`,
+    pageNumber
+  );
 
   const handleRecords = () => {
     if (showAlert) {
@@ -40,7 +41,7 @@ export function ImpactIncidentLogging({ showAlert = true }) {
         <thead>
           <tr>
             <th>#</th>
-            <th>Dia y Hora</th>
+
             <th>Description</th>
           </tr>
         </thead>
@@ -49,7 +50,7 @@ export function ImpactIncidentLogging({ showAlert = true }) {
             data.map((log) => (
               <tr key={log.id}>
                 <td>{log.id}</td>
-                <td>{getDateAndDayFromTimestamp(log.createdAt)}</td>
+
                 <td>{log.description}</td>
               </tr>
             ))}

@@ -14,7 +14,7 @@ export function GasRecords() {
   const [pageNumber, setPageNumber] = useState(0);
 
   // Usar el hook ListItemsPaginated para obtener los datos y la paginación
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${gasRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
+  const { data , totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${gasRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
 
   return (
     <div className="g-background">
@@ -36,8 +36,8 @@ export function GasRecords() {
               </tr>
             </thead>
             <tbody>
-              {datos &&
-                datos.map((d, index) => (
+              {data &&
+                data.map((d, index) => (
                   <tr key={index}>
                     <td>{d.id}</td>
                     <td>{getDateFromTimestamp(d.createdAt)}</td>

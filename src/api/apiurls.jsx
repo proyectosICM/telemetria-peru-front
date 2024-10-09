@@ -87,3 +87,8 @@ export const ImagesCLNameViewURL = `${ImagesCLURL}/images`;
 export const impactIncidentLoggingURL = `${baseAPIURL}/impact_incident_logging`;
 export const impactIncidentLoggingByVehicleURL = `${impactIncidentLoggingURL}/findByVehicleId`;
 export const impactIncidentLoggingByVehiclePageURL = `${impactIncidentLoggingURL}/findByVehicleId-page`;
+
+/* */
+export const speedExcessLoggerURL = `${baseAPIURL}/speed_excess_logger`;
+export const speedExcessLoggerByVehicleURL = `${speedExcessLoggerURL}/findByVehicleId`;
+export const speedExcessLoggerByVehiclePageURL = `${speedExcessLoggerURL}/findByVehicleId-page`;

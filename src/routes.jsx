@@ -25,6 +25,7 @@ import { AddDriverForm } from "./pages/adminPanel/driverAdmin/addDriverForm";
 import { AddCompanyForm } from "./pages/adminPanel/companyAdmin/addCompanyForm";
 import { AddUserForm } from "./pages/adminPanel/userAdmin/addUserForm";
 import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
+import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -32,6 +33,8 @@ export const routes = [
   { path: "/login", component: <Login /> },
   { path: "/redirectandW", component: <WelcomeAndRedirect/> },
   { path: "/admin", component: <AdminPanel/> },
+
+  { path: "/vehicle-info", component: <VehicleInfoPanel/> },
 
   { path: "/gas-Records", component: <GasRecords/> },
   { path: "/battery-Records", component: <BatteryRecords /> },
@@ -74,4 +77,6 @@ export const routes = [
 
   { path: "/ver-cl/:idcl", component: <VerCL /> },
   { path: "/records-panel", component: <RecordsPanel /> },
+
+
 ];

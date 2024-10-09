@@ -40,7 +40,7 @@ export function ListItemsPaginated(url, setData, page) {
 */
 
 export function ListItemsPaginated(url, pageNumber) {
-  const [datos, setDatos] = useState([]);
+  const [data, setData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -52,10 +52,10 @@ export function ListItemsPaginated(url, pageNumber) {
           Authorization: `Bearer ${token}`,
         },
       });
-      setDatos(response.data.content);
+      setData(response.data.content);
       setTotalPages(response.data.totalPages);
       setCurrentPage(response.data.number);
-     // console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error listing items", error);
     }
@@ -73,5 +73,5 @@ export function ListItemsPaginated(url, pageNumber) {
     return () => clearInterval(intervalId);
   });
 
-  return { datos, totalPages, currentPage, setCurrentPage, fetchData };
+  return { data, totalPages, currentPage, setCurrentPage, fetchData };
 }

@@ -15,7 +15,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   useEffect(() => {
     ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData);
   }, [companyId]);
-
+ 
   useEffect(() => {
     ListItems(`${vehiclesTypesURL}`, setDataTypes);
   }, []);

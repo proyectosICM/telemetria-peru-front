@@ -8,7 +8,6 @@ import { AdminPanelItem } from "./adminPanelItem";
 
 export function AdminPanel() {
   LogoutToken();
-  const navigate = useNavigate();
  
   return (
     <div className="g-background">

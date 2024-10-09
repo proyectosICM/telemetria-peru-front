@@ -9,7 +9,7 @@ import { calculatePercentage } from "../../utils/calculatePercentage";
 import { handleRecordsMessage } from "../../utils/handleRecordsMessage";
 import { getStatusColor } from "../../utils/getStatusColorCPB";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
-import CircularProgressbarWithStatus from "../../common/CircularProgressbarWithStatus";
+import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";
 
 export function TireInfoData({ showAlert = true }) {

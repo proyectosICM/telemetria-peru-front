@@ -4,63 +4,32 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
 import { companiesURL } from "../../../api/apiurls";
-import { editItem } from "../../../hooks/editItem";
-import { agregarElementoAPI } from "../../../hooks/agregarElementoAPI";
-import Swal from "sweetalert2";
+import { alertMessageError, alertMessageValidated } from "../../../messages/apiResponseMessages";
+import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
 
 export function AddCompanyForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const rolId = localStorage.getItem("rolId");
 
-  const [companiesData, setCompaniesData] = useState("");
-  const [companyName, setCompanyName] = useState("");
+  const [companyData, setCompanyData] = useState({ id: "", name: "" });
+  const { saveItem } = useSaveItem(companiesURL, "/company-admin");
 
   useEffect(() => {
     if (id) {
-      ListItems(`${companiesURL}/${id}`, setCompaniesData);
+      ListItems(`${companiesURL}/${id}`, (data) => {
+        setCompanyData({...data})
+      });
     }
   }, [id]);
 
-  useEffect(() => {
-    if (companiesData) {
-      setCompanyName(companiesData.name);
-    }
-  }, [companiesData]);
-
   const handleSaveCompany = async () => {
-    const requestData = {
-      name: companyName,
-    };
     try {
-      if (id != null || id !== undefined) {
-        const response = await editItem(`${companiesURL}/${id}`, requestData);
-        console.log(response.status);
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: "Empresa editada con éxito",
-          });
-        }
-      } else {
-        const response = await agregarElementoAPI(companiesURL, requestData);
-        if (response.status === 201) {
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: "Empresa guardada con éxito",
-          });
-        }
-      }
-      await navigate("/company-admin");
+      alertMessageValidated(companyData.name, "El nombre de la empresa no puede estar vacío");
+      await saveItem(id, { name: companyData.name });
     } catch (error) {
-      console.error("Error al guardar la batería:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: `Hubo un error al guardar los datos. Inténtalo nuevamente. ${error.response.data}`,
-      });
+      alertMessageError(error);
+      return;
     }
   };
 
@@ -73,16 +42,16 @@ export function AddCompanyForm() {
         </Button>
         <h1 style={{ color: "white" }}>Agregar Empresa</h1>
         <div style={{ width: "80%", margin: "auto" }}>
-          {/* Input para nombre de la batería */}
+          {/* Input for Company name */}
           <Form.Group controlId="batteryName" style={{ marginBottom: "20px" }}>
             <Form.Label style={{ color: "white" }}>Nombre de la nueva empresa</Form.Label>
             <Form.Control
               type="text"
               placeholder="Ingrese el nombre de la batería"
               style={{ backgroundColor: "white", color: "black" }}
-              value={companyName}
+              value={companyData.name}
               isDisabled={rolId !== "1"}
-              onChange={(e) => setCompanyName(e.target.value)}
+              onChange={(e) => setCompanyData({...companyData, name: e.target.value})}
             />
           </Form.Group>
         </div>

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { calculatePercentage } from "../../utils/calculatePercentage";
 import { handleRecordsMessage } from "../../utils/handleRecordsMessage";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
-import CircularProgressbarWithStatus from "../../common/CircularProgressbarWithStatus";
+import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";
 import mqttDataHandler from "../../hooks/mqttDataHandler"; // Importa el hook
 

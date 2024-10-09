@@ -13,6 +13,7 @@ export function useCompanyAdminLogic() {
       const result = await alertDeleteConfirmation();
       if (result.isConfirmed) {
         const response = await deleteItem(`${companiesURL}/${id}`);
+        console.log(response)
         if (response.status === 204) {
           alertSuccessfulDeleted();
         }

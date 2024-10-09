@@ -11,10 +11,11 @@ export const getDateAndDayFromTimestamp = (timestamp) => {
     second: "2-digit",
   });
 
-  //const dayOfWeek = date.toLocaleString('en-GB', { weekday: 'long' });
+  // const dayOfWeek = date.toLocaleString('en-GB', { weekday: 'long' });
 
   // Combina la fecha y el día de la semana en una sola cadena
   // return `${formattedDate} (${dayOfWeek})`;
+  
   return `${formattedDate}`;
 };
 

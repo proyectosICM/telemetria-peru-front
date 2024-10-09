@@ -1,6 +1,15 @@
-import React from "react";
 import Swal from "sweetalert2";
 
+export function alertMessageValidated(value, message) {
+  if (!value.trim()) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: `${message}`,
+    });
+    throw new Error(message);
+  }
+}
 
 export function alertMessageCreated(status) {
   if (status === 201) {
@@ -20,6 +29,14 @@ export function alertMessageEdited(status) {
       text: `Registro editado con éxito `,
     });
   }
+}
+
+export function alertMessageError(error) {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: `Hubo un error al guardar los datos. Inténtalo nuevamente. ${error.response.data}`,
+  });
 }
 
 export function alertMessageExpiredToken() {
@@ -45,9 +62,9 @@ export function alertDeleteConfirmation() {
 }
 
 export function alertSuccessfulDeleted() {
-  Swal.fire("Eliminado!", "La batería ha sido eliminada.", "success");
+  Swal.fire("Eliminado!", "El registro ha sido eliminado.", "success");
 }
 
 export function alertFailedfulDeleted() {
-  Swal.fire("Error!", "Hubo un problema al eliminar la batería. Inténtalo de nuevo.", "error");
+  Swal.fire("Error!", "Hubo un problema al eliminar el registro. Inténtalo de nuevo.", "error");
 }

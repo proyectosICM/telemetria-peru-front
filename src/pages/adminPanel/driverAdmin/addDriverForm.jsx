@@ -10,6 +10,8 @@ import { editItem } from "../../../hooks/editItem";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
+import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
+import { alertMessageError } from "../../../messages/apiResponseMessages";
 
 export function AddDriverForm() {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ export function AddDriverForm() {
   const [driverPhoneNumber, setDriverPhoneNumber] = useState("");
   const [licenseIssueDate, setLicenseIssueDate] = useState(null);
   const [licenseExpireDate, setLicenseExpireDate] = useState(null);
+  const { saveItem } = useSaveItem(driverURL, "/driver-admin");
 
   useEffect(() => {
     if (id != null || id !== undefined) {
@@ -96,19 +99,10 @@ export function AddDriverForm() {
     };
     console.log(requestData);
     try {
-      if (id != null || id !== undefined) {
-        await editItem(`${driverURL}/${id}`, requestData);
-      } else {
-        await agregarElementoAPI(driverURL, requestData);
-      } 
-      navigate("/driver-admin");
+      await saveItem(id, requestData);
     } catch (error) {
-      console.error("Error al guardar el conductor:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: `Hubo un error al guardar los datos. Inténtalo nuevamente. ${error.response.data}`,
-      });
+      alertMessageError(error);
+      return;
     }
   };
 
@@ -165,7 +159,7 @@ export function AddDriverForm() {
                 placeholder="Ingrese el nombre del conductor"
                 style={{ backgroundColor: "white", color: "black" }}
                 value={driverName}
-                maxLength="50" 
+                maxLength="50"
                 onChange={handleTextInput(setDriverName)} // Llama a la función de validación
               />
             </Form.Group>

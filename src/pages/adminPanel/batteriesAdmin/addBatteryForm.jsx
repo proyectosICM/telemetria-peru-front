@@ -4,85 +4,71 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
 import { batteryURL, companiesURL, vehiclesByCompanyURL } from "../../../api/apiurls";
-
 import Select from "react-select";
-import { agregarElementoAPI } from "../../../hooks/agregarElementoAPI";
-import { editItem } from "../../../hooks/editItem";
- 
+import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
+
 export function AddBatteryForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const rolId = localStorage.getItem("rolId");
   const companyId = localStorage.getItem("companyId");
 
-  const [batteryData, setBatteryData] = useState();
+  const [batteryData, setBatteryData] = useState({ id: "", name: "", companyId: "", companyName: "", vehicleId: "", licensePlate: "" });
   const [companies, setCompanies] = useState([]);
   const [vehicles, setVehicles] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState(null);
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
-  const [batteryName, setBatteryName] = useState("");
+
+  const { saveItem } = useSaveItem(batteryURL, "/batteries-admin");
 
   useEffect(() => {
-    if (id != null || id !== undefined) {
-      ListItems(`${batteryURL}/${id}`, setBatteryData);
+    if (id) {
+      ListItems(`${batteryURL}/${id}`, (data) => {
+        setBatteryData({ ...data });
+      });
     }
   }, [id]);
-
-  useEffect(() => {
-    if (batteryData) {
-      setBatteryName(batteryData.name); 
-      setSelectedCompany({ value: batteryData.companyId, label: batteryData.companyName }); 
-      setSelectedVehicle({ value: batteryData.vehicleId, label: batteryData.licensePlate }); 
-    }
-  }, [batteryData]);
 
   useEffect(() => {
     ListItems(`${companiesURL}`, setCompanies);
   }, []);
 
   useEffect(() => {
-    if (selectedCompany) {
-      ListItems(`${vehiclesByCompanyURL}/${selectedCompany.value}`, setVehicles);
-    }
-  }, [selectedCompany]);
-
-  useEffect(() => {
     if (rolId !== "1" && companyId && companies.length > 0) {
       const selectedCompany = companies.find((company) => company.id === parseInt(companyId));
-      setSelectedCompany({ value: selectedCompany.id, label: selectedCompany.name });
+      setBatteryData((prevData) => ({
+        ...prevData,
+        companyId: selectedCompany?.id || "",
+        companyName: selectedCompany?.name || "",
+      }));
     }
   }, [rolId, companyId, companies]);
+
+  useEffect(() => {
+    if (batteryData.companyId) {
+      ListItems(`${vehiclesByCompanyURL}/${batteryData.companyId}`, setVehicles);
+    }
+  }, [batteryData.companyId]);
 
   // Formatear las opciones de empresas para react-select
   const companyOptions = companies.map((company) => ({
     value: company.id,
-    label: company.name, // Asegúrate de que esta propiedad exista en tus datos
-  })); 
+    label: company.name,
+  }));
 
   // Formatear las opciones de vehículos para react-select
   const vehicleOptions = vehicles.map((vehicle) => ({
     value: vehicle.id,
-    label: vehicle.licensePlate, // Asegúrate de que esta propiedad exista en tus datos
+    label: vehicle.licensePlate,
   }));
 
   const handleSaveBattery = async () => {
     const requestData = {
-      name: batteryName,
-      companyModel: {
-        id: selectedCompany?.value,
-      },
-      vehicleModel: {
-        id: selectedVehicle?.value,
-      },
+      name: batteryData.name,
+      companyModel: { id: batteryData.companyId },
+      vehicleModel: { id: batteryData.vehicleId },
     };
-    console.log(requestData);
+
     try {
-      if (id != null || id !== undefined) {
-        await editItem(`${batteryURL}/${id}`, requestData);
-      } else {
-        await agregarElementoAPI(batteryURL, requestData);
-      }
-      navigate("/batteries-admin");
+      await saveItem(id, requestData);
     } catch (error) {
       console.error("Error al guardar la batería:", error);
     }
@@ -104,9 +90,9 @@ export function AddBatteryForm() {
               type="text"
               placeholder="Ingrese el nombre de la batería"
               style={{ backgroundColor: "white", color: "black" }}
-              value={batteryName}
+              value={batteryData.name}
               isDisabled={rolId !== "1"}
-              onChange={(e) => setBatteryName(e.target.value)} // Manejar el cambio en el input
+              onChange={(e) => setBatteryData({ ...batteryData, name: e.target.value })}
             />
           </Form.Group>
 
@@ -115,14 +101,19 @@ export function AddBatteryForm() {
             <Form.Group controlId="associatedCompany" style={{ marginBottom: "20px" }}>
               <Form.Label style={{ color: "white" }}>Empresa Asociada</Form.Label>
               <Select
-                options={companyOptions} // Opciones de empresas
-                value={selectedCompany} // Valor seleccionado
+                options={companyOptions}
+                value={companyOptions.find((option) => option.value === batteryData.companyId)}
                 onChange={(selectedOption) => {
-                  setSelectedCompany(selectedOption); // Establecer la empresa seleccionada
-                  setSelectedVehicle(null); // Limpiar la selección del vehículo cuando se cambia la empresa
+                  setBatteryData((prevData) => ({
+                    ...prevData,
+                    companyId: selectedOption?.value || "",
+                    companyName: selectedOption?.label || "",
+                    vehicleId: "", // Limpiar el vehículo cuando se cambia la empresa
+                    licensePlate: "",
+                  }));
                 }}
                 placeholder="Seleccione una empresa"
-                isSearchable // Habilita la barra de búsqueda
+                isSearchable
                 styles={{
                   control: (provided) => ({
                     ...provided,
@@ -147,13 +138,17 @@ export function AddBatteryForm() {
           <Form.Group controlId="assignedVehicle" style={{ marginBottom: "20px" }}>
             <Form.Label style={{ color: "white" }}>Vehículo Asociado</Form.Label>
             <Select
-              options={vehicleOptions} // Opciones de vehículos
-              value={selectedVehicle} // Valor seleccionado
+              options={vehicleOptions}
+              value={vehicleOptions.find((option) => option.value === batteryData.vehicleId)}
               onChange={(selectedOption) => {
-                setSelectedVehicle(selectedOption); // Establecer el vehículo seleccionado
+                setBatteryData((prevData) => ({
+                  ...prevData,
+                  vehicleId: selectedOption?.value || "",
+                  licensePlate: selectedOption?.label || "",
+                }));
               }}
               placeholder="Seleccione un vehículo"
-              isSearchable // Habilita la barra de búsqueda
+              isSearchable
               styles={{
                 control: (provided) => ({
                   ...provided,
@@ -176,9 +171,9 @@ export function AddBatteryForm() {
           <Button
             variant="primary"
             style={{ backgroundColor: "#007bff", border: "none" }}
-            onClick={handleSaveBattery} // Llamar a la función para guardar la batería
+            onClick={handleSaveBattery}
           >
-            Guardar Bateria 
+            Guardar Bateria
           </Button>
         </div>
       </div>

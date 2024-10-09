@@ -4,12 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
 import { rolesURL } from "../../../api/apiurls";
 import { Button, Form } from "react-bootstrap";
+import { alertMessageError, alertMessageValidated } from "../../../messages/apiResponseMessages";
+import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
 
 export function AddRolForm() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [roleData, setRoleData] = useState({ name: "", id: "" }); // Asegúrate de incluir el ID en el estado
+  const [roleData, setRoleData] = useState({ id: "", name: "" });
+  const { saveItem } = useSaveItem(rolesURL, "/roles-admin");
 
   useEffect(() => {
     if (id) {
@@ -19,10 +22,14 @@ export function AddRolForm() {
     }
   }, [id]);
 
-  const handleSaveUser = async () => {
-    const requestData = {
-      name: roleData.name,
-    };
+  const handleSaveRole = async () => {
+    try {
+      alertMessageValidated(roleData.name, "El nombre del rol no puede estar vacío");
+      await saveItem(id, { name: roleData.name });
+    } catch (error) {
+      alertMessageError(error);
+      return;
+    }
   };
 
   return (
@@ -36,22 +43,17 @@ export function AddRolForm() {
         <h1 style={{ color: "white" }}>{id ? "Editar Rol" : "Agregar Rol"}</h1>
 
         {/* Contenedor para que el ID y el Nombre estén en la misma línea */}
-        <div style={{ display: "flex", width: "80%", margin: "20px auto ", gap: "20px" }}>
+        <div style={{ display: "flex", width: "80%", margin: "20px auto", gap: "20px" }}>
           {/* Campo para mostrar el ID (deshabilitado) */}
           {id && (
             <Form.Group controlId="id" style={{ flexBasis: "20%" }}>
               <Form.Label style={{ color: "white" }}>Id</Form.Label>
-              <Form.Control
-                type="text"
-                style={{ backgroundColor: "white", color: "black" }}
-                value={roleData.id} // El valor del ID
-                disabled // Deshabilitado para que no sea editable
-              />
+              <Form.Control type="text" style={{ backgroundColor: "white", color: "black" }} value={roleData.id} disabled />
             </Form.Group>
           )}
 
           {/* Input para nombre del rol */}
-          <Form.Group controlId="username" style={{ flexBasis: "80%" }}>
+          <Form.Group controlId="username" style={{ flexBasis: id ? "80%" : "100%" }}>
             <Form.Label style={{ color: "white" }}>Nombre del rol</Form.Label>
             <Form.Control
               type="text"
@@ -63,7 +65,7 @@ export function AddRolForm() {
           </Form.Group>
         </div>
 
-        <Button variant="primary" style={{ backgroundColor: "#007bff", border: "none" }} onClick={handleSaveUser}>
+        <Button variant="primary" style={{ backgroundColor: "#007bff", border: "none" }} onClick={handleSaveRole}>
           Guardar Rol
         </Button>
       </div>

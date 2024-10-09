@@ -9,7 +9,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   const [dataTypes, setDataTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
- 
+
   const companyId = localStorage.getItem("companyId");
 
   useEffect(() => {
@@ -26,9 +26,9 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   };
 
   const filteredData = useMemo(() => {
-    return data.filter((item) =>
-      item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedType ? item.vehicletypeModel.name === selectedType : true)
+    return data.filter(
+      (item) =>
+        item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) && (selectedType ? item.vehicletypeModel.name === selectedType : true)
     );
   }, [data, searchTerm, selectedType]);
 
@@ -47,11 +47,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
       </div>
 
       <div className="vmp-filter-bar">
-        <select
-          className="vmp-filter-select"
-          value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
-        >
+        <select className="vmp-filter-select" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
           <option value="">Todos los tipos</option>
           {dataTypes.map((type) => (
             <option key={type.id} value={type.name}>
@@ -63,13 +59,9 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
 
       <div className="vmp-panel">
         {filteredData.map((item, index) => (
-          <div
-            className="vmp-item"
-            key={index}
-            onClick={() => handleSelectVehicle(item.id, item.vehicleTypeId)}
-          >
+          <div className="vmp-item" key={index} onClick={() => handleSelectVehicle(item.id, item.vehicleTypeId)}>
             <div className="vmp-item-details">
-            <FaTruck className="vmp-truck-icon" />
+              <FaTruck className="vmp-truck-icon" />
               <p className="vmp-license">
                 <strong>Placa:</strong> {item.licensePlate}
               </p>

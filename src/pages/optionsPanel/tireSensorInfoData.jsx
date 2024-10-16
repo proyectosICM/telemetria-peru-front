@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { mqttDominio, mqttTopics, vehiclesTypesURL } from "../../api/apiurls";
@@ -17,9 +17,9 @@ export function TireInfoData({ showAlert = true }) {
   const [data, setData] = useState([]);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
-  const [maxPressure, setMaxPressure] = useState(0)
+  const [maxPressure, setMaxPressure] = useState(0);
   const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
-  const { isConnected, messages } = useMqtt(mqttDominio, topic);
+  const { messages, clearMessages } = useMqtt(mqttDominio, topic);
   const [pressureRange, setPressureRange] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,18 @@ export function TireInfoData({ showAlert = true }) {
       const maxPressureData = pressureRange.tirePressureRange.maxTirePressure || 0;
       setMaxPressure(maxPressureData);
     }
-  }, [pressureRange]); 
+  }, [pressureRange]);
+
+  const previousVehicleIdRef = useRef(selectedVehicleId);
+
+  // Limpiar mensajes al cambiar de vehículo seleccionado
+  useEffect(() => {
+    if (previousVehicleIdRef.current !== selectedVehicleId) {
+      clearMessages(); // Llama a la función para limpiar mensajes solo si el vehículo ha cambiado
+      setData(0);
+      previousVehicleIdRef.current = selectedVehicleId; // Actualiza el ref del vehículo anterior
+    }
+  }, [selectedVehicleId, clearMessages]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -56,7 +67,8 @@ export function TireInfoData({ showAlert = true }) {
   }, [messages]);
 
   const determineStatus = (percentage) => {
-    const { optimalTirePressureRangeStart, regularTirePressureRangeStart, lowTirePressureRangeStart, veryLowTirePressureRangeStart } = pressureRange.tirePressureRange;
+    const { optimalTirePressureRangeStart, regularTirePressureRangeStart, lowTirePressureRangeStart, veryLowTirePressureRangeStart } =
+      pressureRange.tirePressureRange;
     if (percentage >= optimalTirePressureRangeStart) {
       return "Óptimo";
     } else if (percentage >= regularTirePressureRangeStart) {
@@ -76,7 +88,6 @@ export function TireInfoData({ showAlert = true }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0px", justifyContent: "center" }}>
         {data.length > 0 ? (
           data.map((tire, index) => {
-
             const percentage = tire.pressure ? calculatePercentage(tire.pressure, maxPressure) : 0;
             const status = determineStatus(tire.pressure);
 

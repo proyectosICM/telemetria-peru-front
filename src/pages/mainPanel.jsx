@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../common/navbarCommon";
 import { MapaBase } from "../maps/mapaBase";
 import { VehicleMenuPanel } from "../common/vehicleMenuPanel";
-import { GasInfo } from "./optionsPanel/gasInfo";
+import { FuelInfo } from "./optionsPanel/fuelInfo";
 import { TireInfo } from "./optionsPanel/tireSensorInfo";
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
-import "./mainPanel.css";
 import { LogoutToken } from "../hooks/logoutToken";
 import { BatteryInfo } from "./optionsPanel/batteryInfo";
 import { TireInfoData } from "./optionsPanel/tireSensorInfoData";
 import { ImpactIncidentLogging } from "./optionsPanel/impactIncidentLogging";
-import useMqtt from "../hooks/useMqtt";
 import { mqttDominio, mqttTopics } from "../api/apiurls";
 import { ChecklistInfo } from "./optionsPanel/checklistInfo";
 
+import useMqtt from "../hooks/useMqtt";
+import "./mainPanel.css";
 export function MainPanel() {
   LogoutToken();
 
@@ -27,7 +27,7 @@ export function MainPanel() {
   };
 
   const topic = `prueba`;
-  const { messages } = useMqtt(mqttDominio, topic);
+  const { messages } = useMqtt(mqttDominio, mqttTopics.prueba);
 
   // Manejar los mensajes recibidos
   useEffect(() => {
@@ -94,7 +94,7 @@ export function MainPanel() {
                 <VehicleInfo />
                 <ChecklistInfo />
                 <VehicleOptions />
-                <GasInfo />
+                <FuelInfo />
               </div>
 
               <div className="main-options-panel-content">

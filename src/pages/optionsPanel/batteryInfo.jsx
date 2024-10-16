@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { circularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Swal from "sweetalert2";
@@ -18,22 +18,32 @@ export function BatteryInfo({ showAlert = true }) {
   const [maxVoltaje, setMaxVoltaje] = useState(0); // Rango de
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
-  
+
   const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
-  const { isConnected, messages } = useMqtt(mqttDominio, topic);
+  const { messages, clearMessages } = useMqtt(mqttDominio, topic);
 
   // Obtener los rangos de batería desde la API del tipo de vehículo
   useEffect(() => {
     ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setBatteryRange);
   }, [selectedTypeVehicleId]);
 
+  // Usar useRef para almacenar el vehículo anterior
+  const previousVehicleIdRef = useRef(selectedVehicleId);
+  // Limpiar mensajes al cambiar de vehículo seleccionado
   useEffect(() => {
-    //console.log("Datos actualizados:", data);
+    if (previousVehicleIdRef.current !== selectedVehicleId) {
+      clearMessages(); // Llama a la función para limpiar mensajes solo si el vehículo ha cambiado
+      setData(0);
+      previousVehicleIdRef.current = selectedVehicleId; // Actualiza el ref del vehículo anterior
+    }
+  }, [selectedVehicleId, clearMessages]);
+
+  useEffect(() => {
     if (batteryRange) {
       const maxGas = batteryRange.batteryRange.maxBatteryVoltage || 0;
       setMaxVoltaje(maxGas);
     }
-  }, [batteryRange]); 
+  }, [batteryRange]);
 
   useEffect(() => {
     if (messages.length > 0) {

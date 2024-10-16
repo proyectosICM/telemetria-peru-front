@@ -32,7 +32,6 @@ export function VehicleInfo({ showAlert = true }) {
       <h4>Información del Vehículo</h4>
       <p>Placa: {data && data.licensePlate}</p>
       <p>Tipo: {data && data.vehicleTypeName}</p>
-
       {/* Mostrar la velocidad actual con el color adecuado según la condición */}
       <p style={{ color: isSpeedExceeded ? "red" : "white" }}>Velocidad Actual: {speed ? `${speed} km` : "0 km"}</p>
 

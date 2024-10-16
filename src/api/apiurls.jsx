@@ -50,10 +50,10 @@ export const driverURL = `${baseAPIURL}/driver`;
 export const driverPagedURL = `${driverURL}/paged`;
 
 /** Gas Records */
-export const gasRecordsURL = `${baseAPIURL}/gas-records`;
-export const gasRecordsPageURL = `${gasRecordsURL}/page`;
-export const gasRecordsByVehicleIdURL = `${gasRecordsURL}/findByVehicleId`;
-export const gasRecordsByVehicleIdPageURL = `${gasRecordsURL}/findByVehicleId-page`;
+export const fuelRecordsURL = `${baseAPIURL}/fuel-records`;
+export const fuelRecordsPageURL = `${fuelRecordsURL}/page`;
+export const fuelRecordsByVehicleIdURL = `${fuelRecordsURL}/findByVehicleId`;
+export const fuelRecordsByVehicleIdPageURL = `${fuelRecordsURL}/findByVehicleId-page`;
 
 /** Battery **/
 export const batteryURL = `${baseAPIURL}/batteries`;
@@ -92,3 +92,10 @@ export const impactIncidentLoggingByVehiclePageURL = `${impactIncidentLoggingURL
 export const speedExcessLoggerURL = `${baseAPIURL}/speed_excess_logger`;
 export const speedExcessLoggerByVehicleURL = `${speedExcessLoggerURL}/findByVehicleId`;
 export const speedExcessLoggerByVehiclePageURL = `${speedExcessLoggerURL}/findByVehicleId-page`;
+
+/* */
+export const truckLoadRecordURLURL = `${baseAPIURL}/truck-loads`;
+export const truckLoadRecordURLByVehicleURL = `${truckLoadRecordURLURL}/findByVehicle`;
+export const truckLoadRecordURLByVehiclePageURL = `${truckLoadRecordURLURL}/findByVehicle-paged`;
+export const truckLoadRecordByVehicleCountURL = `${truckLoadRecordURLURL}/count-day`;
+export const truckLoadRecordByVehicleCountAllURL = `${truckLoadRecordURLURL}/daily-load-counts`;

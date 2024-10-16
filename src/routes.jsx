@@ -4,7 +4,6 @@ import { BatteryRecords } from "./pages/batteryRecords/batteryRecords";
 import { ChecklistPanel } from "./pages/checklistPanel/checklisPanel";
 import { Example } from "./pages/checklistPanel/example";
 import { Example2 } from "./pages/checklistPanel/example2";
-import { GasRecords } from "./pages/gasRecords/gasRecords";
 import { ImpactIncidentLoggingRecords } from "./pages/impactIncidentLoggingRecords/impactIncidentLoggingRecords";
 import { IssuesRecords } from "./pages/issuesRecords/issuesRecords";
 import { Login } from "./pages/login/login";
@@ -26,6 +25,7 @@ import { AddCompanyForm } from "./pages/adminPanel/companyAdmin/addCompanyForm";
 import { AddUserForm } from "./pages/adminPanel/userAdmin/addUserForm";
 import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
 import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
+import { FuelRecords } from "./pages/fuelRecords/fuelRecords";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -36,7 +36,7 @@ export const routes = [
 
   { path: "/vehicle-info", component: <VehicleInfoPanel/> },
 
-  { path: "/gas-Records", component: <GasRecords/> },
+  { path: "/fuel-Records", component: <FuelRecords /> },
   { path: "/battery-Records", component: <BatteryRecords /> },
   
   { path: "/issues-Records", component: <IssuesRecords /> },

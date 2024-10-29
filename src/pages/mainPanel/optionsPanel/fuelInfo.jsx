@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import useMqtt from "../../hooks/useMqtt";
-import { mqttDominio, mqttTopics, vehiclesTypesURL, vehiclesURL } from "../../api/apiurls";
+import useMqtt from "../../../hooks/useMqtt";
+import { mqttDominio, mqttTopics, vehiclesTypesURL, vehiclesURL } from "../../../api/apiurls";
 import { useNavigate } from "react-router-dom";
-import { calculatePercentage } from "../../utils/calculatePercentage";
-import { handleRecordsMessage } from "../../utils/handleRecordsMessage";
-import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
-import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
-import { ListItems } from "../../hooks/listItems";
-import mqttDataHandler from "../../hooks/mqttDataHandler"; // Importa el hook
+import { calculatePercentage } from "../../../utils/calculatePercentage";
+import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
+import NoDataCircularProgressbar from "../../../common/noDataCircularProgressbar";
+import CircularProgressbarWithStatus from "../../../common/circularProgressbarWithStatus";
+import { ListItems } from "../../../hooks/listItems";
+import mqttDataHandler from "../../../hooks/mqttDataHandler";
+
 
 export function FuelInfo({ showAlert = true }) {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export function FuelInfo({ showAlert = true }) {
   useEffect(() => {
     mqttDataHandler(messages, setDataValue, "fuelInfo");
   }, [messages]);
-
+ 
   // Calcula el porcentaje y actualiza el estado
   useEffect(() => {
     if (dataValue !== null && maxPressure > 0) {

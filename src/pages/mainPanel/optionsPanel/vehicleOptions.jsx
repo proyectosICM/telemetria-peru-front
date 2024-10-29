@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { vehiclesOptionsDataURL, vehiclesOptionsUpdateURL } from "../../api/apiurls";
-import { ListItems } from "../../hooks/listItems";
-import { editVehicleOptions } from "../../hooks/editItem";
-import '../../styles/truckOptions.css'
+import { vehiclesOptionsDataURL, vehiclesOptionsUpdateURL } from "../../../api/apiurls";
+import { ListItems } from "../../../hooks/listItems";
+import { editVehicleOptions } from "../../../hooks/editItem";
+import '../../../styles/truckOptions.css'
 
 export function VehicleOptions() {
   const [data, setData] = useState({});

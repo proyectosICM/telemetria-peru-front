@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { handleRecordsMessage } from "../../utils/handleRecordsMessage";
-import { FaCheckSquare, FaClipboardCheck, FaTruckLoading, FaTruckMoving } from "react-icons/fa";
-import { Button } from "react-bootstrap";
+import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
+import { FaClipboardCheck } from "react-icons/fa";
 
 export function ChecklistInfo({ showAlert = true }) {
   const navigate = useNavigate();
 
-  // Estilos para los "cards"
   const cardStyle = {
     justifyContent: "center",
     alignItems: "center",
@@ -18,7 +16,7 @@ export function ChecklistInfo({ showAlert = true }) {
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
     cursor: "pointer",
     color: "#fff",
-    backgroundColor: "#007BFF", // Agrega un color de fondo aquí
+    backgroundColor: "#007BFF",
   };
 
   const iconStyle = { fontSize: "3.2em", marginBottom: "10px" };

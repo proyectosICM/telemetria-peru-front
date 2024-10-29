@@ -3,13 +3,15 @@ import { circularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { mqttDominio, mqttTopics, vehiclesTypesURL } from "../../api/apiurls";
+import { vehiclesTypesURL } from "../../api/apiurls";
 import useMqtt from "../../hooks/useMqtt";
 import { calculatePercentage } from "../../utils/calculatePercentage";
 import { getStatusColor } from "../../utils/getStatusColorCPB";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";
+import mqttDataHandler from "../../hooks/mqttDataHandler";
+import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
 
 export function BatteryInfo({ showAlert = true }) {
   const navigate = useNavigate();
@@ -46,24 +48,7 @@ export function BatteryInfo({ showAlert = true }) {
   }, [batteryRange]);
 
   useEffect(() => {
-    if (messages.length > 0) {
-      const lastMessageStr = messages[messages.length - 1];
-      //console.log("Último mensaje recibido:", lastMessageStr);
-
-      try {
-        const lastMessage = JSON.parse(lastMessageStr);
-
-        // Verificar si el mensaje contiene datos de baterías
-        if (lastMessage.bateriesData) {
-          setData(lastMessage.bateriesData);
-        } else {
-          setData([]); // No hay datos de baterías en el mensaje
-        }
-      } catch (error) {
-        console.error("Error parsing MQTT message", error);
-        console.log("Mensaje recibido no válido:", lastMessageStr);
-      }
-    }
+    mqttDataHandler(messages, setData, "bateriesData");
   }, [messages]);
 
   const handleRecords = () => {

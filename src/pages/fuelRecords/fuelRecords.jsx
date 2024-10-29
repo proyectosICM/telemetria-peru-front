@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { NavbarCommon } from "../../common/navbarCommon";
-import { FuelInfo } from "../optionsPanel/fuelInfo";
+
 import { fuelRecordsByVehicleIdPageURL, vehiclesURL } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
-import { PaginacionUtils } from "../../utils/paginacionUtils";
+import { PaginacionUtils } from '../../utils/paginacionUtils';
+import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
+
 
 export function FuelRecords() {
   const navigate = useNavigate();

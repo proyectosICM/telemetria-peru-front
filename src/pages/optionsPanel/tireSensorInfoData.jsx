@@ -11,6 +11,7 @@ import { getStatusColor } from "../../utils/getStatusColorCPB";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";
+import mqttDataHandler from "../../hooks/mqttDataHandler";
 
 export function TireInfoData({ showAlert = true }) {
   const navigate = useNavigate();
@@ -46,24 +47,7 @@ export function TireInfoData({ showAlert = true }) {
   }, [selectedVehicleId, clearMessages]);
 
   useEffect(() => {
-    if (messages.length > 0) {
-      const lastMessageStr = messages[messages.length - 1];
-      //console.log("Último mensaje recibido:", lastMessageStr);
-
-      try {
-        const lastMessage = JSON.parse(lastMessageStr);
-
-        if (lastMessage.tiresData) {
-          setData(lastMessage.tiresData);
-        } else {
-          setData([]); // No hay datos de llantas en el mensaje
-        }
-      } catch (error) {
-        console.error("Error parsing MQTT message", error);
-        console.log("Mensaje recibido no válido:", lastMessageStr);
-        setData([]); // No hay datos válidos
-      }
-    }
+    mqttDataHandler(messages, setData, "tiresData");
   }, [messages]);
 
   const determineStatus = (percentage) => {

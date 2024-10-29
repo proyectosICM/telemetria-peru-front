@@ -8,7 +8,6 @@ import { ImpactIncidentLoggingRecords } from "./pages/impactIncidentLoggingRecor
 import { IssuesRecords } from "./pages/issuesRecords/issuesRecords";
 import { Login } from "./pages/login/login";
 import { WelcomeAndRedirect } from "./pages/login/welcomeAndRedirect";
-import { MainPanel } from "./pages/mainPanel";
 import { TireSensorsDetails } from "./pages/tireSensorsDetails/tireSensorsDetails";
 import { Example4 } from './pages/checklistPanel/example4';
 import { Example3 } from './pages/checklistPanel/example3';
@@ -26,6 +25,7 @@ import { AddUserForm } from "./pages/adminPanel/userAdmin/addUserForm";
 import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
 import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
 import { FuelRecords } from "./pages/fuelRecords/fuelRecords";
+import { MainPanel } from "./pages/mainPanel/mainPanel";
  
 export const routes = [
   { path: "/", component: <MainPanel /> },

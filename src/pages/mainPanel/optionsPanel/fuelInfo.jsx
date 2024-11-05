@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import useMqtt from "../../../hooks/useMqtt";
 import { mqttDominio, mqttTopics, vehiclesTypesURL, vehiclesURL } from "../../../api/apiurls";

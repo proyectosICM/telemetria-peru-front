@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { circularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { vehiclesTypesURL } from "../../api/apiurls";
 import useMqtt from "../../hooks/useMqtt";
 import { calculatePercentage } from "../../utils/calculatePercentage";
-import { getStatusColor } from "../../utils/getStatusColorCPB";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";

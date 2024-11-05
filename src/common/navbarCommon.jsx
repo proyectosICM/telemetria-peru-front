@@ -13,10 +13,7 @@ export function NavbarCommon() {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand
-        style={{ marginLeft: "25px", cursor: "pointer" }}
-        onClick={() => navigation("/")}
-      >
+      <Navbar.Brand style={{ marginLeft: "25px", cursor: "pointer" }} onClick={() => navigation("/")}>
         Inicio
       </Navbar.Brand>
 
@@ -28,16 +25,12 @@ export function NavbarCommon() {
         {/* Centering the navigation links */}
         <Nav className="mx-auto">
           <Nav.Link onClick={() => navigation("/")}>Panel Principal</Nav.Link>
-          <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link>
-          <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link>
+          {/* <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link> */}
+          {/* <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link> */}
         </Nav>
 
         {/* Right-aligned logout button */}
-        <Button
-          style={{ marginRight: "25px" }}
-          onClick={handleLogout}
-          variant="outline-light"
-        >
+        <Button style={{ marginRight: "25px" }} onClick={handleLogout} variant="outline-light">
           Cerrar Sesión
         </Button>
       </Navbar.Collapse>

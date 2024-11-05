@@ -30,7 +30,7 @@ export function VehicleInfoPanel() {
           {vehicleData && vehicleData.vehicleTypeName}
         </p>
         <p>Velocidad maxima definida: {vehicleData && vehicleData.maxSpeed ? vehicleData.maxSpeed : "No registra"} </p>
-        <TruckLoadsTable />
+        <TruckLoadsTable /> 
         <TruckDailyCountLoadTable />
         <SpeedExcessTable />
       </div>

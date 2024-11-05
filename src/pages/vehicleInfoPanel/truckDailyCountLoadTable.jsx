@@ -16,7 +16,7 @@ export function TruckDailyCountLoadTable() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto", width: "100%" }}>
-      <h2>Registro de excesos de velocidad</h2>
+      <h2>Registro de cargas diarias</h2>
       <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "80%" }}>
         <thead>
           <tr>

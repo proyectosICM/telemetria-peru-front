@@ -20,7 +20,6 @@ export function TruckLoadsTable() {
     pageNumber
   );
 
-
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto", width: "100%" }}>
       <h2>Registro de cargas</h2>

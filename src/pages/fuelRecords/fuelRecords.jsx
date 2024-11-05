@@ -40,7 +40,7 @@ export function FuelRecords() {
                 <th>Dia</th>
                 <th>Hora</th>
                 <th>Placa</th>
-                <th>{vehicleData.fuelType === "GAS " ? "Presion" : "Volumen"}</th>
+                <th>{vehicleData && vehicleData.fuelType === "GAS " ? "Presion" : "Volumen"}</th>
               </tr>
             </thead>
             <tbody>

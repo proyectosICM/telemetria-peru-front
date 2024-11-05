@@ -11,19 +11,19 @@ import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUt
 
 export function ChecklistPanel() {
   const navigate = useNavigate();
-  
-  const [data, setData] = useState([]);
+
+  const [vehicleData, setVehicleData] = useState([]);
   const [selectedChecklist, setSelectedChecklist] = useState("todos");
   const [pageNumber, setPageNumber] = useState(0);
-  
+
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsVehiclePageURL}/${selectedVehicleId}`, pageNumber);
-  
+
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsVehiclePageURL}/${selectedVehicleId}`, pageNumber);
+
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
   }, [selectedVehicleId]);
-  
+
   const cardStyle = {
     display: "inline-block",
     width: "200px",
@@ -35,45 +35,33 @@ export function ChecklistPanel() {
     cursor: "pointer",
     color: "#fff",
   };
-  
+
   const iconStyle = { fontSize: "2em", marginBottom: "10px" };
 
   // Función para determinar qué checklist mostrar según el tipo de vehículo
   const renderChecklistCards = () => {
-    if (data && data.vehicleTypeId) {
-      const vehicleTypeId = data.vehicleTypeId;
-      
+    if (vehicleData && vehicleData.vehicleTypeId) {
+      const vehicleTypeId = vehicleData.vehicleTypeId;
+
       if (vehicleTypeId === 3 || vehicleTypeId === 4) {
         return (
           <>
-            <div
-              style={{ ...cardStyle, backgroundColor: "#28a745" }}
-              onClick={() => navigate("/example/salida")}
-            >
+            <div style={{ ...cardStyle, backgroundColor: "#28a745" }} onClick={() => navigate("/example/salida")}>
               <FaClipboardCheck style={iconStyle} />
               <p>Inspección diaria de unidades (salida)</p>
             </div>
 
-            <div
-              style={{ ...cardStyle, backgroundColor: "#ffc107" }}
-              onClick={() => navigate("/example/retorno")}
-            >
+            <div style={{ ...cardStyle, backgroundColor: "#ffc107" }} onClick={() => navigate("/example/retorno")}>
               <FaTruckMoving style={iconStyle} />
               <p>Inspección diaria de unidades (retorno)</p>
             </div>
 
-            <div
-              style={{ ...cardStyle, backgroundColor: "#17a2b8" }}
-              onClick={() => navigate("/example2/retorno")}
-            >
+            <div style={{ ...cardStyle, backgroundColor: "#17a2b8" }} onClick={() => navigate("/example2/retorno")}>
               <FaTruckLoading style={iconStyle} />
               <p>Inspección diaria de unidad MOTOFURGON (retorno)</p>
             </div>
 
-            <div
-              style={{ ...cardStyle, backgroundColor: "#007bff" }}
-              onClick={() => navigate("/example2/salida")}
-            >
+            <div style={{ ...cardStyle, backgroundColor: "#007bff" }} onClick={() => navigate("/example2/salida")}>
               <FaCheckSquare style={iconStyle} />
               <p>Inspección diaria de unidades MOTOFURGON (salida)</p>
             </div>
@@ -82,10 +70,7 @@ export function ChecklistPanel() {
       } else if (vehicleTypeId === 1 || vehicleTypeId === 2) {
         return (
           <>
-            <div
-              style={{ ...cardStyle, backgroundColor: "#28a745" }}
-              onClick={() => navigate(`/example3/${data.licensePlate}`)}
-            >
+            <div style={{ ...cardStyle, backgroundColor: "#28a745" }} onClick={() => navigate(`/example3/${vehicleData.licensePlate}`)}>
               <FaClipboardCheck style={iconStyle} />
               <p>Nuevo registro</p>
             </div>
@@ -96,7 +81,7 @@ export function ChecklistPanel() {
     return null;
   };
 
-  const vehicleTypeId = data?.vehicleTypeId;
+  const vehicleTypeId = vehicleData?.vehicleTypeId;
 
   return (
     <div className="g-background">
@@ -170,8 +155,8 @@ export function ChecklistPanel() {
               </tr>
             </thead>
             <tbody>
-              {datos && datos.length > 0 ? (
-                datos.map((dato) => {
+              {data && data.length > 0 ? (
+                data.map((dato) => {
                   const driverName = dato.driverModel ? dato.driverModel.name : null;
                   const driverLastName = dato.driverModel ? dato.driverModel.lastName : null;
                   const driverFullName = driverName && driverLastName ? `${driverName} ${driverLastName}` : "No registra";
@@ -184,7 +169,8 @@ export function ChecklistPanel() {
                       <td>{`${Math.floor(dato.timer / 60)}:${dato.timer % 60 < 10 ? `0${dato.timer % 60}` : dato.timer % 60}`}</td>
                       <td>{dato.name}</td>
                       <td>{dato.vehicleModel.licensePlate}</td>
-                      {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <td>{driverFullName}</td>} {/* Muestra el nombre completo o "No registra" solo si no es tipo 1 o 2 */}
+                      {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <td>{driverFullName}</td>}{" "}
+                      {/* Muestra el nombre completo o "No registra" solo si no es tipo 1 o 2 */}
                       <td>
                         <Button style={{ width: "80%", backgroundColor: "#007bff", border: "none" }} onClick={() => navigate(`/ver-cl/${dato.id}`)}>
                           Ver

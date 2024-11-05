@@ -26,7 +26,7 @@ import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
 import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
 import { FuelRecords } from "./pages/fuelRecords/fuelRecords";
 import { MainPanel } from "./pages/mainPanel/mainPanel";
- 
+  
 export const routes = [
   { path: "/", component: <MainPanel /> },
   { path: "/mapa", component: <MapaBase /> },

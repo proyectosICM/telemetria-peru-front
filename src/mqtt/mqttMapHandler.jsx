@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // Hook para manejar los mensajes MQTT relacionados con el mapa
 const useMqttMapHandler = (messages) => {
   const [buses, setBuses] = useState([]);
-
+ 
   useEffect(() => {
     if (messages && messages.length > 0) {
       messages.forEach((message) => {

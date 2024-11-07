@@ -5,22 +5,22 @@ const useMqtt = (brokerUrl, topic) => {
   const [client, setClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState([]);
-
+ 
   useEffect(() => {
     const client = mqtt.connect(brokerUrl);
     client.on("connect", () => {
-      //console.log("Conectado a MQTT Broker");
+      console.log("Conectado a MQTT Broker");
       setIsConnected(true);
       client.subscribe(topic, (err) => {
         if (!err) {
-          //console.log(`Suscrito al tópico ${topic}`);
+          console.log(`Suscrito al tópico ${topic}`);
         }
       });
     });
 
     client.on("message", (receivedTopic, message) => {
       if (receivedTopic === topic) {
-        //console.log(`Mensaje recibido: ${message.toString()}`);
+        console.log(`Mensaje recibido: ${message.toString()}`);
         setMessages((prevMessages) => [...prevMessages, message.toString()]);
       }
     });

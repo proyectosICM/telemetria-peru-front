@@ -7,7 +7,7 @@ export const mqttLocalURL = "ws://telemetriaperu:1883"
 
 // Temas MQTT
 export const mqttTopics = {
-    mapa: "mapa",
+    mapa: "prueba",
     tmp_gasPressure: "tmp_gasPressure/",
     sensorsData: "sensorsData/",
 };

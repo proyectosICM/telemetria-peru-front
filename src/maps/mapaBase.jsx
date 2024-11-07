@@ -14,7 +14,7 @@ export function MapaBase({ buses, rutas }) {
 
   // Estado para controlar quw se  muestre el mapa después de un retraso
   const showMap = useShowMapAfterDelay(20);
-
+ 
   // Función para crear el mapa utilizando el hook personalizado
   const createMap = useCreateMap(mapRef, position, setMap);
 

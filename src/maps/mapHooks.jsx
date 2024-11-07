@@ -11,7 +11,7 @@ import { Fill, Icon, Style, Text  } from "ol/style";
 import { Point } from "ol/geom";
 export const useShowMapAfterDelay = (delay) => {
   const [showMap, setShowMap] = useState(false);
-
+ 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowMap(true);

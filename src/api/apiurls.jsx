@@ -8,7 +8,7 @@ export const mqttLocalURL = "ws://localhost:1883"
 // Temas MQTT
 export const mqttTopics = {
     mapa: "mapa",
-    tmp_gasPressure: "tmp_gasPressure/",
+    tmp_gasPressure: "telData/",
 };
 
 // URL para desarrollo

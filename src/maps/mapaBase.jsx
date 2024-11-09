@@ -23,7 +23,7 @@ export function MapaBase({ buses, rutas }) {
       createMap();
     }
   }, [showMap, createMap]);
-
+  
 
   useEffect(() => {
     if (map && buses) {

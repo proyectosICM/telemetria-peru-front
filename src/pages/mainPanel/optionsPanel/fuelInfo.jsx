@@ -128,7 +128,7 @@ export function FuelInfo({ showAlert = true }) {
                     ? "Volumen Actual: "
                     : vehicleData.fuelType === "GAS"
                     ? "Presión Actual: "
-                    : "Otro valor si es necesario"}{" "}
+                    : "Valor"}{" "}
                   {dataValue} {vehicleData.fuelType === "GAS" ? "psi" : ""}
                 </span>
                 <br />

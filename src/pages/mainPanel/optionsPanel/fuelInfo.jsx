@@ -54,6 +54,7 @@ export function FuelInfo({ showAlert = true }) {
   }, [selectedVehicleId, clearMessages]);
 
   // Procesar el mensaje de MQTT usando mqttDataHandler
+  //fuelInfo
   useEffect(() => {
     mqttDataHandler(messages, setDataValue, "fuelInfo");
   }, [messages]);

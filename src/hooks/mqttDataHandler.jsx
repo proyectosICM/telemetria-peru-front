@@ -4,7 +4,7 @@ const mqttDataHandler = (messages, setData, criterio) => {
     const lastMessageStr = messages[messages.length - 1];
  
     try {
- 
+  
       if (lastMessageStr.startsWith(criterio)) {
         const value = parseFloat(lastMessageStr.split(":")[1].trim());
         setData(value);

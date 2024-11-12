@@ -79,21 +79,14 @@ export function FuelInfo({ showAlert = true }) {
     // Definir las variables de rango según el tipo de combustible
     let optimalRangeStart, regularRangeStart, lowRangeStart, veryLowRangeStart;
     //console.log(typeVehicleData)
-    if (vehicleData.fuelType === "GAS") {
+    if (vehicleData && vehicleData.fuelType) {
       ({
         optimalGasRangeStart: optimalRangeStart,
         regularGasRangeStart: regularRangeStart,
         lowGasRangeStart: lowRangeStart,
         veryLowGasRangeStart: veryLowRangeStart,
       } = typeVehicleData.fuelRange);
-    } else if (vehicleData.fuelType === "GASOLINA") {
-      ({
-        optimalGasolineRangeStart: optimalRangeStart,
-        regularGasolineRangeStart: regularRangeStart,
-        lowGasolineRangeStart: lowRangeStart,
-        veryLowGasolineRangeStart: veryLowRangeStart,
-      } = typeVehicleData.gasolineRange);
-    }
+    } 
     //console.log(optimalRangeStart)
     // Verificar el estado del rango de presión
     if (pressureValue >= optimalRangeStart) {

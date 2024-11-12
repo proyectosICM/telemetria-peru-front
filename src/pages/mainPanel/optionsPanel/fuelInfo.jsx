@@ -35,7 +35,7 @@ export function FuelInfo({ showAlert = true }) {
 
   useEffect(() => {
     if (typeVehicleData) {
-      const maxGas = typeVehicleData.gasRange?.maxGasPressure || 0; // Usar el operador de encadenamiento opcional
+      const maxGas = typeVehicleData.fuel?.maxFuelPressure || 0; // Usar el operador de encadenamiento opcional
       setMaxPressure(maxGas);
     }
   }, [typeVehicleData]);
@@ -68,11 +68,11 @@ export function FuelInfo({ showAlert = true }) {
 
   const determineStatus = (pressureValue, vehicleData, typeVehicleData) => {
     // Verificar la disponibilidad de los rangos según el tipo de combustible
-    if (vehicleData && vehicleData.fuelType === "GAS" && !typeVehicleData?.gasRange) {
+    if (vehicleData && vehicleData.fuelType === "GAS" && !typeVehicleData?.fuelRange) {
       return "No Disponible";
     }
 
-    if (vehicleData && vehicleData.fuelType === "GASOLINA" && !typeVehicleData?.gasolineRange) {
+    if (vehicleData && vehicleData.fuelType === "GASOLINA" && !typeVehicleData?.fuelRange) {
       return "No Disponible";
     }
 
@@ -85,7 +85,7 @@ export function FuelInfo({ showAlert = true }) {
         regularGasRangeStart: regularRangeStart,
         lowGasRangeStart: lowRangeStart,
         veryLowGasRangeStart: veryLowRangeStart,
-      } = typeVehicleData.gasRange);
+      } = typeVehicleData.fuelRange);
     } else if (vehicleData.fuelType === "GASOLINA") {
       ({
         optimalGasolineRangeStart: optimalRangeStart,

@@ -35,7 +35,7 @@ export function FuelInfo({ showAlert = true }) {
 
   useEffect(() => {
     if (typeVehicleData) {
-      const maxValue = typeVehicleData.fuelRange?.maxFuelValue || 0; 
+      const maxValue = typeVehicleData.fuelRange?.maxFuelValue || 0;
       setMaxPressure(maxValue);
     }
   }, [typeVehicleData]);
@@ -118,13 +118,20 @@ export function FuelInfo({ showAlert = true }) {
       <div style={{ display: "flex", justifyContent: "center", margin: "10px auto" }}>
         {dataValue !== null ? (
           <CircularProgressbarWithStatus value={percentage} status={status} size={"40%"}>
-            {dataValue !== null && (  
+            {dataValue !== null && (
               <>
                 <span style={{ fontSize: "15px" }}>Estado: {status}</span>
                 <br />
                 <span style={{ fontSize: "15px" }}>
                   {vehicleData.fuelType === "GASOLINA" ? "Volumen Actual: " : vehicleData.fuelType === "GAS" ? "Presión Actual: " : "Valor"}{" "}
-                  {vehicleData.fuelType === "DIESEL" ? (dataValue * 0.264172) : dataValue } {vehicleData.fuelType === "GASOLINA" ?  "vol" ? vehicleData.fuelType === "GAS" : "psi" ? vehicleData.fuelType === "DIESEL" : "gal" : "" }
+                  {vehicleData.fuelType === "DIESEL" ? (dataValue * 0.264172).toFixed(2) : dataValue}{" "}
+                  {vehicleData.fuelType === "GASOLINA"
+                    ? "vol"
+                    : vehicleData.fuelType === "GAS"
+                    ? "psi"
+                    : vehicleData.fuelType === "DIESEL"
+                    ? "gal"
+                    : ""}
                 </span>
                 <br />
                 {/* <span style={{ fontSize: "15px" }}>Cambios realizados en el día: 10</span> */}

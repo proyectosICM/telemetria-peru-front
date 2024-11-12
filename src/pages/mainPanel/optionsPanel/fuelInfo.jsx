@@ -35,8 +35,8 @@ export function FuelInfo({ showAlert = true }) {
 
   useEffect(() => {
     if (typeVehicleData) {
-      const maxGas = typeVehicleData.fuel?.maxFuelValue || 0; // Usar el operador de encadenamiento opcional
-      setMaxPressure(maxGas);
+      const maxValue = typeVehicleData.fuelRange?.maxFuelValue || 0; 
+      setMaxPressure(maxValue);
     }
   }, [typeVehicleData]);
 

@@ -9,18 +9,18 @@ const useMqtt = (brokerUrl, topic) => {
   useEffect(() => {
     const client = mqtt.connect(brokerUrl);
     client.on("connect", () => {
-      console.log("Conectado a MQTT Broker");
+      //console.log("Conectado a MQTT Broker");
       setIsConnected(true);
       client.subscribe(topic, (err) => {
         if (!err) {
-          console.log(`Suscrito al tópico ${topic}`);
+          //console.log(`Suscrito al tópico ${topic}`);
         }
       });
     });
 
     client.on("message", (receivedTopic, message) => {
       if (receivedTopic === topic) {
-        console.log(`Mensaje recibido: ${message.toString()}`);
+        //console.log(`Mensaje recibido: ${message.toString()}`);
         setMessages((prevMessages) => [...prevMessages, message.toString()]);
       }
     });
@@ -35,12 +35,12 @@ const useMqtt = (brokerUrl, topic) => {
   const sendMessage = (message) => {
     if (client && isConnected) {
       client.publish(topic, message);
-      console.log(`Mensaje enviado: ${message}`);
+      //console.log(`Mensaje enviado: ${message}`);
     }
   };
 
   const clearMessages = () => {
-    console.log("Mensajes Borrados")
+    //console.log("Mensajes Borrados")
     setMessages([]);
   };
 

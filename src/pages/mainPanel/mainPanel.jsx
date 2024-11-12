@@ -21,9 +21,12 @@ export function MainPanel() {
   LogoutToken();
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
-  const { messages } = useMqtt(mqttDominio, mqttTopics.mapa);
+  const companyId = localStorage.getItem("companyId");
+  const topic = `${mqttTopics.mapa}${companyId}`;
+  console.log(topic);
+  const { messages } = useMqtt(mqttDominio, topic);
   const buses = useMqttMapHandler(messages);
-  console.log(buses)
+  //console.log(buses)
 
   const handleSelectVehicle = (id) => {
     localStorage.setItem("selectedVehicleId", id);

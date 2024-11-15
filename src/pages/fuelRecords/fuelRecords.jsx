@@ -53,8 +53,8 @@ export function FuelRecords() {
                     <td>{getTimeFromTimestamp(d.createdAt)}</td>
                     <td>{d.vehicleModel.licensePlate}</td>
                     <td>
-                      {vehicleData.fuelType === "DIESEL" ? (d.dataValue * 0.264172).toFixed(2) : d.dataValue}{" "}
-                      {vehicleData.fuelType === "GAS " ? "psi" : "volumen"}
+                      {vehicleData && vehicleData.fuelType === "DIESEL" ? (d.dataValue * 0.264172).toFixed(2) : d.dataValue}{" "}
+                      {vehicleData && vehicleData.fuelType === "GAS " ? "psi" : "volumen"}
                     </td>
                   </tr>
                 ))}

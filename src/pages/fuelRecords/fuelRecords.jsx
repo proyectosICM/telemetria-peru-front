@@ -23,8 +23,6 @@ export function FuelRecords() {
   // Usar el hook ListItemsPaginated para obtener los datos y la paginación
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${fuelRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
 
-  console.log(data);
-
   return (
     <div className="g-background">
       <NavbarCommon />

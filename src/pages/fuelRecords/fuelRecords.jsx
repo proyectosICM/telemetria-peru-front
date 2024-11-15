@@ -6,9 +6,8 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { fuelRecordsByVehicleIdPageURL, vehiclesURL } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
-import { PaginacionUtils } from '../../utils/paginacionUtils';
+import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
-
 
 export function FuelRecords() {
   const navigate = useNavigate();
@@ -52,7 +51,8 @@ export function FuelRecords() {
                     <td>{getTimeFromTimestamp(d.createdAt)}</td>
                     <td>{d.vehicleModel.licensePlate}</td>
                     <td>
-                      {d.valueData} {vehicleData.fuelType === "GAS " ? "psi" : "volumen"}
+                      {vehicleData.fuelType === "DIESEL" ? (d.dataValue * 0.264172).toFixed(2) : d.dataValue}{" "}
+                      {vehicleData.fuelType === "GAS " ? "psi" : "volumen"}
                     </td>
                   </tr>
                 ))}

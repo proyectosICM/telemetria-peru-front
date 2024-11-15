@@ -12,10 +12,10 @@ export const mqttTopics = {
 };
 
 // URL para desarrollo
-const base = "http://192.168.1.232:7078"
+//const base = "http://192.168.1.232:7078"
  
 // URL para producion en el servidor
-//export const base = "http://telemetriaperu.com:7070";
+export const base = "http://telemetriaperu.com:7070";
 
 
 

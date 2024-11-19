@@ -51,12 +51,18 @@ export const InfoUserURL = `${UserURL}/info/`;
 export const driverURL = `${baseAPIURL}/driver`;
 export const driverPagedURL = `${driverURL}/paged`;
 
-/** Gas Records */
+/** Fuel Records */
 export const fuelRecordsURL = `${baseAPIURL}/fuel-records`;
 export const fuelRecordsPageURL = `${fuelRecordsURL}/page`;
 export const fuelRecordsByVehicleIdURL = `${fuelRecordsURL}/findByVehicleId`;
 export const fuelRecordsByVehicleIdPageURL = `${fuelRecordsURL}/findByVehicleId-page`;
+export const fuelRecordsHourlyAVLURL = `${fuelRecordsURL}/hourly-averages`;
 
+/**  */
+export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;
+export const alarmRecordsPageURL = `${alarmRecordsURL}/page`;
+export const alarmRecordsByVehicleIdURL = `${alarmRecordsURL}/findByVehicle`;
+export const alarmRecordsByVehicleIdPageURL = `${alarmRecordsURL}/findByVehicle-paged`;
 /** Battery **/
 export const batteryURL = `${baseAPIURL}/batteries`;
 export const batteryPagedURL = `${batteryURL}/paged`;

@@ -26,6 +26,7 @@ import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
 import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
 import { FuelRecords } from "./pages/fuelRecords/fuelRecords";
 import { MainPanel } from "./pages/mainPanel/mainPanel";
+import { AlarmRecords } from "./pages/alarmRecords/alarmRecords";
   
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -37,6 +38,7 @@ export const routes = [
   { path: "/vehicle-info", component: <VehicleInfoPanel/> },
 
   { path: "/fuel-Records", component: <FuelRecords /> },
+  { path: "/alarm-Records", component: <AlarmRecords /> },
   { path: "/battery-Records", component: <BatteryRecords /> },
   
   { path: "/issues-Records", component: <IssuesRecords /> },

@@ -16,6 +16,7 @@ import useMqtt from "../../hooks/useMqtt";
 import useMqttMapHandler from "../../mqtt/mqttMapHandler";
 import "./mainPanel.css";
 import { FuelInfo } from "./optionsPanel/fuelInfo";
+import { AlarmInfo } from "./optionsPanel/alarmInfo";
 
 export function MainPanel() {
   LogoutToken();
@@ -23,10 +24,9 @@ export function MainPanel() {
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
   const companyId = localStorage.getItem("companyId");
   const topic = `${mqttTopics.mapa}${companyId}`;
-  console.log(topic);
+
   const { messages } = useMqtt(mqttDominio, topic);
   const buses = useMqttMapHandler(messages);
-  //console.log(buses)
 
   const handleSelectVehicle = (id) => {
     localStorage.setItem("selectedVehicleId", id);
@@ -54,13 +54,17 @@ export function MainPanel() {
                 <VehicleInfo />
                 <ChecklistInfo />
                 <VehicleOptions />
-                <FuelInfo />
+                <AlarmInfo />
               </div>
 
               <div className="main-options-panel-content">
+                <FuelInfo />
                 <BatteryInfo />
                 <TireInfo />
                 <TireInfoData />
+              </div>
+
+              <div className="main-options-panel-content">
                 <ImpactIncidentLogging />
               </div>
             </div>

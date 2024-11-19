@@ -14,7 +14,7 @@ const mqttDataHandler = (messages, setData, criterio) => {
           const value = lastMessage[criterio];
           setData(value);
         } else {
-          console.log(`${criterio} no actualizado`);
+          //console.log(`${criterio} no actualizado`);
         }
       }
     } catch (err) {

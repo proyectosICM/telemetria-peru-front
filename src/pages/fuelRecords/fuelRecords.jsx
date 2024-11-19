@@ -1,28 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { NavbarCommon } from "../../common/navbarCommon";
-
-import {
-  fuelRecordsByVehicleIdPageURL,
-  fuelRecordsHourlyAVLURL,
-  vehiclesURL,
-} from "../../api/apiurls";
+import { fuelRecordsByVehicleIdPageURL, fuelRecordsHourlyAVLURL, fuelRecordsWeekAVLURL, vehiclesURL } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
-import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
+import { FuelRecordsTable } from "./fuelRecordsTable";
+import { ChartComponent } from "../../common/chartComponent";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -33,6 +19,10 @@ export function FuelRecords() {
 
   const [vehicleData, setVehicleData] = useState(null);
   const [hourlyAVL, setHourlyAVL] = useState();
+  const [weekAVL, setWeeklyAVL] = useState();
+  //const [weekAVL, setWeeklyAVL] = useState();
+
+  const layout = "side-by-side";
 
   useEffect(() => {
     ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
@@ -42,21 +32,24 @@ export function FuelRecords() {
     ListItems(`${fuelRecordsHourlyAVLURL}/${selectedVehicleId}`, setHourlyAVL);
   }, [selectedVehicleId]);
 
-  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
-    `${fuelRecordsByVehicleIdPageURL}/${selectedVehicleId}`,
-    pageNumber
-  );
+  useEffect(() => {
+    ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL);
+  }, [selectedVehicleId]);
 
-  // Preparar los datos del gráfico a partir de hourlyAVL
-  const chartData = {
-    labels: hourlyAVL?.map((record) => new Date(record.hour).toLocaleTimeString()), // Convertir a hora legible
+  useEffect(() => {
+    ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL);
+  }, [selectedVehicleId]);
+
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${fuelRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
+
+  // Datos del gráfico por hora
+  const hourlyChartData = {
+    labels: hourlyAVL?.map((record) => new Date(record.hour).toLocaleTimeString()),
     datasets: [
       {
-        label: "Promedio de Combustible (litros/psi)",
+        label: "Promedio de Combustible por hora",
         data: hourlyAVL?.map((record) =>
-          vehicleData && vehicleData.fuelType === "DIESEL"
-            ? (record.averageValue * 0.264172).toFixed(2)
-            : record.averageValue
+          vehicleData && vehicleData.fuelType === "DIESEL" ? (record.averageValue * 0.264172).toFixed(2) : record.averageValue
         ),
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -64,30 +57,42 @@ export function FuelRecords() {
     ],
   };
 
-  const chartOptions = {
+  const hourlyChartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Promedio de Combustible por Hora",
-      },
+      legend: { position: "top" },
+      title: { display: true, text: "Promedio de Combustible por Hora" },
     },
     scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Hora",
-        },
+      x: { title: { display: true, text: "Hora" } },
+      y: { title: { display: true, text: "Valor Promedio" } },
+    },
+  };
+
+  // Datos del gráfico por semana
+  const weeklyChartData = {
+    labels: weekAVL?.map((record) => new Date(record.day).toLocaleDateString()),
+    datasets: [
+      {
+        label: "Promedio de Combustible por semana",
+        data: weekAVL?.map((record) =>
+          vehicleData && vehicleData.fuelType === "DIESEL" ? (record.averageValue * 0.264172).toFixed(2) : record.averageValue
+        ),
+        borderColor: "rgba(153, 102, 255, 1)",
+        backgroundColor: "rgba(153, 102, 255, 0.2)",
       },
-      y: {
-        title: {
-          display: true,
-          text: "Valor Promedio",
-        },
-      },
+    ],
+  };
+
+  const weeklyChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+      title: { display: true, text: "Promedio de Combustible por semana" },
+    },
+    scales: {
+      x: { title: { display: true, text: "Día" } },
+      y: { title: { display: true, text: "Valor Promedio" } },
     },
   };
 
@@ -108,56 +113,13 @@ export function FuelRecords() {
           }}
         >
           <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
-          <Table striped bordered hover variant="dark" style={{ margin: "10px", width: "90%" }}>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Dia</th>
-                <th>Hora</th>
-                <th>Placa</th>
-                <th>{vehicleData && vehicleData.fuelType === "GAS " ? "Presion" : "Volumen"}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map((d, index) => (
-                  <tr key={index}>
-                    <td>{d.id}</td>
-                    <td>{getDateFromTimestamp(d.createdAt)}</td>
-                    <td>{getTimeFromTimestamp(d.createdAt)}</td>
-                    <td>{d.vehicleModel.licensePlate}</td>
-                    <td>
-                      {vehicleData && vehicleData.fuelType === "DIESEL"
-                        ? (d.valueData * 0.264172).toFixed(2)
-                        : d.valueData}{" "}
-                      {vehicleData && vehicleData.fuelType === "GAS " ? "psi" : "volumen"}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+          <FuelRecordsTable data={data} fuelType={vehicleData} />
+          <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
 
-          <PaginacionUtils
-            setPageNumber={setPageNumber}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
-
-          <h1>Estadisticas</h1>
-
-          {/* Componente del gráfico */}
-          <div
-            style={{
-              width: "80%",
-              margin: "20px auto",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Line data={chartData} options={chartOptions} />
+          <h1>Estadísticas</h1>
+          <div style={{ width: "100%", height: "400px", display: "flex" }}>
+            <ChartComponent data={hourlyChartData} options={hourlyChartOptions} layout={layout} />
+            <ChartComponent data={weeklyChartData} options={weeklyChartOptions} layout={layout} />
           </div>
         </div>
       </div>

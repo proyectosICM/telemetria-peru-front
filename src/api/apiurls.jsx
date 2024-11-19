@@ -57,6 +57,7 @@ export const fuelRecordsPageURL = `${fuelRecordsURL}/page`;
 export const fuelRecordsByVehicleIdURL = `${fuelRecordsURL}/findByVehicleId`;
 export const fuelRecordsByVehicleIdPageURL = `${fuelRecordsURL}/findByVehicleId-page`;
 export const fuelRecordsHourlyAVLURL = `${fuelRecordsURL}/hourly-averages`;
+export const fuelRecordsWeekAVLURL = `${fuelRecordsURL}/week-averages`;
 
 /**  */
 export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;

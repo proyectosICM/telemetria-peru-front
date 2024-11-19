@@ -31,27 +31,22 @@
   overflow-y: auto;
 }
 
-.graph-panel {
-  width: 100%;
-  height: 280px;
-  margin: auto;
-}
-
-.graph-item {
-  width: 50%;
-  height: 280px;
-  margin: auto;
-  color: white;
-
-}
-
-.graph-container {
-  width: 100%;
-  height: 280px;
-  margin: auto;
-  overflow: auto;
+.charts-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap; /* Permite que los gráficos se ajusten a nuevas filas */
+  justify-content: center; /* Centra los gráficos horizontalmente */
+  gap: 20px; /* Espaciado entre gráficos */
+}
+
+.charts-container > * {
+  flex: 0 1 45%; /* Cada gráfico ocupa hasta el 45% del ancho del contenedor */
+  max-width: 45%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .charts-container > * {
+    flex: 0 1 100%; /* En pantallas pequeñas, cada gráfico ocupa el 100% del ancho */
+    max-width: 100%;
+  }
 }

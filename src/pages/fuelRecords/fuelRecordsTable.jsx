@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 
 export function FuelRecordsTable({ data, fuelType }) {
-  console.log(fuelType)
+
   return (
     <div style={{ margin: "10px", width: "90%" }}> 
       <Table striped bordered hover variant="dark">

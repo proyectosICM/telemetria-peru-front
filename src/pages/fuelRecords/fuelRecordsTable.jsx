@@ -2,7 +2,8 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 
-export function FuelRecordsTable({ data, type }) {
+export function FuelRecordsTable({ data, fuelType }) {
+  console.log(fuelType)
   return (
     <div style={{ margin: "10px", width: "90%" }}> 
       <Table striped bordered hover variant="dark">
@@ -12,7 +13,7 @@ export function FuelRecordsTable({ data, type }) {
             <th>Dia</th>
             <th>Hora</th>
             <th>Placa</th>
-            <th>{type && type.fuelType === "GAS " ? "Presion" : "Volumen"}</th>
+            <th>{fuelType && fuelType.fuelType === "GAS " ? "Presion" : "Volumen"}</th>
           </tr>
         </thead>
         <tbody>
@@ -24,8 +25,8 @@ export function FuelRecordsTable({ data, type }) {
                 <td>{getTimeFromTimestamp(d.createdAt)}</td>
                 <td>{d.vehicleModel.licensePlate}</td>
                 <td>
-                  {type && type.fuelType === "DIESEL" ? (d.valueData * 0.264172).toFixed(2) : d.valueData}{" "}
-                  {type && type.fuelType === "GAS " ? "psi" : "volumen"}
+                  {fuelType && fuelType.fuelType === "DIESEL" ? (d.valueData * 0.264172).toFixed(2) : d.valueData}{" "}
+                  {fuelType && fuelType.fuelType === "GAS " ? "psi" : "volumen"}
                 </td>
               </tr>
             ))}

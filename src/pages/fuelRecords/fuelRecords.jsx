@@ -21,7 +21,7 @@ export function FuelRecords() {
   const [hourlyAVL, setHourlyAVL] = useState();
   const [weekAVL, setWeeklyAVL] = useState();
   //const [weekAVL, setWeeklyAVL] = useState();
-
+  //console.log(vehicleData)
   const layout = "side-by-side";
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export function FuelRecords() {
           }}
         >
           <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
-          <FuelRecordsTable data={data} fuelType={vehicleData} />
+          {vehicleData && <FuelRecordsTable data={data} fuelType={vehicleData} />}
           <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
 
           <h1>Estadísticas</h1>

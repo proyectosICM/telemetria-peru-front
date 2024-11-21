@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { FaExclamationTriangle, FaRegBellSlash } from "react-icons/fa";
+import { FaCar, FaCarCrash } from "react-icons/fa"; // Íconos para encendido y apagado
 import { useNavigate } from "react-router-dom";
 import { mqttDominio, mqttTopics } from "../../../api/apiurls";
 import useMqtt from "../../../hooks/useMqtt";
 import mqttDataHandler from "../../../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
 
-export function AlarmInfo({ showAlert = true }) {
+export function IgnitionInfo({ showAlert = true }) {
   const navigate = useNavigate();
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages, clearMessages } = useMqtt(mqttDominio, topic);
-  const [alarm, setAlarm] = useState(false); // Estado de la alarma (activo o inactivo)
+  const [ignition, setIgnition] = useState(true); // Estado de ignición (encendido o apagado)
 
   useEffect(() => {
-    mqttDataHandler(messages, setAlarm, "alarmInfo");
+    mqttDataHandler(messages, setIgnition, "ignitionInfo");
   }, [messages]);
 
-  
-  //console.log(messages)
-
+  console.log(messages)
   // Obtener fecha y hora actual
   const currentDateTime = new Date();
   const formattedDateTime = `${currentDateTime.toLocaleDateString("es-ES").replace(/\//g, "-")} - ${currentDateTime.toLocaleTimeString("es-ES", {
@@ -29,7 +27,7 @@ export function AlarmInfo({ showAlert = true }) {
     minute: "2-digit",
   })}`;
 
-  // Estilos del card según si la alarma está activa o no
+  // Estilos del card según el estado de encendido
   const cardStyle = {
     display: "flex",
     flexDirection: "column",
@@ -40,12 +38,12 @@ export function AlarmInfo({ showAlert = true }) {
     margin: "10px auto",
     textAlign: "center",
     borderRadius: "10px",
-    boxShadow: alarm ? "0px 4px 15px rgba(255, 0, 0, 0.4)" : "0px 4px 15px rgba(169, 169, 169, 0.4)",
+    boxShadow: ignition ? "0px 4px 15px rgba(0, 255, 0, 0.4)" : "0px 4px 15px rgba(169, 169, 169, 0.4)",
     cursor: "pointer",
     color: "#fff",
-    backgroundColor: alarm ? "#FF4D4D" : "#A9A9A9", // Rojo si la alarma está activada, gris si está desactivada
-    border: alarm ? "2px solid #FF0000" : "2px solid #D3D3D3", // Borde rojo o gris
-    animation: alarm ? "pulse 1.5s infinite" : "none", // Pulsación si está activada
+    backgroundColor: ignition ? "#4CAF50" : "#A9A9A9", // Verde si está encendido, gris si está apagado
+    border: ignition ? "2px solid #008000" : "2px solid #D3D3D3", // Borde verde o gris
+    animation: ignition ? "pulse 1.5s infinite" : "none", // Pulsación si está encendido
   };
 
   // Estilos del ícono y texto
@@ -66,16 +64,16 @@ export function AlarmInfo({ showAlert = true }) {
   };
 
   return (
-    <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/alarm-Records")}>
-      <h4>Información de Alarma</h4>
+    <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/ignition-Records")}>
+      <h4>Información de Ignición</h4>
       <div style={cardStyle}>
-        {alarm ? (
-          <FaExclamationTriangle style={iconStyle} /> // Ícono de alarma si está activada
+        {ignition ? (
+          <FaCar style={iconStyle} /> // Ícono de encendido
         ) : (
-          <FaRegBellSlash style={iconStyle} /> // Ícono de alarma desactivada
+          <FaCarCrash style={iconStyle} /> // Ícono de apagado
         )}
-        <p style={textStyle}>{alarm ? "¡Alarma activada!" : "Alarma desactivada"}</p>
-        {alarm ? <p style={dateStyle}>{formattedDateTime}</p> : <p>Sin incidencia</p>}
+        <p style={textStyle}>{ignition ? "Vehículo encendido" : "Vehículo apagado"}</p>
+        {ignition ? <p style={dateStyle}>{formattedDateTime}</p> : <p>Sin actividad reciente</p>}
       </div>
     </div>
   );

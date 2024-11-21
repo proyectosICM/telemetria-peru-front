@@ -8,7 +8,7 @@ export const mqttLocalURL = "ws://localhost:1883"
 // Temas MQTT
 export const mqttTopics = {
     mapa: "mapa/",
-    tmp_gasPressure: "telData/",
+    telData: "telData/",
 };
 
 // URL para desarrollo
@@ -58,6 +58,11 @@ export const fuelRecordsByVehicleIdURL = `${fuelRecordsURL}/findByVehicleId`;
 export const fuelRecordsByVehicleIdPageURL = `${fuelRecordsURL}/findByVehicleId-page`;
 export const fuelRecordsHourlyAVLURL = `${fuelRecordsURL}/hourly-averages`;
 export const fuelRecordsWeekAVLURL = `${fuelRecordsURL}/week-averages`;
+
+export const ignitionRecordsURL = `${baseAPIURL}/vehicle-ignition`;
+export const ignitionRecordsPagedURL = `${ignitionRecordsURL}/paged`;
+export const ignitionRecordsByVehicleIdURL = `${ignitionRecordsURL}/findByVehicle`;
+export const ignitionsByVehicleIdPageURL = `${ignitionRecordsURL}/findByVehicle-paged`;
 
 /**  */
 export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;

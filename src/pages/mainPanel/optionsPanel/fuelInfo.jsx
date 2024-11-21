@@ -16,7 +16,7 @@ export function FuelInfo({ showAlert = true }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
 
-  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
+  const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages, clearMessages } = useMqtt(mqttDominio, topic);
 
   const [vehicleData, setVehicleData] = useState(null);

@@ -17,6 +17,7 @@ import useMqttMapHandler from "../../mqtt/mqttMapHandler";
 import "./mainPanel.css";
 import { FuelInfo } from "./optionsPanel/fuelInfo";
 import { AlarmInfo } from "./optionsPanel/alarmInfo";
+import { IgnitionInfo } from "./optionsPanel/ignitionInfo";
 
 export function MainPanel() {
   LogoutToken();
@@ -52,20 +53,21 @@ export function MainPanel() {
               <h3>Options Panel</h3>
               <div className="main-options-panel-content">
                 <VehicleInfo />
-                <ChecklistInfo />
-                <VehicleOptions />
+                <IgnitionInfo />
                 <AlarmInfo />
+                <VehicleOptions />
               </div>
 
               <div className="main-options-panel-content">
+                <ChecklistInfo />
                 <FuelInfo />
                 <BatteryInfo />
-                <TireInfo />
-                <TireInfoData />
+                <ImpactIncidentLogging />
               </div>
 
               <div className="main-options-panel-content">
-                <ImpactIncidentLogging />
+                <TireInfo />
+                <TireInfoData />
               </div>
             </div>
           ) : (

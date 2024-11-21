@@ -27,6 +27,7 @@ import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
 import { FuelRecords } from "./pages/fuelRecords/fuelRecords";
 import { MainPanel } from "./pages/mainPanel/mainPanel";
 import { AlarmRecords } from "./pages/alarmRecords/alarmRecords";
+import { IgnitionRecords } from "./pages/ignitionRecords/ignitionRecords";
   
 export const routes = [
   { path: "/", component: <MainPanel /> },
@@ -39,6 +40,7 @@ export const routes = [
 
   { path: "/fuel-Records", component: <FuelRecords /> },
   { path: "/alarm-Records", component: <AlarmRecords /> },
+  { path: "/ignition-Records", component: <IgnitionRecords /> },
   { path: "/battery-Records", component: <BatteryRecords /> },
   
   { path: "/issues-Records", component: <IssuesRecords /> },

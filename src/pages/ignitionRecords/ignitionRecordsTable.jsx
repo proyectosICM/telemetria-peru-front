@@ -3,6 +3,7 @@ import { Table } from "react-bootstrap";
 import { FaHashtag, FaCalendarAlt, FaClock, FaCarAlt, FaToggleOn } from "react-icons/fa";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 
+
 export function IgnitionRecordsTable({ data }) {
   return (
     <div style={{ margin: "10px", width: "90%" }}>
@@ -11,7 +12,6 @@ export function IgnitionRecordsTable({ data }) {
           <tr>
             <th>
               <FaHashtag style={{ marginRight: "8px" }} />
-              #
             </th>
             <th>
               <FaCalendarAlt style={{ marginRight: "8px" }} />

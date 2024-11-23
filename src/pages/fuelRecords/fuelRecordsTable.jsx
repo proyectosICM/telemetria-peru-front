@@ -8,15 +8,14 @@ export function FuelRecordsTable({ data, fuelType }) {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>#</th>
+            <th>Placa</th>
             <th>Dia</th>
             <th>Hora</th>
-            <th>Placa</th>
             <th>
               {fuelType && fuelType.fuelType === "GAS"
                 ? "PSI"
                 : fuelType.fuelType === "GASOLINA"
-                ? "VOLUMEN"
+                ? "Volumen"
                 : fuelType.fuelType === "DIESEL"
                 ? "Galones"
                 : ""}
@@ -27,16 +26,15 @@ export function FuelRecordsTable({ data, fuelType }) {
           {data &&
             data.map((d, index) => (
               <tr key={index}>
-                <td>{d.id}</td>
+                <td>{d.vehicleModel.licensePlate}</td>
                 <td>{getDateFromTimestamp(d.createdAt)}</td>
                 <td>{getTimeFromTimestamp(d.createdAt)}</td>
-                <td>{d.vehicleModel.licensePlate}</td>
                 <td>
                   {fuelType && fuelType.fuelType === "DIESEL" ? (d.valueData * 0.264172).toFixed(2) : d.valueData}{" "}
                   {fuelType && fuelType.fuelType === "GAS"
                     ? "PSI"
                     : fuelType.fuelType === "GASOLINA"
-                    ? "VOLUMEN"
+                    ? "Volumen"
                     : fuelType.fuelType === "DIESEL"
                     ? "gal"
                     : ""}

@@ -63,6 +63,7 @@ export const ignitionRecordsURL = `${baseAPIURL}/vehicle-ignition`;
 export const ignitionRecordsPagedURL = `${ignitionRecordsURL}/paged`;
 export const ignitionRecordsByVehicleIdURL = `${ignitionRecordsURL}/findByVehicle`;
 export const ignitionsByVehicleIdPageURL = `${ignitionRecordsURL}/findByVehicle-paged`;
+export const ignitionBasicChartURL = `${ignitionRecordsURL}/active-durations`;
 
 /**  */
 export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;

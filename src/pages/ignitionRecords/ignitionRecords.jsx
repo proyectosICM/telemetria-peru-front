@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { IgnitionInfo } from "../mainPanel/optionsPanel/ignitionInfo";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
-import { fuelRecordsByVehicleIdPageURL, ignitionsByVehicleIdPageURL } from "../../api/apiurls";
-import { ListItemsPaginated } from "../../hooks/listItems";
+import { fuelRecordsByVehicleIdPageURL, ignitionBasicChartURL, ignitionsByVehicleIdPageURL } from "../../api/apiurls";
+import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { IgnitionRecordsTable } from "./ignitionRecordsTable";
 
 export function IgnitionRecords() {
@@ -13,6 +13,14 @@ export function IgnitionRecords() {
   const [pageNumber, setPageNumber] = useState(0);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${ignitionsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
+
+
+  const [chartsData, setChartsData] = useState();
+
+  useEffect(() => {
+    ListItems(`${ignitionBasicChartURL}/${selectedVehicleId}`, setChartsData);
+  }, [selectedVehicleId]);
+
 
   return (
     <div className="g-background">

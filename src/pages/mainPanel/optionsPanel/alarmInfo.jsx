@@ -67,7 +67,6 @@ export function AlarmInfo({ showAlert = true }) {
 
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/alarm-Records")}>
-      <h4>Información de Alarma</h4>
       <div style={cardStyle}>
         {alarm ? (
           <FaExclamationTriangle style={iconStyle} /> // Ícono de alarma si está activada

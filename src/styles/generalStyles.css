@@ -20,11 +20,11 @@
 }
 
 .g-option-item {
-  width: 300px;
-  height: 250px;
-  margin: 0px 2%;
+  width: 220px;
+  height: 220px;
+  margin: 2%;
   border: 2px solid #d1d0cc;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5%;
   cursor: pointer;
   flex-wrap: nowrap;
@@ -33,20 +33,25 @@
 
 .charts-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que los gráficos se ajusten a nuevas filas */
-  justify-content: center; /* Centra los gráficos horizontalmente */
-  gap: 20px; /* Espaciado entre gráficos */
+  flex-wrap: wrap;
+  /* Permite que los gráficos se ajusten a nuevas filas */
+  justify-content: center;
+  /* Centra los gráficos horizontalmente */
+  gap: 20px;
+  /* Espaciado entre gráficos */
 }
 
-.charts-container > * {
-  flex: 0 1 45%; /* Cada gráfico ocupa hasta el 45% del ancho del contenedor */
+.charts-container>* {
+  flex: 0 1 45%;
+  /* Cada gráfico ocupa hasta el 45% del ancho del contenedor */
   max-width: 45%;
   box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
-  .charts-container > * {
-    flex: 0 1 100%; /* En pantallas pequeñas, cada gráfico ocupa el 100% del ancho */
+  .charts-container>* {
+    flex: 0 1 100%;
+    /* En pantallas pequeñas, cada gráfico ocupa el 100% del ancho */
     max-width: 100%;
   }
 }

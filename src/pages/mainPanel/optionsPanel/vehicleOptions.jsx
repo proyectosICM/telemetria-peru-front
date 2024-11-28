@@ -44,11 +44,11 @@ export function VehicleOptions() {
 
   return (
     <div className="g-option-item">
-      <h4>Opciones Remotas</h4>
+      <h5>Opciones Remotas</h5>
 
       {options.map(({ label, stateKey, onLabel, offLabel }) => (
         <div key={stateKey} className="option">
-          <span style={{ fontSize: "18px", margin: "5px" }}>
+          <span style={{ fontSize: "15px", margin: "5px" }}>
             {states[stateKey] ? onLabel : offLabel}
           </span>
           <label className="tk-op-switch">

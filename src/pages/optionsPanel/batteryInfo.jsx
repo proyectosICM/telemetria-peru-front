@@ -89,7 +89,7 @@ export function BatteryInfo({ showAlert = true }) {
 
   return (
     <div className="g-option-item" onClick={handleRecords}>
-      <h4>Battery Info</h4>
+      <h5>Battery Info</h5>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0px", justifyContent: "center" }}>
         {data.length > 0 ? (
           data.map((battery, index) => {

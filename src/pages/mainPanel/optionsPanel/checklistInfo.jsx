@@ -6,11 +6,14 @@ export function ChecklistInfo({ showAlert = true }) {
   const navigate = useNavigate();
 
   const cardStyle = {
+    display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    width: "60%",
-    padding: "20px",
-    margin: "auto",
+    width: "80%",
+    padding: "10px",
+
+    margin: "10% auto ",  
     textAlign: "center",
     borderRadius: "10px",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
@@ -19,11 +22,12 @@ export function ChecklistInfo({ showAlert = true }) {
     backgroundColor: "#007BFF",
   };
 
-  const iconStyle = { fontSize: "3.2em", marginBottom: "10px" };
+  const iconStyle = {
+    fontSize: "2.2em",
+    marginBottom: "10px",
+  };
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/checklist-panel")}>
-      <h1>Checklist</h1>
-
       <div style={cardStyle}>
         <FaClipboardCheck style={iconStyle} />
         <p>Realizar/Ver los checklist</p>

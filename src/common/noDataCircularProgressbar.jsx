@@ -11,23 +11,25 @@ import "react-circular-progressbar/dist/styles.css";
  */
 const NoDataCircularProgressbar = () => {
   return (
-    <div style={{ width: "40%", textAlign: "center" }}>
-      <CircularProgressbar
-        value={0}
-        maxValue={100}
-        text={`${Math.round(0)}%`}
-        styles={buildStyles({
-          rotation: 0.5,
-          strokeLinecap: "butt",
-          trailColor: "#eee",
-          textSize: "16px",
-          pathTransitionDuration: 0.5,
-          pathColor: "rgba(255, 0, 0, 1)",
-          textColor: "white",
-          backgroundColor: "#3e98c7",
-        })}
-      />
-      <div style={{ color: "white", marginTop: "10px" }}>
+    <div style={{ textAlign: "center" }}>
+      <div style={{ width: "40%", textAlign: "center", margin: "auto" }}>
+        <CircularProgressbar
+          value={0}
+          maxValue={100}
+          text={`${Math.round(0)}%`}
+          styles={buildStyles({
+            rotation: 0.5,
+            strokeLinecap: "butt",
+            trailColor: "#eee",
+            textSize: "16px",
+            pathTransitionDuration: 0.5,
+            pathColor: "rgba(255, 0, 0, 1)",
+            textColor: "white",
+            backgroundColor: "#3e98c7",
+          })}
+        />
+      </div>
+      <div style={{ color: "white", marginTop: "10px", width: "100%"}}>
         <span style={{ fontSize: "15px" }}>No hay datos en tiempo real para graficar</span>
       </div>
     </div>

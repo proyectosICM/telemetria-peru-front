@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export function VehicleInfo({ showAlert = true }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [speed, setSpeed] = useState(null);
+  const [speed, setSpeed] = useState(null); 
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
@@ -31,16 +31,17 @@ export function VehicleInfo({ showAlert = true }) {
 
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/vehicle-info")}>
-      <h4>Información del Vehículo</h4>
-      <p>Placa: {data && data.licensePlate}</p>
-      <p>Tipo: {data && data.vehicleTypeName}</p>
+      <h5>Información del Vehículo</h5>
+      <span>Placa: {data && data.licensePlate}</span>
+      <br />
+      <span>Tipo: {data && data.vehicleTypeName}</span>
+      <br />
       {/* Mostrar la velocidad actual con el color adecuado según la condición */}
-      <p style={{ color: isSpeedExceeded ? "red" : "white" }}>Velocidad Actual: {speed ? `${speed} km` : "0 km"}</p>
-
+      <span style={{ color: isSpeedExceeded ? "red" : "white" }}>Velocidad Actual: {speed ? `${speed} km` : "0 km"}</span>
+      <br />
       {/* Mostrar advertencia solo si se excede la velocidad máxima */}
       {isSpeedExceeded && <p style={{ color: "red" }}>¡Límite de velocidad excedido!</p>}
-
-      <p>Tiempo encendido: {data && data.timeOn} segundos</p>
+      {/*<span>Tiempo encendido: {data && data.timeOn} segundos</span>*/}
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function IgnitionInfo({ showAlert = true }) {
   const [ignition, setIgnition] = useState(false); // Estado de ignición (encendido o apagado)
 
   useEffect(() => {
-    mqttDataHandler(messages, setIgnition, "ignitionInfo");
+    //mqttDataHandler(messages, setIgnition, "ignitionInfo");
   }, [messages]);
 
   console.log(messages);
@@ -34,8 +34,8 @@ export function IgnitionInfo({ showAlert = true }) {
     justifyContent: "center",
     alignItems: "center",
     width: "80%",
-    padding: "20px",
-    margin: "10px auto",
+    padding: "10px",
+    margin: "10% auto ",
     textAlign: "center",
     borderRadius: "10px",
     boxShadow: ignition ? "0px 4px 15px rgba(0, 255, 0, 0.4)" : "0px 4px 15px rgba(169, 169, 169, 0.4)",
@@ -62,13 +62,13 @@ export function IgnitionInfo({ showAlert = true }) {
     fontSize: "0.9em",
     color: "#FFD700",
   };
-
+ 
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/ignition-Records")}>
       <div style={cardStyle}>
         {ignition ? <FaCar style={iconStyle} /> : <FaCarCrash style={iconStyle} />}
         <p style={textStyle}>{ignition ? "Vehículo encendido" : "Vehículo apagado"}</p>
-        {ignition ? <p style={dateStyle}>{formattedDateTime}</p> : <p>Sin actividad reciente</p>}
+        {/*ignition ? <p style={dateStyle}>{formattedDateTime}</p> : <p>Sin actividad </p>*/}
       </div>
     </div>
   );

@@ -53,21 +53,22 @@ export function MainPanel() {
               <h3>Options Panel</h3>
               <div className="main-options-panel-content">
                 <VehicleInfo />
+                <VehicleOptions />
                 <IgnitionInfo />
                 <AlarmInfo />
-                <VehicleOptions />
+                <ChecklistInfo />
               </div>
 
               <div className="main-options-panel-content">
-                <ChecklistInfo />
                 <FuelInfo />
                 <BatteryInfo />
                 <ImpactIncidentLogging />
+                <TireInfo />
+                <TireInfoData />
               </div>
 
               <div className="main-options-panel-content">
-                <TireInfo />
-                <TireInfoData />
+         
               </div>
             </div>
           ) : (

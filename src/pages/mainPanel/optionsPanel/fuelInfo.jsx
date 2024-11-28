@@ -11,7 +11,7 @@ import { ListItems } from "../../../hooks/listItems";
 import mqttDataHandler from "../../../hooks/mqttDataHandler";
 
 export function FuelInfo({ showAlert = true }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
@@ -85,7 +85,7 @@ export function FuelInfo({ showAlert = true }) {
         lowFuelRangeStart: lowRangeStart,
         veryLowFuelRangeStart: veryLowRangeStart,
       } = typeVehicleData.fuelRange);
-    } 
+    }
     // Verificar el estado del rango de presión
     if (pressureValue >= optimalRangeStart) {
       return "Óptimo";
@@ -104,16 +104,16 @@ export function FuelInfo({ showAlert = true }) {
 
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/fuel-Records")}>
-      <h4>Combustible Info</h4>
-      <span>Tipo: {vehicleData && vehicleData.fuelType}</span>
-      <div style={{ display: "flex", justifyContent: "center", margin: "10px auto" }}>
+      <h5>Combustible</h5>
+      <span style={{ fontSize: "14px" }}>Tipo: {vehicleData && vehicleData.fuelType}</span>
+      <div style={{ display: "flex", justifyContent: "center", margin: "0px auto 0px auto" }}>
         {dataValue !== null ? (
           <CircularProgressbarWithStatus value={percentage} status={status} size={"40%"}>
             {dataValue !== null && (
               <>
-                <span style={{ fontSize: "15px" }}>Estado: {status}</span>
+                <span style={{ fontSize: "14px" }}>Estado: {status}</span>
                 <br />
-                <span style={{ fontSize: "15px" }}>
+                <span style={{ fontSize: "14px" }}>
                   {vehicleData.fuelType === "GASOLINA" ? "Volumen Actual: " : vehicleData.fuelType === "GAS" ? "Presión Actual: " : "Valor"}{" "}
                   {vehicleData.fuelType === "DIESEL" ? (dataValue * 0.264172).toFixed(2) : dataValue}{" "}
                   {vehicleData.fuelType === "GASOLINA"

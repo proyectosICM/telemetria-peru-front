@@ -36,8 +36,8 @@ export function AlarmInfo({ showAlert = true }) {
     justifyContent: "center",
     alignItems: "center",
     width: "80%",
-    padding: "20px",
-    margin: "10px auto",
+    padding: "10px",
+    margin: "10% auto ",
     textAlign: "center",
     borderRadius: "10px",
     boxShadow: alarm ? "0px 4px 15px rgba(255, 0, 0, 0.4)" : "0px 4px 15px rgba(169, 169, 169, 0.4)",
@@ -74,7 +74,7 @@ export function AlarmInfo({ showAlert = true }) {
           <FaRegBellSlash style={iconStyle} /> // Ícono de alarma desactivada
         )}
         <p style={textStyle}>{alarm ? "¡Alarma activada!" : "Alarma desactivada"}</p>
-        {alarm ? <p style={dateStyle}>{formattedDateTime}</p> : <p>Sin incidencia</p>}
+        {/*alarm ? <p style={dateStyle}>{formattedDateTime}</p> : <p>Sin incidencia</p>*/}
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ const CircularProgressbarWithStatus = ({ value, status, size, children }) => {
   const statusColor = getStatusColor(status);
   return (
     <div>
-      <div style={{ width: size, height: size, margin: "auto" }}>
+      <div style={{ width: size, height: size, margin: "auto auto 0px auto" }}>
         <CircularProgressbar
           value={value}
           maxValue={100}
@@ -37,7 +37,7 @@ const CircularProgressbarWithStatus = ({ value, status, size, children }) => {
           })}
         />
       </div>
-      <div style={{ textAlign: "center", color: "white", margin: "30px 0 0 0 " }}>{children}</div>
+      <div style={{ textAlign: "center", color: "white", margin: "22px 0px 0px 0px " }}>{children}</div>
     </div>
   );
 };

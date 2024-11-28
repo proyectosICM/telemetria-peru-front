@@ -3,12 +3,13 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { NavbarCommon } from "../../common/navbarCommon";
-import { fuelRecordsByVehicleIdPageURL, fuelRecordsHourlyAVLURL, fuelRecordsWeekAVLURL, vehiclesURL } from "../../api/apiurls";
+import { fuelEfficiencyByVehicleURL, fuelRecordsByVehicleIdPageURL, fuelRecordsHourlyAVLURL, fuelRecordsWeekAVLURL, vehiclesURL } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
 import { FuelRecordsTable } from "./fuelRecordsTable";
 import { ChartComponent } from "../../common/chartComponent";
+import { FuelEfficiencyTable } from "./fuelEfficiencyTable";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -16,6 +17,8 @@ export function FuelRecords() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumberEfficiency, setPageNumberEfficiency] = useState(0);
+  const [fuelEfficiency, setFuelEfficiency] = useState();
 
   const [vehicleData, setVehicleData] = useState(null);
   const [hourlyAVL, setHourlyAVL] = useState();
@@ -24,6 +27,7 @@ export function FuelRecords() {
   //console.log(vehicleData)
   const layout = "side-by-side";
 
+
   useEffect(() => {
     ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
   }, [selectedVehicleId]);
@@ -31,7 +35,7 @@ export function FuelRecords() {
   useEffect(() => {
     ListItems(`${fuelRecordsHourlyAVLURL}/${selectedVehicleId}`, setHourlyAVL);
   }, [selectedVehicleId]);
-
+ 
   useEffect(() => {
     ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL);
   }, [selectedVehicleId]);
@@ -113,6 +117,8 @@ export function FuelRecords() {
           }}
         >
           <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
+
+          <FuelEfficiencyTable />
           {vehicleData && <FuelRecordsTable data={data} fuelType={vehicleData} />}
           <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
 

@@ -41,12 +41,12 @@ export function FuelEfficiencyTable() {
                   {getTimeFromTimestamp(d.startTime)}
                 </td>
                 <td>
-                   {getTimeFromTimestamp(d.endTime)}
+                   {getDateFromTimestamp.endTime ? getTimeFromTimestamp(d.endTime): "Aun no disponible"}
                 </td>
-                <td>{d.accumulatedHours}</td>
+                <td>{d.accumulatedHours ? d.accumulatedHours : "Aun no disponible" }</td>
                 <td>{d.initialFuel} L</td>
-                <td>{d.finalFuel} L</td>
-                <td>{d.coordinates}</td>
+                <td>{d.finalFuel ? `${d.finalFuel} L` : "Aun no disponible" }</td>
+                <td>{d.coordinates ? d.coordinates : "Aun no disponible" }</td>
               </tr>
             ))}
         </tbody>

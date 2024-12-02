@@ -44,3 +44,22 @@ export const getTimeFromTimestamp = (timestamp) => {
 //    second: "2-digit",
   return `${formattedTime}`;
 };
+export const calculateHoursDifference = (startTimestamp, endTimestamp) => {
+  if (!startTimestamp || !endTimestamp) return null; // Verifica que ambos valores existan
+
+  const start = new Date(startTimestamp * 1000);
+  const end = new Date(endTimestamp * 1000);
+
+  const diffInMilliseconds = end - start;
+
+  // Calcular horas y minutos
+  const totalMinutes = Math.floor(diffInMilliseconds / (1000 * 60)); // Total de minutos
+  const hours = Math.floor(totalMinutes / 60); // Horas completas
+  const minutes = totalMinutes % 60; // Minutos restantes
+
+  // Asegurar formato de dos dígitos para horas y minutos
+  const formattedHours = String(hours).padStart(2, "0");
+  const formattedMinutes = String(minutes).padStart(2, "0");
+
+  return `${formattedHours}:${formattedMinutes}`;
+};

@@ -16,7 +16,7 @@ export function IgnitionInfo({ showAlert = true }) {
   const [ignition, setIgnition] = useState(false); // Estado de ignición (encendido o apagado)
 
   useEffect(() => {
-    //mqttDataHandler(messages, setIgnition, "ignitionInfo");
+    mqttDataHandler(messages, setIgnition, "ignitionInfo");
   }, [messages]);
 
   console.log(messages);

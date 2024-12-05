@@ -36,11 +36,10 @@ export function FuelEfficiencyTable() {
             <th>Combustible final</th>
             <th>Rendimiendo Combustible</th>
             <th>Coordenadas Final</th>
-
           </tr>
         </thead>
         <tbody>
-        {processedData &&
+          {processedData &&
             processedData.map((d, index) => (
               <tr key={index}>
                 <td>{d.fuelEfficiencyStatus}</td>
@@ -51,7 +50,15 @@ export function FuelEfficiencyTable() {
                 <td>{d.hoursAccumulated}</td>
                 <td>{d.formattedInitialFuel}</td>
                 <td>{d.formattedFinalFuel}</td>
-                <td>{d.fuelEfficiency ? `${d.fuelEfficiency} km/l `: "Aún no disponible" } </td>
+                <td>
+                  {d.vehicleModel.fuelType === "DIESEL"
+                    ? d.fuelEfficiency
+                      ? `${(d.fuelEfficiency * 0.264172).toFixed(4)} km/gal`
+                      : ""
+                    : d.fuelEfficiency
+                    ? `${d.fuelEfficiency} km/l`
+                    : ""}
+                </td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
               </tr>
             ))}

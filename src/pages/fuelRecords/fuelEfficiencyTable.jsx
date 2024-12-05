@@ -34,6 +34,7 @@ export function FuelEfficiencyTable() {
             <th>Horas acumuladas</th>
             <th>Combustible inicial</th>
             <th>Combustible final</th>
+            <th>Rendimiendo Combustible</th>
             <th>Coordenadas Final</th>
 
           </tr>
@@ -51,6 +52,7 @@ export function FuelEfficiencyTable() {
                 <td>{d.formattedInitialFuel}</td>
                 <td>{d.formattedFinalFuel}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
+                <td>{d.fuelEfficiency ? d.fuelEfficiency : "Aún no disponible" }</td>
               </tr>
             ))}
         </tbody>

@@ -53,11 +53,11 @@ export function FuelEfficiencyTable() {
                 <td>
                   {d.vehicleModel.fuelType === "DIESEL"
                     ? d.fuelEfficiency
-                      ? `${(d.fuelEfficiency * 0.264172).toFixed(4)} km/gal`
-                      : ""
+                      ? `${(d.fuelEfficiency * 0.264172).toFixed(2)} km/gal`
+                      : "Aún no disponible"
                     : d.fuelEfficiency
-                    ? `${d.fuelEfficiency} km/l`
-                    : ""}
+                    ? `${(d.fuelEfficiency).toFixed(2)} km/l`
+                    : "Aún no disponible"}
                 </td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
               </tr>

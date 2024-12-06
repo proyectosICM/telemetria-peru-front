@@ -3,7 +3,14 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { NavbarCommon } from "../../common/navbarCommon";
-import { fuelEfficiencyByVehicleURL, fuelRecordsByVehicleIdPageURL, fuelRecordsHourlyAVLURL, fuelRecordsWeekAVLURL, vehiclesURL } from "../../api/apiurls";
+import {
+  fuelEfficiencyByVehicleURL,
+  fuelRecordsByVehicleIdPageURL,
+  fuelRecordsHourlyAVLURL,
+  fuelRecordsMonthAVLURL,
+  fuelRecordsWeekAVLURL,
+  vehiclesURL,
+} from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
@@ -23,10 +30,12 @@ export function FuelRecords() {
   const [vehicleData, setVehicleData] = useState(null);
   const [hourlyAVL, setHourlyAVL] = useState();
   const [weekAVL, setWeeklyAVL] = useState();
+  const [monthAVL, setMonthAVL] = useState();
+  const [yearAVL, setYearAVL] = useState();
+
   //const [weekAVL, setWeeklyAVL] = useState();
   //console.log(vehicleData)
   const layout = "side-by-side";
-
 
   useEffect(() => {
     ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
@@ -35,14 +44,16 @@ export function FuelRecords() {
   useEffect(() => {
     ListItems(`${fuelRecordsHourlyAVLURL}/${selectedVehicleId}`, setHourlyAVL);
   }, [selectedVehicleId]);
- 
+
   useEffect(() => {
     ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL);
+    ListItems(`${fuelRecordsMonthAVLURL}/${selectedVehicleId}`, setMonthAVL);
   }, [selectedVehicleId]);
+
+  console.log(monthAVL);
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${fuelRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
 
@@ -100,6 +111,35 @@ export function FuelRecords() {
     },
   };
 
+  // Datos del gráfico por mes
+  const monthlyChartData = {
+    labels: monthAVL?.map((record) => new Date(record.day).toLocaleDateString()),
+    datasets: [
+      {
+        label: "Promedio de Combustible por Mes",
+        data: monthAVL?.map((record) =>
+          vehicleData && vehicleData.fuelType === "DIESEL" ? (record.averageValue * 0.264172).toFixed(2) : record.averageValue
+        ),
+        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+      },
+    ],
+  };
+
+  console.log(monthlyChartData)
+
+  const monthlyChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+      title: { display: true, text: "Promedio de Combustible por Mes" },
+    },
+    scales: {
+      x: { title: { display: true, text: "Fecha" } },
+      y: { title: { display: true, text: "Valor Promedio" } },
+    },
+  };
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -125,6 +165,10 @@ export function FuelRecords() {
           <h1>Estadísticas</h1>
           <div style={{ width: "100%", height: "400px", display: "flex" }}>
             <ChartComponent data={hourlyChartData} options={hourlyChartOptions} layout={layout} />
+            <ChartComponent data={weeklyChartData} options={weeklyChartOptions} layout={layout} />
+          </div>
+          <div style={{ width: "100%", height: "400px", display: "flex" }}>
+            {monthAVL && <ChartComponent data={monthlyChartData} options={monthlyChartOptions} layout={layout} />}
             <ChartComponent data={weeklyChartData} options={weeklyChartOptions} layout={layout} />
           </div>
         </div>

@@ -48,7 +48,7 @@ export function FuelEfficiencyTable() {
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>
                 <td>{d.hoursAccumulated}</td>
-                <td>{d.formattedInitialFuel}</td>
+                <td>{d.formattedInitialFuel}</td> 
                 <td>{d.formattedFinalFuel}</td>
                 <td>
                   {d.vehicleModel.fuelType === "DIESEL"

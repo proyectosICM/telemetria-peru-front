@@ -34,7 +34,9 @@ export function FuelEfficiencyTable() {
             <th>Horas acumuladas</th>
             <th>Combustible inicial</th>
             <th>Combustible final</th>
-            <th>Rendimiendo Combustible</th>
+            <th>Combustible Consumido</th>
+            <th>Rendimiendo Combustible (x KM) </th>
+            <th>Rendimiendo Combustible (x h) </th>
             <th>Coordenadas Final</th>
           </tr>
         </thead>
@@ -48,17 +50,19 @@ export function FuelEfficiencyTable() {
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>
                 <td>{d.hoursAccumulated}</td>
-                <td>{d.formattedInitialFuel}</td> 
+                <td>{d.formattedInitialFuel}</td>
                 <td>{d.formattedFinalFuel}</td>
+                <td>{(d.formattedInitialFuel - d.formattedFinalFuel).toFixed(2) }</td>
                 <td>
                   {d.vehicleModel.fuelType === "DIESEL"
                     ? d.fuelEfficiency
                       ? `${(d.fuelEfficiency * 0.264172).toFixed(2)} km/gal`
                       : "Aún no disponible"
                     : d.fuelEfficiency
-                    ? `${(d.fuelEfficiency).toFixed(2)} km/l`
+                    ? `${d.fuelEfficiency.toFixed(2)} km/l`
                     : "Aún no disponible"}
                 </td>
+                <td>{d.fuelConsumptionPerHour ? `${(d.fuelConsumptionPerHour * 0.264172).toFixed(2)} gal/h` : "Aun no disponible"}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
               </tr>
             ))}

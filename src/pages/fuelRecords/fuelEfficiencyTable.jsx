@@ -49,16 +49,16 @@ export function FuelEfficiencyTable() {
               <tr key={index}>
                 <td>{d.id}</td>
                 <td>{d.fuelEfficiencyStatus}</td>
-                <td>{d.licensePlate}</td>
+                <td>{d.vehicleModel.licensePlate}</td>
                 <td>{getDateFromTimestamp(d.startTime)}</td>
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>
                 <td>{d.hoursAccumulated}</td>
-                <td>{d.initialFuel}</td>
-                <td>{d.finalFuel}</td>
-                <td>{(d.initialFuel - d.finalFuel).toFixed(2)}</td>
+                <td>{d.formattedInitialFuel}</td>
+                <td>{d.formattedFinalFuel}</td>
+                <td>{(d.formattedInitialFuel - d.formattedFinalFuel).toFixed(2)}</td>
                 <td>
-                  {d.fuelType === "DIESEL"
+                  {d.vehicleModel.fuelType === "DIESEL"
                     ? d.fuelEfficiency != null // Verifica que no sea null o undefined
                       ? `${(d.fuelEfficiency * 0.264172).toFixed(2)} km/gal`
                       : "Aún no disponible"

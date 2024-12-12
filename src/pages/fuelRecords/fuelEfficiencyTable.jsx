@@ -21,11 +21,14 @@ export function FuelEfficiencyTable() {
     hoursAccumulated: d.startTime && d.endTime ? calculateHoursDifference(d.startTime, d.endTime) : "Aún no disponible",
   }));
 
+  console.log(processedData);
+
   return (
     <div style={{ margin: "10px", width: "90%" }}>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Estado</th>
             <th>Placa</th>
             <th>Dia</th>
@@ -44,25 +47,26 @@ export function FuelEfficiencyTable() {
           {processedData &&
             processedData.map((d, index) => (
               <tr key={index}>
+                <td>{d.id}</td>
                 <td>{d.fuelEfficiencyStatus}</td>
-                <td>{d.vehicleModel.licensePlate}</td>
+                <td>{d.licensePlate}</td>
                 <td>{getDateFromTimestamp(d.startTime)}</td>
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>
                 <td>{d.hoursAccumulated}</td>
-                <td>{d.formattedInitialFuel}</td>
-                <td>{d.formattedFinalFuel}</td>
-                <td>{(d.formattedInitialFuel - d.formattedFinalFuel).toFixed(2) }</td>
+                <td>{d.initialFuel}</td>
+                <td>{d.finalFuel}</td>
+                <td>{(d.initialFuel - d.finalFuel).toFixed(2)}</td>
                 <td>
-                  {d.vehicleModel.fuelType === "DIESEL"
-                    ? d.fuelEfficiency
+                  {d.fuelType === "DIESEL"
+                    ? d.fuelEfficiency != null // Verifica que no sea null o undefined
                       ? `${(d.fuelEfficiency * 0.264172).toFixed(2)} km/gal`
                       : "Aún no disponible"
-                    : d.fuelEfficiency
+                    : d.fuelEfficiency != null // Verifica que no sea null o undefined
                     ? `${d.fuelEfficiency.toFixed(2)} km/l`
                     : "Aún no disponible"}
                 </td>
-                <td>{d.fuelConsumptionPerHour ? `${(d.fuelConsumptionPerHour * 0.264172).toFixed(2)} gal/h` : "Aun no disponible"}</td>
+                <td>{d.fuelConsumptionPerHour != null ? `${(d.fuelConsumptionPerHour * 0.264172).toFixed(2)} gal/h` : "Aun no disponible"}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
               </tr>
             ))}

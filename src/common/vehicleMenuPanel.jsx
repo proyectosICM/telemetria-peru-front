@@ -34,12 +34,12 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
 
   return (
     <div className="vmp-container">
-      <h1 className="vmp-title">Camiones</h1>
+      <h1 className="vmp-title">Camiones</h1>x
 
       <div className="vmp-search-bar">
         <input
           type="text"
-          placeholder="Buscar por matrícula..."
+          placeholder="Buscar por matrícula..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="vmp-search-input"

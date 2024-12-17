@@ -68,7 +68,7 @@ export function FuelEfficiencyTable() {
                 </td>
                 <td>{d.fuelConsumptionPerHour != null ? `${(d.fuelConsumptionPerHour * 0.264172).toFixed(2)} gal/h` : "Aun no disponible"}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
-              </tr>
+              </tr> 
             ))}
         </tbody>
       </Table>

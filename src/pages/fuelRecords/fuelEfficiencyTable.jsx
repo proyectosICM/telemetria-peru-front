@@ -21,7 +21,6 @@ export function FuelEfficiencyTable() {
     hoursAccumulated: d.startTime && d.endTime ? calculateHoursDifference(d.startTime, d.endTime) : "Aún no disponible",
   }));
 
-  console.log(processedData);
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>

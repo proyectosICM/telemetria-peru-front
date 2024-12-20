@@ -66,6 +66,7 @@ export const fuelEfficiencyByVehicleURL = `${fuelEfficiencyURL}/findByVehicle`;
 export const fuelEfficiencyByVehiclePagedURL = `${fuelEfficiencyURL}/findByVehicle-paged`;
 export const fuelEfficiencyByDailyAVGURL = `${fuelEfficiencyURL}/daily-averages`;
 export const fuelEfficiencyByMothAVGURL = `${fuelEfficiencyURL}/monthly-averages`;
+export const fuelEfficiencySummary = `${fuelEfficiencyURL}/summary`;
 
 
 export const ignitionRecordsURL = `${baseAPIURL}/vehicle-ignition`;

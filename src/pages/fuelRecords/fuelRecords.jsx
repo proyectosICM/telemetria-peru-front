@@ -19,6 +19,7 @@ import { ChartComponent } from "../../common/chartComponent";
 import { FuelEfficiencyTable } from "./fuelEfficiencyTable";
 import { Line } from "react-chartjs-2";
 import { AvgFuelEfficiency } from "./avgFuelEfficiency";
+import { AvgResults } from "./avgResults";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -154,6 +155,8 @@ export function FuelRecords() {
           }}
         >
           <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
+
+          <AvgResults />
           {/** Eficiencia */}
           <FuelEfficiencyTable />
           <AvgFuelEfficiency />

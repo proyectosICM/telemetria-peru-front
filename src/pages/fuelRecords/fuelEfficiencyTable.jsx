@@ -38,7 +38,7 @@ export function FuelEfficiencyTable() {
             <th>Combustible final</th>
             <th>Combustible Consumido</th>
             <th>Rendimiendo Combustible (x KM) </th>
-            <th>Rendimiendo Combustible (x h) </th>
+            <th>Rendimiendo Combustible (gal/h) </th>
             <th>Coordenadas Final</th>
           </tr>
         </thead>
@@ -48,7 +48,7 @@ export function FuelEfficiencyTable() {
               <tr key={index}>
                 <td>{d.id}</td>
                 <td>{d.fuelEfficiencyStatus}</td>
-                <td>{d.vehicleModel.licensePlate}</td>
+                <td>{d.vehicleModel.licensePlate}</td> 
                 <td>{getDateFromTimestamp(d.startTime)}</td>
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>

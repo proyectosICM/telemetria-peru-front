@@ -58,10 +58,10 @@ export function AvgFuelEfficiency() {
         );
 
         // Obtener valores para cada estado
-        const operationData = monthlyO.map((item) => item.avgh);
-        const ralentiData = monthlyR.map((item) => item.avgh);
-        const estacionadoData = monthlyE.map((item) => item.avgh);
-
+        const operationData = monthlyO.map((item) => (item.avgh * 0.264172).toFixed(2)); // Conversión a galones con 2 decimales
+        const ralentiData = monthlyR.map((item) => (item.avgh * 0.264172).toFixed(2)); // Conversión a galones con 2 decimales
+        const estacionadoData = monthlyE.map((item) => (item.avgh * 0.264172).toFixed(2)); // Conversión a galones con 2 decimales
+  
         setChartData({
           labels,
           datasets: [
@@ -98,7 +98,8 @@ export function AvgFuelEfficiency() {
         const labels = sortedDaily.map((item) =>
           parseDate(item.day).toLocaleString("es-ES", { day: "numeric", month: "short" })
         );
-        const operationData = sortedDaily.map((item) => item.avgh);
+        const operationData = sortedDaily.map((item) => (item.avgh * 0.264172).toFixed(2)); // Conversión a galones con 2 decimales
+
 
         setChartData({
           labels,

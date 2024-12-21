@@ -5,7 +5,7 @@ import { ListItems } from "../../hooks/listItems";
 import { formatTimeDecimal } from "../../utils/formatUtils";
 
 export function AvgResults() {
-  const [selectedFilter, setSelectedFilter] = useState("Seleccionar filtro");
+  const [selectedFilter, setSelectedFilter] = useState("Por Año");
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
@@ -190,7 +190,7 @@ export function AvgResults() {
           <tr>
             <th>Estado</th>
             <th>Tiempo (h)</th>
-            <th>Combustible Consumido (L)</th>
+            <th>Combustible Consumido (gal)</th>
             <th>Rendimiento Combustible (gal/h) </th>
           </tr>
         </thead>

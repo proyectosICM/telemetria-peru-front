@@ -1,32 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
-import { NavbarCommon } from "../../common/navbarCommon";
-import {
-  fuelEfficiencyByVehicleURL,
-  fuelRecordsByVehicleIdPageURL,
-  fuelRecordsHourlyAVLURL,
-  fuelRecordsMonthAVLURL,
-  fuelRecordsWeekAVLURL,
-  fuelRecordsYearAVLURL,
-  vehiclesURL,
-} from "../../api/apiurls";
-import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
-import { PaginacionUtils } from "../../utils/paginacionUtils";
-import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
-import { FuelRecordsTable } from "./fuelRecordsTable";
+import { ListItems } from "../../hooks/listItems";
+import { fuelRecordsHourlyAVLURL, fuelRecordsMonthAVLURL, fuelRecordsWeekAVLURL, fuelRecordsYearAVLURL, vehiclesURL } from "../../api/apiurls";
 import { ChartComponent } from "../../common/chartComponent";
-import { FuelEfficiencyTable } from "./fuelEfficiencyTable";
-import { Line } from "react-chartjs-2";
-import { AvgFuelEfficiency } from "./avgFuelEfficiency";
-import { AvgResults } from "./avgResults";
-import { FuelCharts } from "./fuelCharts";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-export function FuelRecords() {
-  const navigate = useNavigate();
+export function FuelCharts() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const [vehicleData, setVehicleData] = useState(null);
@@ -35,8 +12,6 @@ export function FuelRecords() {
   const [monthAVL, setMonthAVL] = useState();
   const [yearAVL, setYearAVL] = useState();
 
-  //const [weekAVL, setWeeklyAVL] = useState();
-  //console.log(vehicleData)
   const layout = "side-by-side";
 
   useEffect(() => {
@@ -58,9 +33,6 @@ export function FuelRecords() {
   useEffect(() => {
     ListItems(`${fuelRecordsYearAVLURL}/${selectedVehicleId}`, setYearAVL);
   }, [selectedVehicleId]);
-
-  // Datos de ejemplo para el gráfico de líneas
-  // Datos de ejemplo para el gráfico
 
   // Datos del gráfico por hora
   const hourlyChartData = {
@@ -174,42 +146,23 @@ export function FuelRecords() {
   };
 
   return (
-    <div className="g-background">
-      <NavbarCommon />
-      <Button onClick={() => navigate("/")} className="back-button">
-        Atras
-      </Button>
-      <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "20px auto",
-          }}
-        >
-          <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
-
-          <AvgResults />
-          {/** Eficiencia */}
-          <FuelEfficiencyTable />
-          <AvgFuelEfficiency />
-
-          {/** Fin Eficiencia */}
-          {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
-          <h1>Estadísticas</h1>
-          <div style={{ width: "100%", height: "400px", display: "flex" }}>
-            <ChartComponent data={hourlyChartData} options={hourlyChartOptions} layout={layout} />
-            <ChartComponent data={weeklyChartData} options={weeklyChartOptions} layout={layout} />
-          </div>
-          <div style={{ width: "100%", height: "400px", display: "flex" }}>
-            {monthAVL && <ChartComponent data={monthlyChartData} options={monthlyChartOptions} layout={layout} />}
-            {yearAVL && <ChartComponent data={yearlyChartData} options={yearlyChartOptions} layout={layout} />}
-          </div>
-
-          <FuelCharts />
-        </div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        border:"2px solid rgba(255, 255, 255)",
+        width: "100%",
+      }}
+    >
+      <div style={{ width: "100%", height: "400px", display: "flex" }}>
+        <ChartComponent data={hourlyChartData} options={hourlyChartOptions} layout={layout} />
+        <ChartComponent data={weeklyChartData} options={weeklyChartOptions} layout={layout} />
+      </div>
+      <div style={{ width: "100%", height: "400px", display: "flex" }}>
+        {monthAVL && <ChartComponent data={monthlyChartData} options={monthlyChartOptions} layout={layout} />}
+        {yearAVL && <ChartComponent data={yearlyChartData} options={yearlyChartOptions} layout={layout} />}
       </div>
     </div>
   );

@@ -21,13 +21,11 @@ export function FuelEfficiencyTable() {
     hoursAccumulated: d.startTime && d.endTime ? calculateHoursDifference(d.startTime, d.endTime) : "Aún no disponible",
   }));
 
-
   return (
-    <div style={{ margin: "10px", width: "90%" }}>
+    <div style={{ margin: "10px", width: "90%", height: "600px", overflowX: "auto" }}>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Estado</th>
             <th>Placa</th>
             <th>Dia</th>
@@ -46,9 +44,8 @@ export function FuelEfficiencyTable() {
           {processedData &&
             processedData.map((d, index) => (
               <tr key={index}>
-                <td>{d.id}</td>
                 <td>{d.fuelEfficiencyStatus}</td>
-                <td>{d.vehicleModel.licensePlate}</td> 
+                <td>{d.vehicleModel.licensePlate}</td>
                 <td>{getDateFromTimestamp(d.startTime)}</td>
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>
@@ -67,7 +64,7 @@ export function FuelEfficiencyTable() {
                 </td>
                 <td>{d.fuelConsumptionPerHour != null ? `${(d.fuelConsumptionPerHour * 0.264172).toFixed(2)} gal/h` : "Aun no disponible"}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
-              </tr> 
+              </tr>
             ))}
         </tbody>
       </Table>

@@ -34,6 +34,21 @@ export function FuelCharts() {
     ListItems(`${fuelRecordsYearAVLURL}/${selectedVehicleId}`, setYearAVL);
   }, [selectedVehicleId]);
 
+  const parseDate = (dateString) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    // Convertir a UTC pero sin ajustarlo al cambio de zona horaria, usando la fecha local.
+    const date = new Date(year, month - 1, day);
+    return date; // Deja el objeto Date intacto, pero sin hacer conversión a UTC
+  };
+
+  // Función para parsear meses, también normalizando a UTC
+  const parseMonth = (dateString) => {
+    const [year, month] = dateString.split("-").map(Number);
+    // Convertir a UTC (sin necesidad de días, solo el mes y año)
+    const date = new Date(year, month - 1, 1);
+    return date;
+  };
+
   // Datos del gráfico por hora
   const hourlyChartData = {
     labels: hourlyAVL?.map((record) => new Date(record.hour).toLocaleTimeString()),
@@ -63,7 +78,7 @@ export function FuelCharts() {
 
   // Datos del gráfico por semana
   const weeklyChartData = {
-    labels: weekAVL?.map((record) => new Date(record.day).toLocaleDateString()),
+    labels: weekAVL?.map((record) => parseDate(record.day).toLocaleDateString()),
     datasets: [
       {
         label: "Promedio de Combustible por semana",
@@ -90,7 +105,7 @@ export function FuelCharts() {
 
   // Datos del gráfico por mes
   const monthlyChartData = {
-    labels: monthAVL?.map((record) => new Date(record.day).toLocaleDateString()),
+    labels: monthAVL?.map((record) => parseDate(record.day).toLocaleDateString()),
     datasets: [
       {
         label: "Promedio de Combustible por Mes",
@@ -117,9 +132,11 @@ export function FuelCharts() {
 
   const yearlyChartData = {
     labels: yearAVL?.map((record) => {
-      // Convertir el mes en un año legible
-      const date = new Date(`${record.month}-01`);
-      return date.getFullYear();
+      // Crear una fecha con el mes y año para mostrar ambos
+      const date = parseMonth(`${record.month}-01`); // Usamos el primer día del mes
+      const monthName = date.toLocaleString("default", { month: "long" }); // Obtén el nombre del mes
+      const year = date.getFullYear(); // Obtén el año
+      return `${monthName} ${year}`; // Concatenar mes y año
     }),
     datasets: [
       {
@@ -152,7 +169,6 @@ export function FuelCharts() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        border:"2px solid rgba(255, 255, 255)",
         width: "100%",
       }}
     >

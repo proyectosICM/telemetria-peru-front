@@ -199,15 +199,7 @@ export function FuelRecords() {
           {/** Fin Eficiencia */}
           {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
           <h1>Estadísticas</h1>
-          <div style={{ width: "100%", height: "400px", display: "flex" }}>
-            <ChartComponent data={hourlyChartData} options={hourlyChartOptions} layout={layout} />
-            <ChartComponent data={weeklyChartData} options={weeklyChartOptions} layout={layout} />
-          </div>
-          <div style={{ width: "100%", height: "400px", display: "flex" }}>
-            {monthAVL && <ChartComponent data={monthlyChartData} options={monthlyChartOptions} layout={layout} />}
-            {yearAVL && <ChartComponent data={yearlyChartData} options={yearlyChartOptions} layout={layout} />}
-          </div>
-
+          
           <FuelCharts />
         </div>
       </div>

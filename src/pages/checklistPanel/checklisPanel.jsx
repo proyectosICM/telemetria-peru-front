@@ -89,7 +89,7 @@ export function ChecklistPanel() {
       <Button onClick={() => navigate("/")} className="back-button">
         Atras
       </Button>
-      <div style={{ border: "2px solid #d1d0cc", margin: "5px 10%" }}>
+      <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
         <h1>Checklist</h1>
 
         <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>{renderChecklistCards()}</div>

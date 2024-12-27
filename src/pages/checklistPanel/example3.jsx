@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { PreguntaCL } from "../../common/preguntaCL";
-import { agregarElementoAPI, agregarElementoConRespuestaAPI, agregarImagenAPI } from "../../hooks/agregarElementoAPI";
+import { addImageAPI, addElementWithResponseAPI } from "../../hooks/addItem";
 import { checklistRecordsURL, ImagesCLURL } from "../../api/apiurls";
 
 import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
@@ -105,12 +105,12 @@ export function Example3() {
     };
 
     try {
-      const clid = await agregarElementoConRespuestaAPI(`${checklistRecordsURL}`, requestData);
+      const clid = await addElementWithResponseAPI(`${checklistRecordsURL}`, requestData);
       console.log(clid);
       for (const imagen of imagenes) {
         const formData = new FormData();
         formData.append("file", imagen);
-        await agregarImagenAPI(`${ImagesCLURL}/${clid.id}`, formData, {
+        await addImageAPI(`${ImagesCLURL}/${clid.id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

@@ -28,7 +28,7 @@ export function IgnitionRecords() {
       <Button onClick={() => navigate("/")} className="back-button">
         Atras
       </Button>
-      <div style={{ border: "2px solid #d1d0cc", margin: "5px 10%" }}>
+      <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
         <div
           style={{
             display: "flex",

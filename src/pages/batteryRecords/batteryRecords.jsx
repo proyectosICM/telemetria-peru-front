@@ -30,7 +30,7 @@ export function BatteryRecords() {
       <Button onClick={() => navigate("/")} className="back-button">
         Atras
       </Button>
-      <div style={{ border: "2px solid #d1d0cc", margin: "20px 10%" }}>
+      <div style={{ border: "2px solid #d1d0cc", margin: "20px 5%" }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto" }}>
           <BatteryInfo vehicleId={selectedVehicleId} showAlert={false} />
         </div>

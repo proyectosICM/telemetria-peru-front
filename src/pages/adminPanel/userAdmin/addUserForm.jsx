@@ -4,9 +4,9 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
 import { editItem } from "../../../hooks/editItem";
-import { agregarElementoAPI } from "../../../hooks/agregarElementoAPI";
 import Swal from "sweetalert2";
 import { UserURL } from "../../../api/apiurls";
+import { addElementAPI } from "../../../hooks/addItem";
 
 export function AddUserForm() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export function AddUserForm() {
           });
         }
       } else {
-        const response = await agregarElementoAPI(UserURL, requestData);
+        const response = await addElementAPI(UserURL, requestData);
         if (response.status === 201) {
           Swal.fire({
             icon: "success",

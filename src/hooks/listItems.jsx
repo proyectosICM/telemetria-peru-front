@@ -1,14 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+function getAuthHeaders() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("Token not available. Please log in.");
+    throw new Error("Token not available. Please log in.");
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 export function ListItems(url, setData) {
   const fetchData = async () => {
     try {
-      const token = await localStorage.getItem("token");
       const response = await axios.get(`${url}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getAuthHeaders(),
       });
       setData(response.data);
     } catch (error) {
@@ -26,11 +34,8 @@ export function ListItemsPaginated(url, pageNumber) {
 
   const fetchData = async (pageNumber) => {
     try {
-      const token = await localStorage.getItem("token");
       const response = await axios.get(`${url}?page=${pageNumber}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getAuthHeaders(),
       });
       setData(response.data.content);
       setTotalPages(response.data.totalPages);

@@ -11,17 +11,23 @@ export function LogoutToken() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) { 
-      const decodedToken = jwtDecode(token);
-      const currentDate = new Date();
-
-      if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        console.log("El token ha expirado");
-
-
-        alertMessageExpiredToken().then(() => {
-          clearLocalStorage();
-          navigate("/login");
-        });
+      try{
+        const decodedToken = jwtDecode(token);
+        const currentDate = new Date();
+  
+        if (decodedToken.exp * 1000 < currentDate.getTime()) {
+          console.log("Token has expired");
+  
+  
+          alertMessageExpiredToken().then(() => {
+            clearLocalStorage();
+            navigate("/login");
+          });
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        clearLocalStorage();
+        navigate("/login");
       }
     } else {
       navigate("/login");

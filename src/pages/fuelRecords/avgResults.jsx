@@ -3,7 +3,7 @@ import { Table, Dropdown, DropdownButton } from "react-bootstrap";
 import { fuelEfficiencySummary, vehiclesURL } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 import { formatTimeDecimal } from "../../utils/formatUtils";
-
+ 
 export function AvgResults() {
   const [selectedFilter, setSelectedFilter] = useState("Por Año");
   const [selectedYear, setSelectedYear] = useState("");
@@ -200,8 +200,8 @@ export function AvgResults() {
             <tr key={index}>
               <td>{item.status}</td>
               <td>{formatTimeDecimal(item.totalHours)}</td>
-              <td>{(item.totalFuelConsumed * 0.264172).toFixed(2)}</td>
-              <td>{(item.averageEfficiency * 0.264172).toFixed(2)}</td>
+              <td>{(item.totalFuelConsumed).toFixed(2)}</td>
+              <td>{(item.avgFuelEfficiency).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

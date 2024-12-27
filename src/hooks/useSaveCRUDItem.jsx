@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { alertMessageCreated, alertMessageEdited, alertMessageError } from "../messages/apiResponseMessages";
 import { editItem } from "./editItem";
-import { agregarElementoAPI } from "./agregarElementoAPI";
+import { addElementAPI } from "./addItem";
 
 export const useSaveItem = (url, navigateTo) => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export const useSaveItem = (url, navigateTo) => {
         response = await editItem(`${url}/${id}`, requestData);
         alertMessageEdited(response.status);
       } else {
-        response = await agregarElementoAPI(url, requestData);
+        response = await addElementAPI(url, requestData);
         alertMessageCreated(response.status);
       }
       await navigate(navigateTo);

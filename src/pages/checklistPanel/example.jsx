@@ -4,10 +4,10 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { PreguntaCL } from "../../common/preguntaCL";
 import preguntas from "../../data/trucks-T1-CL/p-unidades.json";
-import { agregarElementoAPI } from "../../hooks/agregarElementoAPI";
 import { checklistRecordsURL } from "../../api/apiurls";
 import { useTimer } from "../../hooks/useTimer";
 import { useImageHandler } from "../../hooks/useImageHandler";
+import { addElementAPI } from "../../hooks/addItem";
 export function Example() {
   const navigate = useNavigate();
   const { type } = useParams();
@@ -77,7 +77,7 @@ export function Example() {
     };
 
     // Llamada a la API
-    agregarElementoAPI(`${checklistRecordsURL}`, requestData);
+    addElementAPI(`${checklistRecordsURL}`, requestData);
     console.log("Respuestas finales: ", respuestasFinales);
     navigate("/checklist-panel");
   };

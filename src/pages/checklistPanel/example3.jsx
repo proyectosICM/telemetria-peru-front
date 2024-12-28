@@ -57,8 +57,6 @@ export function Example3() {
     setIsFormValid(allAnswered && nombreOperador && lecturaHorometro && numeroMontacargas);
   }, [respuestas, nombreOperador, lecturaHorometro, numeroMontacargas]);
 
-
-
   const handleSubmit = async () => {
     setIsActive(false);
     const respuestasFinales = {
@@ -106,15 +104,10 @@ export function Example3() {
 
     try {
       const clid = await addElementWithResponseAPI(`${checklistRecordsURL}`, requestData);
-      console.log(clid);
       for (const imagen of imagenes) {
         const formData = new FormData();
         formData.append("file", imagen);
-        await addImageAPI(`${ImagesCLURL}/${clid.id}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await addImageAPI(`${ImagesCLURL}/${clid.id}`, formData);
       }
       navigate("/checklist-panel");
     } catch (error) {

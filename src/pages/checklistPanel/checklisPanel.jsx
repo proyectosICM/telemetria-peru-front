@@ -150,7 +150,7 @@ export function ChecklistPanel() {
                 <th>Tiempo</th>
                 <th>Descripción</th>
                 <th>Placa</th>
-                {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <th>Conductor</th>} {/* Columna "Conductor" solo si no es tipo 1 o 2 */}
+                {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <th>Conductor</th>}
                 <th>Detalles</th>
               </tr>
             </thead>
@@ -182,7 +182,7 @@ export function ChecklistPanel() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={vehicleTypeId === 1 || vehicleTypeId === 2 ? 6 : 7} style={{ textAlign: "center" }}>
+                  <td colSpan={vehicleTypeId === 1 || vehicleTypeId === 2 ? 8 : 7} style={{ textAlign: "center" }}>
                     No hay registros disponibles
                   </td>
                 </tr>

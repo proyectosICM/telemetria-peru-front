@@ -47,8 +47,6 @@ export function VerCL() {
   };
 
   const renderImages = (images) => {
-    console.log(images);
-    console.log(`${ImagesCLNameViewURL}?filename=`);
     return (
       <div style={{ marginTop: "20px" }}>
         <h4 style={{ color: "white" }}>Imágenes Asociadas:</h4>
@@ -56,9 +54,9 @@ export function VerCL() {
           {images.map((image) => (
             <div key={image.id} style={{ marginBottom: "10px", color: "lightgray", flex: "1 0 calc(33.333% - 10px)", margin: "5px" }}>
               <img
-                src={`${ImagesCLNameViewURL}?filename=${image.urlImage}`} // Asegúrate de que este sea el endpoint correcto
+                src={`${ImagesCLNameViewURL}?filename=${image.urlImage}`} 
                 alt={image.urlImage}
-                style={{ width: "100%", height: "auto", borderRadius: "8px" }} // Ajustar el tamaño aquí
+                style={{ width: "100%", height: "auto", borderRadius: "8px" }} 
               />
             </div>
           ))}

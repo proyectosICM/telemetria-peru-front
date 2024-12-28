@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: "",
 });
-
+ 
 // Function to get authentication headers
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
@@ -38,10 +38,11 @@ export async function addElementWithResponseAPI(url, requestData) {
 }
 
 export async function addImageAPI(url, formData) {
+  const token = localStorage.getItem("token");
   try {
     const response = await axiosInstance.post(url, formData, {
       headers: {
-        ...getAuthHeaders(),
+        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     });

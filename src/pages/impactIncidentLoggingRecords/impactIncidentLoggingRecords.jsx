@@ -17,7 +17,7 @@ export function ImpactIncidentLoggingRecords() {
   return (
     <div>
       <NavbarCommon />
-      <Button onClick={() => navigate("/")} className="back-button">
+      <Button onClick={() => navigate("/")} className="back-button"> 
         Atras
       </Button>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto" }}>

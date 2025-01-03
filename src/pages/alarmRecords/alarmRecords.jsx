@@ -6,7 +6,7 @@ import { ListItemsPaginated } from "../../hooks/listItems";
 import { alarmRecordsByVehicleIdPageURL, fuelRecordsByVehicleIdPageURL } from "../../api/apiurls";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
-
+ 
 export function AlarmRecords() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

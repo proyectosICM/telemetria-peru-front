@@ -2,13 +2,7 @@
 
 [role="strong"]
 This document details the items stored in `localStorage` within the React application. Specifically, it focuses on the keys saved during the authentication process.
-
-Específicamente, se centra en las claves que se guardan durante el proceso de autenticación.
-
-* **Persistence / Persistencia :**  
-  * This value persists even after closing the browser window. The token should be manually removed from `localStorage` when the user logs out.
-  * Este valor persiste incluso después de cerrar la ventana del navegador. El token debería eliminarse manualmente del `localStorage` cuando el usuario cierre sesión.  
-
+Este documento detalla los elementos almacenados en `localStorage` dentro de la aplicación React. En concreto, se centra en las claves guardadas durante el proceso de autenticación.
 
 == LocalStorage Keys / Claves del LocalStorage 
 

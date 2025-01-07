@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCar, FaCarCrash } from "react-icons/fa"; // Íconos para encendido y apagado
+import { FaCar, FaCarCrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { mqttDominio, mqttTopics } from "../../../api/apiurls";
 import useMqtt from "../../../hooks/useMqtt";
@@ -12,22 +12,22 @@ export function IgnitionInfo({ showAlert = true }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
+
+  const [ignition, setIgnition] = useState(false);
   const { messages } = useMqtt(mqttDominio, topic);
-  const [ignition, setIgnition] = useState(false); // Estado de ignición (encendido o apagado)
 
   useEffect(() => {
     mqttDataHandler(messages, setIgnition, "ignitionInfo");
   }, [messages]);
 
-  console.log(messages);
-  // Obtener fecha y hora actual
+  // Get current date and time
   const currentDateTime = new Date();
   const formattedDateTime = `${currentDateTime.toLocaleDateString("es-ES").replace(/\//g, "-")} - ${currentDateTime.toLocaleTimeString("es-ES", {
     hour: "2-digit",
     minute: "2-digit",
   })}`;
 
-  // Estilos del card según el estado de encendido
+  // Card styles based on power state
   const cardStyle = {
     display: "flex",
     flexDirection: "column",
@@ -62,7 +62,7 @@ export function IgnitionInfo({ showAlert = true }) {
     fontSize: "0.9em",
     color: "#FFD700",
   };
- 
+
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/ignition-Records")}>
       <div style={cardStyle}>

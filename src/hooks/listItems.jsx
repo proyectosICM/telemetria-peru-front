@@ -12,7 +12,7 @@ function getAuthHeaders() {
   };
 }
 
-export function ListItems(url, setData) {
+export function ListItems(url, setData, setError) {
   const fetchData = async () => {
     try {
       const response = await axios.get(`${url}`, {
@@ -20,6 +20,7 @@ export function ListItems(url, setData) {
       });
       setData(response.data);
     } catch (error) {
+      setError(error);
       console.error(error);
     }
   };
@@ -31,6 +32,7 @@ export function ListItemsPaginated(url, pageNumber) {
   const [data, setData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [pageError , setPageError ] = useState(null);
 
   const fetchData = async (pageNumber) => {
     try {
@@ -40,9 +42,11 @@ export function ListItemsPaginated(url, pageNumber) {
       setData(response.data.content);
       setTotalPages(response.data.totalPages);
       setCurrentPage(response.data.number);
+      setPageError(null);
       // console.log(response.data);
     } catch (error) {
       console.error("Error listing items", error);
+      setPageError(error);
     }
   };
 
@@ -58,5 +62,5 @@ export function ListItemsPaginated(url, pageNumber) {
     return () => clearInterval(intervalId);
   });
 
-  return { data, totalPages, currentPage, setCurrentPage, fetchData };
+  return { data, totalPages, currentPage, setCurrentPage, fetchData, pageError };
 }

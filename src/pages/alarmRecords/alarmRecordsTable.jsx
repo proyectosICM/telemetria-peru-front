@@ -1,9 +1,8 @@
 import React from "react";
-import { Table } from "react-bootstrap";
-import { FaHashtag, FaCalendarAlt, FaClock, FaCarAlt, FaToggleOn } from "react-icons/fa";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
+import { Table } from "react-bootstrap";
 
-export function IgnitionRecordsTable({ data, error }) {
+export function AlarmRecordsTable({ data, error }) {
   return (
     <div style={{ margin: "10px", width: "90%" }}>
       {error && (
@@ -15,22 +14,9 @@ export function IgnitionRecordsTable({ data, error }) {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>
-              <FaCalendarAlt style={{ marginRight: "8px" }} />
-              Día
-            </th>
-            <th>
-              <FaClock style={{ marginRight: "8px" }} />
-              Hora
-            </th>
-            <th>
-              <FaCarAlt style={{ marginRight: "8px" }} />
-              Placa
-            </th>
-            <th>
-              <FaToggleOn style={{ marginRight: "8px" }} />
-              Estado
-            </th>
+            <th>Dia</th>
+            <th>Hora</th>
+            <th>Placa</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +26,6 @@ export function IgnitionRecordsTable({ data, error }) {
                 <td>{d.createdAt ? getDateFromTimestamp(d.createdAt) : "Error"}</td>
                 <td>{d.createdAt ? getTimeFromTimestamp(d.createdAt) : "Error"}</td>
                 <td>{d.vehicleModel && d.vehicleModel.licensePlate ? d.vehicleModel.licensePlate : "Error"}</td>
-                <td>{d.status ? "Encendido" : "Apagado"}</td>
               </tr>
             ))
           ) : (

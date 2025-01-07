@@ -1,33 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { IgnitionInfo } from "../mainPanel/optionsPanel/ignitionInfo";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
-import { fuelRecordsByVehicleIdPageURL, ignitionBasicChartURL, ignitionsByVehicleIdPageURL } from "../../api/apiurls";
+import { ignitionBasicChartURL, ignitionsByVehicleIdPageURL } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { IgnitionRecordsTable } from "./ignitionRecordsTable";
+import { BackButton } from "../../common/backButton";
+import { IgnitionCount } from "./ignitionCount";
 
 export function IgnitionRecords() {
   const navigate = useNavigate();
-  const [pageNumber, setPageNumber] = useState(0);
-  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${ignitionsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
 
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const [chartsData, setChartsData] = useState();
+  const [error, setError] = useState(null);
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
+    `${ignitionsByVehicleIdPageURL}/${selectedVehicleId}`,
+    pageNumber
+  );
 
   useEffect(() => {
-    ListItems(`${ignitionBasicChartURL}/${selectedVehicleId}`, setChartsData);
+    if (selectedVehicleId) {
+      ListItems(`${ignitionBasicChartURL}/${selectedVehicleId}`, setChartsData, setError);
+    }
   }, [selectedVehicleId]);
-
 
   return (
     <div className="g-background">
       <NavbarCommon />
-      <Button onClick={() => navigate("/")} className="back-button">
-        Atras
-      </Button>
+
+      <BackButton path="/" />
+
       <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
         <div
           style={{
@@ -38,9 +45,12 @@ export function IgnitionRecords() {
             margin: "20px auto",
           }}
         >
-          <IgnitionInfo />
-          <IgnitionRecordsTable data={data} />
+          <IgnitionInfo showAlert={false} />
+          <IgnitionRecordsTable data={data} error={pageError} />
           <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
+        
+          <IgnitionCount />
+        
         </div>
       </div>
     </div>

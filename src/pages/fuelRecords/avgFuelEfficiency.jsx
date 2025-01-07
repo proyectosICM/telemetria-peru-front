@@ -16,7 +16,10 @@ export function AvgFuelEfficiency() {
 
   const [isMonthly, setIsMonthly] = useState(false);
 
-  const [selectedMonth, setSelectedMonth] = useState("12");
+  const [selectedMonth, setSelectedMonth] = useState(
+    String(new Date().getMonth() + 1).padStart(2, "0")
+  );
+  
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   // Helper function to handle dates

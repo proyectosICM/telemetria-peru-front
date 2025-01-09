@@ -9,15 +9,16 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   const [dataTypes, setDataTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [error, setError] = useState(null);
 
   const companyId = localStorage.getItem("companyId");
 
   useEffect(() => {
-    ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData);
+    ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData, setError);
   }, [companyId]); 
  
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}`, setDataTypes);
+    ListItems(`${vehiclesTypesURL}`, setDataTypes, setError);
   }, []);
 
   const handleSelectVehicle = (id, type) => {

@@ -17,8 +17,6 @@ export const mqttTopics = {
 // URL para producion en el servidor
 export const base = "http://telemetriaperu.com:7070";
 
-
-
 export const baseURL = `${base}`;
 
 export const loginURL = `${base}/login`;
@@ -67,6 +65,7 @@ export const fuelEfficiencyByVehiclePagedURL = `${fuelEfficiencyURL}/findByVehic
 export const fuelEfficiencyByDailyAVGURL = `${fuelEfficiencyURL}/daily-averages`;
 export const fuelEfficiencyByMothAVGURL = `${fuelEfficiencyURL}/monthly-averages`;
 export const fuelEfficiencySummary = `${fuelEfficiencyURL}/summary`;
+export const fuelEfficiencyDownload = `${fuelEfficiencyURL}/download-excel`;
 
 
 export const ignitionRecordsURL = `${baseAPIURL}/vehicle-ignition`;
@@ -74,13 +73,16 @@ export const ignitionRecordsPagedURL = `${ignitionRecordsURL}/paged`;
 export const ignitionRecordsByVehicleIdURL = `${ignitionRecordsURL}/findByVehicle`;
 export const ignitionsByVehicleIdPageURL = `${ignitionRecordsURL}/findByVehicle-paged`;
 export const ignitionBasicChartURL = `${ignitionRecordsURL}/active-durations`;
-export const ignitionCountingURL = `${ignitionRecordsURL}/count-weekly`;
+export const ignitionCountingURL = `${ignitionRecordsURL}/count`;
+export const ignitionAllMothURL = `${ignitionRecordsURL}/counts-all-months`;
+export const ignitionAllDayURL = `${ignitionRecordsURL}/counts-all-days`;
 
-/**  */
+/** Alarm */
 export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;
 export const alarmRecordsPageURL = `${alarmRecordsURL}/page`;
 export const alarmRecordsByVehicleIdURL = `${alarmRecordsURL}/findByVehicle`;
 export const alarmRecordsByVehicleIdPageURL = `${alarmRecordsURL}/findByVehicle-paged`;
+
 /** Battery **/
 export const batteryURL = `${baseAPIURL}/batteries`;
 export const batteryPagedURL = `${batteryURL}/paged`;

@@ -6,7 +6,7 @@ import { fuelEfficiencyByDailyAVGURL, fuelEfficiencyByMothAVGURL } from "../../a
 
 export function AvgFuelEfficiency() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-
+  const [error, setError] = useState(null);
   const [daily, setDaily] = useState();
   const [monthlyO, setMonthlyO] = useState();
   const [monthlyR, setMonthlyR] = useState();
@@ -27,7 +27,7 @@ export function AvgFuelEfficiency() {
     const [year, month, day] = dateString.split("-").map(Number);
     return new Date(year, month - 1, day);
   };
-
+ 
   const parseMonth = (dateString) => {
     const [year, month] = dateString.split("-").map(Number);
     return new Date(year, month - 1);
@@ -41,10 +41,10 @@ export function AvgFuelEfficiency() {
 
   // Load data from APIs
   useEffect(() => {
-    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=OPERACION&year=${selectedYear}`, setMonthlyO);
-    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=RALENTI&year=${selectedYear}`, setMonthlyR);
-    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=ESTACIONADO&year=${selectedYear}`, setMonthlyE);
-    ListItems(`${fuelEfficiencyByDailyAVGURL}/${selectedVehicleId}?month=${selectedMonth}&year=${selectedYear}`, setDaily);
+    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=OPERACION&year=${selectedYear}`, setMonthlyO, setError);
+    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=RALENTI&year=${selectedYear}`, setMonthlyR, setError);
+    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=ESTACIONADO&year=${selectedYear}`, setMonthlyE, setError);
+    ListItems(`${fuelEfficiencyByDailyAVGURL}/${selectedVehicleId}?month=${selectedMonth}&year=${selectedYear}`, setDaily, setError);
   }, [selectedVehicleId, selectedMonth, selectedYear]);
 
   // Process the data for the chart

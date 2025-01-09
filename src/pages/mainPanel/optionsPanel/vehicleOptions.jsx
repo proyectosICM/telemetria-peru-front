@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { vehiclesOptionsDataURL, vehiclesOptionsUpdateURL } from "../../../api/apiurls";
 import { ListItems } from "../../../hooks/listItems";
 import { editVehicleOptions } from "../../../hooks/editItem";
-import '../../../styles/truckOptions.css'
+import "../../../styles/truckOptions.css";
 
 export function VehicleOptions() {
   const [data, setData] = useState({});
+  const [error, setError] = useState(null);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   useEffect(() => {
-    ListItems(`${vehiclesOptionsDataURL}/${selectedVehicleId}`, setData);
+    ListItems(`${vehiclesOptionsDataURL}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
   const options = [
@@ -48,15 +49,9 @@ export function VehicleOptions() {
 
       {options.map(({ label, stateKey, onLabel, offLabel }) => (
         <div key={stateKey} className="option">
-          <span style={{ fontSize: "15px", margin: "5px" }}>
-            {states[stateKey] ? onLabel : offLabel}
-          </span>
+          <span style={{ fontSize: "15px", margin: "5px" }}>{states[stateKey] ? onLabel : offLabel}</span>
           <label className="tk-op-switch">
-            <input
-              type="checkbox"
-              checked={states[stateKey]}
-              onChange={() => handleToggle(stateKey)}
-            />
+            <input type="checkbox" checked={states[stateKey]} onChange={() => handleToggle(stateKey)} />
             <span className="tk-op-slider"></span>
           </label>
         </div>

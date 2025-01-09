@@ -5,7 +5,7 @@ import { ChartComponent } from "../../common/chartComponent";
 
 export function FuelCharts() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-
+  const [error, setError] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
   const [hourlyAVL, setHourlyAVL] = useState();
   const [weekAVL, setWeeklyAVL] = useState();
@@ -15,23 +15,23 @@ export function FuelCharts() {
   const layout = "side-by-side";
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsHourlyAVLURL}/${selectedVehicleId}`, setHourlyAVL);
+    ListItems(`${fuelRecordsHourlyAVLURL}/${selectedVehicleId}`, setHourlyAVL, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL);
+    ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsMonthAVLURL}/${selectedVehicleId}`, setMonthAVL);
+    ListItems(`${fuelRecordsMonthAVLURL}/${selectedVehicleId}`, setMonthAVL, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsYearAVLURL}/${selectedVehicleId}`, setYearAVL);
+    ListItems(`${fuelRecordsYearAVLURL}/${selectedVehicleId}`, setYearAVL, setError);
   }, [selectedVehicleId]);
 
   const parseDate = (dateString) => {

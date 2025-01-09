@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 export function VehicleInfo({ showAlert = true }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [speed, setSpeed] = useState(null); 
+  const [error, setError] = useState(null);
+  const [speed, setSpeed] = useState(null);
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
@@ -18,7 +19,7 @@ export function VehicleInfo({ showAlert = true }) {
 
   // Fetch vehicle data when selectedVehicleId changes
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
   // Handle incoming MQTT messages to update speed info

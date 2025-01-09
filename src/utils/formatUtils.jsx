@@ -1,4 +1,5 @@
 // utils/formatUtils.js
+
 export const getDateAndDayFromTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
 
@@ -20,6 +21,7 @@ export const getDateAndDayFromTimestamp = (timestamp) => {
 };
 
 // Función que entrega solo la fecha desde un timestamp
+
 export const getDateFromTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
 

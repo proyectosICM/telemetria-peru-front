@@ -19,9 +19,10 @@ export function FuelRecords() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const [vehicleData, setVehicleData] = useState(null);
-
+  const [error, setError] = useState(null);
+   
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   return (

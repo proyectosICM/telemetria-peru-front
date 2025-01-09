@@ -19,6 +19,7 @@ export function ListItems(url, setData, setError) {
         headers: getAuthHeaders(),
       });
       setData(response.data);
+      setError(null);
     } catch (error) {
       setError(error);
       console.error(error);

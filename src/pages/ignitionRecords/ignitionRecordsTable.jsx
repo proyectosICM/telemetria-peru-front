@@ -16,6 +16,9 @@ export function IgnitionRecordsTable({ data, error }) {
         <thead>
           <tr>
             <th>
+              id
+            </th>
+            <th>
               <FaCalendarAlt style={{ marginRight: "8px" }} />
               Día
             </th>
@@ -37,6 +40,7 @@ export function IgnitionRecordsTable({ data, error }) {
           {data && !error ? (
             data.map((d, index) => (
               <tr key={index}>
+                <td>{d.id}</td>
                 <td>{d.createdAt ? getDateFromTimestamp(d.createdAt) : "Error"}</td>
                 <td>{d.createdAt ? getTimeFromTimestamp(d.createdAt) : "Error"}</td>
                 <td>{d.vehicleModel && d.vehicleModel.licensePlate ? d.vehicleModel.licensePlate : "Error"}</td>

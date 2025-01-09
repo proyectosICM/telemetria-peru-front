@@ -3,14 +3,14 @@ import { Table, Dropdown, DropdownButton } from "react-bootstrap";
 import { fuelEfficiencySummary, vehiclesURL } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 import { formatTimeDecimal } from "../../utils/formatUtils";
- 
+
 export function AvgResults() {
   const [selectedFilter, setSelectedFilter] = useState("Por Año");
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [data, setData] = useState([]);
-
+  const [error, setError] = useState(null);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function AvgResults() {
     }
 
     // Llamar a la API con la URL construida
-    ListItems(url, setData);
+    ListItems(url, setData, setError);
   }, [selectedVehicleId, selectedYear, selectedMonth, selectedDay]);
 
   // Generar lista de años desde el actual hasta 2020
@@ -153,7 +153,9 @@ export function AvgResults() {
             ))}
           </select>
 
-          <label htmlFor="month-select" style={{ marginLeft: "20px" }}>Seleccionar Mes:</label>
+          <label htmlFor="month-select" style={{ marginLeft: "20px" }}>
+            Seleccionar Mes:
+          </label>
           <select id="month-select" value={selectedMonth} onChange={handleMonthSelect} style={{ marginLeft: "10px" }}>
             <option value="">-- Seleccionar Mes --</option>
             <option value="01">Enero</option>
@@ -200,8 +202,8 @@ export function AvgResults() {
             <tr key={index}>
               <td>{item.status}</td>
               <td>{formatTimeDecimal(item.totalHours)}</td>
-              <td>{(item.totalFuelConsumed).toFixed(2)}</td>
-              <td>{(item.avgFuelEfficiency).toFixed(2)}</td>
+              <td>{item.totalFuelConsumed.toFixed(2)}</td>
+              <td>{item.avgFuelEfficiency.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

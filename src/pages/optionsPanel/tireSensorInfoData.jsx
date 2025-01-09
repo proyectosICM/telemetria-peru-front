@@ -15,6 +15,7 @@ import mqttDataHandler from "../../hooks/mqttDataHandler";
 export function TireInfoData({ showAlert = true }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
   const [maxPressure, setMaxPressure] = useState(0);
@@ -23,7 +24,7 @@ export function TireInfoData({ showAlert = true }) {
   const [pressureRange, setPressureRange] = useState(0);
 
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setPressureRange);
+    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setPressureRange, setError);
   }, [selectedTypeVehicleId]);
 
   useEffect(() => {

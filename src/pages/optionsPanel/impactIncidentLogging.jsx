@@ -10,7 +10,7 @@ export function ImpactIncidentLogging({ showAlert = true }) {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [pageNumber, setPageNumber] = useState(0);
-
+  const [error, setError] = useState(null);
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
     `${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`,
     pageNumber

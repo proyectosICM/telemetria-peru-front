@@ -14,6 +14,7 @@ export function IgnitionInfo({ showAlert = true }) {
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
 
   const [ignition, setIgnition] = useState(false);
+  const [error, setError] = useState(null);
   const { messages } = useMqtt(mqttDominio, topic);
 
   useEffect(() => {

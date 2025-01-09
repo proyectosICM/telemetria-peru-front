@@ -13,7 +13,8 @@ import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
 
 export function BatteryInfo({ showAlert = true }) {
   const navigate = useNavigate();
-  const [data, setData] = useState([]); // Datos de la batería
+  const [data, setData] = useState([]); 
+    const [error, setError] = useState(null);
   const [batteryRange, setBatteryRange] = useState(null); // Rango de batería dinámico
   const [maxVoltaje, setMaxVoltaje] = useState(0); // Rango de
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
@@ -24,7 +25,7 @@ export function BatteryInfo({ showAlert = true }) {
 
   // Obtener los rangos de batería desde la API del tipo de vehículo
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setBatteryRange);
+    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setBatteryRange, setError);
   }, [selectedTypeVehicleId]);
 
   // Usar useRef para almacenar el vehículo anterior

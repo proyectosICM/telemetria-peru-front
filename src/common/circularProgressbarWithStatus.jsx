@@ -3,7 +3,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { getStatusColor } from "../utils/getStatusColorCPB";
 import "react-circular-progressbar/dist/styles.css";
 import "./commonStyles.css";
-
+ 
 /**
  * This component displays a circular progress bar with a visual
  * status based on a provided value and status.

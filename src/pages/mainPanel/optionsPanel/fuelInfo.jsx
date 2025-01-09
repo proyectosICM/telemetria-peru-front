@@ -18,7 +18,7 @@ export function FuelInfo({ showAlert = true }) {
 
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages, clearMessages } = useMqtt(mqttDominio, topic);
-
+  const [error, setError] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
   const [typeVehicleData, setTypeVehicleData] = useState(null);
   const [dataValue, setDataValue] = useState(null);
@@ -26,11 +26,11 @@ export function FuelInfo({ showAlert = true }) {
   const [maxPressure, setMaxPressure] = useState(0);
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setTypeVehicleData);
+    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setTypeVehicleData, setError);
   }, [selectedTypeVehicleId]);
 
   useEffect(() => {

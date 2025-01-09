@@ -14,7 +14,7 @@ export function AlarmInfo({ showAlert = true }) {
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages, clearMessages } = useMqtt(mqttDominio, topic);
   const [alarm, setAlarm] = useState(false); // Estado de la alarma (activo o inactivo)
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     mqttDataHandler(messages, setAlarm, "alarmInfo");
   }, [messages]);

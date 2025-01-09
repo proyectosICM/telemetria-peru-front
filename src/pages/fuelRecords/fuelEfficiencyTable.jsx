@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ListItemsPaginated } from "../../hooks/listItems";
-import { fuelEfficiencyByVehiclePagedURL } from "../../api/apiurls";
+import { fuelEfficiencyByVehiclePagedURL, fuelEfficiencyByVehicleURL, fuelEfficiencyDownload } from "../../api/apiurls";
 import { formatTimeDecimal, getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 
 export function FuelEfficiencyTable() {
@@ -13,6 +13,38 @@ export function FuelEfficiencyTable() {
     `${fuelEfficiencyByVehiclePagedURL}/${selectedVehicleId}`,
     pageNumberEfficiency
   );
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(`${fuelEfficiencyDownload}/${selectedVehicleId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/vnd.ms-excel", // Tipo MIME para archivos Excel
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al descargar el archivo");
+      }
+
+      // Crear el archivo descargable
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // Crear un enlace de descarga
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `fuel-efficiency-vehicle-${selectedVehicleId}.xls`); // Nombre del archivo
+      document.body.appendChild(link);
+      link.click();
+
+      // Limpiar
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error al descargar el archivo:", error);
+    }
+  };
 
   return (
     <div style={{ margin: "10px", width: "90%", height: "600px", overflowX: "auto" }}>
@@ -43,15 +75,11 @@ export function FuelEfficiencyTable() {
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>
                 <td>{d.accumulatedHours ? formatTimeDecimal(d.accumulatedHours) : "Aún no disponible"}</td>
-                <td>{(d.initialFuel).toFixed(2)}</td>
-                <td>{d.finalFuel ? (d.finalFuel).toFixed(2) : "Aún no disponible"}</td>
-                <td>
-                  {d.finalFuel !== "Aún no disponible" ? (d.initialFuel - d.finalFuel).toFixed(2) : "Aún no disponible"}
-                </td>
-                <td>
-                  {d.fuelEfficiency!= null ? `${(d.fuelEfficiency).toFixed(2)} km/gal` : "Aún no disponible"}
-                </td>
-                <td>{d.fuelConsumptionPerHour != null ? `${(d.fuelConsumptionPerHour).toFixed(2)} gal/h` : "Aun no disponible"}</td>
+                <td>{d.initialFuel.toFixed(2)}</td>
+                <td>{d.finalFuel ? d.finalFuel.toFixed(2) : "Aún no disponible"}</td>
+                <td>{d.finalFuel !== "Aún no disponible" ? (d.initialFuel - d.finalFuel).toFixed(2) : "Aún no disponible"}</td>
+                <td>{d.fuelEfficiency != null ? `${d.fuelEfficiency.toFixed(2)} km/gal` : "Aún no disponible"}</td>
+                <td>{d.fuelConsumptionPerHour != null ? `${d.fuelConsumptionPerHour.toFixed(2)} gal/h` : "Aun no disponible"}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
               </tr>
             ))}
@@ -59,6 +87,9 @@ export function FuelEfficiencyTable() {
       </Table>
 
       <PaginacionUtils setPageNumber={setPageNumberEfficiency} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
+      <Button variant="success" onClick={handleDownload}>
+        Descargar Excel
+      </Button>
     </div>
   );
 }

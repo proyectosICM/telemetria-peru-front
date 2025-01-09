@@ -10,7 +10,7 @@ export function NavbarCommon() {
     clearLocalStorage();
     navigation("/login");
   };
-
+ 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand style={{ marginLeft: "25px", cursor: "pointer" }} onClick={() => navigation("/")}>

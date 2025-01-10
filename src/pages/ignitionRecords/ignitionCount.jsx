@@ -6,7 +6,6 @@ import { ignitionCountingURL } from "../../api/apiurls";
 
 export function IgnitionCount() {
   const navigate = useNavigate();
-
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const [data, setData] = useState();
@@ -18,7 +17,6 @@ export function IgnitionCount() {
     }
   }, [selectedVehicleId]);
 
-  // Organizar los datos de acuerdo a la respuesta que se obtiene
   const formattedData = data
     ? [
         { label: "Día", count: data.day ? data.day.counts : 0 },
@@ -27,10 +25,6 @@ export function IgnitionCount() {
         { label: "Año", count: data.year ? data.year.counts : 0 },
       ]
     : [];
-
-  const handleRow = (dat) => {
-    console.log(dat);
-  };
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>
@@ -52,9 +46,9 @@ export function IgnitionCount() {
         <tbody>
           {formattedData.length > 0 ? (
             formattedData.map((d, index) => (
-              <tr key={index} onClick={() => handleRow(d.label)}>
-                <td>{d.label}</td>
-                <td>{d.count}</td>
+              <tr key={index}>
+                <td>{d.label ? d.label : "Error"}</td>
+                <td>{d.count ? d.count : "Error"}</td>
               </tr>
             ))
           ) : (

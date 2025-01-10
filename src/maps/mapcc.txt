@@ -63,15 +63,6 @@ export const addMarker = (map, position, image, title) => {
     }
   });
 
-  let markerImageSrc;
-  if (image === 'busesIcono') {
-    markerImageSrc = require("../images/busesIcono.png");
-  } else if (image === 'paradero') {
-    markerImageSrc = require("../images/paradero.png");
-  } else {
-    markerImageSrc = require("../images/masIcono.png");
-  }
-
   // Si existe un marcador con el mismo título, actualizar su posición
   if (existingMarker) {
     existingMarker.getGeometry().setCoordinates(fromLonLat(position));
@@ -85,37 +76,26 @@ export const addMarker = (map, position, image, title) => {
 
   marker.set("title", title);
 
-  const vectorSource = new VectorSource({
-    features: [marker],
-  });
-
-  const vectorLayer = new VectorLayer({
-    source: vectorSource,
-    style: new Style({
-      image: new CircleStyle({
-        radius: 20,
-        fill: new Fill({ color: "#ff5722" }),
-        stroke: new Stroke({ color: "#ffffff", width: 2 }),
+  map.addLayer(
+    new VectorLayer({
+      source: new VectorSource({
+        features: [marker],
       }),
-      text: new Text({
-        text: title,
-        offsetY: -15,
-        textAlign: "center",
-        fill: new Fill({ color: "#000" }),
-        font: "15px Arial, sans-serif",
-        backgroundFill: new Fill({ color: "rgba(255,255,255,0.5)" }),
+      style: new Style({
+        image: new CircleStyle({
+          radius: 20,
+          fill: new Fill({ color: "#ff5722" }), // Color del punto
+          stroke: new Stroke({ color: "#ffffff", width: 2 }), // Borde blanco
+        }),
+        text: new Text({
+          text: title,
+          offsetY: -15, // Posición del texto sobre el marcador
+          textAlign: "center",
+          fill: new Fill({ color: "#000" }),
+          font: "15px Arial, sans-serif",
+          backgroundFill: new Fill({ color: "rgba(255,255,255,0.5)" }),
+        }),
       }),
-    }),
-  });
-
-  map.addLayer(vectorLayer);
-
-  // Agregar evento de clic al marcador
-  vectorSource.on('featureclick', (evt) => {
-    const clickedFeature = evt.feature;
-    if (clickedFeature) {
-      alert(`Clicked on marker: ${clickedFeature.get("title")}`);
-    }
-  });
-};
-
+    })
+  );
+}; 

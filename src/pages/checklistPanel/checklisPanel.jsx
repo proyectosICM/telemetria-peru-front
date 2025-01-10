@@ -15,13 +15,14 @@ export function ChecklistPanel() {
   const [vehicleData, setVehicleData] = useState([]);
   const [selectedChecklist, setSelectedChecklist] = useState("todos");
   const [pageNumber, setPageNumber] = useState(0);
+  const [errorV, setErrorV] = useState(null);
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsVehiclePageURL}/${selectedVehicleId}`, pageNumber);
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setErrorV);
   }, [selectedVehicleId]);
 
   const cardStyle = {

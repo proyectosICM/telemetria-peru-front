@@ -1,5 +1,4 @@
-// utils/formatUtils.js
-
+// Converts a timestamp in seconds into a date and time string. 
 export const getDateAndDayFromTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
 
@@ -11,17 +10,10 @@ export const getDateAndDayFromTimestamp = (timestamp) => {
     minute: "2-digit",
     second: "2-digit",
   });
-
-  // const dayOfWeek = date.toLocaleString('en-GB', { weekday: 'long' });
-
-  // Combina la fecha y el día de la semana en una sola cadena
-  // return `${formattedDate} (${dayOfWeek})`;
-  
   return `${formattedDate}`;
 };
 
-// Función que entrega solo la fecha desde un timestamp
-
+// Converts a timestamp in seconds into a date string.
 export const getDateFromTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
 
@@ -34,7 +26,7 @@ export const getDateFromTimestamp = (timestamp) => {
   return `${formattedDate}`;
 };
 
-// Función que entrega solo la hora desde un timestamp
+// Converts a timestamp in seconds into a time string.
 export const getTimeFromTimestamp = (timestamp) => {
   const date = new Date(timestamp * 1000);
 
@@ -46,26 +38,29 @@ export const getTimeFromTimestamp = (timestamp) => {
 //    second: "2-digit",
   return `${formattedTime}`;
 };
+
+// Calculates the difference in hours and minutes between two given timestamps.
 export const calculateHoursDifference = (startTimestamp, endTimestamp) => {
-  if (!startTimestamp || !endTimestamp) return null; // Verifica que ambos valores existan
+  if (!startTimestamp || !endTimestamp) return null;
 
   const start = new Date(startTimestamp * 1000);
   const end = new Date(endTimestamp * 1000);
 
   const diffInMilliseconds = end - start;
 
-  // Calcular horas y minutos
-  const totalMinutes = Math.floor(diffInMilliseconds / (1000 * 60)); // Total de minutos
-  const hours = Math.floor(totalMinutes / 60); // Horas completas
-  const minutes = totalMinutes % 60; // Minutos restantes
+  // Calculate hours and minutes
+  const totalMinutes = Math.floor(diffInMilliseconds / (1000 * 60)); 
+  const hours = Math.floor(totalMinutes / 60); 
+  const minutes = totalMinutes % 60; 
 
-  // Asegurar formato de dos dígitos para horas y minutos
+  // Ensure two-digit format for hours and minutes
   const formattedHours = String(hours).padStart(2, "0");
   const formattedMinutes = String(minutes).padStart(2, "0");
 
   return `${formattedHours}:${formattedMinutes}`;
 };
 
+// Formats a decimal hour into a time string in the format "HH:mm".
 export function formatTimeDecimal(decimalHours) {
   const hours = Math.floor(decimalHours); // Parte entera: horas
   const minutes = Math.round((decimalHours - hours) * 60); // Parte decimal: minutos

@@ -8,13 +8,11 @@ import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
 
 export function IgnitionInfo({ showAlert = true }) {
   const navigate = useNavigate();
-
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
 
   const [ignition, setIgnition] = useState(false);
-  const [error, setError] = useState(null);
   const { messages } = useMqtt(mqttDominio, topic);
 
   useEffect(() => {

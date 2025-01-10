@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { FaHashtag, FaCalendarAlt, FaClock, FaCarAlt, FaToggleOn } from "react-icons/fa";
+import { FaCalendarAlt, FaClock, FaCarAlt, FaToggleOn } from "react-icons/fa";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 
 export function IgnitionRecordsTable({ data, error }) {
@@ -15,9 +15,6 @@ export function IgnitionRecordsTable({ data, error }) {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>
-              id
-            </th>
             <th>
               <FaCalendarAlt style={{ marginRight: "8px" }} />
               Día
@@ -40,7 +37,6 @@ export function IgnitionRecordsTable({ data, error }) {
           {data && !error ? (
             data.map((d, index) => (
               <tr key={index}>
-                <td>{d.id}</td>
                 <td>{d.createdAt ? getDateFromTimestamp(d.createdAt) : "Error"}</td>
                 <td>{d.createdAt ? getTimeFromTimestamp(d.createdAt) : "Error"}</td>
                 <td>{d.vehicleModel && d.vehicleModel.licensePlate ? d.vehicleModel.licensePlate : "Error"}</td>

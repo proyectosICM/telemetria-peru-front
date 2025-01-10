@@ -70,7 +70,7 @@ export function FuelEfficiencyTable() {
             data.map((d, index) => (
               <tr key={index}>
                 <td>{d.fuelEfficiencyStatus}</td>
-                <td>{d.licensePlate}</td>
+                <td>{d.licensePlate ? d.licensePlate : "."}</td>
                 <td>{getDateFromTimestamp(d.startTime)}</td>
                 <td>{getTimeFromTimestamp(d.startTime)}</td>
                 <td>{d.endTime ? getTimeFromTimestamp(d.endTime) : "Aún no disponible"}</td>

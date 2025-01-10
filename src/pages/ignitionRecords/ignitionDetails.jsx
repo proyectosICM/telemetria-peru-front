@@ -5,6 +5,7 @@ import { Form, Table } from "react-bootstrap";
 import { ListItems } from "../../hooks/listItems";
 import { ignitionAllDayURL, ignitionAllMothURL } from "../../api/apiurls";
 import { tr } from "date-fns/locale";
+import { getDateFromTimestamp } from "../../utils/formatUtils";
 
 export function IgnitionDetails() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
@@ -14,9 +15,9 @@ export function IgnitionDetails() {
   const [errorYear, setErrorYear] = useState(null);
 
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 2021 }, (_, i) => currentYear - i); // Genera años desde el actual hasta 2022
-  const [selectedYear, setSelectedYear] = useState(currentYear); // Estado inicial con el año actual
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); // Estado inicial con el mes actual
+  const years = Array.from({ length: currentYear - 2021 }, (_, i) => currentYear - i);
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
 
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
@@ -33,7 +34,6 @@ export function IgnitionDetails() {
     }
   }, [selectedVehicleId, selectedYear, selectedMonth]);
 
-  // Objeto de traducción de números de mes a nombres en español
   const monthNames = {
     1: "Enero",
     2: "Febrero",
@@ -62,13 +62,14 @@ export function IgnitionDetails() {
 
     return dataMoth.map((item, index) => (
       <tr key={index}>
-        <td>{item.day}</td>
-        <td>{item.count}</td>
+        <td>{item.day && getDateFromTimestamp(item.day)}</td>
+        <td>{item.counts}</td>
       </tr>
     ));
   };
 
-  const months = Array.from({ length: 12 }, (_, i) => i + 1); // Genera meses del 1 al 12
+  // Genera meses del 1 al 12
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   return (
     <div>

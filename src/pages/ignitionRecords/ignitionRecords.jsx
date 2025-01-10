@@ -10,12 +10,8 @@ import { BackButton } from "../../common/backButton";
 import { IgnitionCount } from "./ignitionCount";
 
 export function IgnitionRecords() {
-  const navigate = useNavigate();
-
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
-  const [chartsData, setChartsData] = useState();
-  const [error, setError] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
@@ -23,17 +19,11 @@ export function IgnitionRecords() {
     pageNumber
   );
 
-  useEffect(() => {
-    if (selectedVehicleId) {
-      ListItems(`${ignitionBasicChartURL}/${selectedVehicleId}`, setChartsData, setError);
-    }
-  }, [selectedVehicleId]);
-
   return (
     <div className="g-background">
       <NavbarCommon />
 
-      <BackButton path="/" />
+      <BackButton path={-1} />
 
       <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
         <div

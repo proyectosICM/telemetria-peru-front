@@ -10,9 +10,10 @@ export function TruckLoadsTable() {
   
   const [loadsCount, setLoadsCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    ListItems(`${truckLoadRecordByVehicleCountURL}/${selectedVehicleId}`, setLoadsCount)
+    ListItems(`${truckLoadRecordByVehicleCountURL}/${selectedVehicleId}`, setLoadsCount, setError)
   },[selectedVehicleId])
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(

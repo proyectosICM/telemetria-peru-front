@@ -77,6 +77,7 @@ export const ignitionCountingURL = `${ignitionRecordsURL}/count`;
 export const ignitionAllMothURL = `${ignitionRecordsURL}/counts-all-months`;
 export const ignitionAllDayURL = `${ignitionRecordsURL}/counts-all-days`;
 
+
 /** Alarm */
 export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;
 export const alarmRecordsPageURL = `${alarmRecordsURL}/page`;

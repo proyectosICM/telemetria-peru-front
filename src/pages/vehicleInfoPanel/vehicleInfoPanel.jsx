@@ -11,10 +11,11 @@ import { TruckDailyCountLoadTable } from "./truckDailyCountLoadTable";
 export function VehicleInfoPanel() {
   const navigate = useNavigate();
   const [vehicleData, setVehicleData] = useState([]);
+  const [error, setError] = useState(null);
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData);
+    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   return (

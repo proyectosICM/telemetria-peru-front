@@ -16,7 +16,7 @@ const useMqttMapHandler = (messages) => {
           }
 
           const data = JSON.parse(jsonString[0]);
-          const { imei, longitude, latitude, licensePlate } = data;
+          const { imei, longitude, latitude, licensePlate, vehicleId, timestamp } = data;
 
           if (imei && longitude && latitude && licensePlate) {
             setBuses((prevBuses) => {
@@ -29,12 +29,14 @@ const useMqttMapHandler = (messages) => {
                   ...updatedBuses[busIndex],
                   longitude,
                   latitude,
-                  licensePlate
+                  licensePlate,
+                  vehicleId,
+                  timestamp
                 };
                 return updatedBuses;
               } else {
                 // Agregar un nuevo bus
-                return [...prevBuses, { imei, longitude, latitude, licensePlate }];
+                return [...prevBuses, { imei, longitude, latitude, licensePlate, vehicleId, timestamp }];
               }
             });
           }

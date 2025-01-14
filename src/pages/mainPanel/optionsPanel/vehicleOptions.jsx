@@ -3,7 +3,7 @@ import { vehiclesOptionsDataURL, vehiclesOptionsUpdateURL } from "../../../api/a
 import { ListItems } from "../../../hooks/listItems";
 import { editVehicleOptions } from "../../../hooks/editItem";
 import "../../../styles/truckOptions.css";
-
+ 
 export function VehicleOptions() {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
@@ -12,6 +12,8 @@ export function VehicleOptions() {
   useEffect(() => {
     ListItems(`${vehiclesOptionsDataURL}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
+
+  console.log(data)
 
   const options = [
     { label: "Vehículo", stateKey: "engine", setState: "setIsVehicleOn", onLabel: "Apagar vehículo", offLabel: "Encender vehículo" },

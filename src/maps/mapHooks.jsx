@@ -4,12 +4,13 @@ import { fromLonLat } from "ol/proj";
 import { XYZ } from "ol/source";
 import { useCallback, useEffect, useState } from "react";
 import Map from "ol/Map";
-
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { Point } from "ol/geom";
 import CircleStyle from "ol/style/Circle";
+import Overlay from 'ol/Overlay';
+import { FaBus } from "react-icons/fa";
 
 export const useShowMapAfterDelay = (delay) => {
   const [showMap, setShowMap] = useState(false);
@@ -49,7 +50,8 @@ export const useCreateMap = (mapRef, position, setMap) => {
   return createMap;
 };
 
-export const addMarker = (map, position, image, title) => {
+export const addMarker = (map, position, image, title, infoHTML) => {
+  console.log(infoHTML)
   // Buscar si ya existe un marcador con el mismo título
   let existingMarker;
   map.getLayers().forEach((layer) => {
@@ -93,16 +95,16 @@ export const addMarker = (map, position, image, title) => {
     source: vectorSource,
     style: new Style({
       image: new CircleStyle({
-        radius: 20,
+        radius: 15,
         fill: new Fill({ color: "#ff5722" }),
         stroke: new Stroke({ color: "#ffffff", width: 2 }),
       }),
       text: new Text({
-        text: title,
+        text: `Placa: ${title}`,
         offsetY: -15,
         textAlign: "center",
         fill: new Fill({ color: "#000" }),
-        font: "15px Arial, sans-serif",
+        font: "bold 15px Arial, sans-serif",
         backgroundFill: new Fill({ color: "rgba(255,255,255,0.5)" }),
       }),
     }),
@@ -110,12 +112,53 @@ export const addMarker = (map, position, image, title) => {
 
   map.addLayer(vectorLayer);
 
+  // Crear overlay HTML
+  const overlayContainer = document.createElement('div');
+  overlayContainer.style.position = 'absolute';
+  overlayContainer.style.backgroundColor = 'white';
+  overlayContainer.style.padding = '5px';
+  overlayContainer.style.border = '1px solid #ccc';
+  overlayContainer.style.width = '300px';
+  
+  // Verificar si infoHTML es un objeto React
+  if (typeof infoHTML === 'object' && infoHTML !== null) {
+    const children = infoHTML.props.children;
+  
+    if (Array.isArray(children)) {
+      overlayContainer.innerHTML = children.map(child => {
+        if (child.type === 'p') {
+          return `<p>${child.props.children}</p>`;
+        } else if (child.type === FaBus) { // Si es el icono FaBus
+          return `<div style="display: flex; align-items: center;">
+                    <div style="margin-right: 10px; color: #555;">
+                      <svg style="width:24px; height:24px;" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path d="M20 6V18a2 2 0 01-2 2H6a2 2 0 01-2-2V6H2"></path>
+                        <path d="M4 10h16"></path>
+                        <path d="M7 6V4a2 2 0 012-2h6a2 2 0 012 2v2"></path>
+                      </svg>
+                    </div>
+                    ${child.props.children}
+                  </div>`;
+        }
+      }).join('');
+    }
+  } else {
+    overlayContainer.innerHTML = infoHTML;  // Si ya es un string puro
+  }
+
+  const overlay = new Overlay({
+    element: overlayContainer,
+    position: fromLonLat(position),
+    positioning: 'bottom-center',
+  });
+
+ //  map.addOverlay(overlay);
+
   // Agregar evento de clic al marcador
   vectorSource.on('featureclick', (evt) => {
     const clickedFeature = evt.feature;
     if (clickedFeature) {
-      alert(`Clicked on marker: ${clickedFeature.get("title")}`);
+      overlay.setPosition(fromLonLat(position)); // Muestra el panel junto al marcador
     }
   });
 };
-

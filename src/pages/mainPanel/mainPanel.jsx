@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { MapaBase } from "../../maps/mapaBase";
 import { VehicleMenuPanel } from "../../common/vehicleMenuPanel";
@@ -34,6 +34,27 @@ export function MainPanel() {
     setSelectedVehicleId(id);
   };
 
+  const [initialPosition, setInitialPosition] = useState([-76.95769789314294, -12.036776926858456]);
+
+  useEffect(() => {
+    if (selectedVehicleId && Array.isArray(buses)) {
+      // Buscar el mensaje más reciente del vehículo seleccionado
+      const vehicleMessages = buses.filter((bus) => bus.vehicleId === selectedVehicleId);
+
+      if (vehicleMessages.length > 0) {
+        // Ordenar los mensajes por tiempo descendente (suponiendo que tengan un campo 'timestamp')
+        const recentMessage = vehicleMessages.sort((a, b) => b.timestamp - a.timestamp)[0];
+        // Establecer la posición inicial con la última ubicación conocida
+        if (recentMessage) {
+          const { longitude, latitude } = recentMessage;
+          setInitialPosition([longitude, latitude]);
+        }
+      } else {
+        console.log("No messages found for selected vehicle ID:", selectedVehicleId);
+      }
+    }
+  }, [selectedVehicleId, buses]);
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -45,7 +66,7 @@ export function MainPanel() {
 
         <div className="main-content">
           <div className="main-map-container">
-            <MapaBase buses={buses} />
+            <MapaBase buses={buses} initialPosition={initialPosition} />
           </div>
 
           {selectedVehicleId ? (
@@ -67,9 +88,7 @@ export function MainPanel() {
                 <TireInfoData />
               </div>
 
-              <div className="main-options-panel-content">
-         
-              </div>
+              <div className="main-options-panel-content"></div>
             </div>
           ) : (
             <div className="main-no-vehicle-selected">

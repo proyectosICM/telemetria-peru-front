@@ -10,9 +10,10 @@ export function WelcomeAndRedirect() {
   const username = localStorage.getItem("username");
 
   const [info, setInfo] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    ListItems(`${InfoUserURL}${username}`, setInfo);
+    ListItems(`${InfoUserURL}${username}`, setInfo, setError);
   }, [username]);
 
   LogoutToken();

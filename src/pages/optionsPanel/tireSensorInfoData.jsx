@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
-import { mqttDominio, mqttTopics, vehiclesTypesRoutes, vehiclesTypesURL } from "../../api/apiurls";
+import { vehiclesTypesRoutes } from "../../api/apiurls";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useMqtt from "../../hooks/useMqtt";
@@ -11,6 +11,7 @@ import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
 import CircularProgressbarWithStatus from "../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../hooks/listItems";
 import mqttDataHandler from "../../hooks/mqttDataHandler";
+import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
 
 export function TireInfoData({ showAlert = true }) {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export function TireInfoData({ showAlert = true }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
   const [maxPressure, setMaxPressure] = useState(0);
-  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
+  const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages, clearMessages } = useMqtt(mqttDominio, topic);
   const [pressureRange, setPressureRange] = useState(0);
 

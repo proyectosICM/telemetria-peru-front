@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaCar, FaCarCrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { mqttDominio, mqttTopics } from "../../../api/apiurls";
 import useMqtt from "../../../hooks/useMqtt";
 import mqttDataHandler from "../../../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
+import { mqttDominio, mqttTopics } from "../../../mqtt/mqttConfig";
 
 export function IgnitionInfo({ showAlert = true }) {
   const navigate = useNavigate();

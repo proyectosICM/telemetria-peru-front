@@ -57,7 +57,6 @@ export const routes = [
   { path: "/example3/:licensePlate", component: <Example3 /> },
   { path: "/example2", component: <Example4 /> },
 
-
   // Admin
   { path: "/company-admin", component: <CompanyAdminPanel /> },
   { path: "/add-company", component: <AddCompanyForm /> },

@@ -18,7 +18,7 @@ export function ChartComponent({ data, options, layout = "single", style }) {
 
   const chartStyle = isSideBySide
     ? {
-        width: "80%", // Cada gráfico ocupa la mitad del espacio
+        width: "80%",
         minWidth: "300px",
       }
     : {

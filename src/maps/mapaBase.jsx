@@ -4,7 +4,7 @@ import { addMarker, useShowMapAfterDelay } from "./mapHooks";
 import { useCreateMap } from "./useCreateMap";
 import { FaBus } from "react-icons/fa";
 import ReactDOM from "react-dom";
-
+ 
 export function MapaBase({ buses, rutas, initialPosition }) {
   const mapRef = useRef(null);
   const showMap = useShowMapAfterDelay(20);

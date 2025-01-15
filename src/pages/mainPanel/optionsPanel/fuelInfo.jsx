@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import useMqtt from "../../../hooks/useMqtt";
-import { mqttDominio, mqttTopics, vehicleRoutes, vehiclesTypesRoutes } from "../../../api/apiurls";
+import { vehicleRoutes, vehiclesTypesRoutes } from "../../../api/apiurls";
 import { useNavigate } from "react-router-dom";
 import { calculatePercentage } from "../../../utils/calculatePercentage";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
@@ -9,6 +9,7 @@ import NoDataCircularProgressbar from "../../../common/noDataCircularProgressbar
 import CircularProgressbarWithStatus from "../../../common/circularProgressbarWithStatus";
 import { ListItems } from "../../../hooks/listItems";
 import mqttDataHandler from "../../../hooks/mqttDataHandler";
+import { mqttDominio, mqttTopics } from "../../../mqtt/mqttConfig";
 
 export function FuelInfo({ showAlert = true }) {
   const navigate = useNavigate(); 

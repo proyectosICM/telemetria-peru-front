@@ -5,12 +5,6 @@ export const mqttDominio = "ws://telemetriaperu.com:1884";
 // Para pruebas locales
 export const mqttLocalURL = "ws://localhost:1883";
 
-// Temas MQTT
-export const mqttTopics = {
-  mapa: "mapa/",
-  telData: "telData/",
-};
-
 // URL para desarrollo
 //const base = "http://192.168.1.232:7078"
 

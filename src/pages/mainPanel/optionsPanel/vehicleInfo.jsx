@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ListItems } from "../../../hooks/listItems";
-import { mqttDominio, mqttTopics, vehicleRoutes } from "../../../api/apiurls";
+import { vehicleRoutes } from "../../../api/apiurls";
 import useMqtt from "../../../hooks/useMqtt";
 import mqttDataHandler from "../../../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
 import { useNavigate } from "react-router-dom";
+import { mqttDominio, mqttTopics } from "../../../mqtt/mqttConfig";
 
 export function VehicleInfo({ showAlert = true }) {
   const navigate = useNavigate();

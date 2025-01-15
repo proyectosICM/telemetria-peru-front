@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../../common/navbarCommon";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { rolesURL } from "../../../api/apiurls";
+import { roleRoutes } from "../../../api/apiurls";
 import { Button, Form } from "react-bootstrap";
 import { alertMessageError, alertMessageValidated } from "../../../messages/apiResponseMessages";
 import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
@@ -12,11 +12,11 @@ export function AddRolForm() {
   const { id } = useParams();
 
   const [roleData, setRoleData] = useState({ id: "", name: "" });
-  const { saveItem } = useSaveItem(rolesURL, "/roles-admin");
+  const { saveItem } = useSaveItem(roleRoutes.base, "/roles-admin");
 
   useEffect(() => {
     if (id) {
-      ListItems(`${rolesURL}/${id}`, (data) => {
+      ListItems(`${roleRoutes.base}/${id}`, (data) => {
         setRoleData({ ...data });
       });
     }

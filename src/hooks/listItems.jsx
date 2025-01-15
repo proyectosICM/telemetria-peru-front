@@ -29,22 +29,28 @@ export function ListItems(url, setData, setError) {
   fetchData();
 }
 
-export function ListItemsPaginated(url, pageNumber) {
+export function ListItemsPaginated(url, pageNumber, parameters = {}) {
   const [data, setData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageError , setPageError ] = useState(null);
+  const [pageError, setPageError] = useState(null);
+
+  // Función para construir la URL con parámetros
+  const buildURL = (url, pageNumber, parameters) => {
+    const queryParams = new URLSearchParams({ page: pageNumber, ...parameters });
+    return `${url}?${queryParams.toString()}`;
+  };
 
   const fetchData = async (pageNumber) => {
     try {
-      const response = await axios.get(`${url}?page=${pageNumber}`, {
+      const finalURL = buildURL(url, pageNumber, parameters);
+      const response = await axios.get(finalURL, {
         headers: getAuthHeaders(),
       });
       setData(response.data.content);
       setTotalPages(response.data.totalPages);
       setCurrentPage(response.data.number);
       setPageError(null);
-      // console.log(response.data);
     } catch (error) {
       console.error("Error listing items", error);
       setPageError(error);
@@ -53,7 +59,7 @@ export function ListItemsPaginated(url, pageNumber) {
 
   useEffect(() => {
     fetchData(pageNumber);
-  }, [pageNumber]);
+  }, [pageNumber, parameters]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

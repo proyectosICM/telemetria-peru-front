@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { batteryURL, companiesURL, driverURL } from "../../../api/apiurls";
+import { batteryURL, companyRoutes, driverURL } from "../../../api/apiurls";
 import Select from "react-select";
 import { agregarElementoAPI } from "../../../hooks/addItem";
 import { editItem } from "../../../hooks/editItem";
@@ -51,7 +51,7 @@ export function AddDriverForm() {
   }, [driverData]);
 
   useEffect(() => {
-    ListItems(`${companiesURL}`, setCompanies);
+    ListItems(`${companyRoutes.base}`, setCompanies);
   }, []);
 
   useEffect(() => {

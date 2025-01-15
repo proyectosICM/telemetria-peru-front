@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { batteryURL, companiesURL, vehiclesByCompanyURL } from "../../../api/apiurls";
+import { batteryURL, companyRoutes, vehicleRoutes } from "../../../api/apiurls";
 import Select from "react-select";
 import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
 
@@ -28,7 +28,7 @@ export function AddBatteryForm() {
   }, [id]);
 
   useEffect(() => {
-    ListItems(`${companiesURL}`, setCompanies);
+    ListItems(`${companyRoutes.base}`, setCompanies);
   }, []);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function AddBatteryForm() {
 
   useEffect(() => {
     if (batteryData.companyId) {
-      ListItems(`${vehiclesByCompanyURL}/${batteryData.companyId}`, setVehicles);
+      ListItems(`${vehicleRoutes.byCompany}/${batteryData.companyId}`, setVehicles);
     }
   }, [batteryData.companyId]);
 

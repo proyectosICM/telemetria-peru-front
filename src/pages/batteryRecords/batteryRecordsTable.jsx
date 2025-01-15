@@ -1,36 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { batteryRecordByVehicleAndBatteryPageURL } from "../../api/apiurls";
+import { ListItemsPaginated } from "../../hooks/listItems";
+import { getDateFromTimestamp, getTimeFromTimestamp } from "./../../utils/formatUtils";
+import { PaginacionUtils } from "../../utils/paginacionUtils";
 
-export function BatteryRecordsTable({ batteries }) {
+export function BatteryRecordsTable({ batteryId }) {
+  const navigate = useNavigate();
+  const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
+    `${batteryRecordByVehicleAndBatteryPageURL}/${selectedVehicleId}`,
+    pageNumber,
+    { batteryId: batteryId }
+  );
   return (
     <div style={{ flex: "1 1 45%", minWidth: "300px", margin: "2%" }}>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Name</th> 
+            <th>Dia</th>
+            <th>Hora</th>
+            <th>Name</th>
             <th>Voltage</th>
             <th>Status</th>
-            <th>Creation Date</th> {/* Nueva columna */}
           </tr>
         </thead>
         <tbody>
-          {batteries.map((battery, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{battery.name}</td>
-              <td>{battery.voltage}</td>
-              <td>{battery.status}</td>
-              <td>{battery.creationDate}</td> {/* Fecha de creación */}
-            </tr>
-          ))}
+          {data &&
+            data.map((d, index) => (
+              <tr key={d.id}>
+                <td>{getDateFromTimestamp(d.createdAt)}</td>
+                <td>{getTimeFromTimestamp(d.createdAt)}</td>
+                <td>{d.nameBattery}</td>
+                <td>{d.voltage} v</td>
+                <td>Good</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginTop: "20px" }}>
-        <Button>Atras</Button>
-        <p style={{ margin: "0" }}>Pagina 1 de 3</p>
-        <Button>Siguiente</Button>
-      </div>
+      <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 }

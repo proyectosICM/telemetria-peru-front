@@ -3,7 +3,7 @@ import "ol/ol.css";
 import { addMarker, useShowMapAfterDelay } from "./mapHooks";
 import { useCreateMap } from "./useCreateMap";
 import { FaBus } from "react-icons/fa";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
 export function MapaBase({ buses, rutas, initialPosition }) {
   const mapRef = useRef(null);
@@ -12,26 +12,19 @@ export function MapaBase({ buses, rutas, initialPosition }) {
 
   // Añadir marcadores para los buses
 
-  <div style={{border:"2px solid red"}}><p>Detalles del bus</p><p>Ubicación: Lima, Perú</p></div>
-
   useEffect(() => {
     if (map && buses) {
       buses.forEach((bus) => {
         const busPosition = [bus.longitude, bus.latitude];
         const infoHTML = (
           <div>
-
-            <p>Detalles del bus</p>
-            {ReactDOM.createPortal(
-              <FaBus size={24} style={{ marginRight: '10px', color: '#555' }} />,
-              document.createElement('div')
-            )}
-            <p>Ubicación: Lima, Perú</p>
+            <p>Detalles del vehiculo</p>
+            <p style={{ marginLeft: '10px' }}>Placa</p>
+            <p style={{ marginLeft: '10px' }}>{bus.licensePlate}</p>
+            {ReactDOM.createPortal(<FaBus size={24} style={{ marginRight: "10px", color: "#555" }} />, document.createElement("div"))}
           </div>
         );
-
-        {/* '<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>' */}
-        addMarker(map, busPosition, "busesIcono", bus.licensePlate );
+        addMarker(map, busPosition, "busesIcono", bus.licensePlate, infoHTML);
       });
     }
   }, [map, buses]);
@@ -41,7 +34,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
     if (map && rutas) {
       rutas.forEach((ruta) => {
         const stopPosition = [ruta.paraderosModel.longitud, ruta.paraderosModel.latitud];
-        addMarker(map, stopPosition, "paradero", ruta.paraderosModel.nombre, '<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>');
+        addMarker(map, stopPosition, "paradero", ruta.paraderosModel.nombre, "<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>");
       });
     }
   }, [map, rutas]);

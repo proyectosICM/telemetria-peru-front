@@ -14,7 +14,7 @@ import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
 export function BatteryInfo({ showAlert = true }) {
   const navigate = useNavigate();
   const [data, setData] = useState([]); 
-    const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [batteryRange, setBatteryRange] = useState(null); // Rango de batería dinámico
   const [maxVoltaje, setMaxVoltaje] = useState(0); // Rango de
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import { SpeedExcessTable } from "./speedExcessTable";
 import { TruckLoadsTable } from "./truckLoadsTable";
 import { TruckDailyCountLoadTable } from "./truckDailyCountLoadTable";
-
+ 
 export function VehicleInfoPanel() {
   const navigate = useNavigate();
   const [vehicleData, setVehicleData] = useState([]);

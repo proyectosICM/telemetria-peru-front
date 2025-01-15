@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaTruck } from "react-icons/fa"; // Importa el ícono de camión
 import { ListItems } from "../hooks/listItems";
-import { vehiclesByCompanyURL, vehiclesTypesURL } from "../api/apiurls";
+import { vehicleRoutes, vehiclesByCompanyURL, vehiclesTypesURL } from "../api/apiurls";
 import { useMemo } from "react";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
@@ -12,9 +12,9 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   const [error, setError] = useState(null);
 
   const companyId = localStorage.getItem("companyId");
-
+ 
   useEffect(() => {
-    ListItems(`${vehiclesByCompanyURL}/${companyId}`, setData, setError);
+    ListItems(`${vehicleRoutes.byCompany}/${companyId}`, setData, setError);
   }, [companyId]); 
  
   useEffect(() => {
@@ -35,7 +35,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
 
   return (
     <div className="vmp-container">
-      <h1 className="vmp-title">Camiones</h1>x
+      <h1 className="vmp-title">Camiones</h1>
 
       <div className="vmp-search-bar">
         <input

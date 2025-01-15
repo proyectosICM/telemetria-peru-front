@@ -8,10 +8,11 @@ import { tireSensorByVehicleIdURL } from "../../api/apiurls";
 export function TireSensorsDetails() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [error, setError] = useState([]);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   useEffect(() => {
-    ListItems(`${tireSensorByVehicleIdURL}/${selectedVehicleId}`, setData);
+    ListItems(`${tireSensorByVehicleIdURL}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
   return (

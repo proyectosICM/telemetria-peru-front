@@ -3,7 +3,7 @@ import { NavbarCommon } from "./../../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { rolesURL } from "../../../api/apiurls";
+import { roleRoutes } from "../../../api/apiurls";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
 import { getDateFromTimestamp } from "../../../utils/formatUtils";
 
@@ -12,9 +12,9 @@ export function RoleAdminPanel() {
   const [datos, setDatos] = useState([]);
 
   useEffect(() => {
-    ListItems(`${rolesURL}`, setDatos);
+    ListItems(`${roleRoutes.base}`, setDatos);
   }, []);
- 
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -41,7 +41,7 @@ export function RoleAdminPanel() {
             {datos && datos.length > 0 ? (
               datos.map((role, index) => (
                 <tr key={role.id}>
-                  <td>{index + 1 }</td>
+                  <td>{index + 1}</td>
                   <td>{role.name}</td>
                   <td>{getDateFromTimestamp(role.createdAt)}</td>
                   <td>

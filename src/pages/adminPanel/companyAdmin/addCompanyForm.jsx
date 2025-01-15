@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { companiesURL } from "../../../api/apiurls";
+import { companyRoutes } from "../../../api/apiurls";
 import { alertMessageError, alertMessageValidated } from "../../../messages/apiResponseMessages";
 import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
 
@@ -13,12 +13,12 @@ export function AddCompanyForm() {
   const rolId = localStorage.getItem("rolId");
 
   const [companyData, setCompanyData] = useState({ id: "", name: "" });
-  const { saveItem } = useSaveItem(companiesURL, "/company-admin");
+  const { saveItem } = useSaveItem(companyRoutes.base, "/company-admin");
 
   useEffect(() => {
     if (id) {
-      ListItems(`${companiesURL}/${id}`, (data) => {
-        setCompanyData({...data})
+      ListItems(`${companyRoutes.base}/${id}`, (data) => {
+        setCompanyData({ ...data });
       });
     }
   }, [id]);
@@ -51,7 +51,7 @@ export function AddCompanyForm() {
               style={{ backgroundColor: "white", color: "black" }}
               value={companyData.name}
               isDisabled={rolId !== "1"}
-              onChange={(e) => setCompanyData({...companyData, name: e.target.value})}
+              onChange={(e) => setCompanyData({ ...companyData, name: e.target.value })}
             />
           </Form.Group>
         </div>

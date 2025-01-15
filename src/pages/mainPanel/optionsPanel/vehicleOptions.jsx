@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { vehiclesOptionsDataURL, vehiclesOptionsUpdateURL } from "../../../api/apiurls";
+import { vehicleRoutes } from "../../../api/apiurls";
 import { ListItems } from "../../../hooks/listItems";
 import { editVehicleOptions } from "../../../hooks/editItem";
 import "../../../styles/truckOptions.css";
@@ -10,7 +10,7 @@ export function VehicleOptions() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   useEffect(() => {
-    ListItems(`${vehiclesOptionsDataURL}/${selectedVehicleId}`, setData, setError);
+    ListItems(`${vehicleRoutes.options.data}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
   console.log(data)
@@ -40,7 +40,7 @@ export function VehicleOptions() {
   const handleToggle = (optionKey) => {
     setStates((prevState) => {
       const newState = !prevState[optionKey];
-      editVehicleOptions(`${vehiclesOptionsUpdateURL}/${selectedVehicleId}`, optionKey, newState);
+      editVehicleOptions(`${vehicleRoutes.options.update}/${selectedVehicleId}`, optionKey, newState);
       return { ...prevState, [optionKey]: newState };
     });
   };

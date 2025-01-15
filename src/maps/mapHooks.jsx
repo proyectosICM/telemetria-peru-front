@@ -152,7 +152,7 @@ export const addMarker = (map, position, image, title, infoHTML) => {
     positioning: 'bottom-center',
   });
 
- //  map.addOverlay(overlay);
+  // map.addOverlay(overlay);
 
   // Agregar evento de clic al marcador
   vectorSource.on('featureclick', (evt) => {

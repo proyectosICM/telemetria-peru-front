@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
-import { mqttDominio, mqttTopics, vehiclesTypesURL } from "../../api/apiurls";
+import { mqttDominio, mqttTopics, vehiclesTypesRoutes, vehiclesTypesURL } from "../../api/apiurls";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useMqtt from "../../hooks/useMqtt";
@@ -24,7 +24,7 @@ export function TireInfoData({ showAlert = true }) {
   const [pressureRange, setPressureRange] = useState(0);
 
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setPressureRange, setError);
+    ListItems(`${vehiclesTypesRoutes.base}/${selectedTypeVehicleId}`, setPressureRange, setError);
   }, [selectedTypeVehicleId]);
 
   useEffect(() => {

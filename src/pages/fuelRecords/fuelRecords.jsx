@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { NavbarCommon } from "../../common/navbarCommon";
-import { vehiclesURL } from "../../api/apiurls";
+import { vehicleRoutes } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 import { FuelInfo } from "../mainPanel/optionsPanel/fuelInfo";
 import { FuelRecordsTable } from "./fuelRecordsTable";
@@ -22,7 +22,7 @@ export function FuelRecords() {
   const [error, setError] = useState(null);
    
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
+    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   return (

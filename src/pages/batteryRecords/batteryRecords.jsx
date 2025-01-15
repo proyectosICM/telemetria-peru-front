@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BatteryInfo } from "../optionsPanel/batteryInfo";
 import { BatteryRecordsTable } from "./batteryRecordsTable";
 import { ListItems } from "../../hooks/listItems";
-import { batteryByVehicleIdURL } from "../../api/apiurls";
+import { batteryRoutes } from "../../api/apiurls";
 
 export function BatteryRecords() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export function BatteryRecords() {
   const [selectedBattery, setSelectedBattery] = useState(null);
 
   useEffect(() => {
-    ListItems(`${batteryByVehicleIdURL}/${selectedVehicleId}`, setDataBattery, setError);
+    ListItems(`${batteryRoutes.byVehicle}/${selectedVehicleId}`, setDataBattery, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {

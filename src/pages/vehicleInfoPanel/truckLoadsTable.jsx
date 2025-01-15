@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { truckLoadRecordByVehicleCountURL, truckLoadRecordURLByVehiclePageURL } from "../../api/apiurls";
+import { truckLoadRecordRoutes } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { getDateAndDayFromTimestamp } from "../../utils/formatUtils";
@@ -7,17 +7,17 @@ import { Table } from "react-bootstrap";
 
 export function TruckLoadsTable() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-  
+
   const [loadsCount, setLoadsCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [error, setError] = useState(null);
- 
+
   useEffect(() => {
-    ListItems(`${truckLoadRecordByVehicleCountURL}/${selectedVehicleId}`, setLoadsCount, setError)
-  },[selectedVehicleId])
+    ListItems(`${truckLoadRecordRoutes.countDay}/${selectedVehicleId}`, setLoadsCount, setError);
+  }, [selectedVehicleId]);
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
-    `${truckLoadRecordURLByVehiclePageURL}/${selectedVehicleId}`,
+    `${truckLoadRecordRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumber
   );
 

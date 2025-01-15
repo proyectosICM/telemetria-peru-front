@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { PreguntaCL } from "../../common/preguntaCL";
 import { addImageAPI, addElementWithResponseAPI } from "../../hooks/addItem";
-import { checklistRecordsURL, ImagesCLURL } from "../../api/apiurls";
+import { checklistRecordsRoutes, imageChecklistRoutes } from "../../api/apiurls";
 
 import preguntas from "../../data/forklift-CL/preguntas-forklift.json";
 import { useTimer } from "../../hooks/useTimer";
@@ -103,11 +103,11 @@ export function Example3() {
     };
 
     try {
-      const clid = await addElementWithResponseAPI(`${checklistRecordsURL}`, requestData);
+      const clid = await addElementWithResponseAPI(`${checklistRecordsRoutes.base}`, requestData);
       for (const imagen of imagenes) {
         const formData = new FormData();
         formData.append("file", imagen);
-        await addImageAPI(`${ImagesCLURL}/${clid.id}`, formData);
+        await addImageAPI(`${imageChecklistRoutes.base}/${clid.id}`, formData);
       }
       navigate("/checklist-panel");
     } catch (error) {

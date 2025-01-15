@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LogoutToken } from "../../hooks/logoutToken";
-import { InfoUserURL } from "../../api/apiurls";
+import { userRoutes } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 
 export function WelcomeAndRedirect() {
@@ -13,7 +13,7 @@ export function WelcomeAndRedirect() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    ListItems(`${InfoUserURL}${username}`, setInfo, setError);
+    ListItems(`${userRoutes.info}/${username}`, setInfo, setError);
   }, [username]);
 
   LogoutToken();

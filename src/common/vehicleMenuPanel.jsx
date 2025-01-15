@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaTruck } from "react-icons/fa"; // Importa el ícono de camión
 import { ListItems } from "../hooks/listItems";
-import { vehicleRoutes, vehiclesByCompanyURL, vehiclesTypesURL } from "../api/apiurls";
+import { vehicleRoutes, vehiclesTypesRoutes } from "../api/apiurls";
 import { useMemo } from "react";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
@@ -12,13 +12,13 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   const [error, setError] = useState(null);
 
   const companyId = localStorage.getItem("companyId");
- 
+
   useEffect(() => {
     ListItems(`${vehicleRoutes.byCompany}/${companyId}`, setData, setError);
-  }, [companyId]); 
- 
+  }, [companyId]);
+
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}`, setDataTypes, setError);
+    ListItems(`${vehiclesTypesRoutes.base}`, setDataTypes, setError);
   }, []);
 
   const handleSelectVehicle = (id, type) => {
@@ -40,7 +40,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
       <div className="vmp-search-bar">
         <input
           type="text"
-          placeholder="Buscar por matrícula..." 
+          placeholder="Buscar por matrícula..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="vmp-search-input"

@@ -15,13 +15,10 @@ export const mqttTopics = {
 //const base = "http://192.168.1.232:7078"
 
 // URL para producion en el servidor
-export const base = "http://telemetriaperu.com:7070";
-
-export const baseURL = `${base}`;
-
-export const loginURL = `${base}/login`;
-
-const baseAPIURL = `${base}/api`;
+//export const base = "http://telemetriaperu.com:7070";
+export const baseURL = "http://telemetriaperu.com:7070";
+export const loginURL = `${baseURL}/login`;
+export const baseAPIURL = `${baseURL}/api`;
 
 // Company Routes
 export const companyRoutes = {
@@ -37,6 +34,13 @@ export const roleRoutes = {
   base: `${baseAPIURL}/roles`,
 };
 
+// User Routes
+export const userRoutes = {
+  base: `${baseAPIURL}/users`,
+  paged: `${baseAPIURL}/paged`,
+  info: `${baseAPIURL}/users/info`,
+};
+
 // Vehicle Routes
 export const vehicleRoutes = {
   base: `${baseAPIURL}/vehicles`,
@@ -49,104 +53,129 @@ export const vehicleRoutes = {
     update: `${baseAPIURL}/vehicles/options-update`,
   },
   statusToggle: `${baseAPIURL}/vehicles/status-toggle`,
-  updateDriver: `${baseAPIURL}/vehicles/update-driver`
+  updateDriver: `${baseAPIURL}/vehicles/update-driver`,
 };
 
-//vehicles
-export const vehiclesURL = `${baseAPIURL}/vehicles`;
+// Driver Routes
+export const driverRoutes = {
+  base: `${baseAPIURL}/driver`,
+  paged: `${baseAPIURL}/driver/paged`,
+};
 
+// Alarm Routes
+export const alarmRecordRoutes = {
+  base: `${baseAPIURL}/alarm-record`,
+  paged: `${baseAPIURL}/alarm-record/paged`,
+  byVehicle: `${baseAPIURL}/alarm-record/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}alarm-record/by-vehicle-paged`,
+};
 
-//vehicles
-export const vehiclesTypesURL = `${baseAPIURL}/vehicle-type`;
+// Battery Routes
+export const batteryRoutes = {
+  base: `${baseAPIURL}/batteries`,
+  paged: `${baseAPIURL}/batteries/paged`,
+  byVehicle: `${baseAPIURL}/batteries/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/batteries/by-vehicle-paged`,
+  byCompany: `${baseAPIURL}/batteries/by-company`,
+  byCompanyPaged: `${baseAPIURL}/batteries/by-company-paged`,
+};
 
+// Battery Records Routes
+export const batteryRecordsRoutes = {
+  base: `${baseAPIURL}/batteries-records`,
+  paged: `${baseAPIURL}/batteries-records/paged`,
+  byBattery: `${baseAPIURL}/batteries-records/by-battery`,
+  byBatteryPaged: `${baseAPIURL}/batteries-records/by-battery-paged`,
+  byVehicle: `${baseAPIURL}/batteries-records/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/batteries-records/by-vehicle-paged`,
+  byVehicleAndBattery: `${baseAPIURL}/batteries-records/by-vehicle-battery`,
+  byVehicleAndBatteryPaged: `${baseAPIURL}/batteries-records/by-vehicle-battery-paged`,
+};
 
+// Fuel Records
+export const fuelRecordsRoutes = {
+  base: `${baseAPIURL}/fuel-records`,
+  paged: `${baseAPIURL}/fuel-records/paged`,
+  byVehicle: `${baseAPIURL}/fuel-records/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/fuel-records/by-vehicle-paged`,
+  hourlyAVL: `${baseAPIURL}/fuel-records/hourly-averages`,
+  weekAVL: `${baseAPIURL}/fuel-records/week-averages`,
+  monthAVL: `${baseAPIURL}/fuel-records/month-averages`,
+  yearAVL: `${baseAPIURL}/fuel-records/year-averages`,
+};
 
+// Fuel Records
+export const fuelEfficiencyRoutes = {
+  base: `${baseAPIURL}/fuel-efficiency`,
+  downloadExcel: `${baseAPIURL}/fuel-efficiency/download-excel`,
+  byVehicle: `${baseAPIURL}/fuel-efficiency/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/fuel-efficiency/by-vehicle-paged`,
+  dailyAverages: `${baseAPIURL}/fuel-efficiency/daily-averages`,
+  monthlyAverages: `${baseAPIURL}/fuel-efficiency/monthly-averages`,
+  summary: `${baseAPIURL}/fuel-efficiency/summary`,
+};
 
-/** User */
-export const UserURL = `${baseAPIURL}/users`;
-export const userPagedURL = `${UserURL}/paged`;
-export const InfoUserURL = `${UserURL}/info/`;
+// Ignition Routes
+export const ignitionRoutes = {
+  base: `${baseAPIURL}/vehicle-ignition`,
+  paged: `${baseAPIURL}/vehicle-ignition/paged`,
+  byVehicle: `${baseAPIURL}/vehicle-ignition/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/vehicle-ignition/by-vehicle-paged`,
+  count: `${baseAPIURL}/vehicle-ignition/count`,
+  countsAllDays: `${baseAPIURL}/vehicle-ignition/counts-all-days`,
+  countsAllMonths:`${baseAPIURL}/vehicle-ignition/counts-all-months`
+};
 
-/** Drivers */
-export const driverURL = `${baseAPIURL}/driver`;
-export const driverPagedURL = `${driverURL}/paged`;
+// Tire Sensor Routes
+export const tireSensorRoutes = {
+  base: `${baseAPIURL}/tire-sensor`,
+  byVehicle: `${baseAPIURL}/tire-sensor/by-vehicle`,
+};
 
-/** Fuel Records */
-export const fuelRecordsURL = `${baseAPIURL}/fuel-records`;
-export const fuelRecordsPageURL = `${fuelRecordsURL}/page`;
-export const fuelRecordsByVehicleIdURL = `${fuelRecordsURL}/findByVehicleId`;
-export const fuelRecordsByVehicleIdPageURL = `${fuelRecordsURL}/findByVehicleId-page`;
-export const fuelRecordsHourlyAVLURL = `${fuelRecordsURL}/hourly-averages`;
-export const fuelRecordsWeekAVLURL = `${fuelRecordsURL}/week-averages`;
-export const fuelRecordsMonthAVLURL = `${fuelRecordsURL}/month-averages`;
-export const fuelRecordsYearAVLURL = `${fuelRecordsURL}/year-averages`;
+// Checklist Routes 
+export const checklistRecordsRoutes = {
+  base: `${baseAPIURL}/checklist-records`,
+  paged: `${baseAPIURL}/checklist-records/paged`,
+  json: `${baseAPIURL}/checklist-records/json`,
+  byVehicle: `${baseAPIURL}/checklist-records/by-vehicle`,
+  byVehiclePages: `${baseAPIURL}/checklist-records/by-vehicle-paged`,
+};
 
-export const fuelEfficiencyURL = `${baseAPIURL}/fuel-efficiency`;
-export const fuelEfficiencyByVehicleURL = `${fuelEfficiencyURL}/findByVehicle`;
-export const fuelEfficiencyByVehiclePagedURL = `${fuelEfficiencyURL}/findByVehicle-paged`;
-export const fuelEfficiencyByDailyAVGURL = `${fuelEfficiencyURL}/daily-averages`;
-export const fuelEfficiencyByMothAVGURL = `${fuelEfficiencyURL}/monthly-averages`;
-export const fuelEfficiencySummary = `${fuelEfficiencyURL}/summary`;
-export const fuelEfficiencyDownload = `${fuelEfficiencyURL}/download-excel`;
+// Image Checklist Routes
+export const imageChecklistRoutes = {
+  base: `${baseAPIURL}/images-cl`,
+  nameView: `${baseAPIURL}/images-cl/images`,
+  byChecklist: `${baseAPIURL}/images-cl/by-checklist`,
+  byChecklistPaged: `${baseAPIURL}/images-cl/by-checklist-paged`,
+};
 
-export const ignitionRecordsURL = `${baseAPIURL}/vehicle-ignition`;
-export const ignitionRecordsPagedURL = `${ignitionRecordsURL}/paged`;
-export const ignitionRecordsByVehicleIdURL = `${ignitionRecordsURL}/findByVehicle`;
-export const ignitionsByVehicleIdPageURL = `${ignitionRecordsURL}/findByVehicle-paged`;
-export const ignitionBasicChartURL = `${ignitionRecordsURL}/active-durations`;
-export const ignitionCountingURL = `${ignitionRecordsURL}/count`;
-export const ignitionAllMothURL = `${ignitionRecordsURL}/counts-all-months`;
-export const ignitionAllDayURL = `${ignitionRecordsURL}/counts-all-days`;
+// Impact Incident Logging Routes
+export const impactIncidentLoggingRoutes = {
+  base: `${baseAPIURL}/impact_incident_logging`,
+  paged: `${baseAPIURL}/impact_incident_logging/paged`,
+  byVehicle: `${baseAPIURL}/impact_incident_logging/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/impact_incident_logging/by-vehicle-paged`,
+};
 
-/** Alarm */
-export const alarmRecordsURL = `${baseAPIURL}/alarm-record`;
-export const alarmRecordsPageURL = `${alarmRecordsURL}/page`;
-export const alarmRecordsByVehicleIdURL = `${alarmRecordsURL}/findByVehicle`;
-export const alarmRecordsByVehicleIdPageURL = `${alarmRecordsURL}/findByVehicle-paged`;
+// Speed Excess Logger Routes
+export const speedExcessLoggerRoutes = {
+  base: `${baseAPIURL}/speed_excess_logger`,
+  paged: `${baseAPIURL}/speed_excess_logger/paged`,
+  byVehicle: `${baseAPIURL}/speed_excess_logger/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/speed_excess_logger/by-vehicle-paged`,
+};
 
-/** Battery **/
-export const batteryURL = `${baseAPIURL}/batteries`;
-export const batteryPagedURL = `${batteryURL}/paged`;
-export const batteryByVehicleIdURL = `${batteryURL}/findByVehicleId`;
-export const batteryByVehicleIdPageURL = `${batteryURL}/findByVehicleId-page`;
+// Truck Load Record Routes
+export const truckLoadRecordRoutes = {
+  base: `${baseAPIURL}/truck-loads`,
+  paged: `${baseAPIURL}/truck-loads/paged`,
+  byVehicle: `${baseAPIURL}/truck-loads/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/truck-loads/by-vehicle-paged`,
+  countDay: `${baseAPIURL}/truck-loads/count-day`,
+  dailyLoadCounts: `${baseAPIURL}/truck-loads/daily-load-counts`,
+};
 
-/** Battery Records **/
-export const batteryRecordURL = `${baseAPIURL}/batteries-records`;
-export const batteryRecordByVehicleIdURL = `${batteryRecordURL}/findByBatteryId`;
-export const batteryRecordByVehicleIdPageURL = `${batteryRecordURL}/findByBatteryId-page`;
-
-export const batteryRecordByVehicleAndBatteryPageURL = `${batteryRecordURL}/vehicle&battery-paged`;
-
-/** Tire Sensor **/
-export const tireSensorURL = `${baseAPIURL}/tire-sensor`;
-export const tireSensorByVehicleIdURL = `${tireSensorURL}/findByVehicleModelId`;
-
-/** Checklist */
-export const checklistRecordsURL = `${baseAPIURL}/checklist-records`;
-export const checklistRecordsPageURL = `${checklistRecordsURL}/paged`;
-export const checklistJSONURL = `${checklistRecordsURL}/json`;
-export const checklistRecordsVehicleURL = `${checklistRecordsURL}/findByVehicle`;
-export const checklistRecordsVehiclePageURL = `${checklistRecordsURL}/findByVehicle-paged`;
-
-/** Image Checklist */
-export const ImagesCLURL = `${baseAPIURL}/images-cl`;
-export const ImagesCLIdURL = `${ImagesCLURL}/findByChecklistRecord`;
-export const ImagesCLIdPagedURL = `${ImagesCLURL}/findByChecklistRecord-paged`;
-export const ImagesCLNameViewURL = `${ImagesCLURL}/images`;
-
-/**  **/
-export const impactIncidentLoggingURL = `${baseAPIURL}/impact_incident_logging`;
-export const impactIncidentLoggingByVehicleURL = `${impactIncidentLoggingURL}/findByVehicleId`;
-export const impactIncidentLoggingByVehiclePageURL = `${impactIncidentLoggingURL}/findByVehicleId-page`;
-
-/* */
-export const speedExcessLoggerURL = `${baseAPIURL}/speed_excess_logger`;
-export const speedExcessLoggerByVehicleURL = `${speedExcessLoggerURL}/findByVehicleId`;
-export const speedExcessLoggerByVehiclePageURL = `${speedExcessLoggerURL}/findByVehicleId-page`;
-
-/* */
-export const truckLoadRecordURLURL = `${baseAPIURL}/truck-loads`;
-export const truckLoadRecordURLByVehicleURL = `${truckLoadRecordURLURL}/findByVehicle`;
-export const truckLoadRecordURLByVehiclePageURL = `${truckLoadRecordURLURL}/findByVehicle-paged`;
-export const truckLoadRecordByVehicleCountURL = `${truckLoadRecordURLURL}/count-day`;
-export const truckLoadRecordByVehicleCountAllURL = `${truckLoadRecordURLURL}/daily-load-counts`;
+// Vehicle Types Routes
+export const vehiclesTypesRoutes = {
+  base: `${baseAPIURL}/vehicle-type`,
+};

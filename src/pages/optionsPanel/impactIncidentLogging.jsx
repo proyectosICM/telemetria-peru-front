@@ -4,7 +4,7 @@ import { FaExclamationCircle } from "react-icons/fa"; // Ícono de advertencia/r
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ListItemsPaginated } from "../../hooks/listItems";
-import { impactIncidentLoggingByVehiclePageURL } from "../../api/apiurls";
+import { impactIncidentLoggingByVehiclePageURL, impactIncidentLoggingRoutes } from "../../api/apiurls";
 
 export function ImpactIncidentLogging({ showAlert = true }) {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export function ImpactIncidentLogging({ showAlert = true }) {
   const [pageNumber, setPageNumber] = useState(0);
   const [error, setError] = useState(null);
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
-    `${impactIncidentLoggingByVehiclePageURL}/${selectedVehicleId}`,
+    `${impactIncidentLoggingRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumber
   );
 

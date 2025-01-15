@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import useMqtt from "../../../hooks/useMqtt";
-import { mqttDominio, mqttTopics, vehiclesTypesURL, vehiclesURL } from "../../../api/apiurls";
+import { mqttDominio, mqttTopics, vehicleRoutes, vehiclesTypesRoutes } from "../../../api/apiurls";
 import { useNavigate } from "react-router-dom";
 import { calculatePercentage } from "../../../utils/calculatePercentage";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
@@ -26,11 +26,11 @@ export function FuelInfo({ showAlert = true }) {
   const [maxPressure, setMaxPressure] = useState(0);
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
+    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setTypeVehicleData, setError);
+    ListItems(`${vehiclesTypesRoutes.base}/${selectedTypeVehicleId}`, setTypeVehicleData, setError);
   }, [selectedTypeVehicleId]);
 
   useEffect(() => {

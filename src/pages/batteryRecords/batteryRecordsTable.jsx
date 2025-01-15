@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { batteryRecordByVehicleAndBatteryPageURL } from "../../api/apiurls";
+import { batteryRecordsRoutes } from "../../api/apiurls";
 import { ListItemsPaginated } from "../../hooks/listItems";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "./../../utils/formatUtils";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
@@ -12,7 +12,7 @@ export function BatteryRecordsTable({ batteryId }) {
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
-    `${batteryRecordByVehicleAndBatteryPageURL}/${selectedVehicleId}`,
+    `${batteryRecordsRoutes.byVehicleAndBatteryPaged}/${selectedVehicleId}`,
     pageNumber,
     { batteryId: batteryId }
   );

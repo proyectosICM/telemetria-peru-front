@@ -5,7 +5,7 @@ import { FaClipboardCheck, FaTruckLoading, FaTruckMoving, FaCheckSquare, FaEye }
 import { Button, Table, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
-import { checklistRecordsVehiclePageURL, vehiclesURL } from "../../api/apiurls";
+import { checklistRecordsRoutes, vehicleRoutes } from "../../api/apiurls";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 
@@ -19,10 +19,10 @@ export function ChecklistPanel() {
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
-  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsVehiclePageURL}/${selectedVehicleId}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsRoutes.byVehiclePages}/${selectedVehicleId}`, pageNumber);
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setErrorV);
+    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setErrorV);
   }, [selectedVehicleId]);
 
   const cardStyle = {

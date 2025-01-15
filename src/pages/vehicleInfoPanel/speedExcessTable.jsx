@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ListItemsPaginated } from "../../hooks/listItems";
-import { speedExcessLoggerByVehiclePageURL } from "../../api/apiurls";
+import { speedExcessLoggerRoutes } from "../../api/apiurls";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { getDateAndDayFromTimestamp } from "../../utils/formatUtils";
 import { Table } from "react-bootstrap";
@@ -10,7 +10,7 @@ export function SpeedExcessTable() {
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
-    `${speedExcessLoggerByVehiclePageURL}/${selectedVehicleId}`,
+    `${speedExcessLoggerRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumber
   );
 

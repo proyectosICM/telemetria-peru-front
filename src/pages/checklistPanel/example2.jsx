@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleSeleccionCL, PreguntaCL } from "../../common/preguntaCL";
 import preguntas from "../../data/trucks-T1-CL/p-mf.json";
-import { checklistRecordsURL } from "../../api/apiurls";
+import { checklistRecordsRoutes } from "../../api/apiurls";
 import { useTimer } from "../../hooks/useTimer";
 import { useImageHandler } from "../../hooks/useImageHandler";
 import { addElementAPI } from "../../hooks/addItem";
@@ -97,7 +97,7 @@ export function Example2() {
     };
 
     // Llamada a la API
-    addElementAPI(`${checklistRecordsURL}`, requestData);
+    addElementAPI(`${checklistRecordsRoutes.base}`, requestData);
     console.log("Respuestas finales: ", respuestasFinales);
     navigate("/checklist-panel");
   };

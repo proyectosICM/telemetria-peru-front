@@ -3,7 +3,7 @@ import { NavbarCommon } from "./../../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItemsPaginated } from "../../../hooks/listItems";
-import { batteryPagedURL, batteryURL } from "../../../api/apiurls";
+import { batteryRoutes } from "../../../api/apiurls";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
 import { getDateFromTimestamp } from "../../../utils/formatUtils";
 import { deleteItem } from "../../../hooks/deleteItem";
@@ -15,7 +15,7 @@ export function BatteriesAdminPanel() {
   const rolId = localStorage.getItem("rolId");
 
   const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${batteryPagedURL}`, pageNumber);
+  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${batteryRoutes.paged}`, pageNumber);
 
   const handleDelete = (id) => {
     // Mostrar alerta de confirmación antes de eliminar
@@ -30,7 +30,7 @@ export function BatteriesAdminPanel() {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteItem(`${batteryURL}/${id}`);
+        deleteItem(`${batteryRoutes.base}/${id}`);
         Swal.fire(
           'Eliminado!',
           'La batería ha sido eliminada.',

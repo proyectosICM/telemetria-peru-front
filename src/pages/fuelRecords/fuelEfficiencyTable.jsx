@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ListItemsPaginated } from "../../hooks/listItems";
-import { fuelEfficiencyByVehiclePagedURL, fuelEfficiencyByVehicleURL, fuelEfficiencyDownload } from "../../api/apiurls";
+import { fuelEfficiencyRoutes } from "../../api/apiurls";
 import { formatTimeDecimal, getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 import { Button, Table } from "react-bootstrap";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
@@ -10,16 +10,16 @@ export function FuelEfficiencyTable() {
   const [pageNumberEfficiency, setPageNumberEfficiency] = useState(0);
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
-    `${fuelEfficiencyByVehiclePagedURL}/${selectedVehicleId}`,
+    `${fuelEfficiencyRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumberEfficiency
   );
 
   const handleDownload = async () => {
     try {
-      const response = await fetch(`${fuelEfficiencyDownload}/${selectedVehicleId}`, {
+      const response = await fetch(`${fuelEfficiencyRoutes.downloadExcel}/${selectedVehicleId}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/vnd.ms-excel", // Tipo MIME para archivos Excel
+          "Content-Type": "application/vnd.ms-excel",
         },
       });
 

@@ -3,7 +3,7 @@ import { BackButton } from "../../common/backButton";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Form, Table } from "react-bootstrap";
 import { ListItems } from "../../hooks/listItems";
-import { ignitionAllDayURL, ignitionAllMothURL } from "../../api/apiurls";
+import { ignitionAllDayURL, ignitionAllMothURL, ignitionRoutes } from "../../api/apiurls";
 import { tr } from "date-fns/locale";
 import { getDateFromTimestamp } from "../../utils/formatUtils";
 
@@ -29,8 +29,8 @@ export function IgnitionDetails() {
 
   useEffect(() => {
     if (selectedVehicleId) {
-      ListItems(`${ignitionAllMothURL}/${selectedVehicleId}?year=${selectedYear}&month=${selectedMonth}`, setDataYear, setErrorYear);
-      ListItems(`${ignitionAllDayURL}/${selectedVehicleId}?year=${selectedYear}&month=${selectedMonth}`, setDataMoth, setErrorMoth);
+      ListItems(`${ignitionRoutes.countsAllDays}/${selectedVehicleId}?year=${selectedYear}&month=${selectedMonth}`, setDataMoth, setErrorMoth);
+      ListItems(`${ignitionRoutes.countsAllMonths}/${selectedVehicleId}?year=${selectedYear}&month=${selectedMonth}`, setDataYear, setErrorYear);
     }
   }, [selectedVehicleId, selectedYear, selectedMonth]);
 

@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItems } from "../../hooks/listItems";
-import { tireSensorByVehicleIdURL } from "../../api/apiurls";
+import { tireSensorRoutes } from "../../api/apiurls";
 
 export function TireSensorsDetails() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export function TireSensorsDetails() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   useEffect(() => {
-    ListItems(`${tireSensorByVehicleIdURL}/${selectedVehicleId}`, setData, setError);
+    ListItems(`${tireSensorRoutes.byVehicle}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
   return (

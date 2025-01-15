@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ListItems } from "../../../hooks/listItems";
-import { mqttDominio, mqttTopics, vehiclesURL } from "../../../api/apiurls";
+import { mqttDominio, mqttTopics, vehicleRoutes } from "../../../api/apiurls";
 import useMqtt from "../../../hooks/useMqtt";
 import mqttDataHandler from "../../../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
@@ -19,7 +19,7 @@ export function VehicleInfo({ showAlert = true }) {
 
   // Fetch vehicle data when selectedVehicleId changes
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setData, setError);
+    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
   // Handle incoming MQTT messages to update speed info

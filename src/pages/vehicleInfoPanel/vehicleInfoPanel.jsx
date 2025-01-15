@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { useNavigate } from "react-router-dom";
-import { vehiclesURL } from "../../api/apiurls";
+import { vehicleRoutes } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 import { Button } from "react-bootstrap";
 import { SpeedExcessTable } from "./speedExcessTable";
 import { TruckLoadsTable } from "./truckLoadsTable";
 import { TruckDailyCountLoadTable } from "./truckDailyCountLoadTable";
- 
+
 export function VehicleInfoPanel() {
   const navigate = useNavigate();
   const [vehicleData, setVehicleData] = useState([]);
@@ -15,7 +15,7 @@ export function VehicleInfoPanel() {
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
+    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   return (
@@ -31,7 +31,7 @@ export function VehicleInfoPanel() {
           {vehicleData && vehicleData.vehicleTypeName}
         </p>
         <p>Velocidad maxima definida: {vehicleData && vehicleData.maxSpeed ? vehicleData.maxSpeed : "No registra"} </p>
-        <TruckLoadsTable /> 
+        <TruckLoadsTable />
         <TruckDailyCountLoadTable />
         <SpeedExcessTable />
       </div>

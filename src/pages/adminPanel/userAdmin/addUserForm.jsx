@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
 import { editItem } from "../../../hooks/editItem";
 import Swal from "sweetalert2";
-import { UserURL } from "../../../api/apiurls";
+import { userRoutes, UserURL } from "../../../api/apiurls";
 import { addElementAPI } from "../../../hooks/addItem";
 
 export function AddUserForm() {
@@ -18,7 +18,7 @@ export function AddUserForm() {
   useEffect(() => {
     if (id) {
       // Cargamos los datos del usuario si estamos en modo edición
-      ListItems(`${UserURL}/${id}`, (data) => {
+      ListItems(`${userRoutes.base}/${id}`, (data) => {
         setUserData({ ...data, password: "" });
       });
     }
@@ -39,7 +39,7 @@ export function AddUserForm() {
 
     try {
       if (id) {
-        const response = await editItem(`${UserURL}/${id}`, requestData);
+        const response = await editItem(`${userRoutes.base}/${id}`, requestData);
         if (response.status === 200) {
           Swal.fire({
             icon: "success",
@@ -48,7 +48,7 @@ export function AddUserForm() {
           });
         }
       } else {
-        const response = await addElementAPI(UserURL, requestData);
+        const response = await addElementAPI(userRoutes.base, requestData);
         if (response.status === 201) {
           Swal.fire({
             icon: "success",

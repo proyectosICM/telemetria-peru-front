@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ListItems } from "../../hooks/listItems";
-import { fuelRecordsHourlyAVLURL, fuelRecordsMonthAVLURL, fuelRecordsWeekAVLURL, fuelRecordsYearAVLURL, vehiclesURL } from "../../api/apiurls";
+import { fuelRecordsRoutes, vehicleRoutes } from "../../api/apiurls";
 import { ChartComponent } from "../../common/chartComponent";
 
 export function FuelCharts() {
@@ -15,23 +15,23 @@ export function FuelCharts() {
   const layout = "side-by-side";
 
   useEffect(() => {
-    ListItems(`${vehiclesURL}/${selectedVehicleId}`, setVehicleData, setError);
+    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsHourlyAVLURL}/${selectedVehicleId}`, setHourlyAVL, setError);
+    ListItems(`${fuelRecordsRoutes.hourlyAVL}/${selectedVehicleId}`, setHourlyAVL, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsWeekAVLURL}/${selectedVehicleId}`, setWeeklyAVL, setError);
+    ListItems(`${fuelRecordsRoutes.weekAVL}/${selectedVehicleId}`, setWeeklyAVL, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsMonthAVLURL}/${selectedVehicleId}`, setMonthAVL, setError);
+    ListItems(`${fuelRecordsRoutes.monthAVL}/${selectedVehicleId}`, setMonthAVL, setError);
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${fuelRecordsYearAVLURL}/${selectedVehicleId}`, setYearAVL, setError);
+    ListItems(`${fuelRecordsRoutes.yearAVL}/${selectedVehicleId}`, setYearAVL, setError);
   }, [selectedVehicleId]);
 
   const parseDate = (dateString) => {

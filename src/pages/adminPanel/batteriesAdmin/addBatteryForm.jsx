@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { batteryURL, companyRoutes, vehicleRoutes } from "../../../api/apiurls";
+import { batteryRoutes, companyRoutes, vehicleRoutes } from "../../../api/apiurls";
 import Select from "react-select";
 import { useSaveItem } from "../../../hooks/useSaveCRUDItem";
 
@@ -17,11 +17,11 @@ export function AddBatteryForm() {
   const [companies, setCompanies] = useState([]);
   const [vehicles, setVehicles] = useState([]);
 
-  const { saveItem } = useSaveItem(batteryURL, "/batteries-admin");
+  const { saveItem } = useSaveItem(batteryRoutes.base, "/batteries-admin");
 
   useEffect(() => {
     if (id) {
-      ListItems(`${batteryURL}/${id}`, (data) => {
+      ListItems(`${batteryRoutes.base}/${id}`, (data) => {
         setBatteryData({ ...data });
       });
     }

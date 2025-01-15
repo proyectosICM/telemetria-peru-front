@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { checklistJSONURL, ImagesCLIdURL, ImagesCLNameViewURL } from "../../api/apiurls";
+import { checklistRecordsRoutes, imageChecklistRoutes, ImagesCLIdURL, ImagesCLNameViewURL } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 
 export function VerCL() {
@@ -10,14 +10,15 @@ export function VerCL() {
   const { idcl } = useParams();
   const [jsonContent, setJsonContent] = useState(null);
   const [imagesURL, setImagesURL] = useState(null);
-  //const [error, setError] = useState(null); // Estado para almacenar errores
-  //ImagesCLNameViewURL //variable qie contiene sdominio/api/images-cl/images
+  const [error, setError] = useState(null); 
+  const [errorImages, setErrorImages] = useState(null); 
+
   useEffect(() => {
-    ListItems(`${checklistJSONURL}/${idcl}`, setJsonContent);
+    ListItems(`${checklistRecordsRoutes.json}/${idcl}`, setJsonContent, setError);
   }, [idcl]);
 
   useEffect(() => {
-    ListItems(`${ImagesCLIdURL}/${idcl}`, setImagesURL);
+    ListItems(`${imageChecklistRoutes.byChecklist}/${idcl}`, setImagesURL, setErrorImages);
   }, [idcl]);
 
   const renderJsonContent = (data) => {
@@ -54,7 +55,7 @@ export function VerCL() {
           {images.map((image) => (
             <div key={image.id} style={{ marginBottom: "10px", color: "lightgray", flex: "1 0 calc(33.333% - 10px)", margin: "5px" }}>
               <img
-                src={`${ImagesCLNameViewURL}?filename=${image.urlImage}`} 
+                src={`${imageChecklistRoutes.nameView}?filename=${image.urlImage}`} 
                 alt={image.urlImage}
                 style={{ width: "100%", height: "auto", borderRadius: "8px" }} 
               />

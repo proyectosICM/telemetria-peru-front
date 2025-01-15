@@ -3,13 +3,13 @@ import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItemsPaginated } from "../../../hooks/listItems";
-import { driverPagedURL } from "../../../api/apiurls";
+import { driverPagedURL, driverRoutes } from "../../../api/apiurls";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
 
 export function DriverAdminPanel() {
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${driverPagedURL}`, pageNumber);
+  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${driverRoutes.paged}`, pageNumber);
 
   // Función para manejar la eliminación de conductores
   const handleDelete = (id) => {

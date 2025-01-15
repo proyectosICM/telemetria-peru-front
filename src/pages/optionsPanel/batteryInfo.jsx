@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { vehiclesTypesURL } from "../../api/apiurls";
+import { vehiclesTypesRoutes, vehiclesTypesURL } from "../../api/apiurls";
 import useMqtt from "../../hooks/useMqtt";
 import { calculatePercentage } from "../../utils/calculatePercentage";
 import NoDataCircularProgressbar from "../../common/noDataCircularProgressbar";
@@ -25,7 +25,7 @@ export function BatteryInfo({ showAlert = true }) {
 
   // Obtener los rangos de batería desde la API del tipo de vehículo
   useEffect(() => {
-    ListItems(`${vehiclesTypesURL}/${selectedTypeVehicleId}`, setBatteryRange, setError);
+    ListItems(`${vehiclesTypesRoutes.base}/${selectedTypeVehicleId}`, setBatteryRange, setError);
   }, [selectedTypeVehicleId]);
 
   // Usar useRef para almacenar el vehículo anterior

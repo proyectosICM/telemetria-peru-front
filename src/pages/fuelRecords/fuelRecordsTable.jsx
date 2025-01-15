@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../utils/formatUtils";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
-import { fuelRecordsByVehicleIdPageURL, vehiclesURL } from "../../api/apiurls";
+import { fuelRecordsRoutes } from "../../api/apiurls";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 
 export function FuelRecordsTable({ fuelType }) {
@@ -11,7 +11,7 @@ export function FuelRecordsTable({ fuelType }) {
 
   const [vehicleData, setVehicleData] = useState(null);
 
-  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${fuelRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${fuelRecordsRoutes.byVehiclePaged}/${selectedVehicleId}`, pageNumber);
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>

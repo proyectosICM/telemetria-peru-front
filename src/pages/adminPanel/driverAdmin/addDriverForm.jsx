@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../../common/navbarCommon";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
-import { batteryURL, companyRoutes, driverURL } from "../../../api/apiurls";
+import { batteryURL, companyRoutes, driverRoutes, driverURL } from "../../../api/apiurls";
 import Select from "react-select";
 import { agregarElementoAPI } from "../../../hooks/addItem";
 import { editItem } from "../../../hooks/editItem";
@@ -29,11 +29,11 @@ export function AddDriverForm() {
   const [driverPhoneNumber, setDriverPhoneNumber] = useState("");
   const [licenseIssueDate, setLicenseIssueDate] = useState(null);
   const [licenseExpireDate, setLicenseExpireDate] = useState(null);
-  const { saveItem } = useSaveItem(driverURL, "/driver-admin");
+  const { saveItem } = useSaveItem(driverRoutes.base, "/driver-admin");
 
   useEffect(() => {
     if (id != null || id !== undefined) {
-      ListItems(`${driverURL}/${id}`, setDriverData);
+      ListItems(`${driverRoutes.base}/${id}`, setDriverData);
     }
   }, [id]);
 

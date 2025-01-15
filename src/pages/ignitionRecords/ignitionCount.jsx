@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItems } from "../../hooks/listItems";
-import { ignitionCountingURL } from "../../api/apiurls";
+import { ignitionCountingURL, ignitionRoutes } from "../../api/apiurls";
 
 export function IgnitionCount() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export function IgnitionCount() {
 
   useEffect(() => {
     if (selectedVehicleId) {
-      ListItems(`${ignitionCountingURL}/${selectedVehicleId}`, setData, setError);
+      ListItems(`${ignitionRoutes.count}/${selectedVehicleId}`, setData, setError);
     }
   }, [selectedVehicleId]);
 

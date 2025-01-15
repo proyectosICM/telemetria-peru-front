@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Dropdown, DropdownButton } from "react-bootstrap";
-import { fuelEfficiencySummary, vehiclesURL } from "../../api/apiurls";
+import { fuelEfficiencyRoutes } from "../../api/apiurls";
 import { ListItems } from "../../hooks/listItems";
 import { formatTimeDecimal } from "../../utils/formatUtils";
 
@@ -15,7 +15,7 @@ export function AvgResults() {
 
   useEffect(() => {
     // Construir la URL basada en los filtros seleccionados
-    let url = `${fuelEfficiencySummary}/${selectedVehicleId}`;
+    let url = `${fuelEfficiencyRoutes.summary}/${selectedVehicleId}`;
     const params = new URLSearchParams();
 
     if (selectedYear) params.append("year", selectedYear);

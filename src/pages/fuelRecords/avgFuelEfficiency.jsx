@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { ListItems } from "../../hooks/listItems";
-import { fuelEfficiencyByDailyAVGURL, fuelEfficiencyByMothAVGURL } from "../../api/apiurls";
+import { fuelEfficiencyByDailyAVGURL, fuelEfficiencyByMothAVGURL, fuelEfficiencyRoutes } from "../../api/apiurls";
 
 export function AvgFuelEfficiency() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
@@ -41,10 +41,10 @@ export function AvgFuelEfficiency() {
 
   // Load data from APIs
   useEffect(() => {
-    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=OPERACION&year=${selectedYear}`, setMonthlyO, setError);
-    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=RALENTI&year=${selectedYear}`, setMonthlyR, setError);
-    ListItems(`${fuelEfficiencyByMothAVGURL}/${selectedVehicleId}?status=ESTACIONADO&year=${selectedYear}`, setMonthlyE, setError);
-    ListItems(`${fuelEfficiencyByDailyAVGURL}/${selectedVehicleId}?month=${selectedMonth}&year=${selectedYear}`, setDaily, setError);
+    ListItems(`${fuelEfficiencyRoutes.monthlyAverages}/${selectedVehicleId}?status=OPERACION&year=${selectedYear}`, setMonthlyO, setError);
+    ListItems(`${fuelEfficiencyRoutes.monthlyAverages}/${selectedVehicleId}?status=RALENTI&year=${selectedYear}`, setMonthlyR, setError);
+    ListItems(`${fuelEfficiencyRoutes.monthlyAverages}/${selectedVehicleId}?status=ESTACIONADO&year=${selectedYear}`, setMonthlyE, setError);
+    ListItems(`${fuelEfficiencyRoutes.dailyAverages}/${selectedVehicleId}?month=${selectedMonth}&year=${selectedYear}`, setDaily, setError);
   }, [selectedVehicleId, selectedMonth, selectedYear]);
 
   // Process the data for the chart

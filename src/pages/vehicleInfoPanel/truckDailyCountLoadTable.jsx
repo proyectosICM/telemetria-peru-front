@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ListItemsPaginated } from "../../hooks/listItems";
-import { speedExcessLoggerByVehiclePageURL, truckLoadRecordByVehicleCountAllURL } from "../../api/apiurls";
+import { speedExcessLoggerByVehiclePageURL, truckLoadRecordByVehicleCountAllURL, truckLoadRecordRoutes } from "../../api/apiurls";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { getDateAndDayFromTimestamp, getDateFromTimestamp } from "../../utils/formatUtils";
 import { Table } from "react-bootstrap";
@@ -10,7 +10,7 @@ export function TruckDailyCountLoadTable() {
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
-    `${truckLoadRecordByVehicleCountAllURL}/${selectedVehicleId}`,
+    `${truckLoadRecordRoutes.dailyLoadCounts}/${selectedVehicleId}`,
     pageNumber
   );
 

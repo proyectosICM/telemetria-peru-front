@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { useNavigate } from "react-router-dom";
 import { IgnitionInfo } from "../mainPanel/optionsPanel/ignitionInfo";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
-import { ignitionBasicChartURL, ignitionsByVehicleIdPageURL } from "../../api/apiurls";
+import { ignitionBasicChartURL, ignitionRoutes, ignitionsByVehicleIdPageURL } from "../../api/apiurls";
 import { ListItems, ListItemsPaginated } from "../../hooks/listItems";
 import { IgnitionRecordsTable } from "./ignitionRecordsTable";
 import { BackButton } from "../../common/backButton";
@@ -15,7 +15,7 @@ export function IgnitionRecords() {
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
-    `${ignitionsByVehicleIdPageURL}/${selectedVehicleId}`,
+    `${ignitionRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumber
   );
 

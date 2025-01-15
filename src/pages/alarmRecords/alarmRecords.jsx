@@ -3,7 +3,7 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItemsPaginated } from "../../hooks/listItems";
-import { alarmRecordsByVehicleIdPageURL } from "../../api/apiurls";
+import { alarmRecordRoutes } from "../../api/apiurls";
 import { PaginacionUtils } from "../../utils/paginacionUtils";
 import { AlarmRecordsTable } from "./alarmRecordsTable";
 
@@ -12,7 +12,7 @@ export function AlarmRecords() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [pageNumber, setPageNumber] = useState(0);
 
-  const { data, totalPages, currentPage, setCurrentPage, pageError  } = ListItemsPaginated(`${alarmRecordsByVehicleIdPageURL}/${selectedVehicleId}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage, pageError  } = ListItemsPaginated(`${alarmRecordRoutes.byVehiclePaged}/${selectedVehicleId}`, pageNumber);
   return (
     <div className="g-background">
       <NavbarCommon />

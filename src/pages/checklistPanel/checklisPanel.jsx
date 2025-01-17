@@ -16,7 +16,7 @@ export function ChecklistPanel() {
   const [selectedChecklist, setSelectedChecklist] = useState("todos");
   const [pageNumber, setPageNumber] = useState(0);
   const [errorV, setErrorV] = useState(null);
-
+ 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${checklistRecordsRoutes.byVehiclePages}/${selectedVehicleId}`, pageNumber);
@@ -157,23 +157,20 @@ export function ChecklistPanel() {
             </thead>
             <tbody>
               {data && data.length > 0 ? (
-                data.map((dato) => {
-                  const driverName = dato.driverModel ? dato.driverModel.name : null;
-                  const driverLastName = dato.driverModel ? dato.driverModel.lastName : null;
-                  const driverFullName = driverName && driverLastName ? `${driverName} ${driverLastName}` : "No registra";
+                data.map((d) => {
 
                   return (
-                    <tr key={dato.id}>
-                      <td>{dato.id}</td>
-                      <td>{getDateFromTimestamp(dato.createdAt)}</td>
-                      <td>{getTimeFromTimestamp(dato.createdAt)}</td>
-                      <td>{`${Math.floor(dato.timer / 60)}:${dato.timer % 60 < 10 ? `0${dato.timer % 60}` : dato.timer % 60}`}</td>
-                      <td>{dato.name}</td>
-                      <td>{dato.vehicleModel.licensePlate}</td>
-                      {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <td>{driverFullName}</td>}{" "}
-                      {/* Muestra el nombre completo o "No registra" solo si no es tipo 1 o 2 */}
+                    <tr key={d.id}>
+                      <td>{d.id}</td>
+                      <td>{d.createdAt ? getDateFromTimestamp(d.createdAt) : "No disponible"}</td>
+                      <td>{d.createdAt ? getTimeFromTimestamp(d.createdAt) : "No disposible"}</td>
+                      <td>{d.timer ? `${Math.floor(d.timer / 60)}:${d.timer % 60 < 10 ? `0${d.timer % 60}` : d.timer % 60}` : "No disponible"}</td>
+                      <td>{d.name ? d.name : "No disponible"}</td>
+                      <td>{d.licensePlate ? d.licensePlate : "No disponible" }</td>
+                      {vehicleTypeId !== 1 && vehicleTypeId !== 2 && <td>{d.driverName ? d.driverName : "No disponible"}</td>}{" "}
+    
                       <td>
-                        <Button style={{ width: "80%", backgroundColor: "#007bff", border: "none" }} onClick={() => navigate(`/ver-cl/${dato.id}`)}>
+                        <Button style={{ width: "80%", backgroundColor: "#007bff", border: "none" }} onClick={() => navigate(`/ver-cl/${d.id}`)}>
                           Ver
                           <FaEye style={{ marginLeft: "8px" }} />
                         </Button>

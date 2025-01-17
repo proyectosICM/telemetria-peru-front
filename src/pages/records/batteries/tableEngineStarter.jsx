@@ -17,7 +17,7 @@ export function EngineStarterRecordsTable() {
   );
   return (
     <div style={{ flex: "1 1 45%", minWidth: "300px", margin: "2%" }}>
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover variant="dark"> 
         <thead>
           <tr>
             <th>Dia</th>

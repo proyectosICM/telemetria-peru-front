@@ -61,7 +61,7 @@ export const alarmRecordRoutes = {
   base: `${baseAPIURL}/alarm-record`,
   paged: `${baseAPIURL}/alarm-record/paged`,
   byVehicle: `${baseAPIURL}/alarm-record/by-vehicle`,
-  byVehiclePaged: `${baseAPIURL}alarm-record/by-vehicle-paged`,
+  byVehiclePaged: `${baseAPIURL}/alarm-record/by-vehicle-paged`,
 };
 
 // Battery Routes
@@ -86,7 +86,7 @@ export const batteryRecordsRoutes = {
   byVehicleAndBatteryPaged: `${baseAPIURL}/batteries-records/by-vehicle-battery-paged`,
 };
 
-// Fuel Records
+// Fuel Records Routes
 export const fuelRecordsRoutes = {
   base: `${baseAPIURL}/fuel-records`,
   paged: `${baseAPIURL}/fuel-records/paged`,
@@ -98,7 +98,7 @@ export const fuelRecordsRoutes = {
   yearAVL: `${baseAPIURL}/fuel-records/year-averages`,
 };
 
-// Fuel Records
+// Fuel Efficiency Routes
 export const fuelEfficiencyRoutes = {
   base: `${baseAPIURL}/fuel-efficiency`,
   downloadExcel: `${baseAPIURL}/fuel-efficiency/download-excel`,
@@ -172,4 +172,20 @@ export const truckLoadRecordRoutes = {
 // Vehicle Types Routes
 export const vehiclesTypesRoutes = {
   base: `${baseAPIURL}/vehicle-type`,
+};
+
+// Alternator Routes
+export const alternatorRoutes = {
+  base: `${baseAPIURL}/alternator`,
+  paged: `${baseAPIURL}/alternator/paged`,
+  byVehicle: `${baseAPIURL}/alternator/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/alternator/by-vehicle-paged`,
+};
+
+// Engine Starter Routes
+export const engineStarterRoutes = {
+  base: `${baseAPIURL}/engine-starter`,
+  paged: `${baseAPIURL}/engine-starter/paged`,
+  byVehicle: `${baseAPIURL}/engine-starter/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/engine-starter/by-vehicle-paged`,
 };

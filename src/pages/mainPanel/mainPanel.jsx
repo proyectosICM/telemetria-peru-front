@@ -3,21 +3,21 @@ import { NavbarCommon } from "../../common/navbarCommon";
 import { MapaBase } from "../../maps/mapaBase";
 import { VehicleMenuPanel } from "../../common/vehicleMenuPanel";
 
-import { TireInfo } from "../optionsPanel/tireSensorInfo";
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
 import { LogoutToken } from "../../hooks/logoutToken";
-import { BatteryInfo } from "../optionsPanel/batteryInfo";
-import { TireInfoData } from "../optionsPanel/tireSensorInfoData";
+import { BatteryInfo } from "../../realTime/batteryInfo";
 import { ImpactIncidentLogging } from "../optionsPanel/impactIncidentLogging";
 import { ChecklistInfo } from "./optionsPanel/checklistInfo";
 import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
 import useMqtt from "../../hooks/useMqtt";
 import useMqttMapHandler from "../../mqtt/mqttMapHandler";
 import "./mainPanel.css";
-import { FuelInfo } from "./optionsPanel/fuelInfo";
-import { AlarmInfo } from "./optionsPanel/alarmInfo";
-import { IgnitionInfo } from "./optionsPanel/ignitionInfo";
+import { FuelInfo } from "../../realTime/fuelInfo";
+import { AlarmInfo } from "../../realTime/alarmInfo";
+import { IgnitionInfo } from "../../realTime/ignitionInfo";
+import { TireInfo } from "../../realTime/tireSensorInfo";
+import { TireInfoData } from "../../realTime/tireSensorInfoData";
 
 export function MainPanel() {
   LogoutToken();

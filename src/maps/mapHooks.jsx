@@ -67,7 +67,7 @@ export const addMarker = (map, position, image, title, infoHTML) => {
 
   let markerImageSrc;
   if (image === 'busesIcono') {
-    markerImageSrc = require("../images/busesIcono.png");
+    markerImageSrc = require("../images/busesIcono.webp");
   } else if (image === 'paradero') {
     markerImageSrc = require("../images/paradero.png");
   } else {

@@ -1,14 +1,11 @@
 import { MapaBase } from "./maps/mapaBase";
 import { AdminPanel } from "./pages/adminPanel/adminPanel";
-import { BatteryRecords } from "./pages/batteryRecords/batteryRecords";
 import { ChecklistPanel } from "./pages/checklistPanel/checklisPanel";
 import { Example } from "./pages/checklistPanel/example";
 import { Example2 } from "./pages/checklistPanel/example2";
-import { ImpactIncidentLoggingRecords } from "./pages/impactIncidentLoggingRecords/impactIncidentLoggingRecords";
-import { IssuesRecords } from "./pages/issuesRecords/issuesRecords";
-import { Login } from "./pages/login/login";
-import { WelcomeAndRedirect } from "./pages/login/welcomeAndRedirect";
-import { TireSensorsDetails } from "./pages/tireSensorsDetails/tireSensorsDetails";
+import { Login } from "./pages/auth/login";
+import { WelcomeAndRedirect } from "./pages/auth/welcomeAndRedirect";
+import { TireSensorsDetails } from "./pages/records/tire/tireSensorsDetails";
 import { Example4 } from './pages/checklistPanel/example4';
 import { Example3 } from './pages/checklistPanel/example3';
 import { CompanyAdminPanel } from "./pages/adminPanel/companyAdmin/companyAdminPanel";
@@ -23,12 +20,15 @@ import { AddDriverForm } from "./pages/adminPanel/driverAdmin/addDriverForm";
 import { AddCompanyForm } from "./pages/adminPanel/companyAdmin/addCompanyForm";
 import { AddUserForm } from "./pages/adminPanel/userAdmin/addUserForm";
 import { AddRolForm } from "./pages/adminPanel/rolAdmin/addRolForm";
-import { VehicleInfoPanel } from "./pages/vehicleInfoPanel/vehicleInfoPanel";
-import { FuelRecords } from "./pages/fuelRecords/fuelRecords";
+import { VehicleInfoPanel } from "./pages/records/vehicleInfo/vehicleInfoPanel";
 import { MainPanel } from "./pages/mainPanel/mainPanel";
-import { AlarmRecords } from "./pages/alarmRecords/alarmRecords";
-import { IgnitionRecords } from "./pages/ignitionRecords/ignitionRecords";
-import { IgnitionDetails } from "./pages/ignitionRecords/ignitionDetails";
+import { AlarmRecords } from "./pages/records/alarm";
+import { IgnitionRecords } from "./pages/records/ignitions";
+import { BatteryRecords } from "./pages/records/batteries";
+import { IgnitionDetails } from './pages/records/ignitions/details';
+import { IssuesRecords } from "./pages/records/issues";
+import { FuelRecords } from "./pages/records/fuel";
+import { ImpactIncidentLoggingRecords } from "./pages/records/impactIncident/impactIncidentLoggingRecords";
   
 export const routes = [
   { path: "/", component: <MainPanel /> },

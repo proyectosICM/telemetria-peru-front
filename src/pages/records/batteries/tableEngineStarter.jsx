@@ -17,7 +17,14 @@ export function EngineStarterRecordsTable() {
   );
   return (
     <div style={{ flex: "1 1 45%", minWidth: "300px", margin: "2%" }}>
-      <Table striped bordered hover variant="dark"> 
+      
+      {pageError && (
+        <div className="error-message" style={{ color: "red", margin: "10px" }}>
+          Error: {pageError.message || "Hubo un problema cargando los datos"}
+        </div>
+      )}
+
+      <Table striped bordered hover variant="dark">
         <thead>
           <tr>
             <th>Dia</th>
@@ -27,15 +34,20 @@ export function EngineStarterRecordsTable() {
           </tr>
         </thead>
         <tbody>
-          {data &&
+          {data && !pageError ? (
             data.map((d, index) => (
               <tr key={d.id}>
                 <td>{d.createdAt ? getDateFromTimestamp(d.createdAt) : "No data"}</td>
                 <td>{d.createdAt ? getTimeFromTimestamp(d.createdAt) : "No data"}</td>
-                <td>{d.current ? `${d.current} a` : "No data"} </td>
+                <td>{d.current ? `${d.current} a` : "No data"}</td>
                 <td>Good</td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6">No hay datos disponibles o hubo un error al cargar los datos.</td>
+            </tr>
+          )}
         </tbody>
       </Table>
       <PaginacionUtils setPageNumber={setPageNumber} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages} />

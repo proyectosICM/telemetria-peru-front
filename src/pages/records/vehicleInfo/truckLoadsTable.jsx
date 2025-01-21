@@ -24,11 +24,18 @@ export function TruckLoadsTable() {
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto", width: "100%" }}>
       <h2>Registro de cargas</h2>
+
+      {error && (
+        <div className="error-message" style={{ color: "red", margin: "10px" }}>
+          Error: {error.message || "Hubo un problema cargando los datos"}
+        </div>
+      )}
+
       <span>Cargas realizadas en el dia {loadsCount}</span>
+
       <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "80%" }}>
         <thead>
           <tr>
-            <th>#</th>
             <th>Día y Hora</th>
             <th>Carga</th>
           </tr>
@@ -37,7 +44,6 @@ export function TruckLoadsTable() {
           {data && data.length > 0 ? (
             data.map((log) => (
               <tr key={log.id}>
-                <td>{log.id}</td>
                 <td>{getDateAndDayFromTimestamp(log.createdAt)}</td>
                 <td>{log.weight} KG</td>
               </tr>

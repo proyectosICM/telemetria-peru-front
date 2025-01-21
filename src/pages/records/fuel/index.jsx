@@ -21,7 +21,7 @@ export function FuelRecords() {
 
   const [vehicleData, setVehicleData] = useState(null);
   const [error, setError] = useState(null);
-   
+    
   useEffect(() => {
     ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
@@ -29,9 +29,10 @@ export function FuelRecords() {
   return ( 
     <div className="g-background">
       <NavbarCommon />
-      <Button onClick={() => navigate("/")} className="back-button">
+      <Button onClick={() => navigate(-1)} className="back-button">
         Atras
       </Button>
+
       <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
         <div
           style={{

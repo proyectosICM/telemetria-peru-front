@@ -64,28 +64,6 @@ export const alarmRecordRoutes = {
   byVehiclePaged: `${baseAPIURL}/alarm-record/by-vehicle-paged`,
 };
 
-// Battery Routes
-export const batteryRoutes = {
-  base: `${baseAPIURL}/batteries`,
-  paged: `${baseAPIURL}/batteries/paged`,
-  byVehicle: `${baseAPIURL}/batteries/by-vehicle`,
-  byVehiclePaged: `${baseAPIURL}/batteries/by-vehicle-paged`,
-  byCompany: `${baseAPIURL}/batteries/by-company`,
-  byCompanyPaged: `${baseAPIURL}/batteries/by-company-paged`,
-};
-
-// Battery Records Routes
-export const batteryRecordsRoutes = {
-  base: `${baseAPIURL}/batteries-records`,
-  paged: `${baseAPIURL}/batteries-records/paged`,
-  byBattery: `${baseAPIURL}/batteries-records/by-battery`,
-  byBatteryPaged: `${baseAPIURL}/batteries-records/by-battery-paged`,
-  byVehicle: `${baseAPIURL}/batteries-records/by-vehicle`,
-  byVehiclePaged: `${baseAPIURL}/batteries-records/by-vehicle-paged`,
-  byVehicleAndBattery: `${baseAPIURL}/batteries-records/by-vehicle-battery`,
-  byVehicleAndBatteryPaged: `${baseAPIURL}/batteries-records/by-vehicle-battery-paged`,
-};
-
 // Fuel Records Routes
 export const fuelRecordsRoutes = {
   base: `${baseAPIURL}/fuel-records`,
@@ -174,12 +152,36 @@ export const vehiclesTypesRoutes = {
   base: `${baseAPIURL}/vehicle-type`,
 };
 
+// Battery Routes
+export const batteryRoutes = {
+  base: `${baseAPIURL}/batteries`,
+  paged: `${baseAPIURL}/batteries/paged`,
+  byVehicle: `${baseAPIURL}/batteries/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/batteries/by-vehicle-paged`,
+  byCompany: `${baseAPIURL}/batteries/by-company`,
+  byCompanyPaged: `${baseAPIURL}/batteries/by-company-paged`,
+};
+
+// Battery Records Routes
+export const batteryRecordsRoutes = {
+  base: `${baseAPIURL}/batteries-records`,
+  paged: `${baseAPIURL}/batteries-records/paged`,
+  byBattery: `${baseAPIURL}/batteries-records/by-battery`,
+  byBatteryPaged: `${baseAPIURL}/batteries-records/by-battery-paged`,
+  byVehicle: `${baseAPIURL}/batteries-records/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/batteries-records/by-vehicle-paged`,
+  byVehicleAndBattery: `${baseAPIURL}/batteries-records/by-vehicle-battery`,
+  byVehicleAndBatteryPaged: `${baseAPIURL}/batteries-records/by-vehicle-battery-paged`,
+  countsByDays: `${baseAPIURL}/batteries-records/counts-by-days`
+};
+
 // Alternator Routes
 export const alternatorRoutes = {
   base: `${baseAPIURL}/alternator`,
   paged: `${baseAPIURL}/alternator/paged`,
   byVehicle: `${baseAPIURL}/alternator/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/alternator/by-vehicle-paged`,
+  countsByDays: `${baseAPIURL}/alternator/counts-by-days`
 };
 
 // Engine Starter Routes
@@ -188,4 +190,5 @@ export const engineStarterRoutes = {
   paged: `${baseAPIURL}/engine-starter/paged`,
   byVehicle: `${baseAPIURL}/engine-starter/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/engine-starter/by-vehicle-paged`,
+    countsByDays: `${baseAPIURL}/engine-starter/counts-by-days`
 };

@@ -5,6 +5,7 @@ import useMqtt from "../hooks/useMqtt";
 import mqttDataHandler from "../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../utils/handleRecordsMessage";
 import { mqttDominio, mqttTopics } from "../mqtt/mqttConfig";
+import { iconStyle, textStyle } from "./cardStyles";
 
 export function IgnitionInfo({ showAlert = true }) {
   const navigate = useNavigate();
@@ -43,23 +44,6 @@ export function IgnitionInfo({ showAlert = true }) {
     backgroundColor: ignition ? "#4CAF50" : "#A9A9A9",
     border: ignition ? "2px solid #008000" : "2px solid #D3D3D3",
     animation: ignition ? "pulse 1.5s infinite" : "none",
-  };
-
-  // Estilos del ícono y texto
-  const iconStyle = {
-    fontSize: "2.2em",
-    marginBottom: "10px",
-  };
-
-  const textStyle = {
-    fontSize: "1em",
-    fontWeight: "bold",
-  };
-
-  const dateStyle = {
-    marginTop: "10px",
-    fontSize: "0.9em",
-    color: "#FFD700",
   };
 
   return (

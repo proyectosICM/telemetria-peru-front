@@ -5,6 +5,7 @@ import useMqtt from "../hooks/useMqtt";
 import mqttDataHandler from "../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../utils/handleRecordsMessage";
 import { mqttDominio, mqttTopics } from "../mqtt/mqttConfig";
+import { cardDisabledStatusStyle, cardGoodStatusStyle, iconStyle, textStyle } from "./cardStyles";
 
 export function AlarmInfo({ showAlert = true }) {
   const navigate = useNavigate();
@@ -19,8 +20,6 @@ export function AlarmInfo({ showAlert = true }) {
     mqttDataHandler(messages, setAlarm, "alarmInfo");
   }, [messages]);
 
-  
-  //console.log(messages)
 
   // Obtener fecha y hora actual
   const currentDateTime = new Date();
@@ -29,45 +28,9 @@ export function AlarmInfo({ showAlert = true }) {
     minute: "2-digit",
   })}`;
 
-  // Estilos del card según si la alarma está activa o no
-  const cardStyle = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "80%",
-    padding: "10px",
-    margin: "10% auto ",
-    textAlign: "center",
-    borderRadius: "10px",
-    boxShadow: alarm ? "0px 4px 15px rgba(255, 0, 0, 0.4)" : "0px 4px 15px rgba(169, 169, 169, 0.4)",
-    cursor: "pointer",
-    color: "#fff",
-    backgroundColor: alarm ? "#FF4D4D" : "#A9A9A9", // Rojo si la alarma está activada, gris si está desactivada
-    border: alarm ? "2px solid #FF0000" : "2px solid #D3D3D3", // Borde rojo o gris
-    animation: alarm ? "pulse 1.5s infinite" : "none", // Pulsación si está activada
-  };
-
-  // Estilos del ícono y texto
-  const iconStyle = {
-    fontSize: "2.2em",
-    marginBottom: "10px",
-  };
-
-  const textStyle = {
-    fontSize: "1em",
-    fontWeight: "bold",
-  };
-
-  const dateStyle = {
-    marginTop: "10px",
-    fontSize: "0.9em",
-    color: "#FFD700", // Amarillo dorado para contraste
-  };
-
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/alarm-Records")}>
-      <div style={cardStyle}>
+      <div style={alarm ? cardGoodStatusStyle : cardDisabledStatusStyle}>
         {alarm ? (
           <FaExclamationTriangle style={iconStyle} /> // Ícono de alarma si está activada
         ) : (

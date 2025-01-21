@@ -40,7 +40,7 @@ export const routes = [
   { path: "/vehicle-info", component: <VehicleInfoPanel/> },
 
   { path: "/fuel-Records", component: <FuelRecords /> },
-  { path: "/alarm-Records", component: <AlarmRecords /> },
+  { path: "/alarm-Records", component: <AlarmRecords /> }, 
   { path: "/ignition-Records", component: <IgnitionRecords /> },
   { path: "/ignition-Details", component: <IgnitionDetails /> },
   { path: "/battery-Records", component: <BatteryRecords /> },
@@ -82,6 +82,4 @@ export const routes = [
 
   { path: "/ver-cl/:idcl", component: <VerCL /> },
   { path: "/records-panel", component: <RecordsPanel /> },
-
-
 ];

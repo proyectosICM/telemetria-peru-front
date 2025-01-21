@@ -16,7 +16,7 @@ export function BatteryRecordsTable() {
   const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
     `${batteryRecordsRoutes.byVehicleAndBatteryPaged}/${selectedVehicleId}`,
     pageNumber,
-    { batteryId: selectedBattery }
+    { batteryId: selectedBattery } 
   );
 
   useEffect(() => {

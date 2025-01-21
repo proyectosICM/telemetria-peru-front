@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { NavbarCommon } from "../../../common/navbarCommon";
@@ -7,6 +7,13 @@ import { FaCarBattery, FaCogs } from "react-icons/fa";
 import { BatteryRecordsTable } from "./tableBattery";
 import { AlternatorRecordsTable } from "./tableAlternator";
 import { EngineStarterRecordsTable } from "./tableEngineStarter";
+import { BatteriesRecordsCharts } from "./charts";
+import { mqttTopics } from "../../../mqtt/mqttConfig";
+import { mqttDominio } from "../../../api/apiurls";
+import useMqtt from "../../../hooks/useMqtt";
+import mqttDataHandler from "../../../hooks/mqttDataHandler";
+import { cardBadStatusStyle, cardGoodStatusStyle, iconStyle, textStyle } from "../../../realTime/cardStyles";
+import { alternatorStyleDiv, chartBatteryDiv, engineStarterStyleDiv, tableDivStyle } from "./styles";
 
 export function BatteryRecords() {
   const navigate = useNavigate();
@@ -14,6 +21,15 @@ export function BatteryRecords() {
 
   const [selectedDevice, setSelectedDevice] = useState("battery");
   const [engineStarter, setEngineStarter] = useState(true);
+  const [alternator, setAlternator] = useState(false);
+
+  const topic = `${mqttTopics.telData}${selectedVehicleId}`;
+  const { messages } = useMqtt(mqttDominio, topic);
+
+  useEffect(() => {
+    mqttDataHandler(messages, setEngineStarter, "engineStarterInfo");
+    mqttDataHandler(messages, setAlternator, "alternator");
+  }, [messages]);
 
   const renderSelectedTable = () => {
     switch (selectedDevice) {
@@ -28,55 +44,19 @@ export function BatteryRecords() {
     }
   };
 
-  const cardStyle = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "80%",
-    padding: "10px",
-    margin: "10% auto ",
-    textAlign: "center",
-    borderRadius: "10px",
-    boxShadow: engineStarter ? "0px 4px 15px rgba(0, 255, 0, 0.4)" : "0px 4px 15px rgba(235, 2, 2, 0.4)",
-    cursor: "pointer",
-    color: "#fff",
-    backgroundColor: engineStarter ? "#4CAF50" : "rgb(255, 69, 58)", // Cambia a un rojo llamativo
-    border: engineStarter ? "2px solid #008000" : "2px solid rgb(247, 240, 240)",
-    animation: engineStarter ? "pulse 1.5s infinite" : "none",
-  };
-  const textStyle = {
-    fontSize: "1em",
-    fontWeight: "bold",
-  };
-
-  const iconStyle = {
-    fontSize: "2.2em",
-    marginBottom: "10px",
-  };
-
   return (
     <div style={{ background: "black" }}>
       <NavbarCommon />
-      <Button onClick={() => navigate("/")} className="back-button">
+      <Button onClick={() => navigate(-1)} className="back-button">
         Atras
       </Button>
+
       <div style={{ border: "2px solid #d1d0cc", margin: "20px 5%" }}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "20px auto" }}>
           {/* Componente Arrancador */}
-          <div
-            onClick={() => setSelectedDevice("engineStarter")}
-            style={{
-              border: "2px solid white",
-              borderRadius: "5%",
-              padding: "12px",
-              width: "20%",
-              textAlign: "center",
-              margin: "0 15px",
-            }}
-          >
+          <div onClick={() => setSelectedDevice("engineStarter")} style={engineStarterStyleDiv}>
             <h5>Arrancador</h5>
-            <div style={cardStyle}>
+            <div style={engineStarter ? cardGoodStatusStyle : cardBadStatusStyle}>
               <FaCarBattery style={iconStyle} />
               <p style={textStyle}>{engineStarter ? "En Buen estado" : "En mal estado"}</p>
             </div>
@@ -88,35 +68,19 @@ export function BatteryRecords() {
           </div>
 
           {/* Componente Alternador */}
-          <div
-            onClick={() => setSelectedDevice("alternator")}
-            style={{
-              border: "2px solid white",
-              borderRadius: "5%",
-              padding: "12px",
-              width: "20%",
-              textAlign: "center",
-              margin: "0 20px",
-            }}
-          >
+          <div onClick={() => setSelectedDevice("alternator")} style={alternatorStyleDiv}>
             <h5>Alternador</h5>
-            <div style={cardStyle}>
+            <div style={alternator ? cardGoodStatusStyle : cardBadStatusStyle}>
               <FaCogs style={iconStyle} />
               <p style={textStyle}>{engineStarter ? "En Buen estado" : "En mal estado"}</p>
             </div>
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "20px",
-            justifyContent: "center",
-            marginTop: "20px",
-          }}
-        >
-          {renderSelectedTable()}
+        <div style={tableDivStyle}>{renderSelectedTable()}</div>
+
+        <div style={chartBatteryDiv}>
+          <BatteriesRecordsCharts type={selectedDevice} />
         </div>
       </div>
     </div>

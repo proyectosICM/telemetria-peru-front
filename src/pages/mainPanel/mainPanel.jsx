@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { MapaBase } from "../../maps/mapaBase";
 import { VehicleMenuPanel } from "../../common/vehicleMenuPanel";
-
 import { VehicleInfo } from "./optionsPanel/vehicleInfo";
 import { VehicleOptions } from "./optionsPanel/vehicleOptions";
 import { LogoutToken } from "../../hooks/logoutToken";
@@ -12,12 +11,12 @@ import { ChecklistInfo } from "./optionsPanel/checklistInfo";
 import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
 import useMqtt from "../../hooks/useMqtt";
 import useMqttMapHandler from "../../mqtt/mqttMapHandler";
-import "./mainPanel.css";
 import { FuelInfo } from "../../realTime/fuelInfo";
 import { AlarmInfo } from "../../realTime/alarmInfo";
 import { IgnitionInfo } from "../../realTime/ignitionInfo";
 import { TireInfo } from "../../realTime/tireSensorInfo";
 import { TireInfoData } from "../../realTime/tireSensorInfoData";
+import "./mainPanel.css";
 
 export function MainPanel() {
   LogoutToken();

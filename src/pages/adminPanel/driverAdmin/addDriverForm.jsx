@@ -19,6 +19,7 @@ export function AddDriverForm() {
   const rolId = localStorage.getItem("rolId");
   const companyId = localStorage.getItem("companyId");
 
+  const [error, setError] = useState(null); 
   const [driverData, setDriverData] = useState();
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -33,7 +34,7 @@ export function AddDriverForm() {
 
   useEffect(() => {
     if (id != null || id !== undefined) {
-      ListItems(`${driverRoutes.base}/${id}`, setDriverData);
+      ListItems(`${driverRoutes.base}/${id}`, setDriverData, setError);
     }
   }, [id]);
 
@@ -51,7 +52,7 @@ export function AddDriverForm() {
   }, [driverData]);
 
   useEffect(() => {
-    ListItems(`${companyRoutes.base}`, setCompanies);
+    ListItems(`${companyRoutes.base}`, setCompanies, setError);
   }, []);
 
   useEffect(() => {
@@ -97,7 +98,7 @@ export function AddDriverForm() {
         id: selectedCompany?.value,
       },
     };
-    console.log(requestData);
+
     try {
       await saveItem(id, requestData);
     } catch (error) {

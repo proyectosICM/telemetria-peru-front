@@ -1,4 +1,5 @@
 import axios from "axios";
+import { alertMessageUnauthorized } from "../messages/apiResponseMessages";
 
 function getAuthHeaders() {
   const token = localStorage.getItem("token");
@@ -17,8 +18,8 @@ export async function editItem(url, requestData, setError) {
       headers: getAuthHeaders(),
     });
   } catch (error) {
-    console.error("Error updating item: ", error);
-    setError(error);
+    alertMessageUnauthorized(error.response.status);
+    setError(error); 
     throw new Error("Error updating item: ", error);
   }
 }
@@ -31,6 +32,7 @@ export async function editSingleValue(url,key, value) {
       headers: getAuthHeaders(),
     });
   } catch (error) {
+    alertMessageUnauthorized(error.response.status);
     console.error("Error updating value:", error);
   }
 }

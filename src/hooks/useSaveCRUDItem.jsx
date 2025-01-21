@@ -20,7 +20,7 @@ export const useSaveItem = (url, navigateTo) => {
       await navigate(navigateTo);
     } catch (error) {
       console.error("Error al guardar el elemento:", error);
-      alertMessageError(error);
+      //alertMessageError(error);
     }
   };
 

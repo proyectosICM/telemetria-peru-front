@@ -25,13 +25,13 @@ export const companyRoutes = {
 
 // Role Routes
 export const roleRoutes = {
-  base: `${baseAPIURL}/roles`,
+  base: `${baseAPIURL}/role`,
 };
 
 // User Routes
 export const userRoutes = {
   base: `${baseAPIURL}/users`,
-  paged: `${baseAPIURL}/paged`,
+  paged: `${baseAPIURL}/users/paged`,
   info: `${baseAPIURL}/users/info`,
 };
 
@@ -54,6 +54,12 @@ export const vehicleRoutes = {
 export const driverRoutes = {
   base: `${baseAPIURL}/driver`,
   paged: `${baseAPIURL}/driver/paged`,
+  byStatus: `${baseAPIURL}/driver/by-status`,
+  byStatusPaged: `${baseAPIURL}/driver/by-status-paged`,
+  byCompanyAndStatus: `${baseAPIURL}/driver/by-company-and-status`,
+  byCompanyAndStatusPaged: `${baseAPIURL}/driver/by-company-and-status-paged`,
+  statusToggle: `${baseAPIURL}/driver/status-toggle`,
+  updateRFID: `${baseAPIURL}/driver/update-RFID`,
 };
 
 // Alarm Routes

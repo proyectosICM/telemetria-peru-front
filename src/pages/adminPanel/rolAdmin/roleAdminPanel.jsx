@@ -10,9 +10,10 @@ import { getDateFromTimestamp } from "../../../utils/formatUtils";
 export function RoleAdminPanel() {
   const navigate = useNavigate();
   const [datos, setDatos] = useState([]);
+  const [error, setError] = useState([]);
 
   useEffect(() => {
-    ListItems(`${roleRoutes.base}`, setDatos);
+    ListItems(`${roleRoutes.base}`, setDatos, setError);
   }, []);
 
   return (

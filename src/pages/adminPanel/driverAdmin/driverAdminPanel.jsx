@@ -9,7 +9,7 @@ import { PaginacionUtils } from "../../../utils/paginacionUtils";
 export function DriverAdminPanel() {
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${driverRoutes.paged}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${driverRoutes.paged}`, pageNumber);
 
   // Función para manejar la eliminación de conductores
   const handleDelete = (id) => {
@@ -17,7 +17,7 @@ export function DriverAdminPanel() {
     console.log("Eliminar conductor con ID:", id); 
     // Llama a tu API para eliminar el conductor y luego refresca los datos
   };
-
+ 
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -46,8 +46,8 @@ export function DriverAdminPanel() {
             </tr>
           </thead>
           <tbody>
-            {datos && datos.length > 0 ? (
-              datos.map((driver, index) => (
+            {data && data.length > 0 ? (
+              data.map((driver, index) => (
                 <tr key={driver.id}>
                   <td>{index + 1 + currentPage * 10}</td>
                   <td>{driver.rfid}</td>
@@ -60,7 +60,7 @@ export function DriverAdminPanel() {
                   <td>
                     <Button variant="warning" onClick={() => navigate(`/edit-driver/${driver.id}`)}>
                       Editar
-                    </Button>{" "}
+                    </Button>
                     <Button variant="danger" onClick={() => handleDelete(driver.id)}>
                       Eliminar
                     </Button>
@@ -69,7 +69,7 @@ export function DriverAdminPanel() {
               ))
             ) : (
               <tr>
-                <td colSpan="8" style={{ textAlign: "center" }}>
+                <td colSpan="9" style={{ textAlign: "center" }}>
                   No hay conductores registrados
                 </td>
               </tr>

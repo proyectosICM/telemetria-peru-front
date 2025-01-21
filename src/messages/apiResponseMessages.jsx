@@ -11,6 +11,16 @@ export function alertMessageValidated(value, message) {
   }
 }
 
+export function alertMessageUnauthorized(status) {
+  if (status === 403) {
+    Swal.fire({
+      icon: "error",
+      title: "Acceso denegado",
+      text: `No tienes los permisos necesarios para realizar esta acción.`,
+    });
+  }
+}
+
 export function alertMessageCreated(status) {
   if (status === 201) {
     Swal.fire({
@@ -35,7 +45,7 @@ export function alertMessageError(error) {
   Swal.fire({
     icon: "error",
     title: "Oops...",
-    text: `Hubo un error al guardar los datos. Inténtalo nuevamente. ${error.response.data}`,
+    text: `Hubo un error al guardar los datos. Inténtalo nuevamente.`,
   });
 }
 

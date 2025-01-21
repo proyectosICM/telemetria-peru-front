@@ -6,7 +6,7 @@ import { deleteItem } from "../../../hooks/deleteItem";
 
 export function useUserAdminLogic() {
   const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${userRoutes.paged}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${userRoutes.paged}`, pageNumber);
 
   const handleDelete = async (id) => {
     try {
@@ -23,7 +23,7 @@ export function useUserAdminLogic() {
   };
 
   return {
-    datos,
+    data,
     totalPages,
     currentPage,
     setCurrentPage,

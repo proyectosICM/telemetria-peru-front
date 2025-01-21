@@ -6,14 +6,13 @@ import { alertDeleteConfirmation, alertFailedfulDeleted, alertSuccessfulDeleted 
 
 export function useCompanyAdminLogic() {
   const [pageNumber, setPageNumber] = useState(0);
-  const { datos, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${companyRoutes.paged}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${companyRoutes.paged}`, pageNumber);
 
   const handleDelete = async (id) => {
     try {
       const result = await alertDeleteConfirmation();
       if (result.isConfirmed) {
         const response = await deleteItem(`${companyRoutes.base}/${id}`);
-        console.log(response)
         if (response.status === 204) {
           alertSuccessfulDeleted();
         }
@@ -24,7 +23,7 @@ export function useCompanyAdminLogic() {
   };
 
   return {
-    datos,
+    data,
     totalPages,
     currentPage,
     setCurrentPage,

@@ -12,14 +12,13 @@ export function AddCompanyForm() {
   const { id } = useParams();
   const rolId = localStorage.getItem("rolId");
 
+  const [error, setError] = useState();
   const [companyData, setCompanyData] = useState({ id: "", name: "" });
   const { saveItem } = useSaveItem(companyRoutes.base, "/company-admin");
 
   useEffect(() => {
     if (id) {
-      ListItems(`${companyRoutes.base}/${id}`, (data) => {
-        setCompanyData({ ...data });
-      });
+      ListItems(`${companyRoutes.base}/${id}`, setCompanyData, setError);
     }
   }, [id]);
 

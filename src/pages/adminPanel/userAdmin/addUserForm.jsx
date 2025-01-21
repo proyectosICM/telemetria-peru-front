@@ -14,13 +14,12 @@ export function AddUserForm() {
 
   // Inicializamos el estado del usuario
   const [userData, setUserData] = useState({ username: "", password: "", email: "" });
-
+  const [error, setError] = useState();
+  
   useEffect(() => {
     if (id) {
       // Cargamos los datos del usuario si estamos en modo edición
-      ListItems(`${userRoutes.base}/${id}`, (data) => {
-        setUserData({ ...data, password: "" });
-      });
+      ListItems(`${userRoutes.base}/${id}`, setUserData, setError);
     }
   }, [id]);
 
@@ -32,7 +31,7 @@ export function AddUserForm() {
       roleModel: {
         id: 2,
       },
-      companyMode: {
+      companyModel: {
         id: 1,
       },
     };

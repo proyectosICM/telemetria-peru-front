@@ -8,8 +8,8 @@ import { useCompanyAdminLogic } from "./useCompanyAdminLogic";
 
 export function CompanyAdminPanel() {
   const navigate = useNavigate();
-  const { datos, totalPages, currentPage, setCurrentPage, setPageNumber, handleDelete } = useCompanyAdminLogic();
-
+  const { data, totalPages, currentPage, setCurrentPage, setPageNumber, handleDelete } = useCompanyAdminLogic();
+ 
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -26,7 +26,7 @@ export function CompanyAdminPanel() {
         <Table striped bordered hover variant="dark" style={{ width: "80%", margin: "auto" }}>
           <thead>
             <tr>
-              <th>#</th>
+              <th>Id</th>
               <th>Nombre</th>
               <th>Estado</th>
               <th>Fecha de Creación</th>
@@ -34,10 +34,10 @@ export function CompanyAdminPanel() {
             </tr>
           </thead>
           <tbody>
-            {datos && datos.length > 0 ? (
-              datos.map((company, index) => (
+            {data && data.length > 0 ? (
+              data.map((company, index) => (
                 <tr key={company.id}>
-                  <td>{index + 1 + currentPage * 10}</td>
+                  <td>{company.id}</td>
                   <td>{company.name}</td>
                   <td>{company.status ? "Activo" : "Inactivo"}</td>
                   <td>{getDateFromTimestamp(company.createdAt)}</td>

@@ -13,20 +13,20 @@ export function AddRolForm() {
 
   const [roleData, setRoleData] = useState({ id: "", name: "" });
   const { saveItem } = useSaveItem(roleRoutes.base, "/roles-admin");
+  const [error, setError] = useState([]);
 
   useEffect(() => {
     if (id) {
-      ListItems(`${roleRoutes.base}/${id}`, (data) => {
-        setRoleData({ ...data });
-      });
+      ListItems(`${roleRoutes.base}/${id}`, setRoleData, setError);
     }
-  }, [id]);
+  }, [id]); 
 
   const handleSaveRole = async () => {
     try {
       alertMessageValidated(roleData.name, "El nombre del rol no puede estar vacío");
       await saveItem(id, { name: roleData.name });
     } catch (error) {
+      //console.log(error)
       alertMessageError(error);
       return;
     }
@@ -44,6 +44,7 @@ export function AddRolForm() {
 
         {/* Contenedor para que el ID y el Nombre estén en la misma línea */}
         <div style={{ display: "flex", width: "80%", margin: "20px auto", gap: "20px" }}>
+
           {/* Campo para mostrar el ID (deshabilitado) */}
           {id && (
             <Form.Group controlId="id" style={{ flexBasis: "20%" }}>

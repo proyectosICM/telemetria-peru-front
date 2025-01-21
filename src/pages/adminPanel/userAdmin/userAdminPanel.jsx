@@ -10,7 +10,7 @@ import { getDateFromTimestamp } from "../../../utils/formatUtils";
 
 export function UserAdminPanel() {
   const navigate = useNavigate();
-  const { datos, totalPages, currentPage, setCurrentPage, setPageNumber, handleDelete } = useUserAdminLogic();
+  const { data, totalPages, currentPage, setCurrentPage, setPageNumber, handleDelete } = useUserAdminLogic();
 
 
   return (
@@ -40,10 +40,10 @@ export function UserAdminPanel() {
             </tr>
           </thead>
           <tbody>
-            {datos && datos.length > 0 ? (
-              datos.map((user, index) => (
+            {data && data.length > 0 ? (
+              data.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{index + 1 + currentPage * 10}</td>
+                  <td>{user.id}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>{user.status ? "Activo" : "Inactivo"}</td>
@@ -62,7 +62,7 @@ export function UserAdminPanel() {
               ))
             ) : (
               <tr>
-                <td colSpan="7" style={{ textAlign: "center" }}>
+                <td colSpan="8" style={{ textAlign: "center" }}>
                   No hay usuarios registrados
                 </td>
               </tr>

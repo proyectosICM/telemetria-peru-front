@@ -26,7 +26,7 @@ export function NavbarCommon() {
         <Nav className="mx-auto">
           <Nav.Link onClick={() => navigation("/")}>Panel Principal</Nav.Link>
           {/* <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link> */}
-          {/* <Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link> */}
+          {<Nav.Link onClick={() => navigation("/admin")}>Administracion</Nav.Link>}
         </Nav>
 
         {/* Right-aligned logout button */}

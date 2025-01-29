@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../utils/formatUtils";
-import { ListItems, ListItemsPaginated } from "../../../hooks/listItems";
-import { fuelRecordsRoutes } from "../../../api/apiurls";
-import { PaginacionUtils } from "../../../utils/paginacionUtils";
+import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
+import { ListItems, ListItemsPaginated } from "../../../../hooks/listItems";
+import { fuelRecordsRoutes } from "../../../../api/apiurls";
+import { PaginacionUtils } from "../../../../utils/paginacionUtils";
 
 export function FuelRecordsTable({ fuelType }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
@@ -11,7 +11,10 @@ export function FuelRecordsTable({ fuelType }) {
 
   const [vehicleData, setVehicleData] = useState(null);
 
-  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(`${fuelRecordsRoutes.byVehiclePaged}/${selectedVehicleId}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
+    `${fuelRecordsRoutes.byVehiclePaged}/${selectedVehicleId}`,
+    pageNumber
+  );
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>

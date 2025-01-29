@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
-import { ListItems } from "../../../hooks/listItems";
-import { fuelEfficiencyByDailyAVGURL, fuelEfficiencyByMothAVGURL, fuelEfficiencyRoutes } from "../../../api/apiurls";
+import { ListItems } from "../../../../hooks/listItems";
+import { fuelEfficiencyRoutes } from "../../../../api/apiurls";
+
 
 export function AvgFuelEfficiency() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table, Dropdown, DropdownButton } from "react-bootstrap";
-import { fuelEfficiencyRoutes } from "../../../api/apiurls";
-import { ListItems } from "../../../hooks/listItems";
-import { formatTimeDecimal } from "../../../utils/formatUtils";
+import { ListItems } from "../../../../hooks/listItems";
+import { formatTimeDecimal } from "../../../../utils/formatUtils";
+import { fuelEfficiencyRoutes } from "../../../../api/apiurls";
 
 export function AvgResults() {
   const [selectedFilter, setSelectedFilter] = useState("Por Año");

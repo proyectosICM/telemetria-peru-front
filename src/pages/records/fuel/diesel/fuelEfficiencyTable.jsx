@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ListItemsPaginated } from "../../../hooks/listItems";
-import { fuelEfficiencyRoutes } from "../../../api/apiurls";
-import { formatTimeDecimal, getDateFromTimestamp, getTimeFromTimestamp } from "../../../utils/formatUtils";
+import { ListItemsPaginated } from "../../../../hooks/listItems";
+import { fuelEfficiencyRoutes } from "../../../../api/apiurls";
+import { formatTimeDecimal, getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
 import { Button, Table } from "react-bootstrap";
-import { PaginacionUtils } from "../../../utils/paginacionUtils";
+import { PaginacionUtils } from "../../../../utils/paginacionUtils";
 
 export function FuelEfficiencyTable() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

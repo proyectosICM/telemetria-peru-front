@@ -64,8 +64,6 @@ export const driverRoutes = {
 
 // Alarm Routes
 export const alarmRecordRoutes = {
-  base: `${baseAPIURL}/alarm-record`,
-  paged: `${baseAPIURL}/alarm-record/paged`,
   byVehicle: `${baseAPIURL}/alarm-record/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/alarm-record/by-vehicle-paged`,
 };
@@ -92,6 +90,18 @@ export const fuelEfficiencyRoutes = {
   monthlyAverages: `${baseAPIURL}/fuel-efficiency/monthly-averages`,
   summary: `${baseAPIURL}/fuel-efficiency/summary`,
 };
+
+export const gasRecordsRoutes = {
+  byVehicle: `${baseAPIURL}/gas-records/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/gas-records/by-vehicle-paged`,
+};
+
+export const gasChangesRoutes = {
+  byVehicle: `${baseAPIURL}/gas-changes/by-vehicle`,
+  byVehiclePaged: `${baseAPIURL}/gas-changes/by-vehicle-paged`,
+};
+
+
 
 // Ignition Routes
 export const ignitionRoutes = {
@@ -183,8 +193,6 @@ export const batteryRecordsRoutes = {
 
 // Alternator Routes
 export const alternatorRoutes = {
-  base: `${baseAPIURL}/alternator`,
-  paged: `${baseAPIURL}/alternator/paged`,
   byVehicle: `${baseAPIURL}/alternator/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/alternator/by-vehicle-paged`,
   countsByDays: `${baseAPIURL}/alternator/counts-by-days`
@@ -198,3 +206,4 @@ export const engineStarterRoutes = {
   byVehiclePaged: `${baseAPIURL}/engine-starter/by-vehicle-paged`,
     countsByDays: `${baseAPIURL}/engine-starter/counts-by-days`
 };
+

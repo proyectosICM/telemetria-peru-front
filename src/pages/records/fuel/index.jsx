@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
-import { NavbarCommon } from "../../../common/navbarCommon";
 import { vehicleRoutes } from "../../../api/apiurls";
+import { NavbarCommon } from "../../../common/navbarCommon";
 import { ListItems } from "../../../hooks/listItems";
-import { FuelRecordsTable } from "./fuelRecordsTable";
-import { FuelEfficiencyTable } from "./fuelEfficiencyTable";
-import { AvgFuelEfficiency } from "./avgFuelEfficiency";
-import { AvgResults } from "./avgResults";
-import { FuelInfo } from "../../../realTime/fuelInfo";
-import { FuelCharts } from "./fuelCharts";
-
+import { DieselComponent } from "./diesel";
+import { GasComponent } from "./gas";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -21,12 +16,12 @@ export function FuelRecords() {
 
   const [vehicleData, setVehicleData] = useState(null);
   const [error, setError] = useState(null);
-    
+
   useEffect(() => {
     ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
-  return ( 
+  return (
     <div className="g-background">
       <NavbarCommon />
       <Button onClick={() => navigate(-1)} className="back-button">
@@ -34,28 +29,10 @@ export function FuelRecords() {
       </Button>
 
       <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "20px auto",
-          }}
-        >
-          <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
-
-          <AvgResults />
-
-          <FuelEfficiencyTable />
-
-          <AvgFuelEfficiency />
- 
-          {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
-          <h1>Estadísticas</h1>
-          <FuelCharts />
-        </div>
+        {vehicleData && vehicleData.fuelType === "DIESEL" && <DieselComponent />}
+        {vehicleData && vehicleData.fuelType === "GAS" && <GasComponent />}
       </div>
     </div>
   );
 }
+ 

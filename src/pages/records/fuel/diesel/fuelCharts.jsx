@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ListItems } from "../../../hooks/listItems";
-import { fuelRecordsRoutes, vehicleRoutes } from "../../../api/apiurls";
-import { ChartComponent } from "../../../common/chartComponent";
+import { ListItems } from "../../../../hooks/listItems";
+import { fuelRecordsRoutes, vehicleRoutes } from "../../../../api/apiurls";
+import { ChartComponent } from "../../../../common/chartComponent";
 
 export function FuelCharts() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");

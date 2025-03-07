@@ -22,7 +22,7 @@ export function TruckDailyCountLoadTable() {
             <th>Día</th>
             <th>Cantiddad de cargas</th>
           </tr>
-        </thead>
+        </thead> 
         <tbody>
           {data && data.length > 0 ? (
             data.map((log, index) => (

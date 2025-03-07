@@ -101,15 +101,13 @@ export const gasChangesRoutes = {
   byVehiclePaged: `${baseAPIURL}/gas-changes/by-vehicle-paged`,
 };
 
-
-
 // Ignition Routes
 export const ignitionRoutes = {
   base: `${baseAPIURL}/vehicle-ignition`,
   paged: `${baseAPIURL}/vehicle-ignition/paged`,
   byVehicle: `${baseAPIURL}/vehicle-ignition/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/vehicle-ignition/by-vehicle-paged`,
-  count: `${baseAPIURL}/vehicle-ignition/count`,
+  count: `${baseAPIURL}/vehicle-ignition/count`, 
   countsAllDays: `${baseAPIURL}/vehicle-ignition/counts-all-days`,
   countsAllMonths:`${baseAPIURL}/vehicle-ignition/counts-all-months`
 };
@@ -161,6 +159,7 @@ export const truckLoadRecordRoutes = {
   byVehiclePaged: `${baseAPIURL}/truck-loads/by-vehicle-paged`,
   countDay: `${baseAPIURL}/truck-loads/count-day`,
   dailyLoadCounts: `${baseAPIURL}/truck-loads/daily-load-counts`,
+  monthCounts: `${baseAPIURL}/truck-loads/month-counts`
 };
 
 // Vehicle Types Routes
@@ -206,4 +205,3 @@ export const engineStarterRoutes = {
   byVehiclePaged: `${baseAPIURL}/engine-starter/by-vehicle-paged`,
     countsByDays: `${baseAPIURL}/engine-starter/counts-by-days`
 };
-

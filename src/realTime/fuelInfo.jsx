@@ -100,7 +100,7 @@ export function FuelInfo({ showAlert = true }) {
       return "No Disponible";
     }
   };
-
+ 
   const status = dataValue !== null && typeVehicleData ? determineStatus(dataValue, vehicleData, typeVehicleData) : "No Disponible";
 
   return (

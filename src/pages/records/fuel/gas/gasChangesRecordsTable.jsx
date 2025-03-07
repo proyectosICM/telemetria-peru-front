@@ -43,10 +43,10 @@ export function GasChangesRecordsTable() {
               <tr key={record.id}>
                 <td>{record.id}</td>
                 <td>{getDateFromTimestamp(record.createdAt)}</td>
-                <td>{getTimeFromTimestamp(record.createdAt)}</td>
+                <td>{getDateFromTimestamp(record.createdAt) + " - " +  getTimeFromTimestamp(record.createdAt) }</td>
                 <td>{record.pressureBeforeChange}</td>
-                <td>{getTimeFromTimestamp(record.changePerformedAt)}</td>
-                <td>{record.pressureAfterChange}</td>
+                <td>{record.changePerformedAt ? getDateFromTimestamp(record.changePerformedAt) + " - " + getTimeFromTimestamp(record.changePerformedAt) : "No dispobible"}</td>
+                <td>{record.pressureAfterChange ? record.pressureAfterChange : "No disponible"}</td>
                 <td>{record.vehicleModel?.licensePlate || "N/A"}</td>
               </tr>
             ))

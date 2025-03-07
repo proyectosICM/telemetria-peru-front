@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export function BackButton({ path }) {
   const navigate = useNavigate();
-
+ 
   return (
     <Button onClick={() => navigate(path)} className="back-button">
       Atrás

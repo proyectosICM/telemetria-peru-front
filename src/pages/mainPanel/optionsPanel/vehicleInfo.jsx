@@ -15,7 +15,7 @@ export function VehicleInfo({ showAlert = true }) {
 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
-  const topic = `${mqttTopics.tmp_gasPressure}${selectedVehicleId}`;
+  const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages } = useMqtt(mqttDominio, topic);
 
   // Fetch vehicle data when selectedVehicleId changes
@@ -25,8 +25,8 @@ export function VehicleInfo({ showAlert = true }) {
 
   // Handle incoming MQTT messages to update speed info
   useEffect(() => {
-    mqttDataHandler(messages, setSpeed, "speedInfo");
-  }, [messages]);
+    mqttDataHandler(messages, setSpeed, "speed");
+  }, [messages]); 
 
   // Comprobar si la velocidad actual supera la velocidad máxima
   const isSpeedExceeded = data?.maxSpeed > 0 && speed > data.maxSpeed;

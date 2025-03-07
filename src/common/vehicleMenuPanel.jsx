@@ -35,7 +35,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
 
   return (
     <div className="vmp-container">
-      <h1 className="vmp-title">Camiones</h1>
+      <h1 className="vmp-title">Unidades</h1>
 
       <div className="vmp-search-bar">
         <input

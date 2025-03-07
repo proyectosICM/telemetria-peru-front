@@ -16,6 +16,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
     if (map && buses) {
       buses.forEach((bus) => {
         const busPosition = [bus.longitude, bus.latitude];
+        const speed = bus.speed;
         const infoHTML = (
           <div>
             <p>Detalles del vehiculo</p>
@@ -24,7 +25,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
             {ReactDOM.createPortal(<FaBus size={24} style={{ marginRight: "10px", color: "#555" }} />, document.createElement("div"))}
           </div>
         );
-        addMarker(map, busPosition, "busesIcono", bus.licensePlate, infoHTML);
+        addMarker(map, speed, busPosition, "busesIcono", bus.licensePlate, infoHTML);
       });
     }
   }, [map, buses]);
@@ -34,7 +35,8 @@ export function MapaBase({ buses, rutas, initialPosition }) {
     if (map && rutas) {
       rutas.forEach((ruta) => {
         const stopPosition = [ruta.paraderosModel.longitud, ruta.paraderosModel.latitud];
-        addMarker(map, stopPosition, "paradero", ruta.paraderosModel.nombre, "<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>");
+        const speed = 0;
+        addMarker(map, speed, stopPosition, "paradero", ruta.paraderosModel.nombre, "<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>");
       });
     }
   }, [map, rutas]);

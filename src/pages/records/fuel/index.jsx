@@ -19,7 +19,7 @@ export function FuelRecords() {
 
   useEffect(() => {
     ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
-  }, [selectedVehicleId]);
+  }, [selectedVehicleId]);  
 
   return (
     <div className="g-background">

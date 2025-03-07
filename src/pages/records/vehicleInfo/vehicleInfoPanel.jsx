@@ -38,7 +38,7 @@ export function VehicleInfoPanel() {
           <strong> Placa:</strong> {vehicleData && vehicleData.licensePlate} | <strong> Tipo de vehículo: </strong>
           {vehicleData && vehicleData.vehicleTypeName}
         </p>
-        <p>Velocidad maxima definida: {vehicleData && vehicleData.maxSpeed ? vehicleData.maxSpeed : "No registra"} </p>
+        <p>Velocidad maxima definida: {vehicleData && vehicleData.maxSpeed ? `${vehicleData.maxSpeed} km/h` : "No registra"} </p>
         <TruckLoadsTable />
         <TruckDailyCountLoadTable />
         <SpeedExcessTable />

@@ -18,7 +18,7 @@ export function VehicleInfoPanel() {
     ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
-  return (
+  return ( 
     <div>
       <NavbarCommon />
       <Button onClick={() => navigate(-1)} className="back-button">

@@ -122,7 +122,7 @@ export function FuelInfo({ showAlert = true }) {
                     : vehicleData.fuelType === "GAS"
                     ? "psi"
                     : vehicleData.fuelType === "DIESEL"
-                    ? "gal"
+                    ? "gal" 
                     : ""}
                 </span>
                 <br />

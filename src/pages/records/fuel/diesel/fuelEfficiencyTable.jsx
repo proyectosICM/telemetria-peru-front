@@ -60,8 +60,6 @@ export function FuelEfficiencyTable() {
             <th>Combustible inicial</th>
             <th>Combustible final</th>
             <th>Combustible Consumido</th>
-            <th>Rendimiendo Combustible (x KM) </th>
-            <th>Rendimiendo Combustible (gal/h) </th>
             <th>Coordenadas Final</th>
           </tr>
         </thead>
@@ -77,9 +75,7 @@ export function FuelEfficiencyTable() {
                 <td>{d.accumulatedHours ? formatTimeDecimal(d.accumulatedHours) : "Aún no disponible"}</td>
                 <td>{d.initialFuel.toFixed(2)}</td>
                 <td>{d.finalFuel ? d.finalFuel.toFixed(2) : "Aún no disponible"}</td>
-                <td>{d.finalFuel !== "Aún no disponible" ? (d.initialFuel - d.finalFuel).toFixed(2) : "Aún no disponible"}</td>
-                <td>{d.fuelEfficiency != null ? `${d.fuelEfficiency.toFixed(2)} km/gal` : "Aún no disponible"}</td>
-                <td>{d.fuelConsumptionPerHour != null ? `${d.fuelConsumptionPerHour.toFixed(2)} gal/h` : "Aun no disponible"}</td>
+                <td>{d.finalFuel !== "Aún no disponible" ? Math.max(0, d.initialFuel - d.finalFuel).toFixed(2) : "Aún no disponible"}</td>
                 <td>{d.coordinates ? d.coordinates : "Aún no disponible"}</td>
               </tr>
             ))}

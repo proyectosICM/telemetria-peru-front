@@ -5,7 +5,7 @@ import { formatTimeDecimal } from "../../../../utils/formatUtils";
 import { fuelEfficiencyRoutes } from "../../../../api/apiurls";
 
 export function AvgResults() {
-  const [selectedFilter, setSelectedFilter] = useState("Por Año");
+  const [selectedFilter, setSelectedFilter] = useState("Por Mes");
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
@@ -15,7 +15,7 @@ export function AvgResults() {
  
   useEffect(() => {
     let url = `${fuelEfficiencyRoutes.summary}/${selectedVehicleId}`;
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(); 
 
     if (selectedYear) params.append("year", selectedYear);
     if (selectedMonth) params.append("month", selectedMonth);
@@ -188,7 +188,7 @@ export function AvgResults() {
 
       <Table striped bordered hover variant="dark">
         <thead>
-          <tr>
+          <tr> 
             <th>Estado</th>
             <th>Tiempo (h)</th>
             <th>Combustible Consumido (gal)</th>

@@ -200,9 +200,9 @@ export function AvgResults() {
           {data.map((item, index) => (
             <tr key={index}>
               <td>{item.status}</td>
-              <td>{formatTimeDecimal(item.totalHours)}</td>
-              <td>{item.totalFuelConsumed.toFixed(2)}</td>
-              <td>{item.avgFuelEfficiency.toFixed(2)}</td>
+              <td>{ formatTimeDecimal(item.totalHours)}</td>
+              <td>{item.status === "ESTACIONADO" ? "0" : item.totalFuelConsumed.toFixed(2)}</td>
+              <td>{item.status === "ESTACIONADO" ? "0" : item.avgFuelEfficiency.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

@@ -15,6 +15,7 @@ export function AdminPanel() {
       <div className="admin-panel-container" style={{ height: "90vh" }}>
         {rolId === "1" && <AdminPanelItem icon={FaBuilding} title="Empresas" route={"/company-admin"} />}
         {rolId === "1" && <AdminPanelItem icon={FaUser} title="Usuarios" route={"/user-admin"} />}
+        <AdminPanelItem icon={FaTruck} title="Vehiculos" route={"/manage-vehicles"} />
         <AdminPanelItem icon={FaTruck} title="Conductores" route={"/driver-admin"} />
         <AdminPanelItem icon={FaBatteryHalf} title="Baterías" route={"/batteries-admin"} />
         <AdminPanelItem icon={FaTachometerAlt} title="Sensor de Neumáticos" route={"/tire-admin"} />

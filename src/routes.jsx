@@ -6,8 +6,8 @@ import { Example2 } from "./pages/checklistPanel/example2";
 import { Login } from "./pages/auth/login";
 import { WelcomeAndRedirect } from "./pages/auth/welcomeAndRedirect";
 import { TireSensorsDetails } from "./pages/records/tire/tireSensorsDetails";
-import { Example4 } from './pages/checklistPanel/example4';
-import { Example3 } from './pages/checklistPanel/example3';
+import { Example4 } from "./pages/checklistPanel/example4";
+import { Example3 } from "./pages/checklistPanel/example3";
 import { CompanyAdminPanel } from "./pages/adminPanel/companyAdmin/companyAdminPanel";
 import { UserAdminPanel } from "./pages/adminPanel/userAdmin/userAdminPanel";
 import { DriverAdminPanel } from "./pages/adminPanel/driverAdmin/driverAdminPanel";
@@ -25,28 +25,29 @@ import { MainPanel } from "./pages/mainPanel/mainPanel";
 import { AlarmRecords } from "./pages/records/alarm";
 import { IgnitionRecords } from "./pages/records/ignitions";
 import { BatteryRecords } from "./pages/records/batteries";
-import { IgnitionDetails } from './pages/records/ignitions/details';
+import { IgnitionDetails } from "./pages/records/ignitions/details";
 import { IssuesRecords } from "./pages/records/issues";
 import { FuelRecords } from "./pages/records/fuel";
 import { ImpactIncidentLoggingRecords } from "./pages/records/impactIncident/impactIncidentLoggingRecords";
-  
+import ManageVehicles from "./pages/adminPanel/manage_vehicles";
+
 export const routes = [
   { path: "/", component: <MainPanel /> },
   { path: "/mapa", component: <MapaBase /> },
   { path: "/login", component: <Login /> },
-  { path: "/redirectandW", component: <WelcomeAndRedirect/> },
-  { path: "/admin", component: <AdminPanel/> },
+  { path: "/redirectandW", component: <WelcomeAndRedirect /> },
+  { path: "/admin", component: <AdminPanel /> },
 
-  { path: "/vehicle-info", component: <VehicleInfoPanel/> },
+  { path: "/vehicle-info", component: <VehicleInfoPanel /> },
 
   { path: "/fuel-Records", component: <FuelRecords /> },
-  { path: "/alarm-Records", component: <AlarmRecords /> }, 
+  { path: "/alarm-Records", component: <AlarmRecords /> },
   { path: "/ignition-Records", component: <IgnitionRecords /> },
   { path: "/ignition-Details", component: <IgnitionDetails /> },
   { path: "/battery-Records", component: <BatteryRecords /> },
-  
+
   { path: "/issues-Records", component: <IssuesRecords /> },
-  { path: "/impact-incident-logging-records", component: <ImpactIncidentLoggingRecords />},
+  { path: "/impact-incident-logging-records", component: <ImpactIncidentLoggingRecords /> },
 
   { path: "/tire-sensors-details", component: <TireSensorsDetails /> },
   { path: "/checklist-panel", component: <ChecklistPanel /> },
@@ -58,6 +59,8 @@ export const routes = [
   { path: "/example2", component: <Example4 /> },
 
   // Admin
+  { path: "/manage-vehicles", component: <ManageVehicles /> },
+
   { path: "/company-admin", component: <CompanyAdminPanel /> },
   { path: "/add-company", component: <AddCompanyForm /> },
   { path: "/edit-company/:id", component: <AddCompanyForm /> },
@@ -68,7 +71,7 @@ export const routes = [
 
   { path: "/driver-admin", component: <DriverAdminPanel /> },
   { path: "/add-driver", component: <AddDriverForm /> },
-  { path: "/edit-driver/:id", component: <AddDriverForm /> }, 
+  { path: "/edit-driver/:id", component: <AddDriverForm /> },
 
   { path: "/batteries-admin", component: <BatteriesAdminPanel /> },
   { path: "/add-battery", component: <AddBatteryForm /> },

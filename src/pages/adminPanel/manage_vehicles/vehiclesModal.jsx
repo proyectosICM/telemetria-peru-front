@@ -86,7 +86,7 @@ export function VehiclesModal({ showModal, handleCloseModal, selectedGroup, data
           Close
         </Button>
         <Button variant="primary" onClick={handleSaveOrUpdate}>
-          {selectedGroup ? "Update" : "Save"} Organization
+          {selectedGroup ? "Update" : "Save"}
         </Button>
       </Modal.Footer>
     </Modal>

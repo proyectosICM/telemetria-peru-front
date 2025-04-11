@@ -12,10 +12,10 @@ export function AvgResults() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
- 
+
   useEffect(() => {
     let url = `${fuelEfficiencyRoutes.summary}/${selectedVehicleId}`;
-    const params = new URLSearchParams(); 
+    const params = new URLSearchParams();
 
     if (selectedYear) params.append("year", selectedYear);
     if (selectedMonth) params.append("month", selectedMonth);
@@ -188,7 +188,7 @@ export function AvgResults() {
 
       <Table striped bordered hover variant="dark">
         <thead>
-          <tr> 
+          <tr>
             <th>Estado</th>
             <th>Tiempo (h)</th>
             <th>Combustible Consumido (gal)</th>
@@ -200,7 +200,7 @@ export function AvgResults() {
           {data.map((item, index) => (
             <tr key={index}>
               <td>{item.status}</td>
-              <td>{ formatTimeDecimal(item.totalHours)}</td>
+              <td>{formatTimeDecimal(item.totalHours)}</td>
               <td>{item.status === "ESTACIONADO" ? "0" : item.totalFuelConsumed.toFixed(2)}</td>
               <td>{item.status === "ESTACIONADO" ? "0" : item.avgFuelEfficiency.toFixed(2)}</td>
             </tr>

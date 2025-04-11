@@ -18,8 +18,8 @@ export function AdminPanel() {
         <AdminPanelItem icon={FaTruck} title="Vehiculos" route={"/manage-vehicles"} />
         <AdminPanelItem icon={FaTruck} title="Conductores" route={"/driver-admin"} />
         <AdminPanelItem icon={FaBatteryHalf} title="Baterías" route={"/batteries-admin"} />
-        <AdminPanelItem icon={FaTachometerAlt} title="Sensor de Neumáticos" route={"/tire-admin"} />
-        {rolId === "1" && <AdminPanelItem icon={FaUserShield} title="Roles" route={"/roles-admin"} />}
+         {/*<AdminPanelItem icon={FaTachometerAlt} title="Sensor de Neumáticos" route={"/tire-admin"} /> */}
+        {/* rolId === "1" && <AdminPanelItem icon={FaUserShield} title="Roles" route={"/roles-admin"} /> */}
       </div>
     </div>
   );

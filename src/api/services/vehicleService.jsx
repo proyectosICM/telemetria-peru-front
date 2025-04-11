@@ -2,6 +2,16 @@ import api from "../axiosConfig";
 
 const endpoint = "/vehicles";
 
+export const getFuelTypes = async () => {
+  try {
+    const response = await api.get(`${endpoint}/fuel-types`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching fuel types:", error);
+    throw error;
+  }
+};
+
 export const getAllVehicles = async () => {
   try {
     const response = await api.get(endpoint);
@@ -33,7 +43,6 @@ export const getByCompanyId = async (companyId) => {
 };
 
 export const getByCompanyIdPaged = async (companyId, page, size) => {
-  alert("hola")
   try {
     const response = await api.get(`${endpoint}/by-company-paged/${companyId}`, {
       params: { page, size },
@@ -87,9 +96,10 @@ export const createVehicle = async (vehicleData) => {
   }
 };
 
-export const updateVehicle = async (id, vehicleData) => {
+export const updateVehicle = async (vehicleData) => {
+
   try {
-    const response = await api.put(`${endpoint}/${id}`, vehicleData);
+    const response = await api.put(`${endpoint}/${vehicleData.id}`, vehicleData);
     return response.data;
   } catch (error) {
     console.error("Error updating vehicle:", error);
@@ -109,7 +119,7 @@ export const updateOptions = async (vehicleId, optionsData) => {
 
 export const updateStatus = async (vehicleId) => {
   try {
-    const response = await api.put(`${endpoint}/status-toggle/${vehicleId}` );
+    const response = await api.put(`${endpoint}/status-toggle/${vehicleId}`);
     return response.data;
   } catch (error) {
     console.error("Error updating vehicle status:", error);

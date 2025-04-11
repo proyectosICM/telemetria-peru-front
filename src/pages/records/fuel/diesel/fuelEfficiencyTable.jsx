@@ -51,6 +51,7 @@ export function FuelEfficiencyTable() {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Estado</th>
             <th>Placa</th>
             <th>Dia</th>
@@ -67,6 +68,7 @@ export function FuelEfficiencyTable() {
           {data &&
             data.map((d, index) => (
               <tr key={index}>
+                <td>{d.id}</td>
                 <td>{d.fuelEfficiencyStatus}</td>
                 <td>{d.licensePlate ? d.licensePlate : "."}</td>
                 <td>{getDateFromTimestamp(d.startTime)}</td>

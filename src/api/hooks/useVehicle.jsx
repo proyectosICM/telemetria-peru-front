@@ -1,6 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as vehicleService from "../services/vehicleService";
 
+export const useGetFuelTypes = () => {
+    return useQuery({
+        queryKey: ["fuelTypes"],
+        queryFn: vehicleService.getFuelTypes,
+    });
+};
 
 export const useGetAllVehicles = () => {
     return useQuery({
@@ -29,11 +35,12 @@ export const useGetVehiclesByCompanyIdPaged = (companyId, page, size) => {
     return useQuery({
         queryKey: ["vehicles", "company", companyId, page, size],
         queryFn: () => vehicleService.getByCompanyIdPaged(companyId, page, size),
-        enabled: !!companyId && !!page && !!size,
+        enabled: !!companyId,
+        // && !!page && !!size
     });
 };
 
-export const useGetVehiclesByStatus = (status) => {
+export const useGetVehiclesByStatus = (status) => { 
     return useQuery({
         queryKey: ["vehicles", "status", status],
         queryFn: () => vehicleService.getByStatus(status),
@@ -63,6 +70,7 @@ export const useCreateVehicle = () => {
         mutationFn: vehicleService.createVehicle,
         onSuccess: () => {
             queryClient.invalidateQueries(["vehicles"]);
+            queryClient.invalidateQueries({ queryKey: ["vehicles"], exact: false });
         },
     });
 };
@@ -73,6 +81,7 @@ export const useUpdateVehicle = () => {
         mutationFn: vehicleService.updateVehicle,
         onSuccess: () => {
             queryClient.invalidateQueries(["vehicles"]);
+            queryClient.invalidateQueries({ queryKey: ["vehicles"], exact: false });
         },
     });
 };
@@ -83,6 +92,7 @@ export const useUpdateOptions = () => {
         mutationFn: vehicleService.updateOptions,
         onSuccess: () => {
             queryClient.invalidateQueries(["vehicles"]);
+            
         },
     });
 };

@@ -8,6 +8,8 @@ import { FuelEfficiencyTable } from "./fuelEfficiencyTable";
 import { AvgFuelEfficiency } from "./avgFuelEfficiency";
 import { FuelCharts } from "./fuelCharts";
 import { FuelRecordsTable } from "./fuelRecordsTable";
+import { FuelReportsTable } from "./fuelReportsTable";
+
 
 export function DieselComponent() {
   const navigate = useNavigate();
@@ -35,6 +37,8 @@ export function DieselComponent() {
       <AvgResults />
 
       <FuelEfficiencyTable />
+
+      <FuelReportsTable />
 
       <AvgFuelEfficiency />
 

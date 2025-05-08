@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL, loginURL } from "../../api/apiurls";
 
-
-
 export const useAuth = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+ 
   const axiosInstance = axios.create({
     baseURL: baseURL,
     withCredentials: true,
@@ -23,8 +21,8 @@ export const useAuth = () => {
         username,
         password,
       });
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("username", username);
+      localStorage.setItem("tp_token", response.data.token);
+      localStorage.setItem("tp_username", username);
       navigate("/redirectandW"); 
     } catch (error) {
       setError("Error en la autenticación");

@@ -22,7 +22,7 @@ export function MainPanel() {
   LogoutToken();
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
-  const companyId = localStorage.getItem("companyId");
+  const companyId = localStorage.getItem("tp_companyId");
   const topic = `${mqttTopics.mapa}${companyId}`;
 
   const { messages } = useMqtt(mqttDominio, topic);

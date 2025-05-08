@@ -2,9 +2,9 @@
 
 export const clearLocalStorage = () => {
   // Eliminar el token
-  localStorage.removeItem("token");
+  localStorage.removeItem("tp_token");
   // Eliminar el resto de localStorages
-  localStorage.removeItem("rolId");
-  localStorage.removeItem("companyId");
-  localStorage.removeItem("userId");
+  localStorage.removeItem("tp_rolId");
+  localStorage.removeItem("tp_companyId");
+  localStorage.removeItem("tp_userId");
 };

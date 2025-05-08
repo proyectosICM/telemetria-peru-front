@@ -11,7 +11,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   const [selectedType, setSelectedType] = useState("");
   const [error, setError] = useState(null);
 
-  const companyId = localStorage.getItem("companyId");
+  const companyId = localStorage.getItem("tp_companyId");
 
   useEffect(() => {
     ListItems(`${vehicleRoutes.byCompany}/${companyId}`, setData, setError);

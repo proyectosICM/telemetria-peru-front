@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function getAuthHeaders() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("tp_token");
   if (!token) {
     console.error("Token not available. Please log in.");
     throw new Error("Token not available. Please log in.");
@@ -11,7 +11,7 @@ function getAuthHeaders() {
     Authorization: `Bearer ${token}`,
   };
 }
-
+ 
 export function ListItems(url, setData, setError) {
   const fetchData = async () => {
     try {

@@ -1,50 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { LogoutToken } from "../../hooks/logoutToken";
-import { userRoutes } from "../../api/apiurls";
-import { ListItems } from "../../hooks/listItems";
+import { getInfoUser } from "../../api/services/userService";
+
 
 export function WelcomeAndRedirect() {
   const navigate = useNavigate();
-  const username = localStorage.getItem("username");
-
-  const [info, setInfo] = useState(null);
-  const [error, setError] = useState(null);
+  const username = localStorage.getItem("tp_username");
 
   useEffect(() => {
-    ListItems(`${userRoutes.info}/${username}`, setInfo, setError);
-  }, [username]);
+    const fetchInfo = async () => {
+      try {
+        const info = await getInfoUser(username);
+        localStorage.setItem("tp_rolId", info.roleModel.id);
+        localStorage.setItem("tp_companyId", info.companyModel.id);
+        localStorage.setItem("tp_userId", info.id);
 
-  LogoutToken();
+        let path = "/";
+        switch (info.roleModel.id) {
+          case "1":
+          case "2":
+          case "3":
+          case "4":
+            path = "/";
+            break;
+          default:
+            path = "/";
+            break;
+        }
 
-  useEffect(() => {
-    if (info) {
-      localStorage.setItem("rolId", info.roleModel.id);
-      localStorage.setItem("companyId", info.companyModel.id);
-      localStorage.setItem("userId", info.id);
-
-      let path;
-      switch (info.roleModel.id) {
-        case "1":
-          path = "/";
-          break;
-        case "2":
-          path = "/";
-          break;
-        case "3":
-          path = "/";
-          break;
-        case "4":
-          path = "/";
-          break;
-        default:
-          path = "/";
-          break;
+        navigate(path);
+      } catch (error) {
+        console.error("No se pudo obtener la información del usuario:", error);
+        // Puedes redirigir a login o mostrar mensaje si quieres
       }
-      navigate(path);
-    }
-  }, [info, navigate]);
+    };
+
+    fetchInfo();
+  }, [username, navigate]);
+
+  LogoutToken(); // Asegúrate que no dependa de estado o efecto
 
   return null;
 }

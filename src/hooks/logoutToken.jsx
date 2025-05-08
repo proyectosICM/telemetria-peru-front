@@ -9,7 +9,7 @@ export function LogoutToken() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("tp_token");
     if (token) { 
       try{
         const decodedToken = jwtDecode(token);

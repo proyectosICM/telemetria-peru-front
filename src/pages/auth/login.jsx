@@ -12,7 +12,7 @@ import { LogoutToken } from "../../hooks/logoutToken";
 export function Login() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
- 
+
   LogoutToken();
 
   const {
@@ -26,7 +26,7 @@ export function Login() {
   const onSubmit = (data) => {
     login(data.username, data.password);
   };
- 
+
   useEffect(() => {
     if (token) {
       navigate("/");
@@ -34,12 +34,21 @@ export function Login() {
   }, [navigate, token]);
 
   return (
-    <div className="login-container">
+    <div
+      className="login-container"
+      style={{
+        backgroundImage: `url('/images/login-fondo.jpg')`,
+        height: "100vh",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="login-form">
+        <h5>TelemetriaPeru</h5>
         <h1>Iniciar sesión</h1>
-        <h1>
+        <h2>
           <FaUserCircle />
-        </h1>
+        </h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Usuario</Form.Label>

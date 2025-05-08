@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import Map from "ol/Map";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { Fill, Icon, Stroke, Style, Text } from "ol/style";
+import { Fill, Stroke, Style, Text } from "ol/style";
 import { Point } from "ol/geom";
 import CircleStyle from "ol/style/Circle";
 import Overlay from "ol/Overlay";
@@ -51,8 +51,6 @@ export const useCreateMap = (mapRef, position, setMap) => {
 };
 
 export const addMarker = (map, speed, position, image, title, infoHTML) => {
-  console.log(infoHTML);
-  // Buscar si ya existe un marcador con el mismo título
   let existingMarker;
   map.getLayers().forEach((layer) => {
     if (layer.getSource() instanceof VectorSource) {

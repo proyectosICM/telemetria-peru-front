@@ -13,8 +13,6 @@ export function VehicleOptions() {
     ListItems(`${vehicleRoutes.options.data}/${selectedVehicleId}`, setData, setError);
   }, [selectedVehicleId]);
 
-  console.log(data)
-
   const options = [
     { label: "Vehículo", stateKey: "engine", setState: "setIsVehicleOn", onLabel: "Apagar vehículo", offLabel: "Encender vehículo" },
     { label: "Alarma", stateKey: "alarm", setState: "setIsAlarmOn", onLabel: "Desactivar alarma", offLabel: "Activar alarma" },

@@ -26,7 +26,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
     localStorage.setItem("selectedTypeVehicleId", type);
   };
 
-  const filteredData = useMemo(() => {
+  const filteredData = useMemo(() => { 
     return data.filter(
       (item) =>
         item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) && (selectedType ? item.vehicletypeModel.name === selectedType : true)

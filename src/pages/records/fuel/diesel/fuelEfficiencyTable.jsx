@@ -19,7 +19,7 @@ export function FuelEfficiencyTable() {
       const response = await fetch(`${fuelEfficiencyRoutes.downloadExcel}/${selectedVehicleId}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/vnd.ms-excel",
+          "Content-Type": "application/vnd.ms-excel", 
         },
       });
 

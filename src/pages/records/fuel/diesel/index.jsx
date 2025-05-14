@@ -25,7 +25,7 @@ export function DieselComponent() {
   return (
     <div
       style={{
-        display: "flex",
+        display: "flex", 
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",

@@ -20,7 +20,7 @@ const formatDateArray = (arr) => {
   return date.toLocaleString(); // Puedes usar toLocaleDateString() si solo quieres la fecha
 };
 
-export function FuelReportsTable() {
+export function FuelReportsTable() { 
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
   const { data: reports, isLoading, isError } = useFuelReportsByVehicle(selectedVehicleId);
@@ -33,7 +33,7 @@ export function FuelReportsTable() {
       ) : isError ? (
         <div>❌ Error al cargar los reportes.</div>
       ) : (
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive variant="dark">
           <thead>
             <tr>
               <th>ID</th>
@@ -42,7 +42,10 @@ export function FuelReportsTable() {
               <th>Hora de cierre</th>
               <th>Combustible inicial</th>
               <th>Combustible final</th>
-              <th>Patente</th>
+              <th>Placa</th>
+              <th>Tiempo Estacionado</th>
+              <th>Tiempo Ralenti</th>
+              <th>Tiempo Operacion</th>
             </tr>
           </thead>
           <tbody>
@@ -55,6 +58,9 @@ export function FuelReportsTable() {
                 <td>{report.initialFuel ?? "—"}</td>
                 <td>{report.finalFuel ?? "—"}</td>
                 <td>{report.vehicleModel?.licensePlate ?? "—"}</td>
+                <td>{formatDuration(report.parkedTime)}</td>
+                <td>{formatDuration(report.idleTime)}</td>
+                <td>{formatDuration(report.operatingTime)}</td>
               </tr>
             ))}
           </tbody>

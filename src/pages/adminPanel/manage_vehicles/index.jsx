@@ -8,7 +8,7 @@ import { useCreateVehicle } from "../../../api/hooks/useVehicle";
 
 
 const ManageVehicles = () => {
-  const companyId = localStorage.getItem("companyId");
+  const companyId = localStorage.getItem("tp_companyId");
   const [page, setPage] = useState(0);
   const size = 10;
 
@@ -90,7 +90,7 @@ const ManageVehicles = () => {
       <Button variant="success" onClick={handleShowModal}>
         Agregar
       </Button>
-      <Table striped bordered hover className="mt-4">
+      <Table striped bordered hover className="mt-4" variant="dark">
         <thead>
           <tr>
             <th>ID</th>

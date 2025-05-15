@@ -53,7 +53,7 @@ export function MainPanel() {
       }
     }
   }, [selectedVehicleId, buses]);
-
+ 
   return (
     <div className="g-background">
       <NavbarCommon />

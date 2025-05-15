@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, Spinner } from "react-bootstrap";
 import { useFuelReportsByVehicle } from "../../../../api/hooks/useFuelReport";
+import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
 
 // Función utilitaria para convertir milisegundos a formato hh:mm:ss
 const formatDuration = (ms) => {
@@ -52,8 +53,8 @@ export function FuelReportsTable() {
             {reports.map((report) => (
               <tr key={report.id}>
                 <td>{report.id}</td>
-                <td>{formatDateArray(report.date)}</td>
-                <td>{formatDateArray(report.openingTime)}</td>
+                <td>{getDateFromTimestamp(report.createdAt)}</td>
+                <td>{getTimeFromTimestamp(report.createdAt)}</td>
                 <td>{formatDateArray(report.closingTime)}</td>
                 <td>{report.initialFuel ?? "—"}</td>
                 <td>{report.finalFuel ?? "—"}</td>

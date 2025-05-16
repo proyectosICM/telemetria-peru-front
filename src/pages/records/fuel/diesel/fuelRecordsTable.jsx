@@ -14,7 +14,7 @@ export function FuelRecordsTable({ fuelType }) {
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
     `${fuelRecordsRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumber
-  );
+  ); 
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>

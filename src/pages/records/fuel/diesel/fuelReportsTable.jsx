@@ -86,6 +86,7 @@ export function FuelReportsTable() {
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Placa</th>
                 <th>Fecha apertura </th>
                 <th>Hora de apertura</th>
                 <th>Fecha cierre </th>
@@ -93,7 +94,7 @@ export function FuelReportsTable() {
                 <th>Combustible inicial</th>
                 <th>Combustible final</th>
                 {/*<th>Uso</th>*/}
-                <th>Placa</th>
+
                 <th>Tiempo Estacionado</th>
                 <th>Tiempo Ralenti</th>
                 <th>Tiempo Operacion</th>
@@ -103,6 +104,7 @@ export function FuelReportsTable() {
               {reports?.content?.map((report) => (
                 <tr key={report.id}>
                   <td>{report.id}</td>
+                  <td>{report.vehicleModel?.licensePlate ?? "—"}</td>
                   <td>{getDateFromTimestamp(report.createdAt)}</td>
                   <td>{getTimeFromTimestamp(report.createdAt)}</td>
                   <td>{getDateFromTimestamp(report.updatedAt)}</td>
@@ -110,7 +112,7 @@ export function FuelReportsTable() {
                   <td>{report.initialFuel ?? "—"}</td>
                   <td>{report.finalFuel ?? "—"}</td>
                   {/*<td>{report.initialFuel}</td>*/}
-                  <td>{report.vehicleModel?.licensePlate ?? "—"}</td>
+
                   <td>{formatDuration(report.parkedTime)}</td>
                   <td>{formatDuration(report.idleTime)}</td>
                   <td>{formatDuration(report.operatingTime)}</td>

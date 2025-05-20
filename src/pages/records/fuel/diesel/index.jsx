@@ -36,7 +36,7 @@ export function DieselComponent() {
 
       <AvgResults />
 
-      <FuelEfficiencyTable />
+{  /*    <FuelEfficiencyTable /> */}
 
       <FuelReportsTable />
 

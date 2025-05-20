@@ -17,6 +17,9 @@ import { IgnitionInfo } from "../../realTime/ignitionInfo";
 import { TireInfo } from "../../realTime/tireSensorInfo";
 import { TireInfoData } from "../../realTime/tireSensorInfoData";
 import "./mainPanel.css";
+import { Button, ButtonGroup } from "react-bootstrap";
+import { FaLayerGroup, FaMapMarkedAlt, FaVideo } from "react-icons/fa";
+import { CamerasPanel } from "../camerasPanel";
 
 export function MainPanel() {
   LogoutToken();
@@ -53,7 +56,7 @@ export function MainPanel() {
       }
     }
   }, [selectedVehicleId, buses]);
- 
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -64,8 +67,27 @@ export function MainPanel() {
         </div>
 
         <div className="main-content">
+          <ButtonGroup>
+            <Button className="button-bordered">
+              {" "}
+              <FaVideo style={{ marginRight: "6px" }} /> Vista camaras
+            </Button>
+            <Button className="button-bordered">
+              {" "}
+              <FaLayerGroup style={{ marginRight: "6px" }} /> Vista mixta
+            </Button>
+            <Button className="button-bordered">
+              {" "}
+              <FaMapMarkedAlt style={{ marginRight: "6px" }} /> Vista Mapa
+            </Button>
+          </ButtonGroup>
+
           <div className="main-map-container">
             <MapaBase buses={buses} initialPosition={initialPosition} />
+          </div>
+
+          <div className="main-map-container">
+            <CamerasPanel />
           </div>
 
           {selectedVehicleId ? (

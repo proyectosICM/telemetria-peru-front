@@ -27,7 +27,7 @@ export function FuelRecordsTable({ fuelType }) {
             <th>
               {fuelType && fuelType.fuelType === "GAS"
                 ? "PSI"
-                : fuelType.fuelType === "GASOLINA"
+                : fuelType.fuelType === "GASOLINA" 
                 ? "Volumen"
                 : fuelType.fuelType === "DIESEL"
                 ? "Galones"

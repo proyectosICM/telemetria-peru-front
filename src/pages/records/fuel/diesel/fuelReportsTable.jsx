@@ -93,8 +93,8 @@ export function FuelReportsTable() {
                 <th>Hora de cierre</th>
                 <th>Combustible inicial</th>
                 <th>Combustible final</th>
-                {/*<th>Uso</th>*/}
-
+                <th>Combustible usado</th>
+                <th>Tipo de uso</th> {/* Nueva columna */}
                 <th>Tiempo Estacionado</th>
                 <th>Tiempo Ralenti</th>
                 <th>Tiempo Operacion</th>
@@ -109,9 +109,22 @@ export function FuelReportsTable() {
                   <td>{getTimeFromTimestamp(report.createdAt)}</td>
                   <td>{getDateFromTimestamp(report.updatedAt)}</td>
                   <td>{getTimeFromTimestamp(report.updatedAt)}</td>
-                  <td>{report.initialFuel ?? "—"}</td>
-                  <td>{report.finalFuel ?? "—"}</td>
-                  {/*<td>{report.initialFuel}</td>*/}
+                  <td>{(report.initialFuel * 0.264172).toFixed(2) ?? "—"}</td>
+                  <td>{(report.finalFuel * 0.264172).toFixed(2) ?? "—"}</td>
+                  <td>
+                    {report.initialFuel != null && report.finalFuel != null
+                      ? Math.abs((report.initialFuel - report.finalFuel) * 0.264172).toFixed(2)
+                      : "—"}
+                  </td>
+                  <td>
+                    {report.initialFuel != null && report.finalFuel != null
+                      ? report.initialFuel > report.finalFuel
+                        ? "🔻 Consumo"
+                        : report.finalFuel > report.initialFuel
+                        ? "🔺 Recarga"
+                        : "➖ Sin variación"
+                      : "—"}
+                  </td>
 
                   <td>{formatDuration(report.parkedTime)}</td>
                   <td>{formatDuration(report.idleTime)}</td>

@@ -30,13 +30,15 @@ import { IssuesRecords } from "./pages/records/issues";
 import { FuelRecords } from "./pages/records/fuel";
 import { ImpactIncidentLoggingRecords } from "./pages/records/impactIncident/impactIncidentLoggingRecords";
 import ManageVehicles from "./pages/adminPanel/manage_vehicles";
+import { CamerasPanel } from "./pages/camerasPanel";
 
 export const routes = [
   { path: "/", component: <MainPanel /> },
   { path: "/mapa", component: <MapaBase /> },
-  { path: "/login", component: <Login /> },
+  { path: "/login", component: <Login /> }, 
   { path: "/redirectandW", component: <WelcomeAndRedirect /> },
   { path: "/admin", component: <AdminPanel /> },
+  { path: "/cameras", component: <CamerasPanel /> },
 
   { path: "/vehicle-info", component: <VehicleInfoPanel /> },
 

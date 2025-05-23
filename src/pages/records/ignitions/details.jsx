@@ -71,7 +71,7 @@ export function IgnitionDetails() {
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   return (
-    <div>
+    <div className="g-background">
       <NavbarCommon />
       <BackButton path={-1} />
       <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%", padding: "20px" }}>

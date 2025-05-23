@@ -45,3 +45,63 @@
   overflow-x: auto;
   margin: 10px 0;
 }
+
+.mixed-view {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  height: 550px; /* ⬅️ Igual que .main-map-container */
+}
+
+.camera-view-panel {
+  height: 550px; /* Igual que .main-map-container */
+  overflow-y: auto;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.camera-view-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.camera-view-panel::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.half-panel {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #1a1a1a;
+  padding: 0.5rem;
+  height: 100%; /* ⬅️ Añade esta línea */
+}
+
+.left-panel {
+  border-right: 1px solid #333;
+  overflow-y: auto; /* 👈 Permite scroll solo en el panel de cámaras */
+}
+
+.left-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.left-panel::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+.right-panel {
+  border-left: 1px solid #333;
+}
+
+@media (max-width: 768px) {
+  .mixed-view {
+    flex-direction: column;
+  }
+  .left-panel,
+  .right-panel {
+    border: none;
+  }
+}

@@ -1,4 +1,3 @@
-import React from "react";
 import { Table } from "react-bootstrap";
 import { FaCalendarAlt, FaClock, FaCarAlt, FaToggleOn } from "react-icons/fa";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../utils/formatUtils";

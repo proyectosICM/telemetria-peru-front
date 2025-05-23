@@ -102,7 +102,7 @@ export const gasChangesRoutes = {
 };
 
 // Ignition Routes
-export const ignitionRoutes = {
+export const ignitionRoutes = { 
   base: `${baseAPIURL}/vehicle-ignition`,
   paged: `${baseAPIURL}/vehicle-ignition/paged`,
   byVehicle: `${baseAPIURL}/vehicle-ignition/by-vehicle`,

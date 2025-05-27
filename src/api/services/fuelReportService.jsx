@@ -46,3 +46,16 @@ export const getByVehicleIdPaged = async (vehicleId, page, size) => {
   }
 };
 
+export const getSummaryByVehicle = async (vehicleId, year, month, day) => {
+  try {
+    const response = await api.get(`${endpoint}/summary/${vehicleId}`,
+      {
+        params: { year, month, day },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching fuel report summary:", error);
+    throw error;
+  }
+}

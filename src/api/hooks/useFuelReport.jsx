@@ -36,3 +36,11 @@ export const useFuelReportsByVehiclePaged = (vehicleId, page, size) => {
     keepPreviousData: true,
   });
 };
+
+export const useFuelReportSummary = (vehicleId, year, month, day) => {
+  return useQuery({
+    queryKey: ["fuelReportSummary", vehicleId, year, month, day],
+    queryFn: () => fuelReportService.getSummaryByVehicle(vehicleId, year, month, day),
+     enabled: vehicleId !== undefined && year !== undefined && month !== undefined && day !== undefined,
+  });
+}

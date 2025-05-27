@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Spinner, Pagination } from "react-bootstrap";
 import { useFuelReportsByVehiclePaged } from "../../../../api/hooks/useFuelReport";
-import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
+import { formatSecondsToHHMMSS, getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
 import "../../../../styles/paginationStyles.css";
 
 // Función utilitaria para convertir milisegundos a formato hh:mm:ss
@@ -25,7 +25,7 @@ const formatDateArray = (arr) => {
 export function FuelReportsTable() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [page, setPage] = useState(0);
-  const pageSize = 10;
+  const pageSize = 8;
 
   const { data: reports, isLoading, isError } = useFuelReportsByVehiclePaged(selectedVehicleId, page, pageSize);
 
@@ -74,7 +74,7 @@ export function FuelReportsTable() {
   };
 
   return (
-    <div style={{ margin: "10px", width: "90%", height: "600px", overflowX: "auto" }}>
+    <div style={{ margin: "10px", width: "90%", height: "800px", overflowX: "auto" }}>
       <h4>📊 Reportes de combustible</h4>
       {isLoading ? (
         <Spinner animation="border" variant="primary" />
@@ -126,9 +126,9 @@ export function FuelReportsTable() {
                       : "—"}
                   </td>
 
-                  <td>{formatDuration(report.parkedTime)}</td>
-                  <td>{formatDuration(report.idleTime)}</td>
-                  <td>{formatDuration(report.operatingTime)}</td>
+                  <td>{formatSecondsToHHMMSS(report.parkedSeconds)}</td>
+                  <td>{formatSecondsToHHMMSS(report.idleSeconds)}</td>
+                  <td>{formatSecondsToHHMMSS(report.operatingSeconds)}</td>
                 </tr>
               ))}
             </tbody>

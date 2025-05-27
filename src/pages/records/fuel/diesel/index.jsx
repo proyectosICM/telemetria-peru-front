@@ -9,6 +9,7 @@ import { AvgFuelEfficiency } from "./avgFuelEfficiency";
 import { FuelCharts } from "./fuelCharts";
 import { FuelRecordsTable } from "./fuelRecordsTable";
 import { FuelReportsTable } from "./fuelReportsTable";
+import { AvgReports } from "./avgReports";
 
 
 export function DieselComponent() {
@@ -34,10 +35,13 @@ export function DieselComponent() {
     >
       <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
 
-      <AvgResults />
+     
 
-{  /*    <FuelEfficiencyTable /> */}
+{  /*    <AvgResults /> 
+ <FuelEfficiencyTable /> */}
 
+
+      <AvgReports />
       <FuelReportsTable />
 
       <AvgFuelEfficiency />

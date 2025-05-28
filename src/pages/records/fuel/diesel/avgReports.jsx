@@ -1,6 +1,7 @@
 import React from "react";
 import { useFuelReportSummary } from "../../../../api/hooks/useFuelReport";
 import { Table } from "react-bootstrap";
+import { formatSecondsToHHMMSS } from "../../../../utils/formatUtils";
 
 export function AvgReports() {
   // Ejemplo: Obtener datos para el vehículo 18 en la fecha 27/5/2025
@@ -43,19 +44,19 @@ export function AvgReports() {
             <tbody>
               <tr>
                 <td>Consumo promedio de combustible</td>
-                <td>{fuelReport.averageFuelConsumption?.toFixed(2)}</td>
+                <td>{fuelReport.averageFuelConsumption}</td>
               </tr>
               <tr>
                 <td>Tiempo total en ralentí (horas)</td>
-                <td>{fuelReport.totalIdleTime}</td>
+                <td>{formatSecondsToHHMMSS(fuelReport.totalIdleTime)}</td>
               </tr>
               <tr>
                 <td>Tiempo total estacionado (horas)</td>
-                <td>{fuelReport.totalParkedTime.toFixed(2)}</td>
+                <td>{formatSecondsToHHMMSS(fuelReport.totalParkedTime)}</td>
               </tr>
               <tr>
                 <td>Tiempo total operando (horas)</td>
-                <td>{fuelReport.totalOperatingTime.toFixed(2)}</td>
+                <td>{formatSecondsToHHMMSS(fuelReport.totalOperatingTime)}</td>
               </tr>
             </tbody>
           </Table>

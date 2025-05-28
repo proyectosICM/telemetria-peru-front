@@ -11,7 +11,6 @@ import { FuelRecordsTable } from "./fuelRecordsTable";
 import { FuelReportsTable } from "./fuelReportsTable";
 import { AvgReports } from "./avgReports";
 
-
 export function DieselComponent() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
@@ -26,20 +25,18 @@ export function DieselComponent() {
   return (
     <div
       style={{
-        display: "flex", 
+        display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         margin: "20px auto",
       }}
-    > 
+    >
       <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
 
-     
-
-{  /*    <AvgResults /> 
+      {/*    
+         <AvgResults />
  <FuelEfficiencyTable /> */}
-
 
       <AvgReports />
       <FuelReportsTable />

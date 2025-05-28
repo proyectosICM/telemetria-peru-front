@@ -107,11 +107,11 @@ export function FuelInfo({ showAlert = true }) {
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/fuel-Records")}>
       <h5>Combustible</h5>
       <span style={{ fontSize: "14px" }}>Tipo: {vehicleData && vehicleData.fuelType}</span>
-      <div style={{ display: "flex", justifyContent: "center", margin: "0px auto 0px auto" }}>
+      <div style={{ display: "flex", justifyContent: "center", margin: "0px auto 0px auto", height:"75%" }}>
         {dataValue !== null ? (
           <CircularProgressbarWithStatus value={percentage} status={status} size={"40%"}>
             {dataValue !== null && (
-              <>
+              <div style={{margin: "0px auto 0px auto", textAlign: "center"}}>
                 <span style={{ fontSize: "14px" }}>Estado: {status}</span>
                 <br />
                 <span style={{ fontSize: "14px" }}>
@@ -127,7 +127,7 @@ export function FuelInfo({ showAlert = true }) {
                 </span>
                 <br />
                 {/* <span style={{ fontSize: "15px" }}>Cambios realizados en el día: 10</span> */}
-              </>
+              </div>
             )}
           </CircularProgressbarWithStatus>
         ) : (

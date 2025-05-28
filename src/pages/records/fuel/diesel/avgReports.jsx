@@ -8,7 +8,7 @@ export function AvgReports() {
   const selectedVehicleId = Number(localStorage.getItem("selectedVehicleId") || 0);
 
   // 🎛️ Estados para filtro
-  const [selectedFilter, setSelectedFilter] = useState("Por Mes");
+  const [selectedFilter, setSelectedFilter] = useState("Por Día");
   const [selectedYear, setSelectedYear]     = useState("");
   const [selectedMonth, setSelectedMonth]   = useState("");
   const [selectedDay, setSelectedDay]       = useState("");

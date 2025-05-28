@@ -40,10 +40,30 @@
 
 .main-options-panel-content {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  margin: 10px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  padding: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.main-options-panel-content > * {
+  flex: 1 1 calc(20% - 10px);
+  min-width: 200px; /* Para evitar que se hagan muy pequeños */
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .main-options-panel-content > * {
+    flex: 1 1 calc(50% - 10px); /* 2 por fila en tablets y pantallas medianas */
+  }
+}
+
+@media (max-width: 600px) {
+  .main-options-panel-content > * {
+    flex: 1 1 100%; /* 1 por fila en móviles */
+  }
 }
 
 .mixed-view {

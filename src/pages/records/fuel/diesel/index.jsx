@@ -32,6 +32,7 @@ export function DieselComponent() {
         margin: "20px auto",
       }}
     >
+
       <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
 
       {/*    

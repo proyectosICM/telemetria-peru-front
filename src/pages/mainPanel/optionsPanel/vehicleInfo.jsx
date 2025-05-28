@@ -26,24 +26,26 @@ export function VehicleInfo({ showAlert = true }) {
   // Handle incoming MQTT messages to update speed info
   useEffect(() => {
     mqttDataHandler(messages, setSpeed, "speed");
-  }, [messages]); 
+  }, [messages]);
 
   // Comprobar si la velocidad actual supera la velocidad máxima
   const isSpeedExceeded = data?.maxSpeed > 0 && speed > data.maxSpeed;
 
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/vehicle-info")}>
-      <h5>Información del Vehículo</h5>
-      <span>Placa: {data && data.licensePlate}</span>
-      <br />
-      <span>Tipo: {data && data.vehicleTypeName}</span>
-      <br />
-      {/* Mostrar la velocidad actual con el color adecuado según la condición */}
-      <span style={{ color: isSpeedExceeded ? "red" : "white" }}>Velocidad Actual: {speed ? `${speed} km` : "0 km"}</span>
-      <br />
-      {/* Mostrar advertencia solo si se excede la velocidad máxima */}
-      {isSpeedExceeded && <p style={{ color: "red" }}>¡Límite de velocidad excedido!</p>}
-      {/*<span>Tiempo encendido: {data && data.timeOn} segundos</span>*/}
+      <div style={{ padding: "10px"}}>
+        <h5>Información del Vehículo</h5>
+        <span>Placa: {data && data.licensePlate}</span>
+        <br />
+        <span>Tipo: {data && data.vehicleTypeName}</span>
+        <br />
+        {/* Mostrar la velocidad actual con el color adecuado según la condición */}
+        <span style={{ color: isSpeedExceeded ? "red" : "white" }}>Velocidad Actual: {speed ? `${speed} km` : "0 km"}</span>
+        <br />
+        {/* Mostrar advertencia solo si se excede la velocidad máxima */}
+        {isSpeedExceeded && <p style={{ color: "red" }}>¡Límite de velocidad excedido!</p>}
+        {/*<span>Tiempo encendido: {data && data.timeOn} segundos</span>*/}
+      </div>
     </div>
   );
 }

@@ -37,7 +37,7 @@ const CircularProgressbarWithStatus = ({ value, status, size, children }) => {
           })}
         />
       </div>
-      <div style={{ textAlign: "center", color: "white", margin: "22px 0px 0px 0px " }}>{children}</div>
+      <div style={{ textAlign: "center", color: "white", margin: "40px 0px 0px 0px " }}>{children}</div>
     </div>
   );
 };

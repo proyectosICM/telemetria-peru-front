@@ -121,16 +121,13 @@ export function MainPanel() {
                 <IgnitionInfo />
                 <AlarmInfo />
                 <ChecklistInfo />
-              </div>
-
-              <div className="main-options-panel-content">
                 <FuelInfo />
                 <BatteryInfo />
                 <ImpactIncidentLogging />
                 <TireInfo />
                 <TireInfoData />
               </div>
-            </div>
+s            </div>
           ) : (
             <div className="main-no-vehicle-selected">
               <h1>Por favor, seleccione un vehículo para ver las opciones.</h1>

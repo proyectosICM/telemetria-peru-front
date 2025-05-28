@@ -49,8 +49,8 @@
 }
 
 .main-options-panel-content > * {
-  flex: 1 1 calc(20% - 10px);
-  min-width: 200px; /* Para evitar que se hagan muy pequeños */
+  flex: 1 1 calc(10% - 10px);
+  min-width: 180px; /* Para evitar que se hagan muy pequeños */
   box-sizing: border-box;
 }
 

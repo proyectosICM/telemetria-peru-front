@@ -7,6 +7,8 @@ import { Button } from "react-bootstrap";
 import { SpeedExcessTable } from "./speedExcessTable";
 import { TruckLoadsTable } from "./truckLoadsTable";
 import { TruckDailyCountLoadTable } from "./truckDailyCountLoadTable";
+import { FaCarSide, FaIdBadge, FaTruck, FaFlagCheckered, FaArrowLeft, FaTachometerAlt } from "react-icons/fa";
+import { FaCircleInfo } from "react-icons/fa6";
 
 export function VehicleInfoPanel() {
   const navigate = useNavigate();
@@ -18,30 +20,30 @@ export function VehicleInfoPanel() {
     ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
   }, [selectedVehicleId]);
 
-  return (  
+  return (
     <div className="g-background">
       <NavbarCommon />
       <Button onClick={() => navigate(-1)} className="back-button">
-        Atras
+        <FaArrowLeft style={{ marginRight: "5px" }} /> Atras
       </Button>
 
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto" }}>
-        <h2>Informacion del vehiculo</h2>
+        <h2> <FaCircleInfo style={{ marginRight: "10px" }} /> Informacion del vehiculo</h2>
 
         {error && (
           <div className="error-message" style={{ color: "red", margin: "10px" }}>
             Error: {error.message || "Hubo un problema cargando los datos"}
           </div>
         )}
- 
+
         <p>
-          <strong> Placa:</strong> {vehicleData && vehicleData.licensePlate} | <strong> Tipo de vehículo: </strong>
+          <strong> <FaIdBadge style={{ marginRight: "5px" }} /> Placa:</strong> {vehicleData && vehicleData.licensePlate} | <strong> <FaTruck style={{ marginRight: "5px" }} /> Tipo de vehículo: </strong>
           {vehicleData && vehicleData.vehicleTypeName}
         </p>
-        <p>Velocidad maxima definida: {vehicleData && vehicleData.maxSpeed ? `${vehicleData.maxSpeed} km/h` : "No registra"} </p>
+        <p><FaTachometerAlt style={{ marginRight: "5px" }} /> Velocidad maxima definida: {vehicleData && vehicleData.maxSpeed ? `${vehicleData.maxSpeed} km/h` : "No registra"} </p>
+        <SpeedExcessTable />
         <TruckLoadsTable />
         <TruckDailyCountLoadTable />
-        <SpeedExcessTable />
       </div>
     </div>
   );

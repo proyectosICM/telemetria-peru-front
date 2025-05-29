@@ -12,8 +12,7 @@ export function ChecklistInfo({ showAlert = true }) {
     alignItems: "center",
     width: "80%",
     padding: "10px",
-
-    margin: "10% auto ",  
+    margin: "20% auto ",  
     textAlign: "center",
     borderRadius: "10px",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",

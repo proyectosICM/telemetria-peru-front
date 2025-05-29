@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaTruck } from "react-icons/fa"; // Importa el ícono de camión
+import { FaFilter, FaSearch, FaTruck } from "react-icons/fa"; // Importa el ícono de camión
 import { ListItems } from "../hooks/listItems";
 import { vehicleRoutes, vehiclesTypesRoutes } from "../api/apiurls";
 import { useMemo } from "react";
@@ -26,7 +26,7 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
     localStorage.setItem("selectedTypeVehicleId", type);
   };
 
-  const filteredData = useMemo(() => { 
+  const filteredData = useMemo(() => {
     return data.filter(
       (item) =>
         item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) && (selectedType ? item.vehicletypeModel.name === selectedType : true)
@@ -35,20 +35,50 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
 
   return (
     <div className="vmp-container">
-      <h1 className="vmp-title">Unidades</h1>
+      <h1 className="vmp-title">🚗 Unidades</h1>
 
-      <div className="vmp-search-bar">
+      <div className="vmp-search-bar" style={{ position: "relative", width: "100%" }}>
+        <FaSearch
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "10px",
+            transform: "translateY(-50%)",
+            color: "#888",
+          }}
+        />
         <input
           type="text"
           placeholder="Buscar por matrícula..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="vmp-search-input"
+          style={{
+            paddingLeft: "35px", // espacio para el ícono
+            width: "100%",
+          }}
         />
       </div>
 
-      <div className="vmp-filter-bar">
-        <select className="vmp-filter-select" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+      <div className="vmp-filter-bar" style={{ position: "relative", width: "100%" }}>
+        <FaFilter
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "10px",
+            transform: "translateY(-50%)",
+            color: "#888",
+          }}
+        />
+        <select
+          className="vmp-filter-select"
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+          style={{
+            paddingLeft: "35px", // espacio para el ícono
+            width: "100%",
+          }}
+        >
           <option value="">Todos los tipos</option>
           {dataTypes.map((type) => (
             <option key={type.id} value={type.name}>

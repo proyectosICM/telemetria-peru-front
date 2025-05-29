@@ -3,7 +3,8 @@ import { vehicleRoutes } from "../../../api/apiurls";
 import { ListItems } from "../../../hooks/listItems";
 import { editVehicleOptions } from "../../../hooks/editItem";
 import "../../../styles/truckOptions.css";
- 
+import { FaCar, FaBell, FaLockOpen, FaLock } from "react-icons/fa";
+
 export function VehicleOptions() {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
@@ -14,9 +15,27 @@ export function VehicleOptions() {
   }, [selectedVehicleId]);
 
   const options = [
-    { label: "Vehículo", stateKey: "engine", setState: "setIsVehicleOn", onLabel: "Apagar vehículo", offLabel: "Encender vehículo" },
-    { label: "Alarma", stateKey: "alarm", setState: "setIsAlarmOn", onLabel: "Desactivar alarma", offLabel: "Activar alarma" },
-    { label: "Seguros", stateKey: "lock", setState: "setAreLocksOn", onLabel: "Retirar seguros", offLabel: "Colocar seguros" },
+    {
+      label: "Vehículo",
+      stateKey: "engineStatus",
+      onLabel: "Apagar vehículo",
+      offLabel: "Encender vehículo",
+      icon: <FaCar style={{ marginRight: "8px" }} />,
+    },
+    {
+      label: "Alarma",
+      stateKey: "alarmStatus",
+      onLabel: "Desactivar alarma",
+      offLabel: "Activar alarma",
+      icon: <FaBell style={{ marginRight: "8px" }} />,
+    },
+    {
+      label: "Seguros",
+      stateKey: "lockStatus",
+      onLabel: "Retirar seguros",
+      offLabel: "Colocar seguros",
+      // Cambia de ícono dinámicamente dentro del render
+    },
   ];
 
   const [states, setStates] = useState({
@@ -45,17 +64,33 @@ export function VehicleOptions() {
 
   return (
     <div className="g-option-item">
-      <h5>Opciones Remotas</h5>
+      <h5 style={{ textAlign: "center", marginBottom: "20px" }}>Opciones Remotas</h5>
 
-      {options.map(({ label, stateKey, onLabel, offLabel }) => (
-        <div key={stateKey} className="option">
-          <span style={{ fontSize: "15px", margin: "5px" }}>{states[stateKey] ? onLabel : offLabel}</span>
-          <label className="tk-op-switch">
-            <input type="checkbox" checked={states[stateKey]} onChange={() => handleToggle(stateKey)} />
-            <span className="tk-op-slider"></span>
-          </label>
-        </div>
-      ))}
+      {options.map(({ label, stateKey, onLabel, offLabel, icon }) => {
+        const dynamicIcon =
+          stateKey === "lockStatus" ? (
+            states[stateKey] ? (
+              <FaLockOpen style={{ marginRight: "8px" }} />
+            ) : (
+              <FaLock style={{ marginRight: "8px" }} />
+            )
+          ) : (
+            icon
+          );
+
+        return (
+          <div key={stateKey} className="option-row">
+            <div className="option-label">
+              {dynamicIcon}
+              {states[stateKey] ? onLabel : offLabel}
+            </div>
+            <label className="tk-op-switch">
+              <input type="checkbox" checked={states[stateKey]} onChange={() => handleToggle(stateKey)} />
+              <span className="tk-op-slider"></span>
+            </label>
+          </div>
+        );
+      })}
     </div>
   );
 }

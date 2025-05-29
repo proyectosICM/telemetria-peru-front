@@ -35,7 +35,7 @@ export function IgnitionInfo({ showAlert = true }) {
     alignItems: "center",
     width: "80%",
     padding: "10px",
-    margin: "10% auto ",
+    margin: "20% auto ",
     textAlign: "center",
     borderRadius: "10px",
     boxShadow: ignition ? "0px 4px 15px rgba(0, 255, 0, 0.4)" : "0px 4px 15px rgba(169, 169, 169, 0.4)",

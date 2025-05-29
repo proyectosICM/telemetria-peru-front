@@ -6,6 +6,9 @@ import mqttDataHandler from "../../../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
 import { useNavigate } from "react-router-dom";
 import { mqttDominio, mqttTopics } from "../../../mqtt/mqttConfig";
+import { BiSolidDashboard } from "react-icons/bi";
+import { FaCar, FaTachometerAlt, FaExclamationTriangle } from "react-icons/fa";
+import { FaPowerOff, FaSpeedometer, FaRoad } from "react-icons/fa";
 
 export function VehicleInfo({ showAlert = true }) {
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ export function VehicleInfo({ showAlert = true }) {
   // Handle incoming MQTT messages to update speed info
   useEffect(() => {
     mqttDataHandler(messages, setSpeed, "speed");
-  }, [messages]);
+  }, [messages]); 
 
   // Comprobar si la velocidad actual supera la velocidad máxima
   const isSpeedExceeded = data?.maxSpeed > 0 && speed > data.maxSpeed;
@@ -34,16 +37,18 @@ export function VehicleInfo({ showAlert = true }) {
   return (
     <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/vehicle-info")}>
       <div style={{ padding: "10px"}}>
-        <h5>Información del Vehículo</h5>
-        <span>Placa: {data && data.licensePlate}</span>
+        <h5><BiSolidDashboard style={{ marginRight: "5px" }} />Información del Vehículo</h5>
+        <span><FaCar style={{ marginRight: "5px" }} /> Placa: {data && data.licensePlate}</span>
         <br />
-        <span>Tipo: {data && data.vehicleTypeName}</span>
+        <span><FaCar style={{ marginRight: "5px" }} /> Tipo: {data && data.vehicleTypeName}</span>
         <br />
         {/* Mostrar la velocidad actual con el color adecuado según la condición */}
-        <span style={{ color: isSpeedExceeded ? "red" : "white" }}>Velocidad Actual: {speed ? `${speed} km` : "0 km"}</span>
+        <span style={{ color: isSpeedExceeded ? "red" : "white" }}> <FaTachometerAlt style={{ marginRight: "5px" }} /> Velocidad Actual: {speed ? `${speed} km` : "0 km"}</span>
         <br />
         {/* Mostrar advertencia solo si se excede la velocidad máxima */}
-        {isSpeedExceeded && <p style={{ color: "red" }}>¡Límite de velocidad excedido!</p>}
+        {isSpeedExceeded && <p style={{ color: "red" }}>
+          <FaExclamationTriangle style={{ marginRight: "5px" }} />
+          ¡Límite de velocidad excedido!</p>}
         {/*<span>Tiempo encendido: {data && data.timeOn} segundos</span>*/}
       </div>
     </div>

@@ -20,8 +20,10 @@
   }
 
   .button-bordered {
-    border: 2px solid white !important; /* Color y grosor del borde */
-    border-radius: 4px; /* Opcional: para esquinas redondeadas */
+    border: 2px solid white !important;
+    /* Color y grosor del borde */
+    border-radius: 4px;
+    /* Opcional: para esquinas redondeadas */
     background-color: white;
     color: #007bff;
     font-weight: bold;
@@ -34,6 +36,8 @@
     border: 2px solid #d1d0cc;
     padding: 5px;
     border-radius: 5%;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     flex-wrap: nowrap;
     overflow-y: auto;

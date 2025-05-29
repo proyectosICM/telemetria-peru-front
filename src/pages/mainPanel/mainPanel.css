@@ -56,13 +56,25 @@
 
 @media (max-width: 1024px) {
   .main-options-panel-content > * {
-    flex: 1 1 calc(50% - 10px); /* 2 por fila en tablets y pantallas medianas */
+    flex: 1 1 calc(30% - 10px); /* 2 por fila en tablets y pantallas medianas */
+  }
+}
+
+@media (max-width: 800px) {
+  .main-options-panel-content > * {
+    flex: 1 1 calc(30% - 10px); /* 1 por fila en móviles */
   }
 }
 
 @media (max-width: 600px) {
   .main-options-panel-content > * {
-    flex: 1 1 100%; /* 1 por fila en móviles */
+    flex: 1 1 calc(30% - 10px); /* 1 por fila en móviles */
+  }
+}
+
+@media (max-width: 300px) {
+  .main-options-panel-content > * {
+    flex: 1 1 calc(50% - 10px); /* 1 por fila en móviles */
   }
 }
 

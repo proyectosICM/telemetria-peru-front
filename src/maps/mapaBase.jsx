@@ -9,7 +9,8 @@ export function MapaBase({ buses, rutas, initialPosition }) {
   const mapRef = useRef(null);
   const showMap = useShowMapAfterDelay(20);
   const map = useCreateMap(mapRef.current, initialPosition); // Crear mapa usando el hook
-
+  //console.log("MapaBase renderizado");
+  //console.log(buses);
   // Añadir marcadores para los buses
 
   useEffect(() => {
@@ -17,6 +18,8 @@ export function MapaBase({ buses, rutas, initialPosition }) {
       buses.forEach((bus) => {
         const busPosition = [bus.longitude, bus.latitude];
         const speed = bus.speed;
+        const ignition = bus.ignitionInfo;
+        
         const infoHTML = (
           <div>
             <p>Detalles del vehiculo</p>
@@ -25,7 +28,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
             {ReactDOM.createPortal(<FaBus size={24} style={{ marginRight: "10px", color: "#555" }} />, document.createElement("div"))}
           </div>
         );
-        addMarker(map, speed, busPosition, "busesIcono", bus.licensePlate, infoHTML);
+        addMarker(map, speed, ignition, busPosition, "busesIcono", bus.licensePlate, infoHTML);
       });
     }
   }, [map, buses]);

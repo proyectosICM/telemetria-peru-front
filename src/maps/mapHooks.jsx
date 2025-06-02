@@ -50,7 +50,7 @@ export const useCreateMap = (mapRef, position, setMap) => {
   return createMap;
 };
 
-export const addMarker = (map, speed, position, image, title, infoHTML) => {
+export const addMarker = (map, speed, ignition, position, image, title, infoHTML) => {
   let existingMarker;
   map.getLayers().forEach((layer) => {
     if (layer.getSource() instanceof VectorSource) {
@@ -72,12 +72,11 @@ export const addMarker = (map, speed, position, image, title, infoHTML) => {
     markerImageSrc = require("../images/masIcono.png");
   }
 
-  const getColorBySpeed = (speed) => {
-    if (speed === 0) return "#808080"; // Gris (detenido)
-    if (speed > 30) return "#FF0000"; // Rojo (más de 30 km/h)
-    return "#00FF00"; // Verde (en movimiento, pero <= 30 km/h)
+  const getColorByIgnition = (ignition) => {
+    if (ignition === 0) return "#808080"; // Gris (apagado)
+    if (ignition === 1) return "#00FF00"; // Verde (encendido)
+    return "#000000"; // Negro o algún color para error/desconocido
   };
-
 
   // Si existe un marcador con el mismo título, actualizar su posición
   if (existingMarker) {
@@ -87,7 +86,7 @@ export const addMarker = (map, speed, position, image, title, infoHTML) => {
       new Style({
         image: new CircleStyle({
           radius: 15,
-          fill: new Fill({ color: getColorBySpeed(speed) }), // Cambia el color según la velocidad
+          fill: new Fill({ color: getColorByIgnition(ignition) }), // Cambia el color según la velocidad
           stroke: new Stroke({ color: "#ffffff", width: 2 }),
         }),
         text: new Text({
@@ -116,13 +115,12 @@ export const addMarker = (map, speed, position, image, title, infoHTML) => {
     features: [marker],
   });
 
-
   const vectorLayer = new VectorLayer({
     source: vectorSource,
     style: new Style({
       image: new CircleStyle({
         radius: 15,
-        fill: new Fill({ color: getColorBySpeed(speed) }),
+        fill: new Fill({ color: getColorByIgnition(ignition) }),
         stroke: new Stroke({ color: "#ffffff", width: 2 }),
       }),
       text: new Text({

@@ -39,7 +39,7 @@ export function MainPanel() {
   };
 
   const [initialPosition, setInitialPosition] = useState([-76.95769789314294, -12.036776926858456]);
-
+  console.log(buses);
   useEffect(() => {
     if (selectedVehicleId && Array.isArray(buses)) {
       const vehicleMessages = buses.filter((bus) => bus.vehicleId === selectedVehicleId);
@@ -108,6 +108,7 @@ export function MainPanel() {
                   <MapaBase buses={buses} initialPosition={initialPosition} />
                 </div>
               </>
+              
             )}
           </div>
 
@@ -120,6 +121,7 @@ export function MainPanel() {
                 <VehicleOptions />
                 <IgnitionInfo />
                 <AlarmInfo />
+                
                 <ChecklistInfo />
                 <FuelInfo />
                 <BatteryInfo />
@@ -127,7 +129,7 @@ export function MainPanel() {
                 <TireInfo />
                 <TireInfoData />
               </div>
-s            </div>
+            </div>
           ) : (
             <div className="main-no-vehicle-selected">
               <h1>Por favor, seleccione un vehículo para ver las opciones.</h1>

@@ -20,7 +20,7 @@ export function GasComponent() {
       }}
     >
       <h1>Gas Component</h1>
-
+ 
       <GasChangesCounts />
 
       <GasChangesRecordsTable />

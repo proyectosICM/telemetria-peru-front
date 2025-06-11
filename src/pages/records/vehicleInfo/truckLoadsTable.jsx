@@ -33,7 +33,7 @@ export function TruckLoadsTable() {
 
       <span>Cargas realizadas en el dia {loadsCount}</span>
 
-      <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "80%" }}>
+      <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "90%" }}>
         <thead>
           <tr>
             <th>Día y Hora</th>

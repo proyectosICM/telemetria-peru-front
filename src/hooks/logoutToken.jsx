@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { clearLocalStorage } from "../utils/storageUtils";
-import Swal from "sweetalert2"; // Importa SweetAlert2
 import { alertMessageExpiredToken } from "../messages/apiResponseMessages";
 
 export function LogoutToken() {
@@ -17,8 +16,7 @@ export function LogoutToken() {
   
         if (decodedToken.exp * 1000 < currentDate.getTime()) {
           console.log("Token has expired");
-  
-  
+          
           alertMessageExpiredToken().then(() => {
             clearLocalStorage();
             navigate("/login");

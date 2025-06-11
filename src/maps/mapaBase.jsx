@@ -4,7 +4,7 @@ import { addMarker, useShowMapAfterDelay } from "./mapHooks";
 import { useCreateMap } from "./useCreateMap";
 import { FaBus } from "react-icons/fa";
 import ReactDOM from "react-dom";
- 
+
 export function MapaBase({ buses, rutas, initialPosition }) {
   const mapRef = useRef(null);
   const showMap = useShowMapAfterDelay(20);
@@ -13,18 +13,27 @@ export function MapaBase({ buses, rutas, initialPosition }) {
   //console.log(buses);
   // Añadir marcadores para los buses
 
+  /* 
+
+
+*/
+
+  function formatCoordinate(value) {
+    return Number.parseFloat(value).toFixed(7);
+  }
+
   useEffect(() => {
     if (map && buses) {
       buses.forEach((bus) => {
-        const busPosition = [bus.longitude, bus.latitude];
+        const busPosition = [formatCoordinate(bus.longitude), formatCoordinate(bus.latitude)];
         const speed = bus.speed;
         const ignition = bus.ignitionInfo;
-        
+
         const infoHTML = (
           <div>
             <p>Detalles del vehiculo</p>
-            <p style={{ marginLeft: '10px' }}>Placa</p>
-            <p style={{ marginLeft: '10px' }}>{bus.licensePlate}</p>
+            <p style={{ marginLeft: "10px" }}>Placa</p>
+            <p style={{ marginLeft: "10px" }}>{bus.licensePlate}</p>
             {ReactDOM.createPortal(<FaBus size={24} style={{ marginRight: "10px", color: "#555" }} />, document.createElement("div"))}
           </div>
         );
@@ -37,7 +46,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
   useEffect(() => {
     if (map && rutas) {
       rutas.forEach((ruta) => {
-        const stopPosition = [ruta.paraderosModel.longitud, ruta.paraderosModel.latitud];
+        const stopPosition = [formatCoordinate(ruta.paraderosModel.longitud), formatCoordinate(ruta.paraderosModel.latitud)];
         const speed = 0;
         addMarker(map, speed, stopPosition, "paradero", ruta.paraderosModel.nombre, "<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>");
       });

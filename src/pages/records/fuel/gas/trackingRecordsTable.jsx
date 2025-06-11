@@ -38,7 +38,7 @@ export function TrackingRecordsTable() {
 
             <th>Vehiculo</th>
           </tr>
-        </thead>
+        </thead>  
         <tbody>
           {/* Verifica si hay datos */}
           {data && data.length > 0 ? (    

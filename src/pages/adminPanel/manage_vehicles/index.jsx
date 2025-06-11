@@ -6,7 +6,6 @@ import { VehiclesModal } from "./vehiclesModal";
 import { getFuelTypes } from "../../../api/services/vehicleService";
 import { useCreateVehicle } from "../../../api/hooks/useVehicle";
 
-
 const ManageVehicles = () => {
   const companyId = localStorage.getItem("tp_companyId");
   const [page, setPage] = useState(0);
@@ -56,7 +55,7 @@ const ManageVehicles = () => {
       alert("Por favor complete todos los campos obligatorios.");
       return;
     }
-  
+
     const vehicleToSend = {
       id: newGroup.id, // necesario para update
       licensePlate: newGroup.licensePlate,
@@ -68,11 +67,11 @@ const ManageVehicles = () => {
       driverModel: null,
       companyModel: { id: newGroup.companyModel || companyId },
     };
-  
+
     const isEditing = !!newGroup.id;
-  
+
     const mutation = isEditing ? updateVehicleMutation : createVehicleMutation;
-  
+
     mutation.mutate(vehicleToSend, {
       onSuccess: () => {
         handleCloseModal();

@@ -12,10 +12,16 @@ export function AlarmRecords() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [pageNumber, setPageNumber] = useState(0);
 
-  const { data, totalPages, currentPage, setCurrentPage, pageError  } = ListItemsPaginated(`${alarmRecordRoutes.byVehiclePaged}/${selectedVehicleId}`, pageNumber);
+  const { data, totalPages, currentPage, setCurrentPage, pageError } = ListItemsPaginated(
+    `${alarmRecordRoutes.byVehiclePaged}/${selectedVehicleId}`,
+    pageNumber
+  );
   return (
     <div className="g-background">
+      {/* Navigation bar */}
       <NavbarCommon />
+
+      {/* Back button */}
       <Button onClick={() => navigate("/")} className="back-button">
         Atras
       </Button>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IgnitionInfo } from "../../../realTime/ignitionInfo";
 import { PaginacionUtils } from "../../../utils/paginacionUtils";
-import { ignitionRoutes } from "../../../api/apiurls";
+import { ignitionRoutes } from "../../../api/apiurls"; 
 import { ListItemsPaginated } from "../../../hooks/listItems";
 import { IgnitionRecordsTable } from "./table";
 import { BackButton } from "../../../common/backButton";

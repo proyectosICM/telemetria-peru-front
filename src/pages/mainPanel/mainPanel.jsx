@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { FaLayerGroup, FaMapMarkedAlt, FaVideo } from "react-icons/fa";
+import { Button, ButtonGroup } from "react-bootstrap";
+import useMqtt from "../../hooks/useMqtt";
+import useMqttMapHandler from "../../mqtt/mqttMapHandler";
 import { NavbarCommon } from "../../common/navbarCommon";
 import { MapaBase } from "../../maps/mapaBase";
 import { VehicleMenuPanel } from "../../common/vehicleMenuPanel";
@@ -9,24 +13,19 @@ import { BatteryInfo } from "../../realTime/batteryInfo";
 import { ImpactIncidentLogging } from "../optionsPanel/impactIncidentLogging";
 import { ChecklistInfo } from "./optionsPanel/checklistInfo";
 import { mqttDominio, mqttTopics } from "../../mqtt/mqttConfig";
-import useMqtt from "../../hooks/useMqtt";
-import useMqttMapHandler from "../../mqtt/mqttMapHandler";
 import { FuelInfo } from "../../realTime/fuelInfo";
 import { AlarmInfo } from "../../realTime/alarmInfo";
 import { IgnitionInfo } from "../../realTime/ignitionInfo";
 import { TireInfo } from "../../realTime/tireSensorInfo";
 import { TireInfoData } from "../../realTime/tireSensorInfoData";
 import { CamerasPanel } from "../camerasPanel";
-
 import "./mainPanel.css";
-import { Button, ButtonGroup } from "react-bootstrap";
-import { FaLayerGroup, FaMapMarkedAlt, FaVideo } from "react-icons/fa";
 
 export function MainPanel() {
   LogoutToken();
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
-  const [view, setView] = useState("map"); // 👈 mapa por defecto
+  const [view, setView] = useState("map"); 
 
   const companyId = localStorage.getItem("tp_companyId");
   const topic = `${mqttTopics.mapa}${companyId}`;
@@ -121,7 +120,6 @@ export function MainPanel() {
                 <VehicleOptions />
                 <IgnitionInfo />
                 <AlarmInfo />
-                
                 <ChecklistInfo />
                 <FuelInfo />
                 <BatteryInfo />

@@ -73,8 +73,8 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
   }
 
   const getColorByIgnition = (ignition) => {
-    if (ignition === 0) return "#808080"; // Gris (apagado)
-    if (ignition === 1) return "#00FF00"; // Verde (encendido)
+    if (ignition === false) return "#808080"; // Gris (apagado)
+    if (ignition === true) return "#00FF00"; // Verde (encendido)
     return "#000000"; // Negro o algún color para error/desconocido
   };
 

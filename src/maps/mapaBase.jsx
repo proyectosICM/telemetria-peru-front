@@ -21,14 +21,16 @@ export function MapaBase({ buses, rutas, initialPosition }) {
   function formatCoordinate(value) {
     return Number.parseFloat(value).toFixed(7);
   }
-
+  console.log(buses)
   useEffect(() => {
     if (map && buses) {
       buses.forEach((bus) => {
-        const busPosition = [formatCoordinate(bus.longitude), formatCoordinate(bus.latitude)];
-        const speed = bus.speed;
-        const ignition = bus.ignitionInfo;
+        const busPosition = [formatCoordinate(bus.snapshotLongitude), formatCoordinate(bus.snapshotLatitude)];
+        const speed = bus.snapshotSpeed;
+        const ignition = bus.snapshotIgnitionStatus;
+        const licensePlate = bus.vehicleModel.licensePlate;
 
+        console.log(ignition)
         const infoHTML = (
           <div>
             <p>Detalles del vehiculo</p>
@@ -37,7 +39,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
             {ReactDOM.createPortal(<FaBus size={24} style={{ marginRight: "10px", color: "#555" }} />, document.createElement("div"))}
           </div>
         );
-        addMarker(map, speed, ignition, busPosition, "busesIcono", bus.licensePlate, infoHTML);
+        addMarker(map, speed, ignition, busPosition, "busesIcono", licensePlate, infoHTML);
       });
     }
   }, [map, buses]);

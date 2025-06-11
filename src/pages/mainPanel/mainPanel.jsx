@@ -20,14 +20,18 @@ import { TireInfo } from "../../realTime/tireSensorInfo";
 import { TireInfoData } from "../../realTime/tireSensorInfoData";
 import { CamerasPanel } from "../camerasPanel";
 import "./mainPanel.css";
+import { useGetByCompanyId } from "../../api/hooks/useVehicleSnapshots";
 
 export function MainPanel() {
   LogoutToken();
+  const companyId = localStorage.getItem("tp_companyId");
+  const { data: dataBus, isLoading, error } = useGetByCompanyId(companyId);
+
+  console.log(dataBus);
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
-  const [view, setView] = useState("map"); 
+  const [view, setView] = useState("map");
 
-  const companyId = localStorage.getItem("tp_companyId");
   const topic = `${mqttTopics.mapa}${companyId}`;
   const { messages } = useMqtt(mqttDominio, topic);
   const buses = useMqttMapHandler(messages);
@@ -38,21 +42,23 @@ export function MainPanel() {
   };
 
   const [initialPosition, setInitialPosition] = useState([-76.95769789314294, -12.036776926858456]);
-  console.log(buses);
+
   useEffect(() => {
-    if (selectedVehicleId && Array.isArray(buses)) {
-      const vehicleMessages = buses.filter((bus) => bus.vehicleId === selectedVehicleId);
-      if (vehicleMessages.length > 0) {
-        const recentMessage = vehicleMessages.sort((a, b) => b.timestamp - a.timestamp)[0];
-        if (recentMessage) {
-          const { longitude, latitude } = recentMessage;
+    if (selectedVehicleId && Array.isArray(dataBus)) {
+      const vehicleSnapshot = dataBus.find((item) => item.vehicleModel?.id === selectedVehicleId);
+      if (vehicleSnapshot) {
+        const longitude = parseFloat(vehicleSnapshot.snapshotLongitude);
+        const latitude = parseFloat(vehicleSnapshot.snapshotLatitude);
+        if (!isNaN(longitude) && !isNaN(latitude)) {
           setInitialPosition([longitude, latitude]);
+        } else {
+          console.warn("Coordenadas inválidas para el vehículo seleccionado");
         }
       } else {
-        console.log("No messages found for selected vehicle ID:", selectedVehicleId);
+        console.log("No se encontró snapshot para el vehículo:", selectedVehicleId);
       }
     }
-  }, [selectedVehicleId, buses]);
+  }, [selectedVehicleId, dataBus]);
 
   return (
     <div className="g-background">
@@ -81,7 +87,7 @@ export function MainPanel() {
           </ButtonGroup>
           {/* Renderizado condicional de vistas */}
           <div className={`main-map-container ${view === "mixed" ? "mixed-view" : ""}`}>
-            {view === "map" && <MapaBase buses={buses} initialPosition={initialPosition} />}
+            {view === "map" && <MapaBase buses={dataBus} initialPosition={initialPosition} />}
             {view === "camera" &&
               (selectedVehicleId ? (
                 <div className="camera-view-panel">
@@ -104,10 +110,9 @@ export function MainPanel() {
                   )}
                 </div>
                 <div className="half-panel right-panel">
-                  <MapaBase buses={buses} initialPosition={initialPosition} />
+                  <MapaBase buses={dataBus} initialPosition={initialPosition} />
                 </div>
               </>
-              
             )}
           </div>
 

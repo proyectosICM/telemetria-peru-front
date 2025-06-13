@@ -22,7 +22,7 @@ export function SpeedExcessTable() {
       <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "90%" }}>
         <thead>
           <tr>
-            {/*<th>#</th>*/}
+            {/*<th>#</th>*/} 
             <th><FaCalendarAlt /> Día y Hora</th>
             <th><FaRegFileAlt /> Descripción</th>
           </tr>

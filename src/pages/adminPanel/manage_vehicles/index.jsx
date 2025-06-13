@@ -5,6 +5,8 @@ import { Button, Pagination, Table } from "react-bootstrap";
 import { VehiclesModal } from "./vehiclesModal";
 import { getFuelTypes } from "../../../api/services/vehicleService";
 import { useCreateVehicle } from "../../../api/hooks/useVehicle";
+import { BackButton } from "../../../common/backButton";
+import { FaHashtag, FaCar, FaMicrochip, FaListAlt, FaGasPump, FaTachometerAlt, FaTools, FaPlus, FaEdit, FaTrash, FaPlusCircle } from "react-icons/fa";
 
 const ManageVehicles = () => {
   const companyId = localStorage.getItem("tp_companyId");
@@ -85,82 +87,104 @@ const ManageVehicles = () => {
   return (
     <div className="g-background">
       <NavbarCommon />
-      <h1>Administrar Vehículos</h1>
-      <Button variant="success" onClick={handleShowModal}>
-        Agregar
-      </Button>
-      <Table striped bordered hover className="mt-4" variant="dark">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <td>Placa</td>
-            <th>Imei</th>
-            <th>Tipo</th>
-            <th>Tipo de combustible</th>
-            <th>Velocidad maxima</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading && (
-            <tr>
-              <td colSpan="3">Cargando...</td>
-            </tr>
-          )}
-          {isError && (
-            <tr>
-              <td colSpan="3">Error al cargar los datos</td>
-            </tr>
-          )}
-          {vehicles && vehicles.content.length > 0 ? (
-            vehicles.content.map((vehicle, index) => (
-              <tr key={vehicle.id}>
-                <td>{vehicle.id}</td>
-                <td>{vehicle.licensePlate}</td>
-                <td>{vehicle.imei}</td>
-                <td>{vehicle.vehicleTypeName}</td>
-                <td>{vehicle.fuelType}</td>
-                <td>{vehicle.maxSpeed} km/h</td>
-                <td>
-                  <button className="btn btn-primary" onClick={() => handleEdit(vehicle)}>
-                    Editar
-                  </button>
-                  <button className="btn btn-danger" onClick={() => console.log("Delete", vehicle.id)}>
-                    Eliminar
-                  </button>
-                </td>
+      <BackButton path={-1} />
+      <div style={{ border: "2px solid #d1d0cc", margin: "5px 5%" }}>
+        <h1>Administrar Vehículos</h1>
+        <Button variant="success" onClick={handleShowModal}>
+          <FaPlusCircle style={{ marginRight: "5px" }} />
+          Agregar
+        </Button>
+        <div style={{ margin: "10px auto  ", width: "90%" }}>
+          <Table striped bordered hover className="mt-4" variant="dark">
+            <thead>
+              <tr>
+                <th>
+                  <FaHashtag /> ID
+                </th>
+                <th>
+                  <FaCar /> Placa
+                </th>
+                <th>
+                  <FaMicrochip /> IMEI
+                </th>
+                <th>
+                  <FaListAlt /> Tipo
+                </th>
+                <th>
+                  <FaGasPump /> Tipo de combustible
+                </th>
+                <th>
+                  <FaTachometerAlt /> Velocidad máxima
+                </th>
+                <th>
+                  <FaTools /> Acciones
+                </th>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7">No hay vehículos disponibles</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-
-      {vehicles && vehicles.totalPages && (
-        <div className="d-flex justify-content-center mt-4">
-          <Pagination>
-            <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 0} />
-            {[...Array(vehicles.totalPages).keys()].map((p) => (
-              <Pagination.Item key={p} active={p === page} onClick={() => handlePageChange(p)}>
-                {p + 1}
-              </Pagination.Item>
-            ))}
-            <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page === vehicles.totalPages - 1} />
-          </Pagination>
+            </thead>
+            <tbody>
+              {isLoading && (
+                <tr>
+                  <td colSpan="3">Cargando...</td>
+                </tr>
+              )}
+              {isError && (
+                <tr>
+                  <td colSpan="3">Error al cargar los datos</td>
+                </tr>
+              )}
+              {vehicles && vehicles.content.length > 0 ? (
+                vehicles.content.map((vehicle, index) => (
+                  <tr key={vehicle.id}>
+                    <td>{vehicle.id}</td>
+                    <td>{vehicle.licensePlate}</td>
+                    <td>{vehicle.imei}</td>
+                    <td>{vehicle.vehicleTypeName}</td>
+                    <td>{vehicle.fuelType}</td>
+                    <td>{vehicle.maxSpeed} km/h</td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Button variant="primary" title="Editar" onClick={() => handleEdit(vehicle)} className="flex-fill">
+                          <FaEdit /> Editar
+                        </Button>
+                        <Button variant="danger" title="Eliminar" onClick={() => console.log("Delete", vehicle.id)} className="flex-fill">
+                          <FaTrash /> Eliminar
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7">No hay vehículos disponibles</td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
         </div>
-      )}
 
-      <VehiclesModal
-        showModal={showModal}
-        handleCloseModal={handleCloseModal}
-        selectedGroup={selectedOrganization}
-        data={newGroup}
-        setData={setNewGroup}
-        handleSaveOrUpdate={handleSaveOrUpdate}
-      />
+        {vehicles && vehicles.totalPages && (
+          <div className="d-flex justify-content-center mt-4">
+            <Pagination>
+              <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 0} />
+              {[...Array(vehicles.totalPages).keys()].map((p) => (
+                <Pagination.Item key={p} active={p === page} onClick={() => handlePageChange(p)}>
+                  {p + 1}
+                </Pagination.Item>
+              ))}
+              <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page === vehicles.totalPages - 1} />
+            </Pagination>
+          </div>
+        )}
+
+        <VehiclesModal
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+          selectedGroup={selectedOrganization}
+          data={newGroup}
+          setData={setNewGroup}
+          handleSaveOrUpdate={handleSaveOrUpdate}
+        />
+      </div>
     </div>
   );
 };

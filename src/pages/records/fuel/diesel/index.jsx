@@ -11,7 +11,7 @@ import { FuelRecordsTable } from "./fuelRecordsTable";
 import { FuelReportsTable } from "./fuelReportsTable";
 import { AvgReports } from "./avgReports";
 
-export function DieselComponent() {
+export function DieselComponent() { 
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 

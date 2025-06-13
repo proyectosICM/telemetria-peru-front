@@ -4,7 +4,6 @@ import { Line } from "react-chartjs-2";
 import { ListItems } from "../../../../hooks/listItems";
 import { fuelEfficiencyRoutes } from "../../../../api/apiurls";
 
-
 export function AvgFuelEfficiency() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [error, setError] = useState(null);

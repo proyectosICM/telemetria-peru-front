@@ -8,7 +8,7 @@ import { GasChangesCounts } from "./gasChangesCount";
 export function GasComponent() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
-
+ 
   return (
     <div
       style={{

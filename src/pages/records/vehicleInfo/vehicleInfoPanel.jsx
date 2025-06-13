@@ -9,6 +9,7 @@ import { TruckLoadsTable } from "./truckLoadsTable";
 import { TruckDailyCountLoadTable } from "./truckDailyCountLoadTable";
 import { FaIdBadge, FaTruck, FaArrowLeft, FaTachometerAlt } from "react-icons/fa";
 import { FaCircleInfo } from "react-icons/fa6";
+import { BackButton } from "../../../common/backButton";
 
 export function VehicleInfoPanel() {
   const navigate = useNavigate();
@@ -32,9 +33,7 @@ export function VehicleInfoPanel() {
       <NavbarCommon />
 
       {/* Back button */}
-      <Button onClick={() => navigate(-1)} className="back-button">
-        <FaArrowLeft style={{ marginRight: "5px" }} /> Atras
-      </Button>
+      <BackButton path={-1} />
 
       <div
         style={{

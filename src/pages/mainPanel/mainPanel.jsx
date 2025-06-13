@@ -58,7 +58,7 @@ export function MainPanel() {
         console.log("No se encontró snapshot para el vehículo:", selectedVehicleId);
       }
     }
-  }, [selectedVehicleId, dataBus]);
+  }, [selectedVehicleId, dataBus]); 
 
   return (
     <div className="g-background">

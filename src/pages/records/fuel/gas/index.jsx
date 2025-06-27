@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { TrackingRecordsTable } from "./trackingRecordsTable";
 import { GasChangesRecordsTable } from "./gasChangesRecordsTable";
 import { GasChangesCounts } from "./gasChangesCount";
+import { AvgGas } from './avgGas';
 
 export function GasComponent() {
   const navigate = useNavigate();
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
- 
+  
   return (
     <div
       style={{
@@ -27,6 +28,8 @@ export function GasComponent() {
 
       {/*              */}
       <TrackingRecordsTable />
+
+      <AvgGas />
     </div>
   );
 }

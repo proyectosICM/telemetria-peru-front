@@ -10,7 +10,7 @@ export const useFuelReports = () => {
 };
 
 // 📄 Obtener todos los reportes con paginación
-export const useFuelReportsPaged = (page, size) => {
+export const useFuelReportsPaged = (page, size) => { 
   return useQuery({
     queryKey: ["fuelReportsPaged", page, size],
     queryFn: () => fuelReportService.getAllFuelReportsPaged(page, size),

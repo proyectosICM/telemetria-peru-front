@@ -16,19 +16,19 @@ export function GasChangesCounts() {
         <tbody>
           <tr>
             <td>Hoy</td>
-            <td>3</td>
+            <td>--</td>
           </tr>
           <tr>
             <td>Semana</td>
-            <td>8</td>
+            <td>--</td>
           </tr>
           <tr>
             <td>Mes</td>
-            <td>22</td>
+            <td>--</td>
           </tr>
           <tr>
             <td>Año</td>
-            <td>150</td>
+            <td>--</td>
           </tr>
         </tbody>
       </Table>

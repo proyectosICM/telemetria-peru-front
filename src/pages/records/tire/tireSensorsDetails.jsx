@@ -4,6 +4,7 @@ import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ListItems } from "../../../hooks/listItems";
 import { tireSensorRoutes } from "../../../api/apiurls";
+import { ForkliftWith4Tires } from "../../optionsPanel/truckTiresGraphics/forkliftWith4Tires";
 
 export function TireSensorsDetails() {
   const navigate = useNavigate();
@@ -16,12 +17,16 @@ export function TireSensorsDetails() {
   }, [selectedVehicleId]);
 
   return (
-    <div>
+    <div className="g-background">
       <NavbarCommon />
       <Button onClick={() => navigate("/")} className="back-button">
         Atras
       </Button>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "20px auto" }}>
+        <div style={{ height: "800px", width: "90%", display: "flex", justifyContent: "center", alignItems: "center", border: "2px solid #ccc", borderRadius: "10px", padding: "20px" }}>
+          <ForkliftWith4Tires />
+        </div>
+
         <h1>Registro detallados </h1>
         <Table striped bordered hover variant="dark" style={{ margin: "20px", width: "80%" }}>
           <thead>

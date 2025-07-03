@@ -6,7 +6,7 @@ export function ForkliftWith4Tires() {
     // setPositioning(pos);
     localStorage.setItem("tireSelected", pos);
   };
-
+ 
   return (
     <>
       <div style={{ margin:"auto", width: "80%", height: "65%", display: "flex", flexDirection: "row" }}>

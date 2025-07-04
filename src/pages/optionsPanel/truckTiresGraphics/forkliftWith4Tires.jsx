@@ -22,7 +22,7 @@ export function ForkliftWith4Tires() {
 
         {/* Right side tires interaction area */}
         <div className="fkl-tires-r">
-          <div className="fkl-tire" onClick={() => handleSelectTire(2)}></div>
+          <div className="fkl-tire" onClick={() => handleSelectTire(2)}></div> 
           <div className="fkl-blank"></div>
           <div className="fkl-tire" onClick={() => handleSelectTire(4)}></div>
         </div>

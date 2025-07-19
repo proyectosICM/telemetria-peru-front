@@ -5,7 +5,7 @@ import './styles/vehicleMenuPanel.css';
 import './styles/generalStyles.css';
 import './styles/truckOptions.css';
 import './styles/forklift-styles.css';
-
+import './styles/truck-styles.css';
 function App() {
   return (
     <div className="App">

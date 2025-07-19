@@ -7,11 +7,11 @@
 /** 
  * Represents the central part of the forklift, including the visual representation of the forklift base.
  */
-.fkl-base-forklift {
+.tck-base-truck {
     width: 20%;
     height: 90%;
     margin: 1rem auto;
-    background-image: url('../images/forklift.png');
+    background-image: url('../images/truck.jpeg');
     background-position: center;
     background-size: cover;
     border:2px solid white;
@@ -20,8 +20,8 @@
 /** 
  * Container for the left and right sets of tires on the forklift, arranging them vertically.
  */
-.fkl-tires-l,
-.fkl-tires-r {
+.tck-tires-l,
+.tck-tires-r {
     width: 10%;
     height: 90%;
     display: flex;
@@ -31,7 +31,7 @@
     margin: 1rem auto;
 }
 
-.fkl-tire-row {
+.tck-tire-row {
     display: flex;
     flex-direction: row;
     /* Aquí van las llantas una al lado de la otra */
@@ -45,7 +45,7 @@
 }
 
 
-.fkl-blank {
+.tck-blank {
     flex: 1;
     margin: 0.5rem 0%;
     background-position: center;
@@ -55,8 +55,8 @@
 /** 
  * Styles for individual tires on both the left and right sides of the forklift, making them interactive.
  */
-.fkl-tires-l .fkl-tire,
-.fkl-tires-r .fkl-tire {
+.tck-tires-l .tck-tire,
+.tck-tires-r .tck-tire {
     width: 100%;
     height: 100%;
     flex: 1;
@@ -74,7 +74,7 @@
  * Styles for the area that shows details of the recovered tires, providing visibility on the status 
  * of the tires (Device pressure, temperature and battery).
  */
-.fkl-info-tire {
+.tck-info-tire {
     width: 60%;
     height: 10%;
     margin: 0 auto;

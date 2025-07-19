@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useGetByVehicleId } from "../../../api/hooks/useTireSensor";
 
-export function ForkliftWith4Tires() {
+export function TruckWith10Tires() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const { data: tireData, isLoading, error } = useGetByVehicleId(selectedVehicleId);
 
@@ -9,7 +9,7 @@ export function ForkliftWith4Tires() {
 
   const handleSelectTire = (pos) => {
     setSelectedTireIndex(pos - 1); // pos 1-4 → índice 0-3
-    localStorage.setItem("tireSelected", pos); 
+    localStorage.setItem("tireSelected", pos);
   };
 
   const selectedTire = tireData?.[selectedTireIndex];
@@ -18,20 +18,34 @@ export function ForkliftWith4Tires() {
     <>
       <div style={{ margin: "auto", width: "80%", height: "65%", display: "flex", flexDirection: "row" }}>
         {/* Lado Izquierdo */}
-        <div className="fkl-tires-l">
-          <div className="fkl-tire" onClick={() => handleSelectTire(1)}></div>
-          <div className="fkl-blank"></div>
-          <div className="fkl-tire" onClick={() => handleSelectTire(3)}></div>
+        <div className="tck-tires-l">
+          <div className="tck-tire" onClick={() => handleSelectTire(1)}></div>
+          <div className="tck-blank"></div>
+          <div className="fkl-tire-row">
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+          </div>
+          <div className="fkl-tire-row">
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+          </div>
         </div>
 
         {/* Base montacargas */}
-        <div className="fkl-base-forklift"></div>
- 
+        <div className="tck-base-truck"></div>
+
         {/* Lado Derecho */}
-        <div className="fkl-tires-r">
-          <div className="fkl-tire" onClick={() => handleSelectTire(2)}></div>
-          <div className="fkl-blank"></div>
-          <div className="fkl-tire" onClick={() => handleSelectTire(4)}></div>
+        <div className="tck-tires-r">
+          <div className="tck-tire" onClick={() => handleSelectTire(2)}></div>
+          <div className="tck-blank"></div>
+          <div className="fkl-tire-row">
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+          </div>
+          <div className="fkl-tire-row">
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+            <div className="tck-tire" onClick={() => handleSelectTire(3)}></div>
+          </div>
         </div>
       </div>
 

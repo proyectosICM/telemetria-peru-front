@@ -8,12 +8,12 @@ export function ForkliftWith6Tires() {
   const [selectedTireIndex, setSelectedTireIndex] = useState(null);
 
   const handleSelectTire = (pos) => {
+    console.log(pos);
     setSelectedTireIndex(pos - 1); // pos 1-6 → índice 0-5
     localStorage.setItem("tireSelected", pos);
   };
 
   const selectedTire = tireData?.[selectedTireIndex];
-
 
   return (
     <>
@@ -21,34 +21,32 @@ export function ForkliftWith6Tires() {
         {/* Lado Izquierdo */}
         <div className="fkl-tires-l">
           {/* Eje delantero izquierdo */}
-          <div className="fkl-tire" onClick={() => handleSelectTire(1)} title="1-FL-IN"></div>
+          <div className="fkl-tire-row">
+            <div className="fkl-tire" onClick={() => handleSelectTire(1)} title="1-FL-IN"></div>
+            <div className="fkl-tire" onClick={() => handleSelectTire(2)} title="1-FL-IN"></div>
+          </div>
+
           <div className="fkl-blank"></div>
           {/* Eje trasero izquierdo */}
           <div className="fkl-tire" onClick={() => handleSelectTire(5)} title="5-RL"></div>
         </div>
-        <div className="fkl-tires-l">
-          {/* Eje delantero izquierdo */}
-          <div className="fkl-tire" onClick={() => handleSelectTire(1)} title="1-FL-IN"></div>
-          <div className="fkl-blank" onClick={() => handleSelectTire(2)} title="2-FL-OUT"></div>
-          {/* Eje trasero izquierdo */}
-          <div className="fkl-blank" onClick={() => handleSelectTire(5)} title="5-RL"></div>
-        </div>
 
         {/* Base montacargas */}
         <div className="fkl-base-forklift"></div>
-
+ 
         {/* Lado Derecho */}
         <div className="fkl-tires-r">
           {/* Eje delantero derecho */}
-          <div className="fkl-tire" onClick={() => handleSelectTire(3)} title="3-FR-IN"></div>
-          <div className="fkl-tire" onClick={() => handleSelectTire(4)} title="4-FR-OUT"></div>
+          <div className="fkl-tire-row">
+            <div className="fkl-tire" onClick={() => handleSelectTire(3)} title="1-FL-IN"></div>
+            <div className="fkl-tire" onClick={() => handleSelectTire(4)} title="1-FL-IN"></div>
+          </div>
+
           <div className="fkl-blank"></div>
           {/* Eje trasero derecho */}
           <div className="fkl-tire" onClick={() => handleSelectTire(6)} title="6-RR"></div>
         </div>
       </div>
-
-
 
       {/* Información del neumático seleccionado */}
       {selectedTire && (

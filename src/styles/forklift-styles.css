@@ -14,7 +14,7 @@
     background-image: url('../images/forklift.png');
     background-position: center;
     background-size: cover;
-    border:2px solid white;
+    border: 2px solid white;
 }
 
 /** 
@@ -41,7 +41,9 @@
     margin: 0.5rem 0;
     gap: 0.5rem;
     /* Espacio entre llantas */
+    /*
     border: 2px solid red;
+    */
 }
 
 
@@ -66,7 +68,9 @@
     background-image: url('../images/llanta.png');
     cursor: pointer;
     flex: 1;
+    /*
     border: 2px solid blue;
+    */
     /* Visual distinction for tires */
 }
 

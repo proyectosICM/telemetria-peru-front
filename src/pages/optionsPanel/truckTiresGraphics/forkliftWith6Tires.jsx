@@ -14,6 +14,9 @@ export function ForkliftWith6Tires() {
   };
 
   const selectedTire = tireData?.[selectedTireIndex];
+  console.log(tireData)
+
+  console.log("Selected Tire:", selectedTire && selectedTire);
 
   return (
     <>
@@ -23,7 +26,7 @@ export function ForkliftWith6Tires() {
           {/* Eje delantero izquierdo */}
           <div className="fkl-tire-row">
             <div className="fkl-tire" onClick={() => handleSelectTire(1)} title="1-FL-IN"></div>
-            <div className="fkl-tire" onClick={() => handleSelectTire(2)} title="1-FL-IN"></div>
+            <div className="fkl-tire" onClick={() => handleSelectTire(2)} title="2-FL-OUT"></div>
           </div>
 
           <div className="fkl-blank"></div>
@@ -33,13 +36,13 @@ export function ForkliftWith6Tires() {
 
         {/* Base montacargas */}
         <div className="fkl-base-forklift"></div>
- 
+
         {/* Lado Derecho */}
         <div className="fkl-tires-r">
           {/* Eje delantero derecho */}
           <div className="fkl-tire-row">
-            <div className="fkl-tire" onClick={() => handleSelectTire(3)} title="1-FL-IN"></div>
-            <div className="fkl-tire" onClick={() => handleSelectTire(4)} title="1-FL-IN"></div>
+            <div className="fkl-tire" onClick={() => handleSelectTire(3)} title="3-FR-IN"></div>
+            <div className="fkl-tire" onClick={() => handleSelectTire(4)} title="4-FR-OUT"></div>
           </div>
 
           <div className="fkl-blank"></div>

@@ -14,6 +14,8 @@ export function ForkliftWith6Tires() {
 
   const selectedTire = tireData?.[selectedTireIndex];
 
+Entonces lo noto, por debajo de mi barbilla al lado izquiersdo
+
 
   return (
     <>

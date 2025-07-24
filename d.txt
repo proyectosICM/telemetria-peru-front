@@ -14,7 +14,8 @@ export function ForkliftWith6Tires() {
 
   const selectedTire = tireData?.[selectedTireIndex];
 
-Entonces lo noto, por debajo de mi barbilla al lado izquiersdo
+Me desespero, las lagrimas empiezan a acumularse en mis ojos, pero me esfcuerzo por no derramar ninguna, de hacerlo todo empeorara, el maquillaje se ira, mi belleza desapareceria.
+Mis manos tiemblan mientras intento encontrar algo para enmendar la grieta, para retener mi belleza.
 
 
   return (

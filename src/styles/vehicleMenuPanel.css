@@ -1,169 +1,169 @@
 .vmp-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 20px;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;            /* 🔹 Asegura altura completa del panel */
+  max-height: 100vh;       /* 🔹 No se pasa de la pantalla */
+  overflow: hidden;        /* 🔹 Evita doble scroll */
 }
- 
+
 .vmp-title {
-    font-size: 2em;
-    margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
-.vmp-search-bar {
-    margin-bottom: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.vmp-search-input {
-    width: 80%;
-    max-width: 600px;
-    padding: 10px;
-    border: 2px solid #007BFF;
-    border-radius: 15px;
-    font-size: 1em;
-    transition: border-color 0.3s;
-}
-
-.vmp-search-input:focus {
-    border-color: #0056b3;
-    outline: none;
-}
-
+.vmp-search-bar,
 .vmp-filter-bar {
-    margin-bottom: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
+.vmp-search-input,
 .vmp-filter-select {
-    width: 80%;
-    max-width: 600px;
-    padding: 10px;
-    border: 2px solid #007BFF;
-    border-radius: 15px;
-    font-size: 1em;
-    transition: border-color 0.3s;
-    background-color: white;
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-.vmp-filter-select:hover {
-    border-color: #0056b3;
+.vmp-search-icon,
+.vmp-filter-icon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  color: #555;
+}
+
+/* 🔹 Scroll solo en la lista */
+.vmp-panel-scroll {
+  flex: 1;                 /* 🔹 ocupa todo el espacio sobrante */
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.vmp-panel-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.vmp-panel-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 123, 255, 0.6);
+  border-radius: 4px;
+}
+.vmp-panel-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
 .vmp-panel {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    border-radius: 10px;
-    overflow: auto;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
 }
 
 .vmp-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: calc(50% - 20px);
-    height: 150px;
-    margin: 10px;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 15px;
-    background-color: #FDCC9B;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .vmp-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.vmp-license,
-.vmp-type {
-    color: #333;
-    margin: 5px 0;
+.vmp-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
 .vmp-truck-icon {
-    width: 40px;
-    height: 40px;
-    color: black;
-    margin-bottom: 10px;
+  width: 28px;
+  height: 28px;
+  color: #007BFF;
 }
 
-
-/* Responsive */
-@media (max-width: 1650px) {
-    .vmp-title {
-        font-size: 1.2em;
-    }
-
-    .vmp-license,
-    .vmp-type {
-        font-size: 0.7em;
-    }
-
+.vmp-license {
+  font-size: 1rem;
+  color: #222;
+  margin: 0;
 }
 
-@media (max-width: 1250px) {
-    .vmp-item {
-        width: 100%;
-    }
-
-    .vmp-title {
-        font-size: 1.5em;
-    }
-
-    .vmp-license,
-    .vmp-type {
-        font-size: 0.9em;
-    }
-
-
+.vmp-item-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #555;
 }
 
-@media (max-width: 780px) {
-    .vmp-title {
-        font-size: 1.2em;
-    }
-
-    .vmp-license,
-    .vmp-type {
-        font-size: 0.7em;
-    }
-
-    .vmp-truck-icon {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 10px;
-    }
+.vmp-type, .vmp-fuel {
+  margin: 0;
 }
 
 @media (max-width: 600px) {
-    .vmp-title {
-        font-size: 1.2em;
-    }
+  .vmp-item-footer {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
 
-    .vmp-license,
-    .vmp-type {
-        font-size: 0.6em;
-    }
+.vmp-item.expanded {
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
 
-    .vmp-truck-icon {
-        width: 30px;
-        height: 30px;
-        margin-bottom: 10px;
-    }
+.vmp-extra {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vmp-action-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.vmp-action-btn:hover {
+  background: #0056b3;
+}
+
+/* Botón de información */
+.vmp-info-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.vmp-info-btn:hover {
+  color: #0056b3;
+}
+
+/* Sub-bloque de tipo + última conexión */
+.vmp-footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vmp-last-conn {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #444;
 }

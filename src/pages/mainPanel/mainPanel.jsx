@@ -21,6 +21,7 @@ import { TireInfoData } from "../../realTime/tireSensorInfoData";
 import { CamerasPanel } from "../camerasPanel";
 import "./mainPanel.css";
 import { useGetByCompanyId } from "../../api/hooks/useVehicleSnapshots";
+import { FleetKpiPanel } from "../../common/FleetKpiPanel";
 
 export function MainPanel() {
   LogoutToken();
@@ -135,7 +136,7 @@ export function MainPanel() {
             </div>
           ) : (
             <div className="main-no-vehicle-selected">
-              <h1>Por favor, seleccione un vehículo para ver las opciones.</h1>
+              <FleetKpiPanel dataBus={dataBus} />
             </div>
           )}
         </div>

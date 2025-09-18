@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { FaFilter, FaSearch, FaTruck } from "react-icons/fa"; // Importa el ícono de camión
+import React, { useEffect, useState, useMemo } from "react";
+import { FaFilter, FaSearch, FaTruck, FaBell, FaPowerOff, FaInfoCircle, FaBus } from "react-icons/fa";
 import { ListItems } from "../hooks/listItems";
 import { vehicleRoutes, vehiclesTypesRoutes } from "../api/apiurls";
-import { useMemo } from "react";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
   const [data, setData] = useState([]);
   const [dataTypes, setDataTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [expandedId, setExpandedId] = useState(null);
   const [error, setError] = useState(null);
 
   const companyId = localStorage.getItem("tp_companyId");
@@ -24,60 +24,40 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
   const handleSelectVehicle = (id, type) => {
     onSelectVehicle(id);
     localStorage.setItem("selectedTypeVehicleId", type);
+    setExpandedId((prev) => (prev === id ? null : id)); // expand/collapse
   };
 
   const filteredData = useMemo(() => {
     return data.filter(
       (item) =>
-        item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) && (selectedType ? item.vehicletypeModel.name === selectedType : true)
+        item.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedType ? item.vehicletypeModel.name === selectedType : true)
     );
   }, [data, searchTerm, selectedType]);
 
   return (
     <div className="vmp-container">
-      <h1 className="vmp-title">🚗 Unidades</h1>
+      <h1 className="vmp-title"><FaBus style={{ marginRight: "8px" }} /> Unidades</h1>
 
-      <div className="vmp-search-bar" style={{ position: "relative", width: "100%" }}>
-        <FaSearch
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "10px",
-            transform: "translateY(-50%)",
-            color: "#888",
-          }}
-        />
+      {/* Barra de búsqueda */}
+      <div className="vmp-search-bar">
+        <FaSearch className="vmp-search-icon" />
         <input
           type="text"
           placeholder="Buscar por matrícula..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="vmp-search-input"
-          style={{
-            paddingLeft: "35px", // espacio para el ícono
-            width: "100%",
-          }}
         />
       </div>
 
-      <div className="vmp-filter-bar" style={{ position: "relative", width: "100%" }}>
-        <FaFilter
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "10px",
-            transform: "translateY(-50%)",
-            color: "#888",
-          }}
-        />
+      {/* Filtro por tipo */}
+      <div className="vmp-filter-bar">
+        <FaFilter className="vmp-filter-icon" />
         <select
           className="vmp-filter-select"
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-          style={{
-            paddingLeft: "35px", // espacio para el ícono
-            width: "100%",
-          }}
         >
           <option value="">Todos los tipos</option>
           {dataTypes.map((type) => (
@@ -88,20 +68,64 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
         </select>
       </div>
 
-      <div className="vmp-panel">
-        {filteredData.map((item, index) => (
-          <div className="vmp-item" key={index} onClick={() => handleSelectVehicle(item.id, item.vehicleTypeId)}>
-            <div className="vmp-item-details">
-              <FaTruck className="vmp-truck-icon" />
-              <p className="vmp-license">
-                <strong>Placa:</strong> {item.licensePlate}
-              </p>
-              <p className="vmp-type">
-                <strong>Tipo:</strong> {item.vehicleTypeName}
-              </p>
-            </div>
-          </div>
-        ))}
+      {/* 🟦 Panel de vehículos con scroll */}
+      <div className="vmp-panel-scroll">
+        <div className="vmp-panel">
+          {filteredData.map((item) => {
+            const isExpanded = expandedId === item.id;
+
+            return (
+              <div
+                className={`vmp-item ${isExpanded ? "expanded" : ""}`}
+                key={item.id}
+                onClick={() => handleSelectVehicle(item.id, item.vehicleTypeId)}
+              >
+                <div className="vmp-item-header">
+                  <FaTruck className="vmp-truck-icon" />
+                  <p className="vmp-license">
+                    <strong>{item.licensePlate}</strong>
+                  </p>
+                  {/* 🟦 Botón de información */}
+                  <button
+                    className="vmp-info-btn"
+                    onClick={(e) => {
+                      e.stopPropagation(); // evitar expandir/cerrar
+                      alert(`Información del vehículo: ${item.licensePlate}`);
+                    }}
+                  >
+                    <FaInfoCircle />
+                  </button>
+                </div>
+
+                <div className="vmp-item-footer">
+                  <div className="vmp-footer-left">
+                    <p className="vmp-type">
+                      <strong>Tipo:</strong> {item.vehicleTypeName}
+                    </p>
+                    <p className="vmp-last-conn">
+                      <strong>Última conexión:</strong>{" "}
+                      {item.lastConnection ?? "N/A"}
+                    </p>
+                  </div>
+                  <p className="vmp-fuel">
+                    <strong>Combustible:</strong> {item.fuelLevel ?? "N/A"}%
+                  </p>
+                </div>
+
+                {isExpanded && (
+                  <div className="vmp-extra">
+                    <button className="vmp-action-btn">
+                      <FaBell /> Ver registros de alarmas
+                    </button>
+                    <button className="vmp-action-btn">
+                      <FaPowerOff /> Ver registros de encendido
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

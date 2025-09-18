@@ -28,6 +28,11 @@ export function NavbarCommon() {
           <Nav.Link onClick={() => navigation("/")} style={{ borderBottom: "none", textDecoration: "none" }}>
             <FaTachometerAlt style={{ marginRight: "5px" }} /> Panel Principal
           </Nav.Link>
+
+          <Nav.Link onClick={() => navigation("/")} style={{ borderBottom: "none", textDecoration: "none" }}>
+            <FaTachometerAlt style={{ marginRight: "5px" }} /> Checklist 
+          </Nav.Link>
+
           {/* <Nav.Link onClick={() => navigation("/records-panel")}>Panel Registros</Nav.Link> */}
           {
             <Nav.Link onClick={() => navigation("/admin")} style={{ borderBottom: "none", textDecoration: "none" }}>

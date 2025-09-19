@@ -1,20 +1,27 @@
 /* MainPanel.css */
 .main-panel-container {
   display: flex;
-} 
+  height: 90vh;
+  overflow: hidden;
+}
 
 .main-sidebar {
-  width: 20%;
-  height: 900px;
-  border: 2px solid #d1d0cc;
+  width: 18%;
+  height: 100%;
+  /* 🔹 Ocupa toda la altura */
+  border: 1px solid #d1d0cc;
+  display: flex;
+  flex-direction: column;
+  /* 🔹 Permite que el VehicleMenuPanel se ajuste */
 }
 
 .main-content {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  height: 900px;
-  border: 2px solid #d1d0cc;
+  width: 82%;
+  height: 100%;
+  /* 🔹 Igual altura */
+  border: 1px solid #d1d0cc;
 }
 
 .main-map-container {
@@ -48,33 +55,38 @@
   overflow-x: hidden;
 }
 
-.main-options-panel-content > * {
+.main-options-panel-content>* {
   flex: 1 1 calc(10% - 10px);
-  min-width: 180px; /* Para evitar que se hagan muy pequeños */
+  min-width: 180px;
+  /* Para evitar que se hagan muy pequeños */
   box-sizing: border-box;
 }
 
 @media (max-width: 1024px) {
-  .main-options-panel-content > * {
-    flex: 1 1 calc(30% - 10px); /* 2 por fila en tablets y pantallas medianas */
+  .main-options-panel-content>* {
+    flex: 1 1 calc(30% - 10px);
+    /* 2 por fila en tablets y pantallas medianas */
   }
 }
 
 @media (max-width: 800px) {
-  .main-options-panel-content > * {
-    flex: 1 1 calc(30% - 10px); /* 1 por fila en móviles */
+  .main-options-panel-content>* {
+    flex: 1 1 calc(30% - 10px);
+    /* 1 por fila en móviles */
   }
 }
 
 @media (max-width: 600px) {
-  .main-options-panel-content > * {
-    flex: 1 1 calc(30% - 10px); /* 1 por fila en móviles */
+  .main-options-panel-content>* {
+    flex: 1 1 calc(30% - 10px);
+    /* 1 por fila en móviles */
   }
 }
 
 @media (max-width: 300px) {
-  .main-options-panel-content > * {
-    flex: 1 1 calc(50% - 10px); /* 1 por fila en móviles */
+  .main-options-panel-content>* {
+    flex: 1 1 calc(50% - 10px);
+    /* 1 por fila en móviles */
   }
 }
 
@@ -82,11 +94,13 @@
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  height: 550px; /* ⬅️ Igual que .main-map-container */
+  height: 550px;
+  /* ⬅️ Igual que .main-map-container */
 }
 
 .camera-view-panel {
-  height: 550px; /* Igual que .main-map-container */
+  height: 550px;
+  /* Igual que .main-map-container */
   overflow-y: auto;
   background-color: #1a1a1a;
   border-radius: 8px;
@@ -108,12 +122,14 @@
   border-radius: 8px;
   background-color: #1a1a1a;
   padding: 0.5rem;
-  height: 100%; /* ⬅️ Añade esta línea */
+  height: 100%;
+  /* ⬅️ Añade esta línea */
 }
 
 .left-panel {
   border-right: 1px solid #333;
-  overflow-y: auto; /* 👈 Permite scroll solo en el panel de cámaras */
+  overflow-y: auto;
+  /* 👈 Permite scroll solo en el panel de cámaras */
 }
 
 .left-panel::-webkit-scrollbar {
@@ -124,6 +140,7 @@
   background-color: #555;
   border-radius: 4px;
 }
+
 .right-panel {
   border-left: 1px solid #333;
 }
@@ -132,6 +149,7 @@
   .mixed-view {
     flex-direction: column;
   }
+
   .left-panel,
   .right-panel {
     border: none;

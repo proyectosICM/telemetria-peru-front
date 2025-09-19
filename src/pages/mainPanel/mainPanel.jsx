@@ -59,7 +59,7 @@ export function MainPanel() {
         console.log("No se encontró snapshot para el vehículo:", selectedVehicleId);
       }
     }
-  }, [selectedVehicleId, dataBus]); 
+  }, [selectedVehicleId, dataBus]);
 
   return (
     <div className="g-background">
@@ -69,7 +69,7 @@ export function MainPanel() {
         <div className="main-sidebar">
           <VehicleMenuPanel onSelectVehicle={handleSelectVehicle} />
         </div>
- 
+
         <div className="main-content">
           {/* Botones para cambiar de vista */}
           <ButtonGroup>
@@ -124,14 +124,17 @@ export function MainPanel() {
               <div className="main-options-panel-content">
                 <VehicleInfo />
                 <VehicleOptions />
-                <IgnitionInfo />
-                <AlarmInfo />
-                <ChecklistInfo />
+                {/* <IgnitionInfo /> */}
+                {/* <AlarmInfo /> */}
+                {/* <ChecklistInfo /> */}
+
+
                 <FuelInfo />
                 <BatteryInfo />
                 <ImpactIncidentLogging />
-                <TireInfo />
-                <TireInfoData />
+                {/* <ImpactIncidentLogging /> */}
+                {/* <TireInfo /> */}
+                {/* <TireInfoData /> */}
               </div>
             </div>
           ) : (

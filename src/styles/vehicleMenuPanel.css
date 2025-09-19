@@ -1,20 +1,22 @@
 .vmp-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;            /* 🔹 Asegura altura completa del panel */
-  max-height: 100vh;       /* 🔹 No se pasa de la pantalla */
-  overflow: hidden;        /* 🔹 Evita doble scroll */
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .vmp-title {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+
 }
 
 .vmp-search-bar,
 .vmp-filter-bar {
   position: relative;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .vmp-search-input,
@@ -34,9 +36,8 @@
   color: #555;
 }
 
-/* 🔹 Scroll solo en la lista */
 .vmp-panel-scroll {
-  flex: 1;                 /* 🔹 ocupa todo el espacio sobrante */
+  flex: 1;
   overflow-y: auto;
   padding-right: 6px;
 }
@@ -44,10 +45,12 @@
 .vmp-panel-scroll::-webkit-scrollbar {
   width: 6px;
 }
+
 .vmp-panel-scroll::-webkit-scrollbar-thumb {
   background-color: rgba(0, 123, 255, 0.6);
   border-radius: 4px;
 }
+
 .vmp-panel-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
@@ -64,13 +67,13 @@
   border-radius: 10px;
   padding: 10px 16px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .vmp-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .vmp-item-header {
@@ -94,13 +97,32 @@
 
 .vmp-item-footer {
   display: flex;
+
   justify-content: space-between;
+
+  flex-direction: column; 
   font-size: 0.85rem;
-  color: #555;
+  color: #555;  
+
+  gap: 16px;
+  flex-wrap: wrap;  
 }
 
-.vmp-type, .vmp-fuel {
+.vmp-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;  /* 🔹 si la pantalla es pequeña, se apilan */
+}
+
+.vmp-type,
+.vmp-fuel {
   margin: 0;
+  font-size: 0.72rem;
+  color: #666;
+
+  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
@@ -112,7 +134,7 @@
 
 .vmp-item.expanded {
   transform: scale(1.02);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 .vmp-extra {
@@ -164,6 +186,7 @@
 
 .vmp-last-conn {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: #444;
+  white-space: nowrap;
 }

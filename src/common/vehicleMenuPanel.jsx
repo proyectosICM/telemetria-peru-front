@@ -98,17 +98,18 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
                 </div>
 
                 <div className="vmp-item-footer">
-                  <div className="vmp-footer-left">
+                  <div className="vmp-footer-top">
                     <p className="vmp-type">
                       <strong>Tipo:</strong> {item.vehicleTypeName}
                     </p>
-                    <p className="vmp-last-conn">
-                      <strong>Última conexión:</strong>{" "}
-                      {item.lastConnection ?? "N/A"}
+                    <p className="vmp-fuel">
+                      <strong>Combustible:</strong> {item.fuelLevel ?? "68 gal"}%
                     </p>
                   </div>
-                  <p className="vmp-fuel">
-                    <strong>Combustible:</strong> {item.fuelLevel ?? "N/A"}%
+
+                  <p className="vmp-last-conn">
+                    <strong>Última conexión:</strong>{" "}
+                    {item.lastConnection ?? "03:05 PM 22/05/2025"}
                   </p>
                 </div>
 

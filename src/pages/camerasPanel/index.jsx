@@ -2,7 +2,6 @@
 import React from "react";
 import "./camerasPanel.css";
 import { HlsPlayer } from "../../common/HlsPlayer";
-// ajusta la ruta según tengas tus hooks:
 import { useGetVehicleVideoConfig } from "../../api/hooks/useVehicle";
 
 export function CamerasPanel({ vehicleId }) {
@@ -68,18 +67,11 @@ export function CamerasPanel({ vehicleId }) {
   const channels = videoConfig.videoChannels || [];
   const urls = videoConfig.hlsUrls || [];
 
-  // Construimos 9 “slots” de cámara: canal 1 a 9
-  const cameras = Array.from({ length: 9 }, (_, idx) => {
-    const channelNumber = idx + 1;
-
-    // Buscamos el índice del canal en el arreglo de videoChannels
-    const channelIndex = channels.indexOf(channelNumber);
-
-    return {
-      name: `Cámara ${channelNumber}`,
-      url: channelIndex !== -1 ? urls[channelIndex] : null,
-    };
-  });
+  // Construimos tantos slots como canales existan
+  const cameras = channels.map((channelNumber, idx) => ({
+    name: `Cámara ${channelNumber}`,
+    url: urls[idx] ?? null,
+  }));
 
   return (
     <div className="g-background">

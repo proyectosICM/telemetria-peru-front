@@ -92,7 +92,7 @@ export function MainPanel() {
             {view === "camera" &&
               (selectedVehicleId ? (
                 <div className="camera-view-panel">
-                  <CamerasPanel />
+                  <CamerasPanel vehicleId={selectedVehicleId} />
                 </div>
               ) : (
                 <div className="main-no-vehicle-selected">
@@ -103,7 +103,7 @@ export function MainPanel() {
               <>
                 <div className="half-panel left-panel">
                   {selectedVehicleId ? (
-                    <CamerasPanel vehicleId={selectedVehicleId}/>
+                    <CamerasPanel vehicleId={selectedVehicleId} />
                   ) : (
                     <div className="main-no-vehicle-selected">
                       <h1>Por favor, seleccione un vehículo para ver las cámaras.</h1>

@@ -31,6 +31,8 @@ const ManageVehicles = () => {
   const { data: vehicles, isLoading, isError } =
     useGetVehiclesByCompanyIdPaged(companyId, page, size);
 
+  console.log(vehicles)
+
   // (si quieres usar fuelTypes aquí, ya está el hook)
   const { data: fuelTypes, isLoading2, isError2 } = useGetFuelTypes();
 

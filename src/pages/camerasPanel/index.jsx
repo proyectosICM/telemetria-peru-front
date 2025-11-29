@@ -2,26 +2,96 @@
 import React from "react";
 import "./camerasPanel.css";
 import { HlsPlayer } from "../../common/HlsPlayer";
+// ajusta la ruta según tengas tus hooks:
+import { useGetVehicleVideoConfig } from "../../api/hooks/useVehicle";
 
-export function CamerasPanel() {
-  const cameras = [
-    { name: "Cámara 1", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { name: "Cámara 2", url: null },
-    { name: "Cámara 3", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { name: "Cámara 4", url: "http://38.43.134.172:2000/000012345678_4.m3u8" },
-    { name: "Cámara 5", url: null },
-    { name: "Cámara 6", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { name: "Cámara 7", url: null },
-    { name: "Cámara 8", url: null },
-    { name: "Cámara 9", url: null },
-  ];
+export function CamerasPanel({ vehicleId }) {
+  const {
+    data: videoConfig,
+    isLoading,
+    isError,
+    error,
+  } = useGetVehicleVideoConfig(vehicleId);
 
   const isHls = (url) => !!url && url.toLowerCase().endsWith(".m3u8");
+
+  if (!vehicleId) {
+    return (
+      <div className="g-background">
+        <div className="g-cameras-panel">
+          <h2>Panel de Cámaras</h2>
+          <p>Selecciona un vehículo para ver sus cámaras.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="g-background">
+        <div className="g-cameras-panel">
+          <h2>Panel de Cámaras</h2>
+          <p>Cargando configuración de video...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="g-background">
+        <div className="g-cameras-panel">
+          <h2>Panel de Cámaras</h2>
+          <p>Error al cargar la configuración de video.</p>
+          {error?.message && <small>{error.message}</small>}
+        </div>
+      </div>
+    );
+  }
+
+  // Si no hay config o no hay URLs, mensaje de “sin cámaras”
+  if (
+    !videoConfig ||
+    !videoConfig.hlsUrls ||
+    videoConfig.hlsUrls.length === 0
+  ) {
+    return (
+      <div className="g-background">
+        <div className="g-cameras-panel">
+          <h2>Panel de Cámaras</h2>
+          <p>Este vehículo no tiene cámaras configuradas.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const channels = videoConfig.videoChannels || [];
+  const urls = videoConfig.hlsUrls || [];
+
+  // Construimos 9 “slots” de cámara: canal 1 a 9
+  const cameras = Array.from({ length: 9 }, (_, idx) => {
+    const channelNumber = idx + 1;
+
+    // Buscamos el índice del canal en el arreglo de videoChannels
+    const channelIndex = channels.indexOf(channelNumber);
+
+    return {
+      name: `Cámara ${channelNumber}`,
+      url: channelIndex !== -1 ? urls[channelIndex] : null,
+    };
+  });
 
   return (
     <div className="g-background">
       <div className="g-cameras-panel">
-        <h2>Panel de Cámaras</h2>
+        <h2>
+          Panel de Cámaras – {videoConfig.licensePlate}{" "}
+          {videoConfig.dvrPhone && (
+            <span style={{ fontSize: "0.8rem", opacity: 0.7 }}>
+              ({videoConfig.dvrPhone})
+            </span>
+          )}
+        </h2>
 
         <div className="camera-grid">
           {cameras.map((camera, index) => (

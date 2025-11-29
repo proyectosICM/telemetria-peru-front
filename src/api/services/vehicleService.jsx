@@ -86,6 +86,16 @@ export const getOptionsData = async (vehicleId) => {
   }
 };
 
+export const getVehicleVideoConfig = async (vehicleId) => {
+  try {
+    const response = await api.get(`${endpoint}/${vehicleId}/video-config`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching vehicle video config:", error);
+    throw error;
+  }
+};
+
 export const createVehicle = async (vehicleData) => {
   try {
     const response = await api.post(endpoint, vehicleData);

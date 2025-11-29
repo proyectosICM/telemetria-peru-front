@@ -64,6 +64,14 @@ export const useGetOptionsData = (vehicleId) => {
     });
 }
 
+export const useGetVehicleVideoConfig = (vehicleId) => {
+    return useQuery({
+        queryKey: ["vehicleVideoConfig", vehicleId],
+        queryFn: () => vehicleService.getVehicleVideoConfig(vehicleId),
+        enabled: !!vehicleId,
+    });
+};
+
 export const useCreateVehicle = () => {
     const queryClient = useQueryClient();
     return useMutation({

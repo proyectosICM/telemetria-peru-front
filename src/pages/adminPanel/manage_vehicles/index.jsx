@@ -1,26 +1,44 @@
 import React, { useState } from "react";
 import { NavbarCommon } from "../../../common/navbarCommon";
-import { useGetFuelTypes, useGetVehiclesByCompanyIdPaged, useUpdateVehicle } from "../../../api/hooks/useVehicle";
+import {
+  useGetFuelTypes,
+  useGetVehiclesByCompanyIdPaged,
+  useUpdateVehicle,
+  useCreateVehicle,
+} from "../../../api/hooks/useVehicle";
 import { Button, Pagination, Table } from "react-bootstrap";
 import { VehiclesModal } from "./vehiclesModal";
-import { getFuelTypes } from "../../../api/services/vehicleService";
-import { useCreateVehicle } from "../../../api/hooks/useVehicle";
 import { BackButton } from "../../../common/backButton";
-import { FaHashtag, FaCar, FaMicrochip, FaListAlt, FaGasPump, FaTachometerAlt, FaTools, FaPlus, FaEdit, FaTrash, FaPlusCircle } from "react-icons/fa";
+import {
+  FaHashtag,
+  FaCar,
+  FaMicrochip,
+  FaListAlt,
+  FaGasPump,
+  FaTachometerAlt,
+  FaTools,
+  FaPlusCircle,
+  FaEdit,
+  FaTrash,
+  FaVideo,
+} from "react-icons/fa";
 
-const ManageVehicles = () => { 
+const ManageVehicles = () => {
   const companyId = localStorage.getItem("tp_companyId");
   const [page, setPage] = useState(0);
   const size = 10;
 
-  const { data: vehicles, isLoading, isError } = useGetVehiclesByCompanyIdPaged(companyId, page, size);
+  const { data: vehicles, isLoading, isError } =
+    useGetVehiclesByCompanyIdPaged(companyId, page, size);
+
+  // (si quieres usar fuelTypes aquí, ya está el hook)
   const { data: fuelTypes, isLoading2, isError2 } = useGetFuelTypes();
 
   const createVehicleMutation = useCreateVehicle();
   const updateVehicleMutation = useUpdateVehicle();
 
   const handlePageChange = (newPage) => {
-    if (newPage >= 0 && newPage < vehicles.totalPages) {
+    if (vehicles && newPage >= 0 && newPage < vehicles.totalPages) {
       setPage(newPage);
     }
   };
@@ -28,14 +46,8 @@ const ManageVehicles = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedOrganization, setSelectedOrganization] = useState(null);
 
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => {
-    setShowModal(false);
-    //setOrganizationName("");
-    setSelectedOrganization(null); // Reset
-  };
-
-  const [newGroup, setNewGroup] = useState({
+  const initialVehicleState = {
+    id: null,
     licensePlate: "",
     imei: "",
     fuelType: "",
@@ -44,19 +56,59 @@ const ManageVehicles = () => {
     companyModel: "",
     timeOn: null,
     driverModel: null,
-  });
+    // NUEVO: DVR + canales
+    dvrPhone: "",
+    videoChannels: [],
+  };
+
+  const [newGroup, setNewGroup] = useState(initialVehicleState);
+
+  const handleShowModal = () => {
+    // al agregar, limpiamos todo
+    setSelectedOrganization(null);
+    setNewGroup({
+      ...initialVehicleState,
+      companyModel: companyId, // por si quieres fijar la empresa actual
+    });
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedOrganization(null);
+    setNewGroup(initialVehicleState);
+  };
 
   const handleEdit = (vehicle) => {
-    setNewGroup(vehicle);
+    // vehicle viene del DTO; asumimos que ya tiene dvrPhone y videoChannels si los mapeaste
+    setNewGroup({
+      ...initialVehicleState,
+      ...vehicle,
+      // por si acaso:
+      dvrPhone: vehicle.dvrPhone || "",
+      videoChannels: vehicle.videoChannels || [],
+      vehicleTypeId: vehicle.vehicleTypeId || vehicle.vehicleTypeId, // por si ya viene así del DTO
+      companyModel: vehicle.companyId || companyId,
+    });
     setSelectedOrganization(vehicle);
-    handleShowModal(true);
+    setShowModal(true);
   };
 
   const handleSaveOrUpdate = () => {
-    if (!newGroup.licensePlate || !newGroup.imei || !newGroup.fuelType || !newGroup.vehicleTypeId || !newGroup.maxSpeed) {
+    if (
+      !newGroup.licensePlate ||
+      !newGroup.imei ||
+      !newGroup.fuelType ||
+      !newGroup.vehicleTypeId ||
+      !newGroup.maxSpeed
+    ) {
       alert("Por favor complete todos los campos obligatorios.");
       return;
     }
+
+    const videoChannelsToSend = Array.isArray(newGroup.videoChannels)
+      ? newGroup.videoChannels
+      : [];
 
     const vehicleToSend = {
       id: newGroup.id, // necesario para update
@@ -68,10 +120,15 @@ const ManageVehicles = () => {
       timeOn: null,
       driverModel: null,
       companyModel: { id: newGroup.companyModel || companyId },
+
+      // NUEVO: DVR / VIDEO
+      dvrPhone: newGroup.dvrPhone && newGroup.dvrPhone.trim() !== ""
+        ? newGroup.dvrPhone.trim()
+        : null,
+      videoChannels: videoChannelsToSend,
     };
 
     const isEditing = !!newGroup.id;
-
     const mutation = isEditing ? updateVehicleMutation : createVehicleMutation;
 
     mutation.mutate(vehicleToSend, {
@@ -84,6 +141,7 @@ const ManageVehicles = () => {
       },
     });
   };
+
   return (
     <div className="g-background">
       <NavbarCommon />
@@ -116,6 +174,10 @@ const ManageVehicles = () => {
                 <th>
                   <FaTachometerAlt /> Velocidad máxima
                 </th>
+                {/* Opcional: pequeña columna para indicar si tiene DVR */}
+                <th>
+                  <FaVideo /> DVR
+                </th>
                 <th>
                   <FaTools /> Acciones
                 </th>
@@ -124,16 +186,16 @@ const ManageVehicles = () => {
             <tbody>
               {isLoading && (
                 <tr>
-                  <td colSpan="3">Cargando...</td>
+                  <td colSpan="8">Cargando...</td>
                 </tr>
               )}
               {isError && (
                 <tr>
-                  <td colSpan="3">Error al cargar los datos</td>
+                  <td colSpan="8">Error al cargar los datos</td>
                 </tr>
               )}
               {vehicles && vehicles.content.length > 0 ? (
-                vehicles.content.map((vehicle, index) => (
+                vehicles.content.map((vehicle) => (
                   <tr key={vehicle.id}>
                     <td>{vehicle.id}</td>
                     <td>{vehicle.licensePlate}</td>
@@ -142,11 +204,32 @@ const ManageVehicles = () => {
                     <td>{vehicle.fuelType}</td>
                     <td>{vehicle.maxSpeed} km/h</td>
                     <td>
+                      {vehicle.dvrPhone ? (
+                        <span title={`DVR: ${vehicle.dvrPhone}`}>
+                          Sí ({(vehicle.videoChannels || []).join(", ")})
+                        </span>
+                      ) : (
+                        "No"
+                      )}
+                    </td>
+                    <td>
                       <div className="d-flex gap-2">
-                        <Button variant="primary" title="Editar" onClick={() => handleEdit(vehicle)} className="flex-fill">
+                        <Button
+                          variant="primary"
+                          title="Editar"
+                          onClick={() => handleEdit(vehicle)}
+                          className="flex-fill"
+                        >
                           <FaEdit /> Editar
                         </Button>
-                        <Button variant="danger" title="Eliminar" onClick={() => console.log("Delete", vehicle.id)} className="flex-fill">
+                        <Button
+                          variant="danger"
+                          title="Eliminar"
+                          onClick={() =>
+                            console.log("Delete", vehicle.id)
+                          }
+                          className="flex-fill"
+                        >
                           <FaTrash /> Eliminar
                         </Button>
                       </div>
@@ -155,7 +238,7 @@ const ManageVehicles = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7">No hay vehículos disponibles</td>
+                  <td colSpan="8">No hay vehículos disponibles</td>
                 </tr>
               )}
             </tbody>
@@ -165,13 +248,23 @@ const ManageVehicles = () => {
         {vehicles && vehicles.totalPages && (
           <div className="d-flex justify-content-center mt-4">
             <Pagination>
-              <Pagination.Prev onClick={() => handlePageChange(page - 1)} disabled={page === 0} />
+              <Pagination.Prev
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page === 0}
+              />
               {[...Array(vehicles.totalPages).keys()].map((p) => (
-                <Pagination.Item key={p} active={p === page} onClick={() => handlePageChange(p)}>
+                <Pagination.Item
+                  key={p}
+                  active={p === page}
+                  onClick={() => handlePageChange(p)}
+                >
                   {p + 1}
                 </Pagination.Item>
               ))}
-              <Pagination.Next onClick={() => handlePageChange(page + 1)} disabled={page === vehicles.totalPages - 1} />
+              <Pagination.Next
+                onClick={() => handlePageChange(page + 1)}
+                disabled={page === vehicles.totalPages - 1}
+              />
             </Pagination>
           </div>
         )}

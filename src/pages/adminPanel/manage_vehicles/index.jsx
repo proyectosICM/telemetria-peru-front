@@ -8,7 +8,7 @@ import { useCreateVehicle } from "../../../api/hooks/useVehicle";
 import { BackButton } from "../../../common/backButton";
 import { FaHashtag, FaCar, FaMicrochip, FaListAlt, FaGasPump, FaTachometerAlt, FaTools, FaPlus, FaEdit, FaTrash, FaPlusCircle } from "react-icons/fa";
 
-const ManageVehicles = () => {
+const ManageVehicles = () => { 
   const companyId = localStorage.getItem("tp_companyId");
   const [page, setPage] = useState(0);
   const size = 10;

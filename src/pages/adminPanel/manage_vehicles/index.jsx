@@ -31,7 +31,7 @@ const ManageVehicles = () => {
   const { data: vehicles, isLoading, isError } =
     useGetVehiclesByCompanyIdPaged(companyId, page, size);
 
-  console.log(vehicles)
+  console.log(vehicles);
 
   // (si quieres usar fuelTypes aquí, ya está el hook)
   const { data: fuelTypes, isLoading2, isError2 } = useGetFuelTypes();
@@ -89,7 +89,7 @@ const ManageVehicles = () => {
       // por si acaso:
       dvrPhone: vehicle.dvrPhone || "",
       videoChannels: vehicle.videoChannels || [],
-      vehicleTypeId: vehicle.vehicleTypeId || vehicle.vehicleTypeId, // por si ya viene así del DTO
+      vehicleTypeId: vehicle.vehicleTypeId || vehicle.vehicleTypeId,
       companyModel: vehicle.companyId || companyId,
     });
     setSelectedOrganization(vehicle);
@@ -124,9 +124,10 @@ const ManageVehicles = () => {
       companyModel: { id: newGroup.companyModel || companyId },
 
       // NUEVO: DVR / VIDEO
-      dvrPhone: newGroup.dvrPhone && newGroup.dvrPhone.trim() !== ""
-        ? newGroup.dvrPhone.trim()
-        : null,
+      dvrPhone:
+        newGroup.dvrPhone && newGroup.dvrPhone.trim() !== ""
+          ? newGroup.dvrPhone.trim()
+          : null,
       videoChannels: videoChannelsToSend,
     };
 
@@ -176,9 +177,11 @@ const ManageVehicles = () => {
                 <th>
                   <FaTachometerAlt /> Velocidad máxima
                 </th>
-                {/* Opcional: pequeña columna para indicar si tiene DVR */}
                 <th>
-                  <FaVideo /> DVR
+                  <FaVideo /> DVR ID
+                </th>
+                <th>
+                  <FaListAlt /> Canales abiertos
                 </th>
                 <th>
                   <FaTools /> Acciones
@@ -188,12 +191,12 @@ const ManageVehicles = () => {
             <tbody>
               {isLoading && (
                 <tr>
-                  <td colSpan="8">Cargando...</td>
+                  <td colSpan="9">Cargando...</td>
                 </tr>
               )}
               {isError && (
                 <tr>
-                  <td colSpan="8">Error al cargar los datos</td>
+                  <td colSpan="9">Error al cargar los datos</td>
                 </tr>
               )}
               {vehicles && vehicles.content.length > 0 ? (
@@ -205,15 +208,25 @@ const ManageVehicles = () => {
                     <td>{vehicle.vehicleTypeName}</td>
                     <td>{vehicle.fuelType}</td>
                     <td>{vehicle.maxSpeed} km/h</td>
+
+                    {/* DVR ID */}
                     <td>
-                      {vehicle.dvrPhone ? (
-                        <span title={`DVR: ${vehicle.dvrPhone}`}>
-                          Sí ({(vehicle.videoChannels || []).join(", ")})
-                        </span>
-                      ) : (
-                        "No"
-                      )}
+                      {vehicle.dvrPhone &&
+                      vehicle.dvrPhone.toString().trim() !== ""
+                        ? vehicle.dvrPhone
+                        : "-"}
                     </td>
+
+                    {/* Canales abiertos */}
+                    <td>
+                      {vehicle.dvrPhone &&
+                      vehicle.dvrPhone.toString().trim() !== "" &&
+                      Array.isArray(vehicle.videoChannels) &&
+                      vehicle.videoChannels.length > 0
+                        ? vehicle.videoChannels.join(", ")
+                        : "-"}
+                    </td>
+
                     <td>
                       <div className="d-flex gap-2">
                         <Button
@@ -239,9 +252,12 @@ const ManageVehicles = () => {
                   </tr>
                 ))
               ) : (
-                <tr>
-                  <td colSpan="8">No hay vehículos disponibles</td>
-                </tr>
+                !isLoading &&
+                !isError && (
+                  <tr>
+                    <td colSpan="9">No hay vehículos disponibles</td>
+                  </tr>
+                )
               )}
             </tbody>
           </Table>

@@ -30,6 +30,7 @@ export const useShowMapAfterDelay = (delay) => {
 
 /**
  * Función para agregar / actualizar marcadores
+ * vehicleId es opcional (para poder identificar el vehículo al hacer clic)
  */
 export const addMarker = (
   map,
@@ -38,7 +39,8 @@ export const addMarker = (
   position,
   image,
   title,
-  infoHTML
+  infoHTML,
+  vehicleId // 👈 nuevo parámetro opcional
 ) => {
   if (!map) return;
 
@@ -69,8 +71,12 @@ export const addMarker = (
     return "#000000";
   };
 
+  // Si existe un marcador con el mismo título, actualizar posición y estilo
   if (existingMarker) {
     existingMarker.getGeometry().setCoordinates(fromLonLat(position));
+    if (vehicleId != null) {
+      existingMarker.set("vehicleId", vehicleId);
+    }
 
     existingMarker.setStyle(
       new Style({
@@ -95,12 +101,16 @@ export const addMarker = (
     return;
   }
 
+  // Si no existe, creamos uno nuevo
   const marker = new Feature({
     geometry: new Point(fromLonLat(position)),
   });
 
   marker.set("title", title);
   marker.set("speed", speed);
+  if (vehicleId != null) {
+    marker.set("vehicleId", vehicleId); // 👈 guardamos el id del vehículo
+  }
 
   const vectorSource = new VectorSource({
     features: [marker],
@@ -129,7 +139,7 @@ export const addMarker = (
 
   map.addLayer(vectorLayer);
 
-  // Overlay opcional (lo dejo tal como lo tenías)
+  // Overlay opcional (tal como lo tenías)
   const overlayContainer = document.createElement("div");
   overlayContainer.style.position = "absolute";
   overlayContainer.style.backgroundColor = "white";

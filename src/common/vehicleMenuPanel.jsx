@@ -5,7 +5,7 @@ import { vehicleRoutes, vehiclesTypesRoutes } from "../api/apiurls";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
   const [data, setData] = useState([]);
-  const [dataTypes, setDataTypes] = useState([]);
+  const [dataTypes, setDataTypes] = useState([]); 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [expandedId, setExpandedId] = useState(null);

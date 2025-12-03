@@ -35,7 +35,7 @@ export function MainPanel() {
 
   const topic = `${mqttTopics.mapa}${companyId}`;
   const { messages } = useMqtt(mqttDominio, topic);
-  const buses = useMqttMapHandler(messages);
+  const buses = useMqttMapHandler(messages); // si quisieras usar los de MQTT
 
   const [initialPosition, setInitialPosition] = useState([
     -76.95769789314294,
@@ -80,7 +80,7 @@ export function MainPanel() {
         <Offcanvas
           show={showSidebar}
           onHide={() => setShowSidebar(false)}
-          responsive="lg"               // 👈 en lg+ se vuelve sidebar fijo
+          responsive="lg"
           placement="start"
           className="main-sidebar-offcanvas"
         >
@@ -149,7 +149,11 @@ export function MainPanel() {
                 }`}
               >
                 {view === "map" && (
-                  <MapaBase buses={dataBus} initialPosition={initialPosition} />
+                  <MapaBase
+                    buses={dataBus}
+                    initialPosition={initialPosition}
+                    onMarkerClick={handleSelectVehicle} // 👈 clic marker = seleccionar
+                  />
                 )}
 
                 {view === "camera" &&
@@ -183,6 +187,7 @@ export function MainPanel() {
                       <MapaBase
                         buses={dataBus}
                         initialPosition={initialPosition}
+                        onMarkerClick={handleSelectVehicle} // 👈 también aquí
                       />
                     </div>
                   </>

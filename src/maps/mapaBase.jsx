@@ -10,7 +10,7 @@ import { addMarker } from "./mapHooks";
 import { FaBus } from "react-icons/fa";
 import ReactDOM from "react-dom";
 
-export function MapaBase({ buses, rutas, initialPosition }) {
+export function MapaBase({ buses, rutas, initialPosition, onMarkerClick }) {
   const mapRef = useRef(null);          // div del mapa
   const mapInstanceRef = useRef(null);  // instancia de OpenLayers
 
@@ -37,7 +37,6 @@ export function MapaBase({ buses, rutas, initialPosition }) {
       });
 
       mapInstanceRef.current = map;
-      // console.log("Mapa creado", map);
     }
   }, []); // solo una vez al montar
 
@@ -53,6 +52,29 @@ export function MapaBase({ buses, rutas, initialPosition }) {
       }
     }
   }, [initialPosition]);
+
+  // 🟣 Click en marcador -> llamar a onMarkerClick(vehicleId)
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map || !onMarkerClick) return;
+
+    const handleClick = (evt) => {
+      map.forEachFeatureAtPixel(evt.pixel, (feature) => {
+        const vehicleId = feature.get("vehicleId");
+        if (vehicleId) {
+          onMarkerClick(vehicleId);
+          return true; // detener búsqueda
+        }
+        return false;
+      });
+    };
+
+    map.on("singleclick", handleClick);
+
+    return () => {
+      map.un("singleclick", handleClick);
+    };
+  }, [onMarkerClick]);
 
   // Marcadores de buses
   useEffect(() => {
@@ -75,6 +97,7 @@ export function MapaBase({ buses, rutas, initialPosition }) {
       const speed = bus.snapshotSpeed ?? 0;
       const ignition = bus.snapshotIgnitionStatus;
       const licensePlate = bus.vehicleModel.licensePlate;
+      const vehicleId = bus.vehicleModel.id; // 👈 ID real del vehículo
 
       const infoHTML = (
         <div>
@@ -98,7 +121,8 @@ export function MapaBase({ buses, rutas, initialPosition }) {
         busPosition,
         "busesIcono",
         licensePlate,
-        infoHTML
+        infoHTML,
+        vehicleId // 👈 se lo pasamos para guardarlo en el Feature
       );
     });
   }, [buses]);
@@ -124,19 +148,19 @@ export function MapaBase({ buses, rutas, initialPosition }) {
         stopPosition,
         "paradero",
         ruta.paraderosModel.nombre,
-        "<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>"
+        "<p>Detalles del bus</p><p>Ubicación: Lima, Perú</p>",
+        null // paraderos no tienen vehicleId
       );
     });
   }, [rutas]);
 
-  // Render simple: inline style para asegurar altura
   return (
     <div
       ref={mapRef}
       className="g-mapa"
       style={{
         width: "100%",
-        height: "70vh", // fuerza altura visible
+        height: "70vh",
         borderRadius: "8px",
         overflow: "hidden",
       }}

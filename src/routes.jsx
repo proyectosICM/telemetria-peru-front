@@ -54,7 +54,7 @@ export const routes = [
   { path: "/tire-sensors-details", component: <TireSensorsDetails /> },
   { path: "/checklist-panel", component: <ChecklistPanel /> },
 
-  { path: "/example/:type", component: <Example /> },
+  { path: "/example/:type", component: <Example /> },   
   { path: "/example2/:type", component: <Example2 /> },
   { path: "/example3", component: <Example3 /> },
   { path: "/example3/:licensePlate", component: <Example3 /> },

@@ -13,7 +13,7 @@ import { mqttDominio, mqttTopics } from "../mqtt/mqttConfig";
 
 export function FuelInfo({ showAlert = true }) {
   const navigate = useNavigate(); 
-
+   
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
 

@@ -69,7 +69,7 @@ export function MainPanel() {
         <div className="main-sidebar">
           <VehicleMenuPanel onSelectVehicle={handleSelectVehicle} />
         </div>
-
+ 
         <div className="main-content">
           {/* Botones para cambiar de vista */}
           <ButtonGroup>

@@ -3,15 +3,7 @@
   }
 
   .g-mapa {
-    text-align: center;
-    justify-content: center;
-    width: 95%;
-    height: 90%;
-    margin: 2% auto;
-    border-radius: 2%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%;
   }
 
   .back-button {

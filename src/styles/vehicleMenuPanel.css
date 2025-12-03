@@ -2,14 +2,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  height: 100%;           /* 👈 para ocupar bien el Offcanvas */
+  overflow: hidden;       /* el scroll lo maneja vmp-panel-scroll */
   padding: 10px;
   box-sizing: border-box;
 }
 
 .vmp-title {
   margin-bottom: 16px;
-
 }
 
 .vmp-search-bar,
@@ -86,7 +86,7 @@
 .vmp-truck-icon {
   width: 28px;
   height: 28px;
-  color: #007BFF;
+  color: #007bff;
 }
 
 .vmp-license {
@@ -97,15 +97,12 @@
 
 .vmp-item-footer {
   display: flex;
-
   justify-content: space-between;
-
-  flex-direction: column; 
+  flex-direction: column;
   font-size: 0.85rem;
-  color: #555;  
-
+  color: #555;
   gap: 16px;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
 }
 
 .vmp-footer-top {
@@ -113,7 +110,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;  /* 🔹 si la pantalla es pequeña, se apilan */
+  flex-wrap: wrap; /* si la pantalla es pequeña, se apilan */
 }
 
 .vmp-type,
@@ -121,7 +118,6 @@
   margin: 0;
   font-size: 0.72rem;
   color: #666;
-
   white-space: nowrap;
 }
 
@@ -189,4 +185,26 @@
   font-size: 0.72rem;
   color: #444;
   white-space: nowrap;
+}
+
+/* 🔹 Compactar en móvil / tablet (dentro del Offcanvas) */
+@media (max-width: 991.98px) {
+  .vmp-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .vmp-item {
+    padding: 8px;
+  }
+
+  .vmp-license {
+    font-size: 14px;
+  }
+
+  .vmp-last-conn,
+  .vmp-type,
+  .vmp-fuel {
+    font-size: 12px;
+  }
 }

@@ -1,17 +1,19 @@
-import { Feature, View } from "ol";
-import TileLayer from "ol/layer/Tile";
-import { fromLonLat } from "ol/proj";
-import { XYZ } from "ol/source";
-import { useCallback, useEffect, useState } from "react";
-import Map from "ol/Map";
+// src/maps/mapHooks.js
+import { useEffect, useState } from "react";
+import { Feature } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { Fill, Stroke, Style, Text } from "ol/style";
 import { Point } from "ol/geom";
+import { Fill, Stroke, Style, Text } from "ol/style";
 import CircleStyle from "ol/style/Circle";
 import Overlay from "ol/Overlay";
+import { fromLonLat } from "ol/proj";
 import { FaBus } from "react-icons/fa";
 
+/**
+ * Hook para mostrar el mapa después de un delay (ms)
+ * (si quieres, lo puedes dejar de usar)
+ */
 export const useShowMapAfterDelay = (delay) => {
   const [showMap, setShowMap] = useState(false);
 
@@ -26,34 +28,23 @@ export const useShowMapAfterDelay = (delay) => {
   return showMap;
 };
 
-export const useCreateMap = (mapRef, position, setMap) => {
-  const createMap = useCallback(() => {
-    const initialMap = new Map({
-      target: mapRef.current,
-      layers: [
-        new TileLayer({
-          source: new XYZ({
-            url: "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
-            attributions: "© Google Maps",
-          }),
-        }),
-      ],
-      view: new View({
-        center: fromLonLat(position),
-        zoom: 15,
-      }),
-    });
+/**
+ * Función para agregar / actualizar marcadores
+ */
+export const addMarker = (
+  map,
+  speed,
+  ignition,
+  position,
+  image,
+  title,
+  infoHTML
+) => {
+  if (!map) return;
 
-    setMap(initialMap);
-  }, [mapRef, position, setMap]);
-
-  return createMap;
-};
-
-export const addMarker = (map, speed, ignition, position, image, title, infoHTML) => {
   let existingMarker;
   map.getLayers().forEach((layer) => {
-    if (layer.getSource() instanceof VectorSource) {
+    if (layer.getSource && layer.getSource() instanceof VectorSource) {
       const features = layer.getSource().getFeatures();
       features.forEach((feature) => {
         if (feature.get("title") === title) {
@@ -72,13 +63,12 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
     markerImageSrc = require("../images/masIcono.png");
   }
 
-  const getColorByIgnition = (ignition) => {
-    if (ignition === false) return "#808080"; // Gris (apagado)
-    if (ignition === true) return "#00FF00"; // Verde (encendido)
-    return "#000000"; // Negro o algún color para error/desconocido
+  const getColorByIgnition = (ignitionValue) => {
+    if (ignitionValue === false) return "#808080";
+    if (ignitionValue === true) return "#00FF00";
+    return "#000000";
   };
 
-  // Si existe un marcador con el mismo título, actualizar su posición
   if (existingMarker) {
     existingMarker.getGeometry().setCoordinates(fromLonLat(position));
 
@@ -86,24 +76,25 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
       new Style({
         image: new CircleStyle({
           radius: 15,
-          fill: new Fill({ color: getColorByIgnition(ignition) }), // Cambia el color según la velocidad
+          fill: new Fill({ color: getColorByIgnition(ignition) }),
           stroke: new Stroke({ color: "#ffffff", width: 2 }),
         }),
         text: new Text({
-          text: `Placa: ${title}\nVelocidad: ${speed} km/h `,
+          text: `Placa: ${title}\nVelocidad: ${speed} km/h`,
           offsetY: -25,
           textAlign: "center",
           fill: new Fill({ color: "#000" }),
           font: "bold 15px Arial, sans-serif",
-          backgroundFill: new Fill({ color: "rgba(255,255,255,0.5)" }),
+          backgroundFill: new Fill({
+            color: "rgba(255,255,255,0.5)",
+          }),
         }),
       })
     );
 
-    return; // Salir de la función, no añadir un nuevo marcador
+    return;
   }
 
-  // Si no existe un marcador con el mismo título, añadir uno nuevo
   const marker = new Feature({
     geometry: new Point(fromLonLat(position)),
   });
@@ -124,19 +115,21 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
         stroke: new Stroke({ color: "#ffffff", width: 2 }),
       }),
       text: new Text({
-        text: `Placa: ${title}\nVelocidad: ${speed} km/h `,
+        text: `Placa: ${title}\nVelocidad: ${speed} km/h`,
         offsetY: -25,
         textAlign: "center",
         fill: new Fill({ color: "#000" }),
         font: "bold 15px Arial, sans-serif",
-        backgroundFill: new Fill({ color: "rgba(255,255,255,0.5)" }),
+        backgroundFill: new Fill({
+          color: "rgba(255,255,255,0.5)",
+        }),
       }),
     }),
   });
 
   map.addLayer(vectorLayer);
 
-  // Crear overlay HTML
+  // Overlay opcional (lo dejo tal como lo tenías)
   const overlayContainer = document.createElement("div");
   overlayContainer.style.position = "absolute";
   overlayContainer.style.backgroundColor = "white";
@@ -144,7 +137,6 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
   overlayContainer.style.border = "1px solid #ccc";
   overlayContainer.style.width = "300px";
 
-  // Verificar si infoHTML es un objeto React
   if (typeof infoHTML === "object" && infoHTML !== null) {
     const children = infoHTML.props.children;
 
@@ -154,23 +146,22 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
           if (child.type === "p") {
             return `<p>${child.props.children}</p>`;
           } else if (child.type === FaBus) {
-            // Si es el icono FaBus
             return `<div style="display: flex; align-items: center;">
                     <div style="margin-right: 10px; color: #555;">
-                      <svg style="width:24px; height:24px;" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <svg style="width:24px; height:24px;" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path d="M20 6V18a2 2 0 01-2 2H6a2 2 0 01-2-2V6H2"></path>
                         <path d="M4 10h16"></path>
                         <path d="M7 6V4a2 2 0 012-2h6a2 2 0 012 2v2"></path>
                       </svg>
                     </div>
-                    ${child.props.children}
                   </div>`;
           }
+          return "";
         })
         .join("");
     }
   } else {
-    overlayContainer.innerHTML = infoHTML; // Si ya es un string puro
+    overlayContainer.innerHTML = infoHTML;
   }
 
   const overlay = new Overlay({
@@ -179,13 +170,5 @@ export const addMarker = (map, speed, ignition, position, image, title, infoHTML
     positioning: "bottom-center",
   });
 
-  // map.addOverlay(overlay);
-
-  // Agregar evento de clic al marcador
-  vectorSource.on("featureclick", (evt) => {
-    const clickedFeature = evt.feature;
-    if (clickedFeature) {
-      overlay.setPosition(fromLonLat(position)); // Muestra el panel junto al marcador
-    }
-  });
+  // map.addOverlay(overlay); // si quieres usarlo
 };

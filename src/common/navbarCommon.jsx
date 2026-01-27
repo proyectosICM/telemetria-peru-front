@@ -82,14 +82,14 @@ export function NavbarCommon() {
             <span>Checklist</span>
           </Nav.Link>
 
-          <Nav.Link
+{ /*         <Nav.Link
             onClick={() => navigation("/tire-sensors-details")}
             style={linkStyle}
           >
             <FaCircleNotch style={iconStyle} />
             <span>Neumáticos</span>
           </Nav.Link>
-
+*/}
           <Nav.Link onClick={() => navigation("/admin")} style={linkStyle}>
             <FaUserShield style={iconStyle} />
             <span>Administración</span>

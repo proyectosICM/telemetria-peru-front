@@ -10,10 +10,11 @@ import CircularProgressbarWithStatus from "../common/circularProgressbarWithStat
 import { ListItems } from "../hooks/listItems";
 import mqttDataHandler from "../hooks/mqttDataHandler";
 import { mqttDominio, mqttTopics } from "../mqtt/mqttConfig";
+import { FaGasPump } from "react-icons/fa";
 
 export function FuelInfo({ showAlert = true }) {
-  const navigate = useNavigate(); 
-   
+  const navigate = useNavigate();
+
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const selectedTypeVehicleId = localStorage.getItem("selectedTypeVehicleId");
 
@@ -27,11 +28,21 @@ export function FuelInfo({ showAlert = true }) {
   const [maxPressure, setMaxPressure] = useState(0);
 
   useEffect(() => {
-    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setVehicleData, setError);
+    if (!selectedVehicleId) return;
+    ListItems(
+      `${vehicleRoutes.base}/${selectedVehicleId}`,
+      setVehicleData,
+      setError
+    );
   }, [selectedVehicleId]);
 
   useEffect(() => {
-    ListItems(`${vehiclesTypesRoutes.base}/${selectedTypeVehicleId}`, setTypeVehicleData, setError);
+    if (!selectedTypeVehicleId) return;
+    ListItems(
+      `${vehiclesTypesRoutes.base}/${selectedTypeVehicleId}`,
+      setTypeVehicleData,
+      setError
+    );
   }, [selectedTypeVehicleId]);
 
   useEffect(() => {
@@ -41,10 +52,8 @@ export function FuelInfo({ showAlert = true }) {
     }
   }, [typeVehicleData]);
 
-  // Usar useRef para almacenar el vehículo anterior
   const previousVehicleIdRef = useRef(selectedVehicleId);
 
-  // Limpiar mensajes al cambiar de vehículo seleccionado
   useEffect(() => {
     if (previousVehicleIdRef.current !== selectedVehicleId) {
       clearMessages();
@@ -53,32 +62,41 @@ export function FuelInfo({ showAlert = true }) {
     }
   }, [selectedVehicleId, clearMessages]);
 
-  // Procesar el mensaje de MQTT usando mqttDataHandler
-  //fuelInfo
   useEffect(() => {
     mqttDataHandler(messages, setDataValue, "fuelInfo");
   }, [messages]);
 
-  // Calcula el porcentaje y actualiza el estado
   useEffect(() => {
     if (dataValue !== null && maxPressure > 0) {
-      const calculatedPercentage = calculatePercentage(dataValue, maxPressure);
+      const calculatedPercentage = calculatePercentage(
+        dataValue,
+        maxPressure
+      );
       setPercentage(calculatedPercentage);
     }
   }, [dataValue, maxPressure]);
 
   const determineStatus = (pressureValue, vehicleData, typeVehicleData) => {
-    // Verificar la disponibilidad de los rangos según el tipo de combustible
-    if (vehicleData && vehicleData.fuelType === "GAS" && !typeVehicleData?.fuelRange) {
+    if (
+      vehicleData &&
+      vehicleData.fuelType === "GAS" &&
+      !typeVehicleData?.fuelRange
+    ) {
       return "No Disponible";
     }
 
-    if (vehicleData && vehicleData.fuelType === "GASOLINA" && !typeVehicleData?.fuelRange) {
+    if (
+      vehicleData &&
+      vehicleData.fuelType === "GASOLINA" &&
+      !typeVehicleData?.fuelRange
+    ) {
       return "No Disponible";
     }
 
-    // Definir las variables de rango según el tipo de combustible
-    let optimalRangeStart, regularRangeStart, lowRangeStart, veryLowRangeStart;
+    let optimalRangeStart,
+      regularRangeStart,
+      lowRangeStart,
+      veryLowRangeStart;
     if (vehicleData && vehicleData.fuelType) {
       ({
         optimalFuelRangeStart: optimalRangeStart,
@@ -87,7 +105,7 @@ export function FuelInfo({ showAlert = true }) {
         veryLowFuelRangeStart: veryLowRangeStart,
       } = typeVehicleData.fuelRange);
     }
-    // Verificar el estado del rango de presión
+
     if (pressureValue >= optimalRangeStart) {
       return "Óptimo";
     } else if (pressureValue >= regularRangeStart) {
@@ -100,39 +118,87 @@ export function FuelInfo({ showAlert = true }) {
       return "No Disponible";
     }
   };
- 
-  const status = dataValue !== null && typeVehicleData ? determineStatus(dataValue, vehicleData, typeVehicleData) : "No Disponible";
+
+  const status =
+    dataValue !== null && typeVehicleData
+      ? determineStatus(dataValue, vehicleData, typeVehicleData)
+      : "No Disponible";
+
+  const handleClick = () => {
+    handleRecordsMessage(navigate, showAlert, "/fuel-Records");
+  };
+
+  const fuelLabel =
+    vehicleData?.fuelType === "GASOLINA"
+      ? "Volumen actual"
+      : vehicleData?.fuelType === "GAS"
+      ? "Presión actual"
+      : vehicleData?.fuelType === "DIESEL"
+      ? "Volumen actual"
+      : "Valor";
+
+  const fuelUnit =
+    vehicleData?.fuelType === "GASOLINA"
+      ? "vol"
+      : vehicleData?.fuelType === "GAS"
+      ? "psi"
+      : vehicleData?.fuelType === "DIESEL"
+      ? "gal"
+      : "";
+
+  const displayValue =
+    vehicleData?.fuelType === "DIESEL"
+      ? dataValue !== null
+        ? (dataValue * 0.264172).toFixed(2)
+        : "-"
+      : dataValue;
 
   return (
-    <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/fuel-Records")}>
-      <h5>Combustible</h5>
-      <span style={{ fontSize: "14px" }}>Tipo: {vehicleData && vehicleData.fuelType}</span>
-      <div style={{ display: "flex", justifyContent: "center", margin: "0px auto 0px auto", height:"75%" }}>
-        {dataValue !== null ? (
-          <CircularProgressbarWithStatus value={percentage} status={status} size={"40%"}>
-            {dataValue !== null && (
-              <div style={{margin: "0px auto 0px auto", textAlign: "center"}}>
-                <span style={{ fontSize: "14px" }}>Estado: {status}</span>
-                <br />
-                <span style={{ fontSize: "14px" }}>
-                  {vehicleData.fuelType === "GASOLINA" ? "Volumen Actual: " : vehicleData.fuelType === "GAS" ? "Presión Actual: " : "Valor"}{" "}
-                  {vehicleData.fuelType === "DIESEL" ? (dataValue * 0.264172).toFixed(2) : dataValue}{" "}
-                  {vehicleData.fuelType === "GASOLINA"
-                    ? "vol"
-                    : vehicleData.fuelType === "GAS"
-                    ? "psi"
-                    : vehicleData.fuelType === "DIESEL"
-                    ? "gal" 
-                    : ""}
-                </span>
-                <br />
-                {/* <span style={{ fontSize: "15px" }}>Cambios realizados en el día: 10</span> */}
-              </div>
-            )}
-          </CircularProgressbarWithStatus>
-        ) : (
-          <NoDataCircularProgressbar />
+    <div className="g-option-item" onClick={handleClick}>
+      <div className="kpi-card-header">
+        <div className="kpi-card-header-main">
+          <FaGasPump className="kpi-card-header-icon" />
+          <div>
+            <h5 className="kpi-card-title">Combustible</h5>
+            <div style={{ fontSize: "0.7rem", color: "#9ca3af" }}>
+              Tipo: {vehicleData?.fuelType || "-"}
+            </div>
+          </div>
+        </div>
+        {status && (
+          <span
+            className={
+              "kpi-status-pill " +
+              (status === "Óptimo"
+                ? "ok"
+                : status === "Regular"
+                ? "warn"
+                : status === "No Disponible"
+                ? ""
+                : "danger")
+            }
+          >
+            {status}
+          </span>
         )}
+      </div>
+
+      <div className="kpi-card-body">
+        <div className="kpi-gauge-wrapper">
+          {dataValue !== null ? (
+            <CircularProgressbarWithStatus
+              value={percentage}
+              status={status}
+              size={"55%"}
+            >
+              <div className="kpi-gauge-details">
+                <div>{fuelLabel}: {displayValue} {fuelUnit}</div>
+              </div>
+            </CircularProgressbarWithStatus>
+          ) : (
+            <NoDataCircularProgressbar />
+          )}
+        </div>
       </div>
     </div>
   );

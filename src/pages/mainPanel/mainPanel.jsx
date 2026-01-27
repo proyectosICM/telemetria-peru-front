@@ -1,7 +1,14 @@
 // MainPanel.jsx
 import React, { useEffect, useState } from "react";
 import { FaLayerGroup, FaMapMarkedAlt, FaVideo, FaBus } from "react-icons/fa";
-import { Button, ButtonGroup, Container, Row, Col, Offcanvas } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Container,
+  Row,
+  Col,
+  Offcanvas,
+} from "react-bootstrap";
 import useMqtt from "../../hooks/useMqtt";
 import useMqttMapHandler from "../../mqtt/mqttMapHandler";
 import { NavbarCommon } from "../../common/navbarCommon";
@@ -27,15 +34,19 @@ import { FleetKpiPanel } from "../../common/FleetKpiPanel";
 export function MainPanel() {
   LogoutToken();
   const companyId = localStorage.getItem("tp_companyId");
-  const { data: dataBus, isLoading, error } = useGetByCompanyId(companyId);
+  const {
+    data: dataBus,
+    isLoading,
+    error,
+  } = useGetByCompanyId(companyId);
 
   const [selectedVehicleId, setSelectedVehicleId] = useState(null);
   const [view, setView] = useState("map");
-  const [showSidebar, setShowSidebar] = useState(false); // 👈 nuevo
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const topic = `${mqttTopics.mapa}${companyId}`;
   const { messages } = useMqtt(mqttDominio, topic);
-  const buses = useMqttMapHandler(messages); // si quisieras usar los de MQTT
+  const buses = useMqttMapHandler(messages); // por si luego quieres usar MQTT
 
   const [initialPosition, setInitialPosition] = useState([
     -76.95769789314294,
@@ -94,8 +105,8 @@ export function MainPanel() {
 
         {/* 🟦 Contenido principal */}
         <Container fluid className="main-content">
-          {/* Fila superior: botón para abrir menú (solo móvil) + botones de vista */}
-          <Row className="align-items-center mb-2">
+          {/* Fila superior: botón menú móvil + botones de vista */}
+          <Row className="align-items-center mb-2 main-view-toggle-row">
             <Col xs="auto" className="d-lg-none">
               <Button
                 variant="dark"
@@ -107,8 +118,9 @@ export function MainPanel() {
               </Button>
             </Col>
 
-            <Col xs={12} lg="auto" className="mt-2 mt-lg-0">
-              <ButtonGroup className="w-100 w-lg-auto">
+            {/* ⬇️ Botones ocupan toda la fila en desktop */}
+            <Col xs={12} lg={12} className="mt-2 mt-lg-0">
+              <ButtonGroup className="main-view-toggle-group">
                 <Button
                   className={`button-bordered ${
                     view === "camera" ? "active" : ""
@@ -152,7 +164,7 @@ export function MainPanel() {
                   <MapaBase
                     buses={dataBus}
                     initialPosition={initialPosition}
-                    onMarkerClick={handleSelectVehicle} // 👈 clic marker = seleccionar
+                    onMarkerClick={handleSelectVehicle} // clic marker = seleccionar
                   />
                 )}
 
@@ -187,7 +199,7 @@ export function MainPanel() {
                       <MapaBase
                         buses={dataBus}
                         initialPosition={initialPosition}
-                        onMarkerClick={handleSelectVehicle} // 👈 también aquí
+                        onMarkerClick={handleSelectVehicle}
                       />
                     </div>
                   </>
@@ -216,7 +228,8 @@ export function MainPanel() {
                   </div>
                 </div>
               ) : (
-                <div className="main-no-vehicle-selected">
+                // ⬇️ contenedor especial para KPI
+                <div className="main-no-vehicle-selected main-kpi-container">
                   <FleetKpiPanel dataBus={dataBus} />
                 </div>
               )}

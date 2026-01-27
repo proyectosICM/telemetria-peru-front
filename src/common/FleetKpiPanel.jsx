@@ -1,21 +1,37 @@
+// src/common/FleetKpiPanel.jsx
 import React from "react";
 import { FaCar, FaGasPump, FaBell, FaPowerOff } from "react-icons/fa";
 import "./FleetKpiPanel.css";
 
-export function FleetKpiPanel() {
-  // Datos de ejemplo (mock)
-  const dataBus = [
-    { id: 1, lastConnection: true, fuelLevel: 80, hasAlarm: false, isIgnitionOn: true },
-    { id: 2, lastConnection: true, fuelLevel: 50, hasAlarm: true, isIgnitionOn: false },
-    { id: 3, lastConnection: false, fuelLevel: 30, hasAlarm: false, isIgnitionOn: false },
-    { id: 4, lastConnection: true, fuelLevel: 60, hasAlarm: true, isIgnitionOn: true },
-  ];
+export function FleetKpiPanel({ dataBus = [] }) {
+  // Si no viene nada o no es array, usamos array vacío
+  const buses = Array.isArray(dataBus) ? dataBus : [];
 
-  const total = dataBus.length;
+  const total = buses.length || 0;
+
+  // Intentamos sacar nivel de combustible de varios posibles campos
+  const getFuelLevel = (v) =>
+    v.fuelLevel ??
+    v.snapshotFuelLevel ??
+    v.snapshotFuelPercent ??
+    v.snapshotFuel ??
+    0;
+
+  // Intentamos detectar alarma
+  const getHasAlarm = (v) =>
+    v.hasAlarm ?? v.snapshotAlarmStatus ?? v.alarmActive ?? false;
+
+  // Intentamos detectar ignición encendida
+  const getIgnitionOn = (v) =>
+    v.isIgnitionOn ?? v.snapshotIgnitionStatus ?? v.ignitionOn ?? false;
+
   const promedioFuel =
-    dataBus.reduce((sum, v) => sum + (v.fuelLevel || 0), 0) / total;
-  const conAlarma = dataBus.filter((v) => v.hasAlarm).length;
-  const encendidos = dataBus.filter((v) => v.isIgnitionOn).length;
+    total > 0
+      ? buses.reduce((sum, v) => sum + (getFuelLevel(v) || 0), 0) / total
+      : 0;
+
+  const conAlarma = buses.filter((v) => getHasAlarm(v)).length;
+  const encendidos = buses.filter((v) => getIgnitionOn(v)).length;
 
   return (
     <div className="fleet-kpi-panel">

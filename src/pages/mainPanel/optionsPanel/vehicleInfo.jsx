@@ -6,9 +6,14 @@ import mqttDataHandler from "../../../hooks/mqttDataHandler";
 import { handleRecordsMessage } from "../../../utils/handleRecordsMessage";
 import { useNavigate } from "react-router-dom";
 import { mqttDominio, mqttTopics } from "../../../mqtt/mqttConfig";
-import { BiSolidDashboard } from "react-icons/bi";
-import { FaCar, FaTachometerAlt, FaExclamationTriangle } from "react-icons/fa";
-import { FaPowerOff, FaSpeedometer, FaRoad } from "react-icons/fa";
+import {
+  BiSolidDashboard,
+} from "react-icons/bi";
+import {
+  FaCar,
+  FaTachometerAlt,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 
 export function VehicleInfo({ showAlert = true }) {
   const navigate = useNavigate();
@@ -21,35 +26,95 @@ export function VehicleInfo({ showAlert = true }) {
   const topic = `${mqttTopics.telData}${selectedVehicleId}`;
   const { messages } = useMqtt(mqttDominio, topic);
 
-  // Fetch vehicle data when selectedVehicleId changes
   useEffect(() => {
-    ListItems(`${vehicleRoutes.base}/${selectedVehicleId}`, setData, setError);
+    if (!selectedVehicleId) return;
+    ListItems(
+      `${vehicleRoutes.base}/${selectedVehicleId}`,
+      setData,
+      setError
+    );
   }, [selectedVehicleId]);
 
-  // Handle incoming MQTT messages to update speed info
   useEffect(() => {
     mqttDataHandler(messages, setSpeed, "speed");
-  }, [messages]); 
+  }, [messages]);
 
-  // Comprobar si la velocidad actual supera la velocidad máxima
-  const isSpeedExceeded = data?.maxSpeed > 0 && speed > data.maxSpeed;
+  const isSpeedExceeded =
+    data?.maxSpeed > 0 && speed != null && speed > data.maxSpeed;
+
+  const handleClick = () => {
+    handleRecordsMessage(navigate, showAlert, "/vehicle-info");
+  };
 
   return (
-    <div className="g-option-item" onClick={() => handleRecordsMessage(navigate, showAlert, "/vehicle-info")}>
-      <div style={{ padding: "10px"}}>
-        <h5><BiSolidDashboard style={{ marginRight: "5px" }} />Información del Vehículo</h5>
-        <span><FaCar style={{ marginRight: "5px" }} /> Placa: {data && data.licensePlate}</span>
-        <br />
-        <span><FaCar style={{ marginRight: "5px" }} /> Tipo: {data && data.vehicleTypeName}</span>
-        <br />
-        {/* Mostrar la velocidad actual con el color adecuado según la condición */}
-        <span style={{ color: isSpeedExceeded ? "red" : "white" }}> <FaTachometerAlt style={{ marginRight: "5px" }} /> Velocidad Actual: {speed ? `${speed} km` : "0 km"}</span>
-        <br />
-        {/* Mostrar advertencia solo si se excede la velocidad máxima */}
-        {isSpeedExceeded && <p style={{ color: "red" }}>
-          <FaExclamationTriangle style={{ marginRight: "5px" }} />
-          ¡Límite de velocidad excedido!</p>}
-        {/*<span>Tiempo encendido: {data && data.timeOn} segundos</span>*/}
+    <div className="g-option-item" onClick={handleClick}>
+      <div className="kpi-card-header">
+        <div className="kpi-card-header-main">
+          <BiSolidDashboard className="kpi-card-header-icon" />
+          <div>
+            <h5 className="kpi-card-title">Información del vehículo</h5>
+            <div style={{ fontSize: "0.7rem", color: "#9ca3af" }}>
+              ID: {selectedVehicleId || "-"}
+            </div>
+          </div>
+        </div>
+        {speed != null && (
+          <span
+            className={
+              "kpi-status-pill " +
+              (isSpeedExceeded ? "danger" : "ok")
+            }
+          >
+            {isSpeedExceeded ? "Sobre límite" : "Dentro del límite"}
+          </span>
+        )}
+      </div>
+
+      <div className="kpi-card-body">
+        <div className="kpi-field">
+          <span className="kpi-field-label">
+            <FaCar style={{ marginRight: 4 }} />
+            Placa
+          </span>
+          <span className="kpi-field-value">
+            {data && data.licensePlate ? data.licensePlate : "-"}
+          </span>
+        </div>
+
+        <div className="kpi-field">
+          <span className="kpi-field-label">
+            Tipo
+          </span>
+          <span className="kpi-field-value">
+            {data && data.vehicleTypeName ? data.vehicleTypeName : "-"}
+          </span>
+        </div>
+
+        <div className="kpi-field">
+          <span className="kpi-field-label">
+            Velocidad actual
+          </span>
+          <span className="kpi-field-value">
+            <FaTachometerAlt style={{ marginRight: 4 }} />
+            {speed != null ? `${speed} km/h` : "0 km/h"}
+          </span>
+        </div>
+
+        {data?.maxSpeed && (
+          <div className="kpi-field">
+            <span className="kpi-field-label">Velocidad máxima</span>
+            <span className="kpi-field-value">
+              {data.maxSpeed} km/h
+            </span>
+          </div>
+        )}
+
+        {isSpeedExceeded && (
+          <div className="kpi-alert-text">
+            <FaExclamationTriangle />
+            Límite de velocidad excedido.
+          </div>
+        )}
       </div>
     </div>
   );

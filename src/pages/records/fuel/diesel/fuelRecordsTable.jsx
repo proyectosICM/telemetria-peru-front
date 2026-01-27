@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
 import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
-import { ListItemsPaginated } from "../../../../hooks/listItems";
+import { ListItemsPaginated, ListItems } from "../../../../hooks/listItems";
 import { fuelRecordsRoutes } from "../../../../api/apiurls";
 import { PaginacionUtils } from "../../../../utils/paginacionUtils";
 
@@ -13,12 +13,10 @@ import {
   LineElement,
   Tooltip,
   Legend,
-  TimeScale,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-// registra módulos de chartjs
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, TimeScale);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 function toDieselGallons(valueData) {
   return valueData * 0.264172;
@@ -28,7 +26,7 @@ export function FuelRecordsTable({ fuelType }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [pageNumber, setPageNumber] = useState(0);
 
-  // Fecha seleccionada (YYYY-MM-DD)
+  // YYYY-MM-DD
   const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
     const yyyy = now.getFullYear();
@@ -39,7 +37,14 @@ export function FuelRecordsTable({ fuelType }) {
 
   const [dayRecords, setDayRecords] = useState([]);
   const [totalCount, setTotalCount] = useState(null);
-  const [loadingChart, setLoadingChart] = useState(false);
+
+  // loading opcional (sin useEffect)
+  const [loadingChart, setLoadingChart] = useState(true);
+  const [loadingCount, setLoadingCount] = useState(true);
+
+  // refs para evitar refetch infinito (guard)
+  const lastCountKeyRef = useRef(null);
+  const lastDayKeyRef = useRef(null);
 
   // Tabla paginada (tu lógica actual)
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
@@ -47,39 +52,49 @@ export function FuelRecordsTable({ fuelType }) {
     pageNumber
   );
 
-  // Total registros del vehículo
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(`${fuelRecordsRoutes.byVehicleCount}/${selectedVehicleId}/count`);
-        const n = await res.json();
-        setTotalCount(n);
-      } catch (e) {
-        setTotalCount(null);
-      }
-    })();
-  }, [selectedVehicleId]);
+  // ===== Fetch COUNT (sin useEffect)
+  const countKey = `${selectedVehicleId}`;
+  if (selectedVehicleId && lastCountKeyRef.current !== countKey) {
+    lastCountKeyRef.current = countKey;
+    setLoadingCount(true);
 
-  // Registros del día para el gráfico (SIN paginación)
-  useEffect(() => {
-    (async () => {
-      setLoadingChart(true);
-      try {
-        const tz = "America/Lima";
-        const res = await fetch(
-          `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${selectedDate}&tz=${tz}`
-        );
-        const records = await res.json();
+    ListItems(
+      `${fuelRecordsRoutes.byVehicleCount}/${selectedVehicleId}/count`,
+      (n) => {
+        setTotalCount(n);
+        setLoadingCount(false);
+      },
+      () => {
+        setTotalCount(null);
+        setLoadingCount(false);
+      }
+    );
+  }
+
+  // ===== Fetch DAY RECORDS (sin useEffect)
+  const tz = "America/Lima";
+  const dayKey = `${selectedVehicleId}|${selectedDate}|${tz}`;
+  if (selectedVehicleId && selectedDate && lastDayKeyRef.current !== dayKey) {
+    lastDayKeyRef.current = dayKey;
+
+    // OJO: no pongas setLoadingChart(true) aquí si te preocupa setState en render.
+    // Nosotros lo seteamos al cambiar fecha (abajo) y en el primer render ya inicia true.
+    ListItems(
+      `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${encodeURIComponent(
+        selectedDate
+      )}&tz=${encodeURIComponent(tz)}`,
+      (records) => {
         setDayRecords(Array.isArray(records) ? records : []);
-      } catch (e) {
+        setLoadingChart(false);
+      },
+      () => {
         setDayRecords([]);
-      } finally {
         setLoadingChart(false);
       }
-    })();
-  }, [selectedVehicleId, selectedDate]);
+    );
+  }
 
-  // Chart data: cada punto = 1 registro (sin promedios)
+  // Chart data: cada punto = 1 registro
   const chartData = useMemo(() => {
     const labels = (dayRecords || []).map((r) => getTimeFromTimestamp(r.createdAt));
 
@@ -89,18 +104,20 @@ export function FuelRecordsTable({ fuelType }) {
       return raw;
     });
 
+    const label =
+      fuelType?.fuelType === "GAS"
+        ? "PSI"
+        : fuelType?.fuelType === "GASOLINA"
+        ? "Volumen"
+        : fuelType?.fuelType === "DIESEL"
+        ? "Galones"
+        : "Valor";
+
     return {
       labels,
       datasets: [
         {
-          label:
-            fuelType?.fuelType === "GAS"
-              ? "PSI"
-              : fuelType?.fuelType === "GASOLINA"
-              ? "Volumen"
-              : fuelType?.fuelType === "DIESEL"
-              ? "Galones"
-              : "Valor",
+          label,
           data: values,
           tension: 0.2,
           pointRadius: 3,
@@ -110,8 +127,17 @@ export function FuelRecordsTable({ fuelType }) {
     };
   }, [dayRecords, fuelType]);
 
-  const chartOptions = useMemo(
-    () => ({
+  const chartOptions = useMemo(() => {
+    const unit =
+      fuelType?.fuelType === "GAS"
+        ? "PSI"
+        : fuelType?.fuelType === "GASOLINA"
+        ? "Volumen"
+        : fuelType?.fuelType === "DIESEL"
+        ? "gal"
+        : "";
+
+    return {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
@@ -119,32 +145,17 @@ export function FuelRecordsTable({ fuelType }) {
         tooltip: {
           callbacks: {
             title: (items) => `Hora: ${items?.[0]?.label ?? ""}`,
-            label: (item) => {
-              const unit =
-                fuelType?.fuelType === "GAS"
-                  ? "PSI"
-                  : fuelType?.fuelType === "GASOLINA"
-                  ? "Volumen"
-                  : fuelType?.fuelType === "DIESEL"
-                  ? "gal"
-                  : "";
-              return `Valor: ${item.parsed.y} ${unit}`;
-            },
+            label: (item) => `Valor: ${item.parsed.y} ${unit}`,
           },
         },
       },
       scales: {
         x: {
-          ticks: {
-            maxRotation: 0,
-            autoSkip: true,
-            maxTicksLimit: 12,
-          },
+          ticks: { autoSkip: true, maxTicksLimit: 12 },
         },
       },
-    }),
-    [fuelType]
-  );
+    };
+  }, [fuelType]);
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>
@@ -152,12 +163,22 @@ export function FuelRecordsTable({ fuelType }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
         <div>
           <div style={{ fontSize: 14, opacity: 0.85 }}>Registros totales del vehículo</div>
-          <div style={{ fontSize: 22, fontWeight: 700 }}>{totalCount === null ? "…" : totalCount}</div>
+          <div style={{ fontSize: 22, fontWeight: 700 }}>
+            {loadingCount ? "…" : totalCount ?? "—"}
+          </div>
         </div>
 
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <span>Día:</span>
-          <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => {
+              // aquí sí podemos setear loading (no es render, es evento)
+              setLoadingChart(true);
+              setSelectedDate(e.target.value);
+            }}
+          />
         </div>
       </div>
 

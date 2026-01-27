@@ -74,6 +74,8 @@ export const fuelRecordsRoutes = {
   paged: `${baseAPIURL}/fuel-records/paged`,
   byVehicle: `${baseAPIURL}/fuel-records/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/fuel-records/by-vehicle-paged`,
+  byVehicleCount: `${baseAPIURL}/fuel-records/by-vehicle`, 
+  byVehicleDay: `${baseAPIURL}/fuel-records/by-vehicle`,   
   hourlyAVL: `${baseAPIURL}/fuel-records/hourly-averages`,
   weekAVL: `${baseAPIURL}/fuel-records/week-averages`,
   monthAVL: `${baseAPIURL}/fuel-records/month-averages`,

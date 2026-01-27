@@ -1,6 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
 import { Table } from "react-bootstrap";
-import { getDateFromTimestamp, getTimeFromTimestamp } from "../../../../utils/formatUtils";
 import { ListItemsPaginated, ListItems } from "../../../../hooks/listItems";
 import { fuelRecordsRoutes } from "../../../../api/apiurls";
 import { PaginacionUtils } from "../../../../utils/paginacionUtils";
@@ -22,6 +21,30 @@ function toDieselGallons(valueData) {
   return valueData * 0.264172;
 }
 
+// ---- helpers para tu formato: epoch en SEGUNDOS con decimales
+function epochSecondsToDate(epochSeconds) {
+  if (epochSeconds == null) return null;
+  const ms = Number(epochSeconds) * 1000;
+  const d = new Date(ms);
+  if (isNaN(d.getTime())) return null;
+  return d;
+}
+
+function formatHHmm(date) {
+  if (!date) return "";
+  const hh = String(date.getHours()).padStart(2, "0");
+  const mm = String(date.getMinutes()).padStart(2, "0");
+  return `${hh}:${mm}`;
+}
+
+function formatYYYYMMDD(date) {
+  if (!date) return "";
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 export function FuelRecordsTable({ fuelType }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
   const [pageNumber, setPageNumber] = useState(0);
@@ -29,24 +52,19 @@ export function FuelRecordsTable({ fuelType }) {
   // YYYY-MM-DD
   const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
-    const yyyy = now.getFullYear();
-    const mm = String(now.getMonth() + 1).padStart(2, "0");
-    const dd = String(now.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
+    return formatYYYYMMDD(now);
   });
 
   const [dayRecords, setDayRecords] = useState([]);
   const [totalCount, setTotalCount] = useState(null);
 
-  // loading opcional (sin useEffect)
   const [loadingChart, setLoadingChart] = useState(true);
   const [loadingCount, setLoadingCount] = useState(true);
 
-  // refs para evitar refetch infinito (guard)
   const lastCountKeyRef = useRef(null);
   const lastDayKeyRef = useRef(null);
 
-  // Tabla paginada (tu lógica actual)
+  // Tabla paginada
   const { data, totalPages, currentPage, setCurrentPage } = ListItemsPaginated(
     `${fuelRecordsRoutes.byVehiclePaged}/${selectedVehicleId}`,
     pageNumber
@@ -77,8 +95,6 @@ export function FuelRecordsTable({ fuelType }) {
   if (selectedVehicleId && selectedDate && lastDayKeyRef.current !== dayKey) {
     lastDayKeyRef.current = dayKey;
 
-    // OJO: no pongas setLoadingChart(true) aquí si te preocupa setState en render.
-    // Nosotros lo seteamos al cambiar fecha (abajo) y en el primer render ya inicia true.
     ListItems(
       `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${encodeURIComponent(
         selectedDate
@@ -96,9 +112,15 @@ export function FuelRecordsTable({ fuelType }) {
 
   // Chart data: cada punto = 1 registro
   const chartData = useMemo(() => {
-    const labels = (dayRecords || []).map((r) => getTimeFromTimestamp(r.createdAt));
+    // ordena por timestamp por si viene desordenado
+    const sorted = [...(dayRecords || [])].sort((a, b) => Number(a.createdAt) - Number(b.createdAt));
 
-    const values = (dayRecords || []).map((r) => {
+    const labels = sorted.map((r) => {
+      const dt = epochSecondsToDate(r.createdAt);
+      return formatHHmm(dt);
+    });
+
+    const values = sorted.map((r) => {
       const raw = r.valueData;
       if (fuelType?.fuelType === "DIESEL") return Number(toDieselGallons(raw).toFixed(2));
       return raw;
@@ -150,16 +172,14 @@ export function FuelRecordsTable({ fuelType }) {
         },
       },
       scales: {
-        x: {
-          ticks: { autoSkip: true, maxTicksLimit: 12 },
-        },
+        x: { ticks: { autoSkip: true, maxTicksLimit: 12 } },
       },
     };
   }, [fuelType]);
 
   return (
     <div style={{ margin: "10px", width: "90%" }}>
-      {/* Header: total + selector */}
+      {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
         <div>
           <div style={{ fontSize: 14, opacity: 0.85 }}>Registros totales del vehículo</div>
@@ -174,7 +194,6 @@ export function FuelRecordsTable({ fuelType }) {
             type="date"
             value={selectedDate}
             onChange={(e) => {
-              // aquí sí podemos setear loading (no es render, es evento)
               setLoadingChart(true);
               setSelectedDate(e.target.value);
             }}
@@ -183,7 +202,16 @@ export function FuelRecordsTable({ fuelType }) {
       </div>
 
       {/* Chart */}
-      <div style={{ height: 280, marginTop: 12, marginBottom: 12, background: "#111", borderRadius: 8, padding: 12 }}>
+      <div
+        style={{
+          height: 280,
+          marginTop: 12,
+          marginBottom: 12,
+          background: "#111",
+          borderRadius: 8,
+          padding: 12,
+        }}
+      >
         {loadingChart ? (
           <div style={{ color: "#fff" }}>Cargando gráfico…</div>
         ) : chartData.labels.length === 0 ? (
@@ -214,25 +242,28 @@ export function FuelRecordsTable({ fuelType }) {
 
         <tbody>
           {data &&
-            data.map((d, index) => (
-              <tr key={index}>
-                <td>{d.vehicleModel.licensePlate}</td>
-                <td>{getDateFromTimestamp(d.createdAt)}</td>
-                <td>{getTimeFromTimestamp(d.createdAt)}</td>
-                <td>
-                  {fuelType && fuelType.fuelType === "DIESEL"
-                    ? toDieselGallons(d.valueData).toFixed(2)
-                    : d.valueData}{" "}
-                  {fuelType && fuelType.fuelType === "GAS"
-                    ? "PSI"
-                    : fuelType.fuelType === "GASOLINA"
-                    ? "Volumen"
-                    : fuelType.fuelType === "DIESEL"
-                    ? "gal"
-                    : ""}
-                </td>
-              </tr>
-            ))}
+            data.map((d, index) => {
+              const dt = epochSecondsToDate(d.createdAt);
+              return (
+                <tr key={index}>
+                  <td>{d.vehicleModel?.licensePlate}</td>
+                  <td>{formatYYYYMMDD(dt)}</td>
+                  <td>{formatHHmm(dt)}</td>
+                  <td>
+                    {fuelType && fuelType.fuelType === "DIESEL"
+                      ? toDieselGallons(d.valueData).toFixed(2)
+                      : d.valueData}{" "}
+                    {fuelType && fuelType.fuelType === "GAS"
+                      ? "PSI"
+                      : fuelType.fuelType === "GASOLINA"
+                      ? "Volumen"
+                      : fuelType.fuelType === "DIESEL"
+                      ? "gal"
+                      : ""}
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
 

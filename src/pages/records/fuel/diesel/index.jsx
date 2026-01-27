@@ -10,6 +10,7 @@ import { FuelCharts } from "./fuelCharts";
 import { FuelRecordsTable } from "./fuelRecordsTable";
 import { FuelReportsTable } from "./fuelReportsTable";
 import { AvgReports } from "./avgReports";
+import { FuelRecordsCharts } from "./fuelRecordsCharts";
 
 export function DieselComponent() {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export function DieselComponent() {
       <AvgFuelEfficiency />
       */}
 
+      <FuelRecordsCharts />
       {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
       <h1>Estadísticas</h1>
       <FuelCharts />

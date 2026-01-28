@@ -4,16 +4,15 @@ import { ListItems } from "../../../../hooks/listItems";
 
 import {
   Chart as ChartJS,
+  CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Tooltip,
   Legend,
-  Filler,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 function toDieselGallons(valueData) {
   return valueData * 0.264172;
@@ -77,7 +76,7 @@ export function FuelRecordsCharts({ fuelType }) {
   // selector de periodo: day | week | month | year
   const [period, setPeriod] = useState("day");
 
-  // YYYY-MM-DD base (sirve como "fecha ancla" para semana/mes/año también)
+  // YYYY-MM-DD base
   const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
     const yyyy = now.getFullYear();
@@ -95,7 +94,6 @@ export function FuelRecordsCharts({ fuelType }) {
     }
 
     if (period === "week") {
-      // semana: últimos 7 días desde selectedDate (incluyendo selectedDate)
       const start = new Date(base);
       start.setDate(start.getDate() - 6);
       const end = new Date(base);
@@ -104,7 +102,6 @@ export function FuelRecordsCharts({ fuelType }) {
     }
 
     if (period === "month") {
-      // mes completo del selectedDate
       const start = new Date(base.getFullYear(), base.getMonth(), 1, 0, 0, 0);
       const end = new Date(base.getFullYear(), base.getMonth() + 1, 1, 0, 0, 0); // exclusivo
       return { startIso: toLocalIsoNoTz(start), endIso: toLocalIsoNoTz(end) };
@@ -116,7 +113,6 @@ export function FuelRecordsCharts({ fuelType }) {
     return { startIso: toLocalIsoNoTz(start), endIso: toLocalIsoNoTz(end) };
   }, [selectedDate, period]);
 
-  // construye URL: day o range
   const url = useMemo(() => {
     const tz = "America/Lima";
     if (!selectedVehicleId) return null;
@@ -132,7 +128,6 @@ export function FuelRecordsCharts({ fuelType }) {
     )}&end=${encodeURIComponent(endIso)}&tz=${encodeURIComponent(tz)}`;
   }, [selectedVehicleId, period, selectedDate, startIso, endIso]);
 
-  // 1) carga inicial / al cambiar url
   useEffect(() => {
     if (!url) return;
 
@@ -146,7 +141,7 @@ export function FuelRecordsCharts({ fuelType }) {
     );
   }, [url]);
 
-  // 2) polling cada 60s (merge) SOLO si estás en "day" (lo más lógico)
+  // polling cada 60s SOLO en day
   useEffect(() => {
     if (!url) return;
     if (period !== "day") return;
@@ -183,47 +178,49 @@ export function FuelRecordsCharts({ fuelType }) {
       .filter(Boolean)
       .sort((a, b) => a.x - b.x);
 
-    const minX = points.length ? points[0].x : undefined;
-    const maxX = points.length ? points[points.length - 1].x : undefined;
-
     const unit =
       fuelType?.fuelType === "GAS"
         ? "PSI"
         : fuelType?.fuelType === "GASOLINA"
-        ? "Volumen"
-        : fuelType?.fuelType === "DIESEL"
-        ? "gal"
-        : "";
+          ? "Volumen"
+          : fuelType?.fuelType === "DIESEL"
+            ? "gal"
+            : "";
 
     const datasetLabel =
       fuelType?.fuelType === "GAS"
         ? "PSI"
         : fuelType?.fuelType === "GASOLINA"
-        ? "Volumen"
-        : fuelType?.fuelType === "DIESEL"
-        ? "Galones"
-        : "Valor";
+          ? "Volumen"
+          : fuelType?.fuelType === "DIESEL"
+            ? "Galones"
+            : "Valor";
 
-    const xTickFormatter = (valueMs) => {
-      return period === "day" ? fmtTimeHHmmssFromMs(valueMs) : fmtDayTimeFromMs(valueMs);
-    };
+    // Para barras: labels en X (Category)
+    // Si hay muchos puntos, mostramos menos labels (pero mantenemos todas las barras)
+    const labels = points.map((p) =>
+      period === "day" ? fmtTimeHHmmssFromMs(p.x) : fmtDayTimeFromMs(p.x)
+    );
+    const values = points.map((p) => p.y);
+
+    // Reduce “ruido” en labels: muestra 1 de cada N
+    const maxTicks = period === "day" ? 10 : 12;
+    const step = labels.length > maxTicks ? Math.ceil(labels.length / maxTicks) : 1;
 
     return {
       debug: { rawLen: arr.length, pointsLen: points.length, sample: points.slice(0, 3) },
       chartData: {
+        labels,
         datasets: [
           {
             label: datasetLabel,
-            data: points,
-            parsing: false,
-            borderColor: "#4FC3F7",
-            backgroundColor: "rgba(79,195,247,0.15)",
-            showLine: true,
-            borderWidth: 2,
-            tension: 0.2,
-            pointRadius: period === "day" ? 2.5 : 1.5, // menos puntos cuando hay muchos datos
-            pointHoverRadius: 6,
-            fill: false,
+            data: values,
+            backgroundColor: "#00B0FF",
+            borderWidth: 0,
+            hoverBackgroundColor: "rgba(79,195,247,1)",
+            hoverBorderColor: "rgba(255,255,255,0.9)",
+            barPercentage: 0.9,
+            categoryPercentage: 0.9,
           },
         ],
       },
@@ -236,24 +233,26 @@ export function FuelRecordsCharts({ fuelType }) {
           tooltip: {
             callbacks: {
               title: (items) => {
-                const x = items?.[0]?.raw?.x;
-                return period === "day" ? `Hora: ${fmtTimeHHmmssFromMs(x)}` : `Fecha: ${fmtDayTimeFromMs(x)}`;
+                const idx = items?.[0]?.dataIndex ?? 0;
+                return labels[idx] ? `Fecha/Hora: ${labels[idx]}` : "";
               },
-              label: (item) => `Valor: ${item.raw.y} ${unit}`,
+              label: (item) => `Valor: ${item.raw} ${unit}`,
             },
           },
         },
         scales: {
           x: {
-            type: "linear",
-            min: minX,
-            max: maxX,
+            type: "category",
             ticks: {
               color: "#fff",
-              maxTicksLimit: period === "day" ? 10 : 12,
-              callback: (value) => xTickFormatter(value),
+              maxRotation: 0,
+              autoSkip: false,
+              callback: function (val, index) {
+                // muestra 1 de cada "step"
+                return index % step === 0 ? this.getLabelForValue(val) : "";
+              },
             },
-            grid: { color: "rgba(255,255,255,0.08)" },
+            grid: { display: false },
           },
           y: {
             ticks: { color: "#fff" },
@@ -270,11 +269,7 @@ export function FuelRecordsCharts({ fuelType }) {
 
       <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
         <span>Periodo:</span>
-        <select
-          value={period}
-          onChange={(e) => setPeriod(e.target.value)}
-          style={{ padding: "4px 8px" }}
-        >
+        <select value={period} onChange={(e) => setPeriod(e.target.value)} style={{ padding: "4px 8px" }}>
           <option value="day">Día</option>
           <option value="week">Semana</option>
           <option value="month">Mes</option>
@@ -297,12 +292,9 @@ export function FuelRecordsCharts({ fuelType }) {
             Sin datos para graficar. (raw: {debug.rawLen}, puntos válidos: {debug.pointsLen})
           </div>
         ) : (
-          <Line data={chartData} options={chartOptions} />
+          <Bar data={chartData} options={chartOptions} />
         )}
       </div>
     </div>
   );
 }
-
-
-// Guardar4 en git

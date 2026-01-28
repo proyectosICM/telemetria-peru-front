@@ -24,16 +24,43 @@ function epochSecondsToMs(epochSeconds) {
   return Number.isFinite(ms) ? ms : null;
 }
 
-function fmtTimeFromMs(ms) {
-  const d = new Date(ms);
-  if (isNaN(d.getTime())) return "";
-  const hh = String(d.getHours()).padStart(2, "0");
-  const mm = String(d.getMinutes()).padStart(2, "0");
-  const ss = String(d.getSeconds()).padStart(2, "0");
-  return `${hh}:${mm}:${ss}`;
+// ---- helpers fecha/hora
+function pad2(n) {
+  return String(n).padStart(2, "0");
 }
 
-// merge sin duplicados por id (si prefieres, puedes usar createdAt)
+function fmtTimeHHmmssFromMs(ms) {
+  const d = new Date(ms);
+  if (isNaN(d.getTime())) return "";
+  return `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
+}
+
+function fmtDayTimeFromMs(ms) {
+  const d = new Date(ms);
+  if (isNaN(d.getTime())) return "";
+  return `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)} ${pad2(d.getHours())}:${pad2(
+    d.getMinutes()
+  )}`;
+}
+
+// "YYYY-MM-DD" -> Date local (00:00)
+function parseYMDToDateLocal(ymd) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  return new Date(y, (m || 1) - 1, d || 1, 0, 0, 0, 0);
+}
+
+// Date -> "YYYY-MM-DDTHH:mm:ss" (sin timezone)
+function toLocalIsoNoTz(date) {
+  const y = date.getFullYear();
+  const m = pad2(date.getMonth() + 1);
+  const d = pad2(date.getDate());
+  const hh = pad2(date.getHours());
+  const mm = pad2(date.getMinutes());
+  const ss = pad2(date.getSeconds());
+  return `${y}-${m}-${d}T${hh}:${mm}:${ss}`;
+}
+
+// merge sin duplicados por id
 function mergeById(prevArr, incomingArr) {
   const map = new Map();
   (Array.isArray(prevArr) ? prevArr : []).forEach((r) => map.set(r.id, r));
@@ -47,40 +74,82 @@ export function FuelRecordsCharts({ fuelType }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
+  // selector de periodo: day | week | month | year
+  const [period, setPeriod] = useState("day");
+
+  // YYYY-MM-DD base (sirve como "fecha ancla" para semana/mes/año también)
   const [selectedDate, setSelectedDate] = useState(() => {
     const now = new Date();
     const yyyy = now.getFullYear();
-    const mm = String(now.getMonth() + 1).padStart(2, "0");
-    const dd = String(now.getDate()).padStart(2, "0");
+    const mm = pad2(now.getMonth() + 1);
+    const dd = pad2(now.getDate());
     return `${yyyy}-${mm}-${dd}`;
   });
 
-  // arma la URL una sola vez por dependencia
+  // calcula range start/end según period
+  const { startIso, endIso } = useMemo(() => {
+    const base = parseYMDToDateLocal(selectedDate);
+
+    if (period === "day") {
+      return { startIso: null, endIso: null };
+    }
+
+    if (period === "week") {
+      // semana: últimos 7 días desde selectedDate (incluyendo selectedDate)
+      const start = new Date(base);
+      start.setDate(start.getDate() - 6);
+      const end = new Date(base);
+      end.setDate(end.getDate() + 1); // exclusivo
+      return { startIso: toLocalIsoNoTz(start), endIso: toLocalIsoNoTz(end) };
+    }
+
+    if (period === "month") {
+      // mes completo del selectedDate
+      const start = new Date(base.getFullYear(), base.getMonth(), 1, 0, 0, 0);
+      const end = new Date(base.getFullYear(), base.getMonth() + 1, 1, 0, 0, 0); // exclusivo
+      return { startIso: toLocalIsoNoTz(start), endIso: toLocalIsoNoTz(end) };
+    }
+
+    // year
+    const start = new Date(base.getFullYear(), 0, 1, 0, 0, 0);
+    const end = new Date(base.getFullYear() + 1, 0, 1, 0, 0, 0); // exclusivo
+    return { startIso: toLocalIsoNoTz(start), endIso: toLocalIsoNoTz(end) };
+  }, [selectedDate, period]);
+
+  // construye URL: day o range
   const url = useMemo(() => {
     const tz = "America/Lima";
-    return `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${selectedDate}&tz=${encodeURIComponent(
-      tz
-    )}`;
-  }, [selectedVehicleId, selectedDate]);
+    if (!selectedVehicleId) return null;
 
-  // 1) carga inicial + cuando cambia vehículo o día
+    if (period === "day") {
+      return `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${selectedDate}&tz=${encodeURIComponent(
+        tz
+      )}`;
+    }
+
+    return `${fuelRecordsRoutes.byVehicleRange}/${selectedVehicleId}/range?start=${encodeURIComponent(
+      startIso
+    )}&end=${encodeURIComponent(endIso)}&tz=${encodeURIComponent(tz)}`;
+  }, [selectedVehicleId, period, selectedDate, startIso, endIso]);
+
+  // 1) carga inicial / al cambiar url
   useEffect(() => {
-    if (!selectedVehicleId) return;
+    if (!url) return;
 
     ListItems(
       url,
       (incoming) => {
-        // cuando cambias de día/vehículo, normalmente quieres reemplazar, no mergear
         setData(Array.isArray(incoming) ? incoming : []);
         setError(null);
       },
       setError
     );
-  }, [url, selectedVehicleId]);
+  }, [url]);
 
-  // 2) polling cada 60s (merge sin borrar)
+  // 2) polling cada 60s (merge) SOLO si estás en "day" (lo más lógico)
   useEffect(() => {
-    if (!selectedVehicleId) return;
+    if (!url) return;
+    if (period !== "day") return;
 
     const intervalId = setInterval(() => {
       ListItems(
@@ -91,10 +160,10 @@ export function FuelRecordsCharts({ fuelType }) {
         },
         setError
       );
-    }, 60_000); // 1 minuto
+    }, 60_000);
 
     return () => clearInterval(intervalId);
-  }, [url, selectedVehicleId]);
+  }, [url, period]);
 
   const { chartData, chartOptions, debug } = useMemo(() => {
     const arr = Array.isArray(data) ? data : [];
@@ -135,6 +204,10 @@ export function FuelRecordsCharts({ fuelType }) {
         ? "Galones"
         : "Valor";
 
+    const xTickFormatter = (valueMs) => {
+      return period === "day" ? fmtTimeHHmmssFromMs(valueMs) : fmtDayTimeFromMs(valueMs);
+    };
+
     return {
       debug: { rawLen: arr.length, pointsLen: points.length, sample: points.slice(0, 3) },
       chartData: {
@@ -148,7 +221,7 @@ export function FuelRecordsCharts({ fuelType }) {
             showLine: true,
             borderWidth: 2,
             tension: 0.2,
-            pointRadius: 2.5,
+            pointRadius: period === "day" ? 2.5 : 1.5, // menos puntos cuando hay muchos datos
             pointHoverRadius: 6,
             fill: false,
           },
@@ -162,7 +235,10 @@ export function FuelRecordsCharts({ fuelType }) {
           legend: { display: true, labels: { color: "#fff" } },
           tooltip: {
             callbacks: {
-              title: (items) => `Hora: ${fmtTimeFromMs(items?.[0]?.raw?.x)}`,
+              title: (items) => {
+                const x = items?.[0]?.raw?.x;
+                return period === "day" ? `Hora: ${fmtTimeHHmmssFromMs(x)}` : `Fecha: ${fmtDayTimeFromMs(x)}`;
+              },
               label: (item) => `Valor: ${item.raw.y} ${unit}`,
             },
           },
@@ -174,8 +250,8 @@ export function FuelRecordsCharts({ fuelType }) {
             max: maxX,
             ticks: {
               color: "#fff",
-              maxTicksLimit: 10,
-              callback: (value) => fmtTimeFromMs(value),
+              maxTicksLimit: period === "day" ? 10 : 12,
+              callback: (value) => xTickFormatter(value),
             },
             grid: { color: "rgba(255,255,255,0.08)" },
           },
@@ -186,17 +262,30 @@ export function FuelRecordsCharts({ fuelType }) {
         },
       },
     };
-  }, [data, fuelType]);
+  }, [data, fuelType, period]);
 
   return (
     <div style={{ width: "90%", margin: "10px auto" }}>
       <h1>Estadísticas</h1>
 
-      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12 }}>
-        <span>Día:</span>
+      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
+        <span>Periodo:</span>
+        <select
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+          style={{ padding: "4px 8px" }}
+        >
+          <option value="day">Día</option>
+          <option value="week">Semana</option>
+          <option value="month">Mes</option>
+          <option value="year">Año</option>
+        </select>
+
+        <span>Fecha base:</span>
         <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+
         <div style={{ marginLeft: "auto", color: "#fff" }}>
-          Total registros del día: {Array.isArray(data) ? data.length : 0}
+          Total registros: {Array.isArray(data) ? data.length : 0}
         </div>
       </div>
 

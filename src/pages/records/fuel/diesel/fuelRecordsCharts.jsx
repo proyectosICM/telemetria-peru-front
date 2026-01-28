@@ -20,7 +20,6 @@ function toDieselGallons(valueData) {
 }
 
 function epochSecondsToMs(epochSeconds) {
-  // createdAt viene en segundos (con decimales)
   const ms = Number(epochSeconds) * 1000;
   return Number.isFinite(ms) ? ms : null;
 }
@@ -32,6 +31,14 @@ function fmtTimeFromMs(ms) {
   const mm = String(d.getMinutes()).padStart(2, "0");
   const ss = String(d.getSeconds()).padStart(2, "0");
   return `${hh}:${mm}:${ss}`;
+}
+
+// merge sin duplicados por id (si prefieres, puedes usar createdAt)
+function mergeById(prevArr, incomingArr) {
+  const map = new Map();
+  (Array.isArray(prevArr) ? prevArr : []).forEach((r) => map.set(r.id, r));
+  (Array.isArray(incomingArr) ? incomingArr : []).forEach((r) => map.set(r.id, r));
+  return Array.from(map.values());
 }
 
 export function FuelRecordsCharts({ fuelType }) {
@@ -48,18 +55,50 @@ export function FuelRecordsCharts({ fuelType }) {
     return `${yyyy}-${mm}-${dd}`;
   });
 
-  useEffect(() => {
+  // arma la URL una sola vez por dependencia
+  const url = useMemo(() => {
     const tz = "America/Lima";
-    const url = `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${selectedDate}&tz=${encodeURIComponent(
+    return `${fuelRecordsRoutes.byVehicleDay}/${selectedVehicleId}/day?date=${selectedDate}&tz=${encodeURIComponent(
       tz
     )}`;
-    ListItems(url, setData, setError);
   }, [selectedVehicleId, selectedDate]);
+
+  // 1) carga inicial + cuando cambia vehículo o día
+  useEffect(() => {
+    if (!selectedVehicleId) return;
+
+    ListItems(
+      url,
+      (incoming) => {
+        // cuando cambias de día/vehículo, normalmente quieres reemplazar, no mergear
+        setData(Array.isArray(incoming) ? incoming : []);
+        setError(null);
+      },
+      setError
+    );
+  }, [url, selectedVehicleId]);
+
+  // 2) polling cada 60s (merge sin borrar)
+  useEffect(() => {
+    if (!selectedVehicleId) return;
+
+    const intervalId = setInterval(() => {
+      ListItems(
+        url,
+        (incoming) => {
+          setData((prev) => mergeById(prev, incoming));
+          setError(null);
+        },
+        setError
+      );
+    }, 60_000); // 1 minuto
+
+    return () => clearInterval(intervalId);
+  }, [url, selectedVehicleId]);
 
   const { chartData, chartOptions, debug } = useMemo(() => {
     const arr = Array.isArray(data) ? data : [];
 
-    // convierte a puntos {x(ms), y(number)} y filtra malos
     const points = arr
       .map((r) => {
         const x = epochSecondsToMs(r.createdAt);
@@ -75,7 +114,6 @@ export function FuelRecordsCharts({ fuelType }) {
       .filter(Boolean)
       .sort((a, b) => a.x - b.x);
 
-    // rangos para eje X
     const minX = points.length ? points[0].x : undefined;
     const maxX = points.length ? points[points.length - 1].x : undefined;
 
@@ -98,56 +136,37 @@ export function FuelRecordsCharts({ fuelType }) {
         : "Valor";
 
     return {
-      debug: {
-        rawLen: arr.length,
-        pointsLen: points.length,
-        sample: points.slice(0, 3),
-      },
-
+      debug: { rawLen: arr.length, pointsLen: points.length, sample: points.slice(0, 3) },
       chartData: {
         datasets: [
           {
             label: datasetLabel,
-            data: points,          // <- [{x,y}]
-            parsing: false,        // <- importante
-
-            // ✅ colores visibles en dark
+            data: points,
+            parsing: false,
             borderColor: "#4FC3F7",
             backgroundColor: "rgba(79,195,247,0.15)",
-
-            // ✅ fuerza línea visible
             showLine: true,
             borderWidth: 2,
             tension: 0.2,
-
-            // puntos
             pointRadius: 2.5,
             pointHoverRadius: 6,
-
-            // opcional: relleno
             fill: false,
           },
         ],
       },
-
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
         animation: false,
-
         plugins: {
           legend: { display: true, labels: { color: "#fff" } },
           tooltip: {
             callbacks: {
-              title: (items) => {
-                const x = items?.[0]?.raw?.x;
-                return `Hora: ${fmtTimeFromMs(x)}`;
-              },
+              title: (items) => `Hora: ${fmtTimeFromMs(items?.[0]?.raw?.x)}`,
               label: (item) => `Valor: ${item.raw.y} ${unit}`,
             },
           },
         },
-
         scales: {
           x: {
             type: "linear",
@@ -168,9 +187,6 @@ export function FuelRecordsCharts({ fuelType }) {
       },
     };
   }, [data, fuelType]);
-
-  // 🔎 debug útil mientras pruebas
-  // console.log("chart debug:", debug);
 
   return (
     <div style={{ width: "90%", margin: "10px auto" }}>

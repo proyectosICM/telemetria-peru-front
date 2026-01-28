@@ -35,8 +35,31 @@ export const getTimeFromTimestamp = (timestamp) => {
     minute: "2-digit",
 
   });
-//    second: "2-digit",
+  //    second: "2-digit",
   return `${formattedTime}`;
+};
+
+export const getTimeFromTimestampWithSeconds = (timestamp) => {
+  const date = new Date(Number(timestamp) * 1000);
+
+  return date.toLocaleString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+};
+
+export const getTimeFromTimestampLimaWithSeconds = (timestamp) => {
+  const date = new Date(Number(timestamp) * 1000);
+
+  return date.toLocaleString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "America/Lima",
+  });
 };
 
 // Calculates the difference in hours and minutes between two given timestamps.
@@ -49,9 +72,9 @@ export const calculateHoursDifference = (startTimestamp, endTimestamp) => {
   const diffInMilliseconds = end - start;
 
   // Calculate hours and minutes
-  const totalMinutes = Math.floor(diffInMilliseconds / (1000 * 60)); 
-  const hours = Math.floor(totalMinutes / 60); 
-  const minutes = totalMinutes % 60; 
+  const totalMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
   // Ensure two-digit format for hours and minutes
   const formattedHours = String(hours).padStart(2, "0");

@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { fuelRecordsRoutes } from "../../../../api/apiurls";
 import { ListItems } from "../../../../hooks/listItems";
 
 import {
   Chart as ChartJS,
-  CategoryScale,
+  TimeScale,
   LinearScale,
   BarElement,
   Tooltip,
@@ -12,7 +12,13 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+// 👇 Adapter para TimeScale (ya lo instalaste)
+import "chartjs-adapter-date-fns";
+
+// 👇 Plugin zoom (asegúrate de haber instalado: npm i chartjs-plugin-zoom)
+import zoomPlugin from "chartjs-plugin-zoom";
+
+ChartJS.register(TimeScale, LinearScale, BarElement, Tooltip, Legend, zoomPlugin);
 
 function toDieselGallons(valueData) {
   return valueData * 0.264172;
@@ -69,6 +75,7 @@ function mergeById(prevArr, incomingArr) {
 
 export function FuelRecordsCharts({ fuelType }) {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
+  const chartRef = useRef(null);
 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -136,6 +143,8 @@ export function FuelRecordsCharts({ fuelType }) {
       (incoming) => {
         setData(Array.isArray(incoming) ? incoming : []);
         setError(null);
+        // reset zoom al cambiar periodo/fecha para evitar “quedarse” en un zoom viejo
+        chartRef.current?.resetZoom?.();
       },
       setError
     );
@@ -163,6 +172,7 @@ export function FuelRecordsCharts({ fuelType }) {
   const { chartData, chartOptions, debug } = useMemo(() => {
     const arr = Array.isArray(data) ? data : [];
 
+    // 👇 OJO: ahora usamos puntos {x,y} para eje time (zoom real)
     const points = arr
       .map((r) => {
         const x = epochSecondsToMs(r.createdAt);
@@ -182,45 +192,35 @@ export function FuelRecordsCharts({ fuelType }) {
       fuelType?.fuelType === "GAS"
         ? "PSI"
         : fuelType?.fuelType === "GASOLINA"
-          ? "Volumen"
-          : fuelType?.fuelType === "DIESEL"
-            ? "gal"
-            : "";
+        ? "Volumen"
+        : fuelType?.fuelType === "DIESEL"
+        ? "gal"
+        : "";
 
     const datasetLabel =
       fuelType?.fuelType === "GAS"
         ? "PSI"
         : fuelType?.fuelType === "GASOLINA"
-          ? "Volumen"
-          : fuelType?.fuelType === "DIESEL"
-            ? "Galones"
-            : "Valor";
+        ? "Volumen"
+        : fuelType?.fuelType === "DIESEL"
+        ? "Galones"
+        : "Valor";
 
-    // Para barras: labels en X (Category)
-    // Si hay muchos puntos, mostramos menos labels (pero mantenemos todas las barras)
-    const labels = points.map((p) =>
-      period === "day" ? fmtTimeHHmmssFromMs(p.x) : fmtDayTimeFromMs(p.x)
-    );
-    const values = points.map((p) => p.y);
-
-    // Reduce “ruido” en labels: muestra 1 de cada N
-    const maxTicks = period === "day" ? 10 : 12;
-    const step = labels.length > maxTicks ? Math.ceil(labels.length / maxTicks) : 1;
+    const minX = points.length ? points[0].x : undefined;
+    const maxX = points.length ? points[points.length - 1].x : undefined;
 
     return {
       debug: { rawLen: arr.length, pointsLen: points.length, sample: points.slice(0, 3) },
       chartData: {
-        labels,
         datasets: [
           {
             label: datasetLabel,
-            data: values,
+            data: points,
+            parsing: false,
             backgroundColor: "#00B0FF",
             borderWidth: 0,
-            hoverBackgroundColor: "rgba(79,195,247,1)",
-            hoverBorderColor: "rgba(255,255,255,0.9)",
-            barPercentage: 0.9,
-            categoryPercentage: 0.9,
+            barPercentage: 1.0,
+            categoryPercentage: 1.0,
           },
         ],
       },
@@ -228,30 +228,57 @@ export function FuelRecordsCharts({ fuelType }) {
         responsive: true,
         maintainAspectRatio: false,
         animation: false,
+        normalized: true,
         plugins: {
           legend: { display: true, labels: { color: "#fff" } },
           tooltip: {
             callbacks: {
               title: (items) => {
-                const idx = items?.[0]?.dataIndex ?? 0;
-                return labels[idx] ? `Fecha/Hora: ${labels[idx]}` : "";
+                const x = items?.[0]?.raw?.x;
+                if (!x) return "";
+                return period === "day"
+                  ? `Hora: ${fmtTimeHHmmssFromMs(x)}`
+                  : `Fecha: ${fmtDayTimeFromMs(x)}`;
               },
-              label: (item) => `Valor: ${item.raw} ${unit}`,
+              label: (item) => {
+                const y = item?.raw?.y;
+                return `Valor: ${y} ${unit}`;
+              },
+            },
+          },
+
+          // ✅ ZOOM + PAN
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: "x",
+              modifierKey: "shift", // arrastra con SHIFT para pan (evita mover sin querer)
+            },
+            zoom: {
+              wheel: { enabled: true }, // zoom con rueda
+              pinch: { enabled: true }, // zoom en touch
+              mode: "x",
+            },
+            limits: {
+              x: { min: "original", max: "original" },
+              y: { min: "original", max: "original" },
             },
           },
         },
         scales: {
           x: {
-            type: "category",
-            ticks: {
-              color: "#fff",
-              maxRotation: 0,
-              autoSkip: false,
-              callback: function (val, index) {
-                // muestra 1 de cada "step"
-                return index % step === 0 ? this.getLabelForValue(val) : "";
+            type: "time",
+            min: minX,
+            max: maxX,
+            time: {
+              tooltipFormat: "dd/MM/yyyy HH:mm:ss",
+              displayFormats: {
+                minute: "HH:mm",
+                hour: "HH:mm",
+                day: "dd/MM",
               },
             },
+            ticks: { color: "#fff", maxRotation: 0 },
             grid: { display: false },
           },
           y: {
@@ -267,9 +294,21 @@ export function FuelRecordsCharts({ fuelType }) {
     <div style={{ width: "90%", margin: "10px auto" }}>
       <h1>Estadísticas</h1>
 
-      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          alignItems: "center",
+          marginBottom: 12,
+          flexWrap: "wrap",
+        }}
+      >
         <span>Periodo:</span>
-        <select value={period} onChange={(e) => setPeriod(e.target.value)} style={{ padding: "4px 8px" }}>
+        <select
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+          style={{ padding: "4px 8px" }}
+        >
           <option value="day">Día</option>
           <option value="week">Semana</option>
           <option value="month">Mes</option>
@@ -277,11 +316,33 @@ export function FuelRecordsCharts({ fuelType }) {
         </select>
 
         <span>Fecha base:</span>
-        <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
+
+        <button
+          onClick={() => chartRef.current?.resetZoom?.()}
+          style={{
+            padding: "6px 10px",
+            borderRadius: 6,
+            border: "1px solid rgba(255,255,255,0.25)",
+            background: "transparent",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+        >
+          Reset zoom
+        </button>
 
         <div style={{ marginLeft: "auto", color: "#fff" }}>
           Total registros: {Array.isArray(data) ? data.length : 0}
         </div>
+      </div>
+
+      <div style={{ color: "#bbb", fontSize: 12, marginBottom: 8 }}>
+        Zoom: rueda / pinch • Pan: arrastra con <b>SHIFT</b> • Reset con botón
       </div>
 
       {error && <div style={{ color: "red" }}>Error cargando datos</div>}
@@ -292,7 +353,7 @@ export function FuelRecordsCharts({ fuelType }) {
             Sin datos para graficar. (raw: {debug.rawLen}, puntos válidos: {debug.pointsLen})
           </div>
         ) : (
-          <Bar data={chartData} options={chartOptions} />
+          <Bar ref={chartRef} data={chartData} options={chartOptions} />
         )}
       </div>
     </div>

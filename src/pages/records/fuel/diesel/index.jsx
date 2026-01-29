@@ -11,6 +11,7 @@ import { FuelRecordsTable } from "./fuelRecordsTable";
 import { FuelReportsTable } from "./fuelReportsTable";
 import { AvgReports } from "./avgReports";
 import { FuelRecordsCharts } from "./fuelRecordsCharts";
+import { FuelTheftAlertsTable } from "./fuelTheftAlertsTable";
 
 export function DieselComponent() {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ export function DieselComponent() {
 
       <FuelRecordsCharts />
       {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
+      <FuelEfficiencyTable />
+      <FuelTheftAlertsTable />
       <h1>Estadísticas</h1>
       <FuelCharts />
     </div>

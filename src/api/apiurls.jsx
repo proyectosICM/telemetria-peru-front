@@ -74,8 +74,8 @@ export const fuelRecordsRoutes = {
   paged: `${baseAPIURL}/fuel-records/paged`,
   byVehicle: `${baseAPIURL}/fuel-records/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/fuel-records/by-vehicle-paged`,
-  byVehicleCount: `${baseAPIURL}/fuel-records/by-vehicle`, 
-  byVehicleDay: `${baseAPIURL}/fuel-records/by-vehicle`,   
+  byVehicleCount: `${baseAPIURL}/fuel-records/by-vehicle`,
+  byVehicleDay: `${baseAPIURL}/fuel-records/by-vehicle`,
   byVehicleRange: `${baseAPIURL}/fuel-records/by-vehicle`,
   hourlyAVL: `${baseAPIURL}/fuel-records/hourly-averages`,
   weekAVL: `${baseAPIURL}/fuel-records/week-averages`,
@@ -86,13 +86,74 @@ export const fuelRecordsRoutes = {
 // Fuel Efficiency Routes
 export const fuelEfficiencyRoutes = {
   base: `${baseAPIURL}/fuel-efficiency`,
-  downloadExcel: `${baseAPIURL}/fuel-efficiency/download-excel`,
-  byVehicle: `${baseAPIURL}/fuel-efficiency/by-vehicle`,
-  byVehiclePaged: `${baseAPIURL}/fuel-efficiency/by-vehicle-paged`,
-  dailyAverages: `${baseAPIURL}/fuel-efficiency/daily-averages`,
-  monthlyAverages: `${baseAPIURL}/fuel-efficiency/monthly-averages`,
-  summary: `${baseAPIURL}/fuel-efficiency/summary`,
+  getById: (id) => `${baseAPIURL}/fuel-efficiency/${id}`,
+  vehicleDay: (vehicleId, day /* YYYY-MM-DD */) =>
+    `${baseAPIURL}/fuel-efficiency/vehicle/${vehicleId}/day/${day}`,
+  listByDay: (day /* YYYY-MM-DD */) =>
+    `${baseAPIURL}/fuel-efficiency/day/${day}`,
+  companyDay: (companyId, day /* YYYY-MM-DD */) =>
+    `${baseAPIURL}/fuel-efficiency/company/${companyId}/day/${day}`,
+  vehicleRange: (vehicleId, start /* YYYY-MM-DD */, end /* YYYY-MM-DD */) =>
+    `${baseAPIURL}/fuel-efficiency/vehicle/${vehicleId}/range?start=${encodeURIComponent(
+      start
+    )}&end=${encodeURIComponent(end)}`,
+  companyRange: (companyId, start, end) =>
+    `${baseAPIURL}/fuel-efficiency/company/${companyId}/range?start=${encodeURIComponent(
+      start
+    )}&end=${encodeURIComponent(end)}`,
+  vehicleDayPaged: (vehicleId, day, page = 0, size = 20) =>
+    `${baseAPIURL}/fuel-efficiency/vehicle/${vehicleId}/day/${day}/paged?page=${page}&size=${size}`,
+
+  vehicleRangePaged: (vehicleId, start, end, page = 0, size = 20) =>
+    `${baseAPIURL}/fuel-efficiency/vehicle/${vehicleId}/range/paged?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&page=${page}&size=${size}`,
+
+  companyDayPaged: (companyId, day, page = 0, size = 20) =>
+    `${baseAPIURL}/fuel-efficiency/company/${companyId}/day/${day}/paged?page=${page}&size=${size}`,
+
+  companyRangePaged: (companyId, start, end, page = 0, size = 20) =>
+    `${baseAPIURL}/fuel-efficiency/company/${companyId}/range/paged?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&page=${page}&size=${size}`,
+
+  vehicleSum: (vehicleId, start, end) =>
+    `${baseAPIURL}/fuel-efficiency/vehicle/${vehicleId}/sum?start=${encodeURIComponent(
+      start
+    )}&end=${encodeURIComponent(end)}`,
+  companySum: (companyId, start, end) =>
+    `${baseAPIURL}/fuel-efficiency/company/${companyId}/sum?start=${encodeURIComponent(
+      start
+    )}&end=${encodeURIComponent(end)}`,
+  upsertDaily: `${baseAPIURL}/fuel-efficiency/daily/upsert`,
+  addSeconds: `${baseAPIURL}/fuel-efficiency/daily/add-seconds`,
+  deleteById: (id) => `${baseAPIURL}/fuel-efficiency/${id}`,
 };
+
+// Fuel Theft Alerts Routes
+export const fuelTheftAlertsRoutes = {
+  base: `${baseAPIURL}/fuel-theft-alerts`,
+  getById: (id) => `${baseAPIURL}/fuel-theft-alerts/${id}`,
+
+  // Builder para el search (porque tiene varios query params opcionales)
+  search: ({
+    vehicleId,
+    status,
+    period, // "day" | "week" | "month" | "year"
+    date,   // "YYYY-MM-DD"
+    tz = "America/Lima",
+    page = 0,
+    size = 20,
+  } = {}) => {
+    const params = new URLSearchParams();
+    if (vehicleId != null) params.set("vehicleId", String(vehicleId));
+    if (status) params.set("status", status);
+    if (period) params.set("period", period);
+    if (date) params.set("date", date);
+    if (tz) params.set("tz", tz);
+    params.set("page", String(page));
+    params.set("size", String(size));
+
+    return `${baseAPIURL}/fuel-theft-alerts?${params.toString()}`;
+  },
+};
+
 
 export const gasRecordsRoutes = {
   byVehicle: `${baseAPIURL}/gas-records/by-vehicle`,
@@ -105,14 +166,14 @@ export const gasChangesRoutes = {
 };
 
 // Ignition Routes
-export const ignitionRoutes = { 
+export const ignitionRoutes = {
   base: `${baseAPIURL}/vehicle-ignition`,
   paged: `${baseAPIURL}/vehicle-ignition/paged`,
   byVehicle: `${baseAPIURL}/vehicle-ignition/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/vehicle-ignition/by-vehicle-paged`,
-  count: `${baseAPIURL}/vehicle-ignition/count`, 
+  count: `${baseAPIURL}/vehicle-ignition/count`,
   countsAllDays: `${baseAPIURL}/vehicle-ignition/counts-all-days`,
-  countsAllMonths:`${baseAPIURL}/vehicle-ignition/counts-all-months`
+  countsAllMonths: `${baseAPIURL}/vehicle-ignition/counts-all-months`
 };
 
 // Tire Sensor Routes
@@ -206,5 +267,5 @@ export const engineStarterRoutes = {
   paged: `${baseAPIURL}/engine-starter/paged`,
   byVehicle: `${baseAPIURL}/engine-starter/by-vehicle`,
   byVehiclePaged: `${baseAPIURL}/engine-starter/by-vehicle-paged`,
-    countsByDays: `${baseAPIURL}/engine-starter/counts-by-days`
+  countsByDays: `${baseAPIURL}/engine-starter/counts-by-days`
 };

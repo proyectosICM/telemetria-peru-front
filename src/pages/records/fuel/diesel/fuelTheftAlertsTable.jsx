@@ -14,10 +14,9 @@ export function FuelTheftAlertsTable() {
 
   const { data, totalPages, currentPage, setCurrentPage, pageError } =
     ListItemsPaginated(fuelTheftAlertsRoutes.base, pageNumber, {
-      vehicleId: selectedVehicleId, // <-- por vehículo
+      vehicleId: selectedVehicleId ? Number(selectedVehicleId) : undefined,
       size: 20,
-      // status: "OPEN", // opcional si luego filtras
-      // period/date NO los mandamos (tabla general)
+      // period/date opcionales si luego quieres filtrar por día/semana/mes/año
     });
 
   return (
@@ -25,11 +24,9 @@ export function FuelTheftAlertsTable() {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>Placa</th>
+            <th>Vehículo</th>
             <th>Día</th>
             <th>Hora</th>
-            <th>Estado</th>
-            <th>Tipo</th>
             <th>Mensaje</th>
           </tr>
         </thead>
@@ -37,28 +34,26 @@ export function FuelTheftAlertsTable() {
         <tbody>
           {pageError ? (
             <tr>
-              <td colSpan={6} style={{ textAlign: "center" }}>
+              <td colSpan={4} style={{ textAlign: "center" }}>
                 Error cargando alertas
               </td>
             </tr>
-          ) : data && data.length > 0 ? (
+          ) : Array.isArray(data) && data.length > 0 ? (
             data.map((a, index) => (
               <tr key={a.id ?? index}>
-                <td>{a.vehicleModel?.licensePlate ?? "-"}</td>
+                <td>{a.licensePlate ?? "-"}</td>
                 <td>{a.detectedAt ? getDateFromTimestamp(a.detectedAt) : "-"}</td>
                 <td>
                   {a.detectedAt
                     ? getTimeFromTimestampWithSeconds(a.detectedAt)
                     : "-"}
                 </td>
-                <td>{a.status ?? "-"}</td>
-                <td>{a.type ?? a.alertType ?? "-"}</td>
-                <td>{a.message ?? a.description ?? "-"}</td>
+                <td>{a.message ?? "-"}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={6} style={{ textAlign: "center" }}>
+              <td colSpan={4} style={{ textAlign: "center" }}>
                 Sin alertas
               </td>
             </tr>

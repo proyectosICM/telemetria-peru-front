@@ -5,7 +5,7 @@ import { vehicleRoutes, vehiclesTypesRoutes } from "../api/apiurls";
 
 export function VehicleMenuPanel({ onSelectVehicle }) {
   const [data, setData] = useState([]);
-  const [dataTypes, setDataTypes] = useState([]); 
+  const [dataTypes, setDataTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [expandedId, setExpandedId] = useState(null);
@@ -102,15 +102,18 @@ export function VehicleMenuPanel({ onSelectVehicle }) {
                     <p className="vmp-type">
                       <strong>Tipo:</strong> {item.vehicleTypeName}
                     </p>
+                    {/* 
                     <p className="vmp-fuel">
                       <strong>Combustible:</strong> {item.fuelLevel ?? "68 gal"}%
                     </p>
+                     */}
                   </div>
-
+                  {/*
                   <p className="vmp-last-conn">
                     <strong>Última conexión:</strong>{" "}
                     {item.lastConnection ?? "03:05 PM 22/05/2025"}
                   </p>
+                  */}
                 </div>
 
                 {isExpanded && (

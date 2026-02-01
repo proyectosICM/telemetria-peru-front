@@ -49,8 +49,10 @@ export function DieselComponent() {
 
       <FuelRecordsCharts />
       {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
+      {/* 
       <FuelEfficiencyTable />
       <FuelTheftAlertsTable />
+      */}
       <h1>Estadísticas</h1>
       <FuelCharts />
     </div>

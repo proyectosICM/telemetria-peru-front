@@ -43,11 +43,13 @@ export function DieselComponent() {
  */}
 
 
-      <AvgReports />
-      <FuelReportsTable />
+   
       
      
-      {/*<AvgFuelEfficiency /> */}
+      {/*
+         <AvgReports />
+      <FuelReportsTable />
+      <AvgFuelEfficiency /> */}
 
       <FuelRecordsCharts />
       {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}

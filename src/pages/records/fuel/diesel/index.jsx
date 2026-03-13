@@ -38,8 +38,9 @@ export function DieselComponent() {
       <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
 
       {/*    
-         <AvgResults />
- <FuelEfficiencyTable /> */}
+ */}
+      <AvgResults />
+      <FuelEfficiencyTable />
 
       {/* 
       <AvgReports />

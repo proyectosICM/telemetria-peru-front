@@ -42,6 +42,14 @@ export function ListItemsPaginated(url, pageNumber, parameters = {}) {
   };
 
   const fetchData = async (pageNumber) => {
+    if (!url) {
+      setData([]);
+      setTotalPages(0);
+      setCurrentPage(0);
+      setPageError(null);
+      return;
+    }
+
     try {
       const finalURL = buildURL(url, pageNumber, parameters);
       const response = await axios.get(finalURL, {
@@ -59,15 +67,17 @@ export function ListItemsPaginated(url, pageNumber, parameters = {}) {
 
   useEffect(() => {
     fetchData(pageNumber);
-  }, [pageNumber, parameters]);
+  }, [url, pageNumber, parameters]);
 
   useEffect(() => {
+    if (!url) return;
+
     const intervalId = setInterval(() => {
       fetchData(pageNumber);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  });
+  }, [url, pageNumber, parameters]);
 
   return { data, totalPages, currentPage, setCurrentPage, fetchData, pageError };
 }

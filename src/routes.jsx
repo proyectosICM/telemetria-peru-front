@@ -87,4 +87,5 @@ export const routes = [
 
   { path: "/ver-cl/:idcl", component: <VerCL /> },
   { path: "/records-panel", component: <RecordsPanel /> },
+  // CDX
 ];

@@ -28,9 +28,9 @@ export function DieselComponent() {
       }}
     >
       <FuelInfo vehicleId={selectedVehicleId} showAlert={false} />
+      <FuelEfficiencyTable />
       <FuelRecordsCharts fuelType={vehicleData} />
       {vehicleData && <FuelRecordsTable fuelType={vehicleData} />}
-      <FuelEfficiencyTable />
       <h1>Estadísticas</h1>
       <FuelCharts />
     </div>

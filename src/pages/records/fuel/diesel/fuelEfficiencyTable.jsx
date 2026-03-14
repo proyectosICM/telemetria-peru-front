@@ -26,6 +26,33 @@ function secondsToHHmmss(sec) {
   return `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`;
 }
 
+function formatDay(value) {
+  if (value == null || value === "") return "-";
+
+  const raw = String(value).trim();
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    const [year, month, day] = raw.split("-");
+    return `${day}/${month}/${year}`;
+  }
+
+  if (/^\d{5}$/.test(raw)) {
+    const year = `20${raw.slice(0, 2)}`;
+    const month = raw.slice(2, 3).padStart(2, "0");
+    const day = raw.slice(3, 5);
+    return `${day}/${month}/${year}`;
+  }
+
+  if (/^\d{6}$/.test(raw)) {
+    const year = `20${raw.slice(0, 2)}`;
+    const month = raw.slice(2, 4);
+    const day = raw.slice(4, 6);
+    return `${day}/${month}/${year}`;
+  }
+
+  return raw;
+}
+
 export function FuelEfficiencyTable() {
   const selectedVehicleId = localStorage.getItem("selectedVehicleId");
 
@@ -91,7 +118,7 @@ export function FuelEfficiencyTable() {
             data.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{item.day ?? "-"}</td>
+                <td>{formatDay(item.day)}</td>
                 <td>{secondsToHHmmss(item.parkedSeconds)}</td>
                 <td>{secondsToHHmmss(item.idleSeconds)}</td>
                 <td>{secondsToHHmmss(item.operationSeconds)}</td>
